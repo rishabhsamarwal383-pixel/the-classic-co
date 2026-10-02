@@ -25,8 +25,62 @@
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   
-  <!-- Canvas Confetti deferred to avoid blocking first paint -->
-  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Dynamic Marketing Pixels & Tracking Loader (Configured via /admin) -->
+  <script>
+    (function initMarketingPixels() {
+      try {
+        var metaPixelId = localStorage.getItem('cc_meta_pixel_id') || "";
+        var ga4Id = localStorage.getItem('cc_ga4_id') || "";
+        var gtmId = localStorage.getItem('cc_gtm_id') || "";
+        var customHead = localStorage.getItem('cc_custom_head_code') || "";
+
+        if (metaPixelId) {
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', metaPixelId);
+          fbq('track', 'PageView');
+        }
+
+        if (ga4Id) {
+          var gaScript = document.createElement('script');
+          gaScript.async = true;
+          gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ga4Id);
+          document.head.appendChild(gaScript);
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', ga4Id);
+        }
+
+        if (gtmId) {
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer',gtmId);
+        }
+
+        if (customHead) {
+          var div = document.createElement('div');
+          div.innerHTML = customHead;
+          Array.from(div.children).forEach(function(child) {
+            if (child.tagName === 'SCRIPT') {
+              var s = document.createElement('script');
+              if (child.src) s.src = child.src;
+              else s.text = child.innerHTML;
+              document.head.appendChild(s);
+            }
+          });
+        }
+      } catch(e) {}
+    })();
+  </script>
 
   <style>
     :root {
@@ -1249,6 +1303,16 @@
           <div class="field-error-msg" id="err-email"></div>
         </div>
 
+        <div class="form-group" style="background:#f5f2eb; padding:10px 14px; border-radius:10px; border:1px solid #e6e0d2; margin-bottom:14px;">
+          <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; font-weight:700; color:#1F1B18; margin:0;">
+            <input type="checkbox" id="inp-send-invoice" checked style="width:18px; height:18px; accent-color:#181716; cursor:pointer;">
+            <span>🧾 Send Official Tax Invoice &amp; Receipt to My Email</span>
+          </label>
+          <div style="font-size:11px; color:#78716c; margin-left:28px; margin-top:2px; line-height:1.4;">
+            Includes itemized tax breakdown, 1-year UV400 warranty certificate, and express rider tracker.
+          </div>
+        </div>
+
         <div class="form-group">
           <label class="form-label">WhatsApp Mobile Number <span class="req-star">*</span></label>
           <input type="tel" id="inp-phone" class="form-input" inputmode="tel" placeholder="e.g. 98290XXXXX (10 Digits)" maxlength="10" oninput="clearFieldError('inp-phone', 'err-phone')">
@@ -1358,6 +1422,10 @@
           💬 Send Order Receipt on WhatsApp (+91 8619661325)
         </button>
 
+        <button type="button" class="btn-print-invoice" onclick="printOrderInvoice(confirmedOrderData)" style="background:#181716; color:#ffffff; font-weight:700; border:none; border-radius:10px; width:100%; min-height:44px; margin-bottom:8px; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center; gap:8px;">
+          🧾 Download / Print Official Tax Invoice (PDF)
+        </button>
+
         <button class="btn-track-action" onclick="openOrderTrackerModal(confirmedOrderData ? confirmedOrderData.orderId : '')">
           📦 View Live Order Tracker
         </button>
@@ -1428,6 +1496,9 @@
     <p>Handcrafted Architectural Eyewear · Delivered Locally in Udaipur, Rajasthan</p>
     <p style="margin-top:6px; font-size:11px; color:#9c978f;">
       30 Studio Silhouettes · Mobile Optimized PWA · Google Sheet CRM &amp; Automated Email Engine
+    </p>
+    <p style="margin-top:10px; font-size:11.5px;">
+      <a href="/admin" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:700;">🔒 Studio Admin &amp; CRM Portal →</a>
     </p>
   </footer>
 
@@ -2595,6 +2666,9 @@
                          '&cu=INR' +
                          '&tn=' + encodeURIComponent(noteText);
 
+      var sendInvoiceCheck = document.getElementById('inp-send-invoice');
+      var shouldSendInvoice = sendInvoiceCheck ? sendInvoiceCheck.checked : true;
+
       confirmedOrderData = {
         orderId: orderId,
         productId: p.id,
@@ -2614,6 +2688,7 @@
         pincode: pincode,
         gps: attachedGPSLocation,
         upiUrl: currentUPIUrl,
+        sendInvoice: shouldSendInvoice,
         createdAt: new Date().toISOString()
       };
 
@@ -2711,6 +2786,31 @@
           body: JSON.stringify(confirmedOrderData)
         }).catch(function() {});
       } catch (err) {}
+
+      // C. Fire Meta & GA4 E-Commerce Purchase Pixels
+      try {
+        if (window.fbq) {
+          fbq('track', 'Purchase', {
+            value: totalAmount,
+            currency: 'INR',
+            content_name: p.title,
+            content_type: 'product',
+            num_items: currentQuantity
+          });
+        }
+        if (window.gtag) {
+          gtag('event', 'purchase', {
+            transaction_id: orderId,
+            value: totalAmount,
+            currency: 'INR',
+            items: [{
+              item_name: p.title,
+              price: totalAmount,
+              quantity: currentQuantity
+            }]
+          });
+        }
+      } catch(pixErr) {}
     }
 
     function triggerUPIIntentDirect() {
@@ -2765,6 +2865,36 @@
       var waMessage = lines.join(nl);
       var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMessage);
       window.open(waUrl, '_blank');
+    }
+
+    // =========================================================================
+    // TAX INVOICE GENERATOR & PRINT ENGINE
+    // =========================================================================
+    function printOrderInvoice(order) {
+      if (!order) {
+        order = confirmedOrderData;
+      }
+      if (!order) {
+        alert("Please complete the order details first to view the invoice.");
+        return;
+      }
+      var brand = 'THE CLASSIC CO.';
+      var invoiceNum = 'INV-CC-' + (order.orderId || '2026-001');
+      var invoiceDate = new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric'
+      });
+      var amount = Number(order.amount) || 899;
+      var taxableValue = Math.round(amount / 1.18);
+      var gstAmount = amount - taxableValue;
+      var cgst = (gstAmount / 2).toFixed(2);
+      var sgst = (gstAmount / 2).toFixed(2);
+
+      var invoiceHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Tax Invoice #' + invoiceNum + '</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#181716;padding:40px;margin:0;background:#fff;line-height:1.5;font-size:13px;}.inv-wrap{max-width:720px;margin:0 auto;border:1px solid #e5e5e5;padding:36px;border-radius:8px;}.inv-header{display:flex;justify-content:space-between;border-bottom:2px solid #181716;padding-bottom:18px;margin-bottom:22px;}.brand-name{font-size:22px;font-weight:800;letter-spacing:1px;font-family:Georgia,serif;}.brand-sub{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#78716c;margin-top:2px;}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;font-size:12.5px;}.table-inv{width:100%;border-collapse:collapse;margin-bottom:20px;}.table-inv th{background:#faf9f6;border:1px solid #e5e5e5;padding:9px 12px;font-size:11px;text-transform:uppercase;text-align:left;}.table-inv td{border:1px solid #e5e5e5;padding:12px;}.total-table{width:260px;margin-left:auto;margin-bottom:22px;border-collapse:collapse;}.total-table td{padding:5px 8px;font-size:12px;}.total-table tr.grand{font-size:15px;font-weight:800;border-top:2px solid #181716;}.warranty-box{background:#faf9f6;border-left:3px solid #b48448;padding:10px 14px;font-size:11.5px;color:#57534e;margin-bottom:22px;}.footer-sign{display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:14px;border-top:1px solid #e5e5e5;font-size:11px;color:#78716c;}@media print{body{padding:0;}.inv-wrap{border:none;padding:0;}}</style></head><body><div class="inv-wrap"><div class="inv-header"><div><div class="brand-name">' + brand + '</div><div class="brand-sub">Architectural Eyewear Studio · Udaipur</div><div style="font-size:11px;color:#57534e;margin-top:4px;">Plot 42, Saheli Marg, Sukhadia Circle, Udaipur 313001<br>Helpline: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div></div><div style="text-align:right;"><h2 style="margin:0;font-size:18px;">TAX INVOICE</h2><div style="margin-top:4px;font-size:11.5px;color:#57534e;">Invoice: <strong>#' + invoiceNum + '</strong><br>Date: <strong>' + invoiceDate + '</strong></div></div></div><div class="meta-grid"><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Billed To:</strong><div style="font-size:13.5px;font-weight:700;">' + order.name + '</div><div style="color:#57534e;margin-top:2px;">📞 +91 ' + order.phone + '<br>📧 ' + (order.email || 'None') + '<br>📍 ' + order.address + '<br>' + (order.landmark ? ('Landmark: ' + order.landmark + '<br>') : '') + 'Udaipur, Rajasthan ' + (order.pincode || '313001') + '</div></div><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Payment & Delivery:</strong><div style="color:#57534e;">Payment Mode: <strong>' + (order.paymentMode || (order.isPrepaid ? 'Instant UPI' : 'Cash on Delivery')) + '</strong><br>Trial Mode: <strong>45-Min Doorstep Mirror Trial</strong><br>Express Shipping: <strong>Zero Cost (Free in Udaipur)</strong><br>Included: <strong>Hard Leather Case + Microfiber Cloth</strong></div></div></div><table class="table-inv"><thead><tr><th>Item Silhouette</th><th>HSN</th><th>Qty</th><th>Rate</th><th>Taxable</th><th>Total</th></tr></thead><tbody><tr><td><strong>' + order.title + '</strong><br><span style="font-size:10.5px;color:#78716c;">100% UV400 Polarized Sunglasses</span></td><td>90041000</td><td>' + (order.quantity || 1) + '</td><td>₹' + taxableValue + '</td><td>₹' + taxableValue + '</td><td><strong>₹' + amount + '</strong></td></tr></tbody></table><table class="total-table"><tr><td>Taxable Value:</td><td align="right">₹' + taxableValue + '</td></tr><tr><td>CGST (9%):</td><td align="right">₹' + cgst + '</td></tr><tr><td>SGST (9%):</td><td align="right">₹' + sgst + '</td></tr><tr><td>Delivery Charge:</td><td align="right" style="color:#10b981;font-weight:700;">FREE</td></tr><tr class="grand"><td>Grand Total:</td><td align="right" style="color:#b48448;">₹' + amount + ' Only</td></tr></table><div class="warranty-box">🛡️ <strong>1-Year Studio Warranty & Doorstep Trial Guarantee:</strong> 7-Day Hassle-free Replacement. Support: +91 8619661325.</div><div class="footer-sign"><div>Computer-generated digital tax invoice & proof of purchase.</div><div style="text-align:right;"><div style="font-family:Georgia,serif;font-size:13px;font-weight:700;">For THE CLASSIC CO.</div><div style="font-size:10px;color:#78716c;margin-top:16px;">Authorized Signatory</div></div></div></div><script>window.onload=function(){window.print();}<\/script></body></html>';
+
+      var printWindow = window.open('', '_blank');
+      printWindow.document.open();
+      printWindow.document.write(invoiceHtml);
+      printWindow.document.close();
     }
 
     // =========================================================================
