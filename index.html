@@ -329,6 +329,23 @@
       .catalog-section { padding: 24px 12px 50px; }
     }
 
+    /* VIEW ALL BUTTON (MOBILE) */
+    .view-all-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 20px 0 8px; gap: 6px;
+    }
+    .btn-view-all {
+      background: #161514; color: #fff; border: none; border-radius: 10px;
+      padding: 14px 36px; font-size: 14px; font-weight: 700;
+      letter-spacing: 0.3px; cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    }
+    .btn-view-all:active { transform: scale(0.97); }
+    .view-all-hint {
+      font-size: 11.5px; color: var(--text-muted); font-weight: 500;
+    }
+
     /* PRODUCT CARD */
     .product-card {
       background: #ffffff;
@@ -2723,6 +2740,8 @@
     let selectedProduct = null;
     let selectedPayment = "cod";
     let confirmedOrderData = null;
+    let mobileShowAll = false;
+    const MOBILE_INITIAL_COUNT = 6;
 
     // Initialize Application
     document.addEventListener("DOMContentLoaded", () => {
@@ -2771,7 +2790,18 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(p => {
+      // 4. Mobile: show limited initially
+      const isMobile = window.innerWidth <= 680;
+      const totalCount = filtered.length;
+      let displayProducts = filtered;
+      let showViewAllBtn = false;
+
+      if (isMobile && !mobileShowAll && totalCount > MOBILE_INITIAL_COUNT) {
+        displayProducts = filtered.slice(0, MOBILE_INITIAL_COUNT);
+        showViewAllBtn = true;
+      }
+
+      grid.innerHTML = displayProducts.map(p => {
         const discount = Math.round(((p.compare_at - p.cod_price) / p.compare_at) * 100);
         const rating = (4.8 + ((p.id % 3) * 0.1)).toFixed(1);
         const reviewCount = 38 + (p.id * 3);
@@ -2799,11 +2829,35 @@
           </div>
         `;
       }).join('');
+
+      // Add "View All" button on mobile
+      if (showViewAllBtn) {
+        const remaining = totalCount - MOBILE_INITIAL_COUNT;
+        grid.insertAdjacentHTML('beforeend', `
+          <div class="view-all-wrap" style="grid-column: 1 / -1;">
+            <button type="button" class="btn-view-all" onclick="showAllProducts()">
+              View All ${totalCount} Silhouettes →
+            </button>
+            <div class="view-all-hint">${remaining} more styles to explore</div>
+          </div>
+        `);
+      }
+    }
+
+    function showAllProducts() {
+      mobileShowAll = true;
+      renderProductsGrid();
+      // Smooth scroll to where new products start
+      const cards = document.querySelectorAll('.product-card');
+      if (cards.length > MOBILE_INITIAL_COUNT) {
+        cards[MOBILE_INITIAL_COUNT].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     }
 
     // Category Tabs
     function filterCategory(cat, btn) {
       currentCategory = cat;
+      mobileShowAll = false;
       document.querySelectorAll(".pill-tab").forEach(t => t.classList.remove("active"));
       if (btn) btn.classList.add("active");
       renderProductsGrid();
@@ -2812,6 +2866,7 @@
     // Search & Sort Handlers
     function handleSearch(val) {
       searchQuery = val.trim();
+      mobileShowAll = false;
       renderProductsGrid();
     }
     function handleSort(val) {
@@ -2827,7 +2882,7 @@
       const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
       viewingProduct = p;
 
-      document.getElementById("detail-main-img").src = p.images[0];
+      // Gallery images are set up via carousel below
       document.getElementById("detail-category").innerText = p.category;
       document.getElementById("detail-title").innerText = p.title;
       document.getElementById("detail-price").innerText = "₹" + p.cod_price;
@@ -2879,7 +2934,8 @@
     }
 
     function switchDetailImage(imgUrl, btn) {
-      document.getElementById("detail-main-img").src = imgUrl;
+      const mainImg = document.getElementById("detail-main-img");
+      if (mainImg) mainImg.src = imgUrl;
       document.querySelectorAll(".prod-thumb-btn").forEach(b => b.classList.remove("active"));
       if (btn) btn.classList.add("active");
     }
