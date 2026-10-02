@@ -1,0 +1,37 @@
+{
+  "name": "The Classic Co. · Eyewear Studio",
+  "short_name": "The Classic Co",
+  "description": "Architectural Sunglasses & Studio Eyewear in Udaipur • 45-Min Express Doorstep Delivery & Trial",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#181716",
+  "theme_color": "#181716",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
