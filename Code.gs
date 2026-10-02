@@ -405,20 +405,32 @@ function sendOwnerAlertEmail(order) {
   MailApp.sendEmail(ownerRecipient, subject, body);
 }
 
+function safeAlert(msg) {
+  try {
+    SpreadsheetApp.getUi().alert(msg);
+  } catch (e) {
+    Logger.log('[ALERT]: ' + msg);
+  }
+}
+
 // ============================================================================
 // 6. CUSTOM GOOGLE SHEETS MENU & AUTOMATED DISPATCH EMAILS
 // ============================================================================
 function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu('👓 THE CLASSIC CO Operations')
-    .addItem('🚚 Mark Selected Row as Dispatched & Send Email', 'menuMarkDispatched')
-    .addItem('✅ Mark Selected Row as Delivered & Send Email', 'menuMarkDelivered')
-    .addItem('💬 Open WhatsApp Chat with Selected Customer', 'menuOpenWhatsApp')
-    .addItem('📧 Resend Confirmation Email to Selected Row', 'menuResendConfirmation')
-    .addSeparator()
-    .addItem('📊 Refresh Sales & Revenue Dashboard', 'menuRefreshDashboard')
-    .addItem('🧪 Send Test Order & Verify Setup', 'testOrderIngestion')
-    .addToUi();
+  try {
+    var ui = SpreadsheetApp.getUi();
+    ui.createMenu('👓 THE CLASSIC CO Operations')
+      .addItem('🚚 Mark Selected Row as Dispatched & Send Email', 'menuMarkDispatched')
+      .addItem('✅ Mark Selected Row as Delivered & Send Email', 'menuMarkDelivered')
+      .addItem('💬 Open WhatsApp Chat with Selected Customer', 'menuOpenWhatsApp')
+      .addItem('📧 Resend Confirmation Email to Selected Row', 'menuResendConfirmation')
+      .addSeparator()
+      .addItem('📊 Refresh Sales & Revenue Dashboard', 'menuRefreshDashboard')
+      .addItem('🧪 Send Test Order & Verify Setup', 'testOrderIngestion')
+      .addToUi();
+  } catch (err) {
+    Logger.log('Headless mode - UI menu skipped: ' + err.message);
+  }
 }
 
 /**
@@ -453,31 +465,31 @@ function menuMarkDispatched() {
   var sheet = SpreadsheetApp.getActiveSheet();
   var row = sheet.getActiveRange().getRow();
   if (row <= 1) {
-    SpreadsheetApp.getUi().alert('Please select a customer order row first.');
+    safeAlert('Please select a customer order row first.');
     return;
   }
   sheet.getRange(row, 12).setValue('🚚 Dispatched / Rider On The Way');
   sendCustomerDispatchUpdateEmail(sheet, row);
-  SpreadsheetApp.getUi().alert('Status updated to Dispatched and email sent to customer!');
+  safeAlert('Status updated to Dispatched and email sent to customer!');
 }
 
 function menuMarkDelivered() {
   var sheet = SpreadsheetApp.getActiveSheet();
   var row = sheet.getActiveRange().getRow();
   if (row <= 1) {
-    SpreadsheetApp.getUi().alert('Please select a customer order row first.');
+    safeAlert('Please select a customer order row first.');
     return;
   }
   sheet.getRange(row, 12).setValue('✅ Delivered (Payment Completed)');
   sendCustomerDeliveredEmail(sheet, row);
-  SpreadsheetApp.getUi().alert('Status updated to Delivered and thank you email sent!');
+  safeAlert('Status updated to Delivered and thank you email sent!');
 }
 
 function menuOpenWhatsApp() {
   var sheet = SpreadsheetApp.getActiveSheet();
   var row = sheet.getActiveRange().getRow();
   if (row <= 1) {
-    SpreadsheetApp.getUi().alert('Please select an order row first.');
+    safeAlert('Please select an order row first.');
     return;
   }
   var phone = String(sheet.getRange(row, 5).getValue()).replace(/\D/g, '');
@@ -509,13 +521,13 @@ function menuResendConfirmation() {
   };
 
   if (!order.email || order.email.indexOf('@') === -1) {
-    SpreadsheetApp.getUi().alert('No valid email found in column 4 for this row.');
+    safeAlert('No valid email found in column 4 for this row.');
     return;
   }
 
   sendCustomerConfirmationEmail(order);
   sheet.getRange(row, 13).setValue('✅ Resent at ' + Utilities.formatDate(new Date(), 'Asia/Kolkata', 'hh:mm a'));
-  SpreadsheetApp.getUi().alert('Confirmation email resent to ' + order.email);
+  safeAlert('Confirmation email resent to ' + order.email);
 }
 
 function sendCustomerDispatchUpdateEmail(sheet, row) {
@@ -693,7 +705,7 @@ function updateSummaryMetrics(ss) {
 function menuRefreshDashboard() {
   var ss = getStoreSpreadsheet();
   updateSummaryMetrics(ss);
-  SpreadsheetApp.getUi().alert('Dashboard metrics refreshed!');
+  safeAlert('Dashboard metrics refreshed!');
 }
 
 function testOrderIngestion() {
@@ -713,7 +725,7 @@ function testOrderIngestion() {
   };
 
   var res = processIncomingOrder(testData);
-  SpreadsheetApp.getUi().alert('Test Order Processed!\n\nOrder ID: ' + res.orderId + '\nEmail Sent: ' + res.emailSent + '\nCheck row in "Orders" tab!');
+  safeAlert('Test Order Processed!\n\nOrder ID: ' + res.orderId + '\nEmail Sent: ' + res.emailSent + '\nCheck row in "Orders" tab!');
 }
 
 function parseFormUrlEncoded(text) {
