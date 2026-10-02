@@ -974,12 +974,400 @@
       border-color: #161514;
       background: var(--bg-warm);
     }
+  
+    /* =======================================================================
+       PROFESSIONAL LUXURY HERO BANNER (IMAGE SPOTLIGHT & ZERO PROMISES)
+       ======================================================================= */
+    .hero-banner {
+      position: relative;
+      background-image: linear-gradient(180deg, rgba(16, 14, 13, 0.12) 0%, rgba(16, 14, 13, 0.48) 100%), url('hero_luxury_bg.jpg');
+      background-size: cover;
+      background-position: center 36%;
+      background-repeat: no-repeat;
+      color: #ffffff;
+      padding: 120px 20px 70px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 520px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 44px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      max-width: 680px;
+      margin: 0 auto 10px;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+    }
+    .hero-desc {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.92);
+      max-width: 440px;
+      margin: 0 auto 22px;
+      line-height: 1.4;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 0;
+    }
+    .btn-hero-primary {
+      background: #ffffff;
+      color: #161514;
+      border: 1px solid #ffffff;
+      font-weight: 700;
+      padding: 12px 30px;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: var(--transition);
+    }
+    .btn-hero-primary:hover {
+      background: #f4ede1;
+      border-color: #f4ede1;
+    }
+
+    @media (max-width: 768px) {
+      .hero-banner {
+        min-height: 420px;
+        padding: 90px 16px 50px;
+        background-position: center center;
+      }
+      .hero-title {
+        font-size: 32px;
+      }
+      .hero-desc {
+        font-size: 13px;
+        margin-bottom: 18px;
+      }
+    }
+
+    /* =======================================================================
+       CLEAN HAMBURGER DRAWER (PURE NAVIGATION, NO PLASTERED PRODUCTS)
+       ======================================================================= */
+    .drawer-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(18, 16, 15, 0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .drawer-panel {
+      position: fixed;
+      top: 0; right: 0;
+      width: 360px;
+      max-width: 88vw;
+      height: 100%;
+      background: #ffffff;
+      z-index: 1001;
+      box-shadow: -10px 0 35px rgba(0, 0, 0, 0.18);
+      transform: translateX(100%);
+      transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .drawer-overlay.active .drawer-panel {
+      transform: translateX(0);
+    }
+    .drawer-header {
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #faf9f6;
+    }
+    .drawer-brand {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #161514;
+    }
+    .drawer-close {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #78716c;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    .drawer-close:hover { color: #161514; background: #e5e5e5; }
+    .drawer-body {
+      padding: 22px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .drawer-section-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .drawer-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .drawer-nav-list a {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 14px;
+      color: #161514;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    .drawer-nav-list a:hover {
+      background: var(--bg-warm);
+      color: var(--accent);
+    }
+
+    /* =======================================================================
+       CLEAN PRODUCT CARD
+       ======================================================================= */
+    .product-card {
+      background: #ffffff;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .product-card:hover {
+      border-color: #161514;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .media-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #faf9f6;
+      overflow: hidden;
+    }
+    .media-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .product-card:hover .media-img {
+      transform: scale(1.03);
+    }
+    .card-body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-cat {
+      font-size: 10.5px;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-rating {
+      font-size: 11px;
+      color: #eab308;
+      margin-bottom: 10px;
+    }
+    .card-rating span { color: var(--text-light); font-size: 10.5px; }
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-top: auto;
+      margin-bottom: 12px;
+    }
+    .price-current {
+      font-size: 16px;
+      font-weight: 800;
+      color: #161514;
+    }
+    .price-original {
+      font-size: 12px;
+      color: var(--text-light);
+      text-decoration: line-through;
+    }
+    .price-save {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--green);
+      background: var(--green-light);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    .btn-card-action {
+      width: 100%;
+      padding: 10px;
+      background: #161514;
+      color: #ffffff;
+      border: 1px solid #161514;
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+    .btn-card-action:hover {
+      background: #2b2826;
+    }
+
+    /* =======================================================================
+       DEDICATED PRODUCT DETAIL MODAL (HIGH RES GALLERY & SPECIFICATIONS)
+       ======================================================================= */
+    .prod-modal-box {
+      background: #ffffff;
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 24px;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    .prod-modal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+    @media (max-width: 768px) {
+      .prod-modal-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .prod-modal-box {
+        padding: 18px 16px;
+        max-height: 94vh;
+      }
+    }
+    .prod-gallery-main {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #faf9f6;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .prod-gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.2s ease;
+    }
+    .prod-thumbs-strip {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .prod-thumb-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 4px;
+      border: 1px solid var(--surface-border);
+      overflow: hidden;
+      cursor: pointer;
+      background: #faf9f6;
+      padding: 0;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .prod-thumb-btn.active {
+      border: 2px solid #161514;
+    }
+    .prod-thumb-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .spec-badge-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-warm);
+      border: 1px solid var(--surface-border);
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: #57534e;
+    }
+  
   </style>
 </head>
 <body>
 
   <!-- ========================================================================= -->
   <!-- LUXURY SLIDE-OVER DRAWER (MENU, SHOPPING BAG & ORDER TRACKER) -->
+  <!-- ========================================================================= -->
+  <!-- ========================================================================= -->
+  <!-- LUXURY NAVIGATION DRAWER (PURE NAVIGATION & TRACKING) -->
   <!-- ========================================================================= -->
   <div class="drawer-overlay" id="menu-drawer" onclick="handleDrawerBackdropClick(event)">
     <div class="drawer-panel" onclick="event.stopPropagation()">
@@ -990,37 +1378,11 @@
 
       <div class="drawer-body">
         
-        <!-- SECTION 1: SHOPPING BAG -->
+        <!-- COLLECTIONS -->
         <div>
-          <div class="drawer-section-title">
-            <span>🛍️ Shopping Bag</span>
-            <span style="font-size:10px; color:var(--green); font-weight:700;">FREE SHIPPING</span>
-          </div>
-
-          <div id="drawer-bag-content">
-            <!-- Rendered dynamically by renderDrawerBag() -->
-          </div>
-        </div>
-
-        <!-- SECTION 2: TRACK YOUR ORDER -->
-        <div style="border-top:1px solid var(--surface-border); padding-top:16px;">
-          <div class="drawer-section-title">
-            <span>📦 Track Your Order</span>
-          </div>
-          <div style="display:flex; gap:6px; margin-bottom:8px;">
-            <input type="text" id="drawer-track-input" class="form-input" placeholder="Order ID (e.g. ORD-CC-1001)" style="font-size:12.5px; padding:8px 10px;">
-            <button type="button" class="btn-submit-order" style="width:auto; padding:8px 14px; margin:0; font-size:12px;" onclick="handleDrawerTrackingSearch()">Track</button>
-          </div>
-          <div id="drawer-track-result" style="display:none; font-size:11.5px; background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:4px; padding:10px; line-height:1.5;"></div>
-        </div>
-
-        <!-- SECTION 3: COLLECTIONS -->
-        <div style="border-top:1px solid var(--surface-border); padding-top:16px;">
-          <div class="drawer-section-title">
-            <span>🕶️ Collections</span>
-          </div>
-          <ul class="drawer-links-list">
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('All')"><span>All Silhouettes (30)</span><span>→</span></a></li>
+          <div class="drawer-section-title">Collections</div>
+          <ul class="drawer-nav-list">
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('All')"><span>All Silhouettes</span><span style="font-size:12px; color:var(--text-light);">30</span></a></li>
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Polarized')"><span>Polarized &amp; Driving</span><span>→</span></a></li>
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Acetates')"><span>Studio Acetates</span><span>→</span></a></li>
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Magnetic')"><span>4-in-1 Magnetic Clip-Ons</span><span>→</span></a></li>
@@ -1029,12 +1391,25 @@
           </ul>
         </div>
 
-        <!-- SECTION 4: ASSISTANCE & ADMIN -->
-        <div style="border-top:1px solid var(--surface-border); padding-top:16px; margin-top:auto;">
-          <ul class="drawer-links-list" style="font-size:12px;">
-            <li><a href="https://wa.me/918619661325" target="_blank" style="color:#059669;"><span>💬 WhatsApp Helpline</span><span>+91 8619661325</span></a></li>
+        <!-- TRACK ORDER -->
+        <div style="border-top:1px solid var(--surface-border); padding-top:18px;">
+          <div class="drawer-section-title">Track Order</div>
+          <div style="display:flex; gap:6px; margin-bottom:8px;">
+            <input type="text" id="drawer-track-input" class="form-input" placeholder="Enter Order ID" style="font-size:13px; padding:9px 12px;">
+            <button type="button" class="btn-submit-order" style="width:auto; padding:9px 16px; margin:0; font-size:12px;" onclick="handleDrawerTrackingSearch()">Search</button>
+          </div>
+          <div id="drawer-track-result" style="display:none; font-size:12px; background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:4px; padding:10px; line-height:1.5;"></div>
+        </div>
+
+        <!-- SUPPORT & ADMIN -->
+        <div style="border-top:1px solid var(--surface-border); padding-top:18px; margin-top:auto;">
+          <ul class="drawer-nav-list" style="font-size:12.5px;">
+            <li><a href="https://wa.me/918619661325" target="_blank" style="color:#059669;"><span>💬 WhatsApp Support</span><span>+91 8619661325</span></a></li>
             <li><a href="/admin" target="_blank" style="color:var(--accent);"><span>🔒 Studio Admin &amp; CRM</span><span>Login</span></a></li>
           </ul>
+          <div style="font-size:11px; color:var(--text-light); margin-top:12px; text-align:center;">
+            Express Shipping Across India · Cash on Delivery Available
+          </div>
         </div>
 
       </div>
@@ -1044,40 +1419,33 @@
 
   <!-- TOP ANNOUNCEMENT BAR -->
   <div class="announcement-bar">
-    <span>Free Express Shipping Across India · Cash on Delivery (COD) Available</span>
+    <span>Complimentary Express Shipping Across India · Cash on Delivery Available</span>
   </div>
 
   <!-- HEADER -->
   <header>
     <a href="#" class="brand-logo">THE CLASSIC CO.</a>
 
-    <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation & Bag">
+    <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation">
       <div class="hamburger-icon">
         <span></span>
         <span></span>
         <span></span>
       </div>
       <span>MENU</span>
-      <span class="hamburger-badge" id="header-bag-count">1</span>
     </button>
   </header>
 
   <!-- HERO SECTION (SHOPIFY DTC MINIMAL STYLE) -->
   <section class="hero-banner">
-    <div class="hero-eyebrow">[ 2026 EYEWEAR ]</div>
-    <h1 class="hero-title">Curated Sunglasses.</h1>
+    <div class="hero-eyebrow">THE CLASSIC CO. · 2026</div>
+    <h1 class="hero-title">Curated Eyewear.</h1>
     <p class="hero-desc">
-      Trending Polarized Frames · Cash on Delivery Across India
+      Trending Polarized Sunglasses
     </p>
 
     <div class="hero-actions">
-      <a href="#collection" class="btn-hero btn-hero-primary">Explore 30 Styles</a>
-    </div>
-
-    <div class="trust-bar">
-      <span>✓ Cash on Delivery Available</span>
-      <span>✓ Pan-India Delivery</span>
-      <span>✓ Hard Case Included</span>
+      <a href="#collection" class="btn-hero-primary">Explore 30 Styles</a>
     </div>
   </section>
 
@@ -1269,6 +1637,66 @@
   <!-- ========================================================================= -->
   <!-- MODAL 1: SHOPIFY EXPRESS CHECKOUT -->
   <!-- ========================================================================= -->
+  
+  <!-- ========================================================================= -->
+  <!-- MODAL: PRODUCT DETAIL QUICK VIEW (GALLERY & SPECS) -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="product-detail-modal" onclick="handleProdModalBackdropClick(event)">
+    <div class="prod-modal-box" onclick="event.stopPropagation()">
+      <button class="modal-close-btn" onclick="closeProductDetailModal()">✕</button>
+
+      <div class="prod-modal-grid">
+        <!-- LEFT: GALLERY -->
+        <div>
+          <div class="prod-gallery-main">
+            <img id="detail-main-img" src="" alt="Product View">
+          </div>
+          <div class="prod-thumbs-strip" id="detail-thumbs-strip">
+            <!-- Thumbs injected by JS -->
+          </div>
+        </div>
+
+        <!-- RIGHT: PRODUCT INFO & ACTIONS -->
+        <div>
+          <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px;" id="detail-category">
+            CATEGORY
+          </div>
+          <h2 style="font-size:22px; font-weight:700; line-height:1.25; margin-bottom:8px; font-family:'Playfair Display', serif;" id="detail-title">
+            Product Title
+          </h2>
+          <div style="font-size:12px; color:#eab308; margin-bottom:14px;" id="detail-rating">
+            ★★★★★ <span style="color:var(--text-light);" id="detail-review-count">(42 Reviews)</span>
+          </div>
+
+          <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:16px;">
+            <span style="font-size:24px; font-weight:800; color:#161514;" id="detail-price">₹899</span>
+            <span style="font-size:14px; color:var(--text-light); text-decoration:line-through;" id="detail-compare">₹1,999</span>
+            <span class="price-save" id="detail-discount">55% OFF</span>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
+            <span class="spec-badge-chip">🕶️ 100% UV400 Polarized</span>
+            <span class="spec-badge-chip">📦 Hard Case &amp; Cloth Included</span>
+            <span class="spec-badge-chip">🚚 Free Express Delivery</span>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <button type="button" class="btn-submit-order" style="padding:14px; font-size:14px; margin:0;" onclick="orderProductFromDetail()">
+              ⚡ Order Now
+            </button>
+            <a id="detail-wa-btn" href="#" target="_blank" class="btn-card-action" style="background:#25d366; border-color:#25d366; text-decoration:none; display:flex; justify-content:center; align-items:center; gap:8px;">
+              💬 Inquire on WhatsApp
+            </a>
+          </div>
+
+          <div style="font-size:11.5px; color:var(--text-muted); margin-top:14px; line-height:1.5;">
+            Cash on Delivery &amp; UPI accepted at checkout. Dispatched within 24 hours.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <div class="modal-backdrop" id="checkout-modal">
     <div class="modal-box">
       <button class="modal-close-btn" onclick="closeCheckoutModal()">✕</button>
@@ -1284,7 +1712,7 @@
 
         <!-- ORDER ITEM SUMMARY -->
         <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:12px; display:flex; gap:12px; align-items:center; margin-bottom:16px;">
-          <img id="check-item-img" src="" style="width:52px; height:52px; object-fit:cover; border-radius:4px; border:1px solid var(--surface-border);" alt="Product">
+          <img id="check-item-img" src="" style="width:68px; height:68px; border-radius:6px; background:#faf9f6; object-fit:cover; border-radius:4px; border:1px solid var(--surface-border);" alt="Product">
           <div style="flex:1;">
             <div style="font-size:13px; font-weight:700; line-height:1.3;" id="check-item-title">Product Title</div>
             <div style="font-size:11.5px; color:var(--text-muted);" id="check-item-cat">Category</div>
@@ -1365,7 +1793,7 @@
         </div>
 
         <button type="button" class="btn-submit-order" onclick="submitCustomerOrder()">
-          <span id="btn-submit-text">Complete Order (Cash on Delivery)</span>
+          <span id="btn-submit-text">Place Order · ₹899</span>
         </button>
 
         <div style="text-align:center; font-size:11px; color:var(--text-light); margin-top:10px;">
@@ -2118,14 +2546,13 @@
         const reviewCount = 38 + (p.id * 3);
 
         return `
-          <div class="product-card">
-            <div class="media-wrap" onclick="openCheckoutForProduct(${p.id})">
+          <div class="product-card" onclick="openProductDetailModal(${p.id})">
+            <div class="media-wrap">
               <img src="${p.images[0]}" alt="${p.title}" class="media-img" loading="lazy">
-              <span class="badge-card">COD AVAILABLE</span>
             </div>
             <div class="card-body">
               <div class="card-cat">${p.category}</div>
-              <div class="card-title" onclick="openCheckoutForProduct(${p.id})">${p.title}</div>
+              <div class="card-title">${p.title}</div>
               <div class="card-rating">
                 ★★★★★ <span>${rating} (${reviewCount})</span>
               </div>
@@ -2134,14 +2561,9 @@
                 <span class="price-original">₹${p.compare_at}</span>
                 <span class="price-save">${discount}% OFF</span>
               </div>
-              <div class="card-actions">
-                <button type="button" class="btn-buy-cod" style="flex:1;" onclick="openCheckoutForProduct(${p.id})">
-                  Buy Now (COD)
-                </button>
-                <button type="button" class="btn-card-bag" onclick="addToBag(${p.id}, event)" title="Add to Bag">
-                  ＋ Bag
-                </button>
-              </div>
+              <button type="button" class="btn-card-action" onclick="event.stopPropagation(); openProductDetailModal(${p.id})">
+                View Details
+              </button>
             </div>
           </div>
         `;
@@ -2167,6 +2589,67 @@
     }
 
     // Checkout Modal Logic
+    
+    let viewingProduct = null;
+
+    function openProductDetailModal(prodId) {
+      const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
+      viewingProduct = p;
+
+      document.getElementById("detail-main-img").src = p.images[0];
+      document.getElementById("detail-category").innerText = p.category;
+      document.getElementById("detail-title").innerText = p.title;
+      document.getElementById("detail-price").innerText = "₹" + p.cod_price;
+      document.getElementById("detail-compare").innerText = "₹" + p.compare_at;
+      const discount = Math.round(((p.compare_at - p.cod_price) / p.compare_at) * 100);
+      document.getElementById("detail-discount").innerText = discount + "% OFF";
+      document.getElementById("detail-review-count").innerText = "(" + (38 + p.id * 3) + " Reviews)";
+
+      // Setup Thumbnails
+      const strip = document.getElementById("detail-thumbs-strip");
+      strip.innerHTML = p.images.map((imgUrl, idx) => `
+        <button type="button" class="prod-thumb-btn ${idx === 0 ? 'active' : ''}" onclick="switchDetailImage('${imgUrl}', this)">
+          <img src="${imgUrl}" alt="Angle ${idx+1}">
+        </button>
+      `).join('');
+
+      // WhatsApp link
+      const waText = encodeURIComponent("Hi The Classic Co! I am interested in: " + p.title + " (₹" + p.cod_price + ")");
+      document.getElementById("detail-wa-btn").href = "https://wa.me/" + WA_NUMBER + "?text=" + waText;
+
+      // Meta Pixel ViewContent
+      try {
+        if (window.fbq) fbq('track', 'ViewContent', { content_name: p.title, value: p.cod_price, currency: 'INR' });
+      } catch(e) {}
+
+      document.getElementById("product-detail-modal").style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function switchDetailImage(imgUrl, btn) {
+      document.getElementById("detail-main-img").src = imgUrl;
+      document.querySelectorAll(".prod-thumb-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+    }
+
+    function closeProductDetailModal() {
+      document.getElementById("product-detail-modal").style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function handleProdModalBackdropClick(e) {
+      if (e.target.id === "product-detail-modal") {
+        closeProductDetailModal();
+      }
+    }
+
+    function orderProductFromDetail() {
+      closeProductDetailModal();
+      if (viewingProduct) {
+        openCheckoutForProduct(viewingProduct.id);
+      }
+    }
+  
     function openCheckoutForProduct(prodId) {
       const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
       selectedProduct = p;
@@ -2211,9 +2694,9 @@
       const p = selectedProduct || PRODUCTS[0];
       const btnText = document.getElementById("btn-submit-text");
       if (mode === "cod") {
-        btnText.innerText = "Complete Order (Cash on Delivery ₹" + p.cod_price + ")";
+        btnText.innerText = "Place Order · ₹" + p.cod_price;
       } else {
-        btnText.innerText = "Complete Order (Instant UPI ₹" + (p.cod_price - 100) + ")";
+        btnText.innerText = "Place Order · ₹" + (p.cod_price - 100);
       }
     }
 
@@ -2464,56 +2947,6 @@
     function handleDrawerBackdropClick(e) {
       if (e.target.id === "menu-drawer") {
         closeMenuDrawer();
-      }
-    }
-
-    function addToBag(prodId, event) {
-      if (event) event.stopPropagation();
-      const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
-      currentBagItem = p;
-      updateBagBadge();
-      openMenuDrawer();
-    }
-
-    function updateBagBadge() {
-      const badge = document.getElementById("header-bag-count");
-      if (badge) {
-        badge.innerText = "1";
-        badge.style.display = "inline-block";
-      }
-    }
-
-    function renderDrawerBag() {
-      const container = document.getElementById("drawer-bag-content");
-      if (!container) return;
-
-      if (!currentBagItem) {
-        container.innerHTML = '<div style="font-size:12.5px; color:var(--text-muted); padding:10px 0;">Your shopping bag is empty. Explore 30 frames below to select your pair.</div>';
-        return;
-      }
-
-      const p = currentBagItem;
-      container.innerHTML = `
-        <div class="drawer-bag-card">
-          <img src="${p.images[0]}" alt="${p.title}" class="drawer-bag-img">
-          <div class="drawer-bag-info">
-            <div class="drawer-bag-title">${p.title}</div>
-            <div class="drawer-bag-price">₹${p.cod_price} <span style="font-size:10.5px; color:var(--text-muted); font-weight:normal;">(COD)</span></div>
-          </div>
-        </div>
-
-        <button type="button" class="btn-submit-order" style="margin-top:10px; display:flex; justify-content:center; align-items:center; gap:8px;" onclick="checkoutFromDrawer()">
-          ⚡ Checkout Now (COD ₹${p.cod_price})
-        </button>
-      `;
-    }
-
-    function checkoutFromDrawer() {
-      closeMenuDrawer();
-      if (currentBagItem) {
-        openCheckoutForProduct(currentBagItem.id);
-      } else {
-        openCheckoutForProduct(PRODUCTS[0].id);
       }
     }
 
