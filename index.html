@@ -1271,6 +1271,274 @@
       }
     }
   
+  
+    /* =======================================================================
+       TOUCH-SCROLLABLE PRODUCT GALLERY (CAROUSEL & SWIPE)
+       ======================================================================= */
+    .prod-gallery-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #faf9f6;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .prod-gallery-carousel {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      scroll-behavior: smooth;
+    }
+    .prod-gallery-carousel::-webkit-scrollbar {
+      display: none;
+    }
+    .prod-gallery-slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #faf9f6;
+    }
+    .prod-gallery-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: #161514;
+      cursor: pointer;
+      z-index: 5;
+      transition: var(--transition);
+      line-height: 1;
+      padding-bottom: 2px;
+    }
+    .carousel-btn:hover {
+      background: #ffffff;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .carousel-btn.prev-btn { left: 10px; }
+    .carousel-btn.next-btn { right: 10px; }
+    .carousel-dots-wrap {
+      position: absolute;
+      bottom: 12px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      z-index: 5;
+    }
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.22);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+    .carousel-dot.active {
+      background: #161514;
+      width: 18px;
+      border-radius: 4px;
+    }
+    .touch-swipe-hint {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 12px;
+      backdrop-filter: blur(4px);
+      z-index: 4;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* =======================================================================
+       CHECKOUT PIXEL-PERFECT SYMMETRY & FORM REFINEMENT
+       ======================================================================= */
+    .modal-box {
+      background: #ffffff;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 26px 24px;
+      position: relative;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+      border: 1px solid var(--surface-border);
+      box-sizing: border-box;
+    }
+    @media (max-width: 680px) {
+      .modal-box {
+        padding: 20px 16px;
+        max-height: 94vh;
+        border-radius: 10px;
+      }
+    }
+    .form-group {
+      margin-bottom: 14px;
+      box-sizing: border-box;
+    }
+    .form-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #161514;
+      margin-bottom: 5px;
+      letter-spacing: 0.2px;
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 11px 14px;
+      border: 1px solid #dcd7cf;
+      border-radius: 6px;
+      font-size: 13.5px;
+      color: #161514;
+      outline: none;
+      transition: var(--transition);
+      font-family: inherit;
+      background: #ffffff;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: #161514;
+      box-shadow: 0 0 0 3px rgba(22, 21, 20, 0.08);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      box-sizing: border-box;
+    }
+    @media (max-width: 480px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+    }
+
+    /* MAP LOCATION DETECT BUTTON & AUTOFILL BOX */
+    .map-autofill-box {
+      margin-bottom: 14px;
+      box-sizing: border-box;
+    }
+    .btn-map-detect {
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #fbf9f5;
+      border: 1.5px dashed #b48448;
+      color: #8c5b20;
+      padding: 11px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-map-detect:hover {
+      background: #f4ede1;
+      border-color: #8c5b20;
+    }
+    .btn-map-detect:active {
+      transform: scale(0.99);
+    }
+    .gps-status-badge {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 6px;
+      font-size: 11.5px;
+      color: #065f46;
+      line-height: 1.4;
+      display: none;
+    }
+
+    /* UPI BRAND LOGOS & BADGES */
+    .upi-brands-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .upi-brand-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .upi-pill-gpay { background: #ffffff; color: #3c4043; border: 1px solid #dadce0; }
+    .upi-pill-phonepe { background: #5f259f; color: #ffffff; }
+    .upi-pill-paytm { background: #00baf2; color: #ffffff; }
+    .upi-pill-upi { background: #0c1a30; color: #00d084; border: 1px solid #00d084; }
+    .upi-pill-cred { background: #000000; color: #ffffff; }
+
+    /* UPI INTENT DIRECT APP BUTTONS IN STEP 2 */
+    .upi-app-buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .btn-upi-app {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+    }
+    .btn-upi-phonepe { background: #5f259f; color: #fff; }
+    .btn-upi-gpay { background: #1a73e8; color: #fff; }
+    .btn-upi-paytm { background: #00baf2; color: #fff; }
+    .btn-upi-generic { background: #161514; color: #fff; grid-column: 1 / -1; }
+    .btn-upi-app:hover { opacity: 0.92; transform: translateY(-1px); }
+  
   </style>
 </head>
 <body>
@@ -1569,8 +1837,14 @@
       <div class="prod-modal-grid">
         <!-- LEFT: GALLERY -->
         <div>
-          <div class="prod-gallery-main">
-            <img id="detail-main-img" src="" alt="Product View">
+          <div class="prod-gallery-wrap">
+            <div class="touch-swipe-hint">👈 Swipe Photos 👉</div>
+            <div class="prod-gallery-carousel" id="detail-gallery-carousel" onscroll="handleGalleryScroll()">
+              <!-- Slides injected by JS -->
+            </div>
+            <div class="carousel-dots-wrap" id="detail-carousel-dots"></div>
+            <button type="button" class="carousel-btn prev-btn" onclick="slideGallery(-1)" aria-label="Previous image">‹</button>
+            <button type="button" class="carousel-btn next-btn" onclick="slideGallery(1)" aria-label="Next image">›</button>
           </div>
           <div class="prod-thumbs-strip" id="detail-thumbs-strip">
             <!-- Thumbs injected by JS -->
@@ -1676,9 +1950,21 @@
         </div>
 
         <!-- SHIPPING ADDRESS -->
+        <!-- MAP / GPS LIVE LOCATION DETECTOR & AUTOFILL -->
+        <div class="map-autofill-box">
+          <button type="button" class="btn-map-detect" onclick="detectGPSAndAutofillAddress()">
+            <span id="gps-btn-icon">📍</span>
+            <span id="gps-btn-text">Auto-Fill Address &amp; Pincode via GPS / Map Location</span>
+          </button>
+          <div id="gps-status-badge" class="gps-status-badge">
+            <!-- Populated on GPS detect -->
+          </div>
+        </div>
+
+        <!-- SHIPPING ADDRESS -->
         <div class="form-group">
           <label class="form-label">Delivery Street Address *</label>
-          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="House/Flat No., Building, Street, Area..." oninput="clearError('inp-address', 'err-address')"></textarea>
+          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="Flat/House No., Street, Area, Colony..." oninput="clearError('inp-address', 'err-address')"></textarea>
           <div class="field-error-msg" id="err-address">Please provide full delivery address.</div>
         </div>
 
@@ -1706,11 +1992,19 @@
         </div>
 
         <div class="payment-option-card" id="pay-opt-upi" onclick="selectPaymentMode('upi')">
-          <div>
-            <div style="font-size:13px; font-weight:700;">⚡ Instant UPI (Save ₹100)</div>
-            <div style="font-size:11.5px; color:var(--green); font-weight:600;">GPay / PhonePe / Paytm / QR</div>
+          <div style="flex:1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
+              <span style="font-size:13px; font-weight:700;">⚡ Instant UPI (Save ₹100)</span>
+              <span style="font-size:14px; font-weight:800; color:var(--green);" id="pay-upi-amount">₹799</span>
+            </div>
+            <div class="upi-brands-row">
+              <span class="upi-brand-pill upi-pill-gpay">GPay</span>
+              <span class="upi-brand-pill upi-pill-phonepe">PhonePe</span>
+              <span class="upi-brand-pill upi-pill-paytm">Paytm</span>
+              <span class="upi-brand-pill upi-pill-cred">CRED</span>
+              <span class="upi-brand-pill upi-pill-upi">BHIM UPI</span>
+            </div>
           </div>
-          <div style="font-size:14px; font-weight:800; color:var(--green);" id="pay-upi-amount">₹799</div>
         </div>
 
         <button type="button" class="btn-submit-order" onclick="submitCustomerOrder()">
@@ -1743,6 +2037,22 @@
           <div><strong>Total Payable:</strong> <strong style="font-size:14px; color:#161514;" id="rec-disp-amount"></strong> (<span id="rec-disp-mode"></span>)</div>
           <div><strong>Shipping To:</strong> <span id="rec-disp-addr"></span></div>
           <div><strong>Email Receipt:</strong> <span id="rec-disp-email"></span></div>
+        </div>
+
+        <!-- DIRECT UPI PAYMENT APPS (WHEN INSTANT UPI CHOSEN) -->
+        <div id="rec-upi-pay-box" style="display:none; margin-bottom:16px;">
+          <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#059669; margin-bottom:8px;">
+            ⚡ Complete Payment via Any UPI App:
+          </div>
+          <div class="upi-app-buttons-grid">
+            <button type="button" class="btn-upi-app btn-upi-phonepe" onclick="launchDirectUpiApp('phonepe')">🟣 PhonePe</button>
+            <button type="button" class="btn-upi-app btn-upi-gpay" onclick="launchDirectUpiApp('gpay')">🔵 Google Pay</button>
+            <button type="button" class="btn-upi-app btn-upi-paytm" onclick="launchDirectUpiApp('paytm')">🔷 Paytm</button>
+            <button type="button" class="btn-upi-app btn-upi-generic" onclick="launchDirectUpiApp('generic')">⚡ Any Other UPI App (CRED / BHIM)</button>
+          </div>
+          <div style="margin-top:10px; font-size:11px; color:var(--text-muted);">
+            Merchant UPI: <strong>8619661325@upi</strong> (The Classic Co.)
+          </div>
         </div>
 
         <button type="button" class="btn-submit-order" onclick="printOrderInvoice(confirmedOrderData)" style="background:#161514; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:8px;">
@@ -2526,13 +2836,34 @@
       document.getElementById("detail-discount").innerText = discount + "% OFF";
       document.getElementById("detail-review-count").innerText = "(" + (38 + p.id * 3) + " Reviews)";
 
+      // Setup Touch-Scroll Gallery Slides
+      const carousel = document.getElementById("detail-gallery-carousel");
+      if (carousel) {
+        carousel.innerHTML = p.images.map((imgUrl, idx) => `
+          <div class="prod-gallery-slide">
+            <img src="${imgUrl}" alt="${p.title} - View ${idx+1}" loading="lazy">
+          </div>
+        `).join('');
+        carousel.scrollLeft = 0;
+      }
+
+      // Setup Dots
+      const dotsWrap = document.getElementById("detail-carousel-dots");
+      if (dotsWrap) {
+        dotsWrap.innerHTML = p.images.map((_, idx) => `
+          <div class="carousel-dot ${idx === 0 ? 'active' : ''}" onclick="scrollToSlide(${idx})"></div>
+        `).join('');
+      }
+
       // Setup Thumbnails
       const strip = document.getElementById("detail-thumbs-strip");
-      strip.innerHTML = p.images.map((imgUrl, idx) => `
-        <button type="button" class="prod-thumb-btn ${idx === 0 ? 'active' : ''}" onclick="switchDetailImage('${imgUrl}', this)">
-          <img src="${imgUrl}" alt="Angle ${idx+1}">
-        </button>
-      `).join('');
+      if (strip) {
+        strip.innerHTML = p.images.map((imgUrl, idx) => `
+          <button type="button" class="prod-thumb-btn ${idx === 0 ? 'active' : ''}" onclick="scrollToSlide(${idx})">
+            <img src="${imgUrl}" alt="Thumbnail ${idx+1}">
+          </button>
+        `).join('');
+      }
 
       // WhatsApp link
       const waText = encodeURIComponent("Hi The Classic Co! I am interested in: " + p.title + " (₹" + p.cod_price + ")");
@@ -2738,6 +3069,14 @@
 
       // Switch to Step 2
       document.getElementById("checkout-step-1").style.display = "none";
+      
+      // Auto launch UPI on mobile if Instant UPI selected
+      if (selectedPayment === "upi") {
+        setTimeout(() => {
+          const upiDeepLink = "upi://pay?pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + totalAmount + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId);
+          window.location.href = upiDeepLink;
+        }, 600);
+      }
       document.getElementById("checkout-step-2").style.display = "block";
 
       // Save to localStorage
@@ -2797,6 +3136,147 @@
       w.document.close();
     }
 
+    
+    // Attached GPS location coordinates / Google Maps Link
+    let attachedGPSMapUrl = "";
+
+    // Touch-Scroll Gallery Logic
+    function slideGallery(direction) {
+      const carousel = document.getElementById("detail-gallery-carousel");
+      if (!carousel) return;
+      const step = carousel.clientWidth;
+      carousel.scrollBy({ left: direction * step, behavior: 'smooth' });
+    }
+
+    function scrollToSlide(index) {
+      const carousel = document.getElementById("detail-gallery-carousel");
+      if (!carousel) return;
+      carousel.scrollTo({ left: index * carousel.clientWidth, behavior: 'smooth' });
+      updateGalleryActiveState(index);
+    }
+
+    function handleGalleryScroll() {
+      const carousel = document.getElementById("detail-gallery-carousel");
+      if (!carousel || !carousel.clientWidth) return;
+      const activeIdx = Math.round(carousel.scrollLeft / carousel.clientWidth);
+      updateGalleryActiveState(activeIdx);
+    }
+
+    function updateGalleryActiveState(idx) {
+      // Update dots
+      document.querySelectorAll(".carousel-dot").forEach((dot, i) => {
+        dot.classList.toggle("active", i === idx);
+      });
+      // Update thumbnails
+      document.querySelectorAll(".prod-thumb-btn").forEach((thumb, i) => {
+        thumb.classList.toggle("active", i === idx);
+      });
+    }
+
+    // GPS & Reverse Geocoding Autofill
+    async function detectGPSAndAutofillAddress() {
+      const btnText = document.getElementById("gps-btn-text");
+      const btnIcon = document.getElementById("gps-btn-icon");
+      const badge = document.getElementById("gps-status-badge");
+
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser. Please type your delivery address.");
+        return;
+      }
+
+      btnText.innerText = "Accessing GPS location...";
+      btnIcon.innerText = "⏳";
+
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          attachedGPSMapUrl = "https://www.google.com/maps?q=" + lat + "," + lng;
+
+          btnText.innerText = "Fetching street & pincode...";
+
+          try {
+            // Use Nominatim reverse geocoding
+            const res = await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + lng, {
+              headers: { 'Accept': 'application/json' }
+            });
+            const data = await res.json();
+            const addr = data.address || {};
+
+            // Extract Pincode
+            const postcode = addr.postcode || "";
+            if (postcode) {
+              const pinInput = document.getElementById("inp-pincode");
+              if (pinInput) {
+                pinInput.value = postcode.replace(/\D/g, '').slice(0, 6);
+                clearError("inp-pincode", "err-pincode");
+              }
+            }
+
+            // Extract City
+            const city = addr.city || addr.town || addr.village || addr.county || addr.state_district || "Udaipur";
+            const cityInput = document.getElementById("inp-city");
+            if (cityInput) {
+              cityInput.value = city;
+              clearError("inp-city", "err-city");
+            }
+
+            // Extract Street / Area Address
+            const roadParts = [
+              addr.house_number,
+              addr.road || addr.suburb || addr.neighbourhood,
+              addr.residential || addr.commercial
+            ].filter(Boolean);
+            const streetText = roadParts.length ? roadParts.join(', ') : (data.display_name ? data.display_name.split(',').slice(0, 3).join(', ') : "");
+
+            const addrInput = document.getElementById("inp-address");
+            if (addrInput && streetText) {
+              addrInput.value = streetText;
+              clearError("inp-address", "err-address");
+            }
+
+            btnText.innerText = "✓ Location Detected (Tap to update)";
+            btnIcon.innerText = "📍";
+
+            badge.style.display = "block";
+            badge.innerHTML = "✓ Auto-detected: <strong>" + city + (postcode ? " - " + postcode : "") + "</strong> · <a href='" + attachedGPSMapUrl + "' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Live Google Maps Pin ↗</a>";
+
+          } catch (e) {
+            console.warn("Reverse geocode fallback", e);
+            btnText.innerText = "✓ GPS Pin Attached";
+            btnIcon.innerText = "📍";
+            badge.style.display = "block";
+            badge.innerHTML = "✓ GPS Coordinates Attached · <a href='" + attachedGPSMapUrl + "' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Google Maps Pin ↗</a>";
+          }
+        },
+        (err) => {
+          btnText.innerText = "Auto-Fill Address via GPS / Map Location";
+          btnIcon.innerText = "📍";
+          alert("Could not fetch location. Please check browser GPS permission or enter your address manually.");
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
+    // Direct UPI App Launcher (PhonePe, GPay, Paytm)
+    function launchDirectUpiApp(app) {
+      if (!confirmedOrderData) return;
+      const payable = confirmedOrderData.amount || 799;
+      const orderId = confirmedOrderData.orderId || "2026-001";
+      const upiBase = "pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + payable + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId);
+
+      let targetUrl = "upi://pay?" + upiBase;
+      if (app === "phonepe") {
+        targetUrl = "phonepe://pay?" + upiBase;
+      } else if (app === "gpay") {
+        targetUrl = "gpay://upi/pay?" + upiBase;
+      } else if (app === "paytm") {
+        targetUrl = "paytmmp://pay?" + upiBase;
+      }
+
+      window.location.href = targetUrl;
+    }
+  
     // Modal Helpers
     function openTrackerModal() {
       document.getElementById("tracker-modal").style.display = "flex";
