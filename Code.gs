@@ -259,7 +259,7 @@ function processIncomingOrder(data) {
 // ============================================================================
 function sendCustomerConfirmationEmail(order) {
   var recipient = order.email;
-  var subject = '🕶️ Order Confirmed #' + order.orderId + ' · THE CLASSIC CO. Udaipur';
+  var subject = '🧾 Tax Invoice & Order Receipt #' + order.orderId + ' · THE CLASSIC CO. Udaipur';
 
   var paymentBadgeColor = order.isPrepaid ? '#059669' : '#D97706';
   var paymentBadgeText = order.isPrepaid ? '⚡ PREPAID (INSTANT UPI DEAL)' : '💵 CASH ON DELIVERY';
