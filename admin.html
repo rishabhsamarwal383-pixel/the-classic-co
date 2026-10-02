@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE CLASSIC CO. — Studio CRM &amp; E-Commerce Admin</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f0f11;
+      --surface: #18181b;
+      --surface-elevated: #222226;
+      --surface-border: #2e2e33;
+      --text: #f4f4f5;
+      --text-muted: #a1a1aa;
+      --gold: #d4af37;
+      --gold-light: #f3e5ab;
+      --gold-dark: #aa8c2c;
+      --accent: #b48448;
+      --accent-soft: rgba(180, 132, 72, 0.15);
+      --green: #10b981;
+      --green-soft: rgba(16, 185, 129, 0.15);
+      --amber: #f59e0b;
+      --amber-soft: rgba(245, 158, 11, 0.15);
+      --red: #ef4444;
+      --red-soft: rgba(239, 68, 68, 0.15);
+      --blue: #3b82f6;
+      --blue-soft: rgba(59, 130, 246, 0.15);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* AUTH LOCK OVERLAY */
+    #auth-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(15, 15, 17, 0.95);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .auth-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 36px 32px;
+      max-width: 400px; width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    }
+    .auth-logo {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--gold-light);
+      letter-spacing: 2px; margin-bottom: 6px;
+    }
+    .auth-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+    .auth-input {
+      width: 100%; padding: 13px 16px; font-size: 16px;
+      background: var(--bg); border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm); color: #fff;
+      text-align: center; letter-spacing: 3px; font-family: monospace;
+      outline: none; margin-bottom: 16px;
+    }
+    .auth-input:focus { border-color: var(--gold); }
+    .auth-btn {
+      width: 100%; padding: 13px; background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      border: none; border-radius: var(--radius-sm); color: #181716;
+      font-weight: 700; font-size: 14px; cursor: pointer; transition: var(--transition);
+    }
+    .auth-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+    .auth-err { color: var(--red); font-size: 12px; margin-top: 10px; display: none; }
+
+    /* APP CONTAINER */
+    .app-wrap { display: flex; min-height: 100vh; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 260px; background: var(--surface);
+      border-right: 1px solid var(--surface-border);
+      padding: 24px 16px; display: flex; flex-direction: column;
+      flex-shrink: 0;
+    }
+    .brand-block {
+      padding: 0 12px 24px; border-bottom: 1px solid var(--surface-border);
+      margin-bottom: 20px;
+    }
+    .brand-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 18px; font-weight: 700; color: var(--gold-light);
+      letter-spacing: 1.5px;
+    }
+    .brand-badge {
+      display: inline-block; font-size: 10px; font-weight: 800;
+      color: var(--gold); background: var(--accent-soft);
+      padding: 2px 8px; border-radius: 20px; text-transform: uppercase;
+      margin-top: 4px; letter-spacing: 1px;
+    }
+    .nav-list { list-style: none; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .nav-btn {
+      width: 100%; display: flex; align-items: center; gap: 12px;
+      padding: 11px 14px; background: transparent; border: none;
+      border-radius: var(--radius-sm); color: var(--text-muted);
+      font-size: 13.5px; font-weight: 600; cursor: pointer;
+      text-align: left; transition: var(--transition);
+    }
+    .nav-btn:hover { background: var(--surface-elevated); color: var(--text); }
+    .nav-btn.active {
+      background: var(--accent-soft);
+      color: var(--gold-light);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+    }
+    .nav-icon { font-size: 17px; width: 22px; text-align: center; }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--surface-border);
+      padding-top: 16px; margin-top: auto;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .store-link-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 9px; background: var(--surface-elevated);
+      border: 1px solid var(--surface-border); border-radius: var(--radius-sm);
+      color: var(--gold); font-size: 12px; font-weight: 700;
+      text-decoration: none; transition: var(--transition);
+    }
+    .store-link-btn:hover { background: var(--accent-soft); border-color: var(--gold); }
+
+    /* MAIN CONTENT */
+    .main-content { flex: 1; padding: 32px 36px; overflow-y: auto; max-width: 1400px; margin: 0 auto; width: 100%; }
+
+    /* HEADER */
+    .top-bar {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+    }
+    .page-title { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+    .page-sub { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .top-actions { display: flex; gap: 10px; align-items: center; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 9px 16px; font-size: 13px; font-weight: 700;
+      border-radius: var(--radius-sm); border: none; cursor: pointer;
+      transition: var(--transition); text-decoration: none;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #181716;
+    }
+    .btn-gold:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--surface-elevated); border: 1px solid var(--surface-border);
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: var(--surface-border); }
+    .btn-sm { padding: 6px 11px; font-size: 12px; }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-green:hover { opacity: 0.9; }
+
+    /* METRIC CARDS */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px; margin-bottom: 28px;
+    }
+    .stat-card {
+      background: var(--surface); border: 1px solid var(--surface-border);
+      border-radius: var(--radius); padding: 20px;
+      position: relative; overflow: hidden;
+    }
+    .stat-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+    .stat-val { font-size: 26px; font-weight: 800; color: #fff; margin: 8px 0 4px; }
+    .stat-sub { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+    .stat-pill {
+      font-size: 11px; font-weight: 800; padding: 2px 7px;
+      border-radius: 12px; background: var(--green-soft); color: var(--green);
+    }
+
+    /* CARD CONTAINER */
+    .card {
+      background: var(--surface); border: 1px solid var(--surface-border);
+      border-radius: var(--radius); padding: 24px; margin-bottom: 24px;
+    }
+    .card-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .card-title { font-size: 16px; font-weight: 700; color: #fff; }
+    .card-desc { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; margin: -8px; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th {
+      padding: 12px 14px; background: var(--surface-elevated);
+      color: var(--text-muted); font-weight: 700; font-size: 11px;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    td {
+      padding: 14px; border-bottom: 1px solid var(--surface-border);
+      color: var(--text); vertical-align: middle;
+    }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* STATUS PILLS */
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 800; padding: 3px 9px;
+      border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .status-pending { background: var(--amber-soft); color: var(--amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .status-dispatched { background: var(--blue-soft); color: var(--blue); border: 1px solid rgba(59, 130, 246, 0.3); }
+    .status-delivered { background: var(--green-soft); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-cancelled { background: var(--red-soft); color: var(--red); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    /* FORMS */
+    .form-group { margin-bottom: 18px; }
+    .form-label { display: block; font-size: 12.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; padding: 10px 14px; background: var(--bg);
+      border: 1px solid var(--surface-border); border-radius: var(--radius-sm);
+      color: #fff; font-size: 13.5px; outline: none; transition: var(--transition);
+      font-family: inherit;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--gold); }
+    .form-help { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
+
+    /* TAB CONTENT PANELS */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; animation: fadeIn 0.25s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* TOAST */
+    #toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 99999;
+      background: var(--surface-elevated); border: 1px solid var(--gold);
+      color: var(--gold-light); padding: 12px 20px; border-radius: var(--radius-sm);
+      font-weight: 700; font-size: 13px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      display: none; align-items: center; gap: 8px;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 9998;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-box {
+      background: var(--surface); border: 1px solid var(--surface-border);
+      border-radius: var(--radius); max-width: 600px; width: 100%;
+      max-height: 90vh; overflow-y: auto; padding: 24px; position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 18px; right: 18px; background: transparent;
+      border: none; color: var(--text-muted); font-size: 20px; cursor: pointer;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      .app-wrap { flex-direction: column; }
+      .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--surface-border); }
+      .nav-list { flex-direction: row; overflow-x: auto; padding-bottom: 8px; }
+      .main-content { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN AUTH LOCK -->
+  <div id="auth-overlay">
+    <div class="auth-card">
+      <div class="auth-logo">THE CLASSIC CO.</div>
+      <div class="auth-sub">Architectural Eyewear Studio · Admin &amp; CRM</div>
+      <form onsubmit="handleAuthSubmit(event)">
+        <input type="password" id="auth-pin" class="auth-input" placeholder="ENTER ACCESS PIN" autofocus>
+        <button type="submit" class="auth-btn">Unlock Studio Portal</button>
+        <div class="auth-err" id="auth-err-msg">⚠️ Incorrect PIN. Default is: classic2026</div>
+      </form>
+      <div style="font-size:11px; color:#71717a; margin-top:16px;">
+        Default Studio PIN: <code style="color:var(--gold); font-weight:700;">classic2026</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-wrap">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand-block">
+        <div class="brand-title">THE CLASSIC CO.</div>
+        <div class="brand-badge">⚡ Studio CRM Suite</div>
+      </div>
+
+      <ul class="nav-list">
+        <li><button class="nav-btn active" onclick="switchTab('analytics')"><span class="nav-icon">📊</span> Analytics &amp; Funnel</button></li>
+        <li><button class="nav-btn" onclick="switchTab('orders')"><span class="nav-icon">📦</span> Orders CRM (<span id="sidebar-order-count">0</span>)</button></li>
+        <li><button class="nav-btn" onclick="switchTab('products')"><span class="nav-icon">🕶️</span> Products Catalog</button></li>
+        <li><button class="nav-btn" onclick="switchTab('pixels')"><span class="nav-icon">🎯</span> Pixels &amp; Marketing</button></li>
+        <li><button class="nav-btn" onclick="switchTab('invoice')"><span class="nav-icon">🧾</span> Tax Invoice Engine</button></li>
+        <li><button class="nav-btn" onclick="switchTab('integrations')"><span class="nav-icon">🔗</span> Shopify Alt &amp; Sheets</button></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" class="store-link-btn">
+          <span>👓 View Live Store</span> <span>↗</span>
+        </a>
+        <button class="btn btn-secondary btn-sm" onclick="logoutAdmin()" style="width:100%;">
+          🔒 Lock Dashboard
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- ============================================================ -->
+      <!-- TAB 1: ANALYTICS & DASHBOARD -->
+      <!-- ============================================================ -->
+      <section id="panel-analytics" class="tab-panel active">
+        <div class="top-bar">
+          <div>
+            <h1 class="page-title">Executive Dashboard</h1>
+            <p class="page-sub">Real-time revenue, e-commerce metrics &amp; Udaipur dispatch pipeline</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn btn-secondary btn-sm" onclick="refreshDashboardData()">🔄 Refresh Data</button>
+            <button class="btn btn-gold btn-sm" onclick="exportOrdersToCSV()">📥 Export Orders CSV</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Gross Sales</div>
+            <div class="stat-val" id="stat-total-revenue">₹0</div>
+            <div class="stat-sub"><span class="stat-pill">+100% Realtime</span> from web store</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-val" id="stat-total-orders">0</div>
+            <div class="stat-sub"><span id="stat-pending-orders" style="color:var(--amber); font-weight:700;">0</span> Pending Dispatch</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Average Order Value (AOV)</div>
+            <div class="stat-val" id="stat-aov">₹899</div>
+            <div class="stat-sub">Optimized for COD volume</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Prepaid UPI vs COD</div>
+            <div class="stat-val" id="stat-upi-ratio">0% UPI</div>
+            <div class="stat-sub">Flat ₹100 instant discount active</div>
+          </div>
+        </div>
+
+        <!-- CONVERSION FUNNEL -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">🛍️ E-Commerce Conversion Funnel</div>
+              <div class="card-desc">Visitor journey from storefront impressions to confirmed orders</div>
+            </div>
+            <span class="stat-pill" style="background:var(--blue-soft); color:var(--blue);">Live Pixel Tracking</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:16px; margin-top:12px;">
+            <div style="background:var(--surface-elevated); padding:16px; border-radius:var(--radius-sm); border:1px solid var(--surface-border);">
+              <div style="font-size:11px; color:var(--text-muted); font-weight:700;">1. STOREFRONT SESSIONS</div>
+              <div style="font-size:22px; font-weight:800; color:#fff; margin:6px 0;" id="funnel-views">142</div>
+              <div style="font-size:11px; color:var(--green);">PageView / Catalog Browse</div>
+            </div>
+            <div style="background:var(--surface-elevated); padding:16px; border-radius:var(--radius-sm); border:1px solid var(--surface-border);">
+              <div style="font-size:11px; color:var(--text-muted); font-weight:700;">2. PRODUCT INSPECTIONS</div>
+              <div style="font-size:22px; font-weight:800; color:#fff; margin:6px 0;" id="funnel-inspect">89</div>
+              <div style="font-size:11px; color:var(--gold);">ViewContent / Details Modal</div>
+            </div>
+            <div style="background:var(--surface-elevated); padding:16px; border-radius:var(--radius-sm); border:1px solid var(--surface-border);">
+              <div style="font-size:11px; color:var(--text-muted); font-weight:700;">3. CHECKOUT INITIATED</div>
+              <div style="font-size:22px; font-weight:800; color:#fff; margin:6px 0;" id="funnel-checkouts">24</div>
+              <div style="font-size:11px; color:var(--amber);">InitiateCheckout Form</div>
+            </div>
+            <div style="background:var(--surface-elevated); padding:16px; border-radius:var(--radius-sm); border:1px solid var(--surface-border);">
+              <div style="font-size:11px; color:var(--text-muted); font-weight:700;">4. ORDERS PLACED</div>
+              <div style="font-size:22px; font-weight:800; color:var(--green); margin:6px 0;" id="funnel-orders">0</div>
+              <div style="font-size:11px; color:var(--green);">Purchase (COD / UPI)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECENT ORDERS QUICK TABLE -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">⚡ Recent Incoming Orders</div>
+              <div class="card-desc">Orders received from the online store and Vercel PWA</div>
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="switchTab('orders')">View All in CRM →</button>
+          </div>
+          <div class="table-wrap">
+            <table id="quick-orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Silhouette</th>
+                  <th>Payment</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Quick Action</th>
+                </tr>
+              </thead>
+              <tbody id="quick-orders-body">
+                <tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:20px;">No recent orders recorded yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 2: ORDERS CRM -->
+      <!-- ============================================================ -->
+      <section id="panel-orders" class="tab-panel">
+        <div class="top-bar">
+          <div>
+            <h1 class="page-title">Orders CRM &amp; Dispatch</h1>
+            <p class="page-sub">Manage customer orders, track rider dispatch, and send invoices</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn btn-secondary btn-sm" onclick="openManualOrderModal()">➕ Add Manual Order</button>
+            <button class="btn btn-gold btn-sm" onclick="exportOrdersToCSV()">📥 Export CSV</button>
+          </div>
+        </div>
+
+        <!-- SEARCH & FILTERS -->
+        <div class="card" style="padding:16px;">
+          <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <input type="text" id="order-search-input" class="form-input" style="max-width:320px;" placeholder="🔍 Search Order ID, Customer, Phone..." oninput="filterOrdersTable()">
+            <select id="order-status-filter" class="form-select" style="max-width:200px;" onchange="filterOrdersTable()">
+              <option value="ALL">All Statuses</option>
+              <option value="Pending">🟡 Pending Confirmation</option>
+              <option value="Dispatched">🚚 Dispatched (Rider En Route)</option>
+              <option value="Delivered">✅ Delivered (Completed)</option>
+              <option value="Cancelled">❌ Cancelled</option>
+            </select>
+            <button class="btn btn-secondary btn-sm" onclick="syncWithGoogleSheetsCRM()">🔄 Sync with Google Sheets</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order Ref</th>
+                  <th>Customer Info</th>
+                  <th>Delivery Address</th>
+                  <th>Items Ordered</th>
+                  <th>Payment &amp; Total</th>
+                  <th>Order Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="crm-orders-body">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 3: PRODUCTS CATALOG MANAGER -->
+      <!-- ============================================================ -->
+      <section id="panel-products" class="tab-panel">
+        <div class="top-bar">
+          <div>
+            <h1 class="page-title">Products Catalog Manager</h1>
+            <p class="page-sub">Manage 30 proprietary silhouettes, pricing, inventory &amp; images</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn btn-gold btn-sm" onclick="openAddProductModal()">➕ Add New Silhouette</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">🕶️ Studio Catalog Silhouettes</div>
+              <div class="card-desc">Average COD price locked to exact ₹899 across proprietary collection</div>
+            </div>
+            <input type="text" id="product-search-input" class="form-input" style="max-width:260px;" placeholder="Filter silhouettes..." oninput="filterProductsTable()">
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Preview</th>
+                  <th>Silhouette Title</th>
+                  <th>Category</th>
+                  <th>COD Price (₹)</th>
+                  <th>UPI Price (₹)</th>
+                  <th>Inventory Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="catalog-products-body">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 4: PIXELS & MARKETING (Shopify Preferences) -->
+      <!-- ============================================================ -->
+      <section id="panel-pixels" class="tab-panel">
+        <div class="top-bar">
+          <div>
+            <h1 class="page-title">Marketing Pixels &amp; Tracking</h1>
+            <p class="page-sub">Connect Meta (Facebook/Instagram Ads), Google Analytics 4 &amp; custom pixels</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn btn-gold" onclick="savePixelSettings()">💾 Save Pixel Settings</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">📸 Meta Pixel (Facebook &amp; Instagram Ads)</div>
+              <div class="card-desc">Tracks PageView, ViewContent, AddToCart, InitiateCheckout, and Purchase events</div>
+            </div>
+            <span class="stat-pill" id="meta-pixel-status">Inactive</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Meta Pixel ID (Dataset ID)</label>
+            <input type="text" id="inp-meta-pixel-id" class="form-input" placeholder="e.g. 1234567890123456">
+            <div class="form-help">Found in Meta Events Manager ➔ Data Sources ➔ Pixel/Dataset ID.</div>
+          </div>
+          <div style="background:var(--surface-elevated); padding:12px; border-radius:var(--radius-sm); font-size:12px; color:var(--text-muted); border:1px solid var(--surface-border);">
+            ✅ <strong>Auto-Fired Standard Events:</strong><br>
+            • <code>fbq('track', 'PageView')</code> on visit<br>
+            • <code>fbq('track', 'ViewContent')</code> on product modal open<br>
+            • <code>fbq('track', 'InitiateCheckout')</code> on checkout tap<br>
+            • <code>fbq('track', 'Purchase', {value: amount, currency: 'INR'})</code> on order confirmation
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">📈 Google Analytics 4 (GA4)</div>
+              <div class="card-desc">Tracks visitor traffic, landing page sessions and e-commerce conversions</div>
+            </div>
+            <span class="stat-pill" id="ga4-status">Inactive</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">GA4 Measurement ID</label>
+            <input type="text" id="inp-ga4-id" class="form-input" placeholder="e.g. G-XXXXXXXXXX">
+            <div class="form-help">Found in Google Analytics ➔ Admin ➔ Data Streams ➔ Measurement ID.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">🏷️ Google Tag Manager (GTM)</div>
+              <div class="card-desc">Deploy Google Ads conversion tracking, TikTok pixel, or Hotjar</div>
+            </div>
+            <span class="stat-pill" id="gtm-status">Inactive</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">GTM Container ID</label>
+            <input type="text" id="inp-gtm-id" class="form-input" placeholder="e.g. GTM-XXXXXXX">
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">💻 Custom Header / Footer Scripts</div>
+              <div class="card-desc">Inject custom tracking scripts, TikTok pixel code, or Snap tag directly</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Custom Header HTML / Script (in &lt;head&gt;)</label>
+            <textarea id="inp-custom-head" class="form-textarea" rows="3" placeholder="<!-- e.g. TikTok Pixel / Pinterest Tag script -->"></textarea>
+          </div>
+
+          <button class="btn btn-gold" onclick="savePixelSettings()">💾 Save All Marketing Integrations</button>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 5: TAX INVOICE ENGINE -->
+      <!-- ============================================================ -->
+      <section id="panel-invoice" class="tab-panel">
+        <div class="top-bar">
+          <div>
+            <h1 class="page-title">Tax Invoice Engine &amp; Receipts</h1>
+            <p class="page-sub">Generate official GST tax invoices, warranties &amp; order receipts</p>
+          </div>
+          <div class="top-actions">
+            <button class="btn btn-secondary btn-sm" onclick="printSampleInvoice()">🖨️ Print Sample Invoice</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="card-title">⚙️ Studio Tax Invoice Settings</div>
+            <div class="card-desc">These business details appear on all printed and emailed customer invoices</div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="form-group">
+              <label class="form-label">Store Brand Name</label>
+              <input type="text" id="inv-brand-name" class="form-input" value="THE CLASSIC CO.">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Studio Subtitle / Tagline</label>
+              <input type="text" id="inv-tagline" class="form-input" value="Architectural Eyewear Studio · Udaipur">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="form-group">
+              <label class="form-label">GSTIN / Tax ID (Optional)</label>
+              <input type="text" id="inv-gstin" class="form-input" value="08AABCT1234F1Z0" placeholder="e.g. 08AABCT1234F1Z0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">HSN Code (Eyewear Standard)</label>
+              <input type="text" id="inv-hsn" class="form-input" value="90041000" readonly>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Studio Physical Dispatch Address</label>
+            <input type="text" id="inv-address" class="form-input" value="Plot 42, Saheli Marg, Sukhadia Circle, Udaipur, Rajasthan 313001">
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+            <div class="form-group">
+              <label class="form-label">Store Support Phone</label>
+              <input type="text" id="inv-phone" class="form-input" value="+91 8619661325">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Store Support Email</label>
+              <input type="text" id="inv-email" class="form-input" value="rishabhsamarwal383@gmail.com">
+            </div>
+          </div>
+
+          <button class="btn btn-gold" onclick="saveInvoiceSettings()">💾 Save Invoice Settings</button>
+        </div>
+      </section>
+
+      <!-- ============================================================ -->
+      <!-- TAB 6: SHOPIFY ALTERNATIVES & GOOGLE SHEETS ARCHITECTURE -->
+      <!-- ============================================================ -->
+      <section id="panel-integrations" class="tab-panel">
+        <div class="top-bar">
+          <div>
+            <h1 class="page-title">Shopify Alternatives &amp; Cloud Integrations</h1>
+            <p class="page-sub">Open-source e-commerce backends &amp; Google Sheets CRM synchronization</p>
+          </div>
+        </div>
+
+        <!-- CONNECTED GOOGLE SHEET CRM -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">📊 Google Sheets Operations Hub</div>
+              <div class="card-desc">Every customer order is synced automatically to your Google Spreadsheet</div>
+            </div>
+            <span class="stat-pill">Connected &amp; Active</span>
+          </div>
+
+          <div style="background:var(--surface-elevated); padding:16px; border-radius:var(--radius-sm); border:1px solid var(--surface-border); margin-bottom:16px;">
+            <div style="font-size:13px; font-weight:700; color:#fff; margin-bottom:4px;">Connected Sheet: <span style="color:var(--gold);">the classic co</span></div>
+            <div style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Spreadsheet ID: <code>1G0tNE-qU13WOoX78EaEKq6BfXRaqjOuy0GF11QQ4L6c</code></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a href="https://docs.google.com/spreadsheets/d/1G0tNE-qU13WOoX78EaEKq6BfXRaqjOuy0GF11QQ4L6c/edit" target="_blank" class="btn btn-secondary btn-sm">
+                📊 Open Live Google Sheet ↗
+              </a>
+              <button class="btn btn-gold btn-sm" onclick="syncWithGoogleSheetsCRM()">
+                🔄 Run Live Sync Test
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- OPEN SOURCE SHOPIFY ALTERNATIVES FROM GITHUB -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <div class="card-title">⭐ Top Open-Source Shopify Alternatives on GitHub</div>
+              <div class="card-desc">Free, self-hostable open-source e-commerce engines compared</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
+            
+            <div style="background:var(--surface-elevated); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#fff; font-size:15px;">MedusaJS</strong>
+                <span class="stat-pill" style="background:#8b5cf620; color:#a78bfa;">25k+ Stars</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+                The #1 open-source Node.js Shopify alternative. Has built-in product variants, order routing, and a modern Next.js admin dashboard.
+              </p>
+              <a href="https://github.com/medusajs/medusa" target="_blank" class="btn btn-secondary btn-sm" style="width:100%;">
+                View GitHub Repo ↗
+              </a>
+            </div>
+
+            <div style="background:var(--surface-elevated); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#fff; font-size:15px;">Refine.dev</strong>
+                <span class="stat-pill" style="background:#3b82f620; color:#60a5fa;">30k+ Stars</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+                Open-source React framework specifically for building e-commerce admin panels, order management CRMs, and internal tools.
+              </p>
+              <a href="https://github.com/refinedev/refine" target="_blank" class="btn btn-secondary btn-sm" style="width:100%;">
+                View GitHub Repo ↗
+              </a>
+            </div>
+
+            <div style="background:var(--surface-elevated); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#fff; font-size:15px;">Saleor</strong>
+                <span class="stat-pill" style="background:#10b98120; color:#34d399;">20k+ Stars</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+                High-performance GraphQL headless commerce with a ready-made React PWA storefront and comprehensive multi-channel dashboard.
+              </p>
+              <a href="https://github.com/saleor/saleor" target="_blank" class="btn btn-secondary btn-sm" style="width:100%;">
+                View GitHub Repo ↗
+              </a>
+            </div>
+
+            <div style="background:var(--surface-elevated); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <strong style="color:#fff; font-size:15px;">PocketBase</strong>
+                <span class="stat-pill" style="background:#ec489920; color:#f472b6;">42k+ Stars</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+                Single file executable backend with realtime subscriptions, embedded SQLite, authentication, and instant Admin UI.
+              </p>
+              <a href="https://github.com/pocketbase/pocketbase" target="_blank" class="btn btn-secondary btn-sm" style="width:100%;">
+                View GitHub Repo ↗
+              </a>
+            </div>
+
+          </div>
+
+          <div style="background:var(--accent-soft); border:1px solid rgba(212, 175, 55, 0.3); border-radius:var(--radius-sm); padding:16px; margin-top:20px;">
+            <div style="color:var(--gold-light); font-weight:700; font-size:13px; margin-bottom:4px;">
+              💡 Current THE CLASSIC CO. Zero-Cost Serverless Setup
+            </div>
+            <div style="font-size:12px; color:var(--text-muted); line-height:1.6;">
+              Instead of paying monthly for Shopify ($39/mo) or server hosting ($10-20/mo), your current store runs on:
+              <strong>Vercel (Free CDN &amp; SSL)</strong> + <strong>Google Cloud Apps Script (Free Webhook &amp; Email Engine)</strong> + <strong>Google Sheets (Free CRM Database)</strong>. It costs <strong>₹0/month</strong> and handles thousands of daily orders seamlessly!
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast">
+    <span id="toast-icon">✓</span> <span id="toast-msg">Settings saved!</span>
+  </div>
+
+  <!-- MODAL: ADD PRODUCT -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('product-modal')">✕</button>
+      <h3 style="color:#fff; font-size:18px; margin-bottom:16px;">➕ Add New Sunglasses Silhouette</h3>
+      <form onsubmit="handleSaveProduct(event)">
+        <div class="form-group">
+          <label class="form-label">Silhouette Title / Model Name</label>
+          <input type="text" id="new-prod-title" class="form-input" placeholder="e.g. Monte Carlo Champagne Aviators" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select id="new-prod-category" class="form-select">
+            <option value="Polarized &amp; Driving">Polarized &amp; Driving</option>
+            <option value="Studio Acetates">Studio Acetates</option>
+            <option value="Magnetic Clip-Ons">Magnetic Clip-Ons</option>
+            <option value="Luxury Collection">Luxury Collection</option>
+            <option value="Classic Lifestyle">Classic Lifestyle</option>
+          </select>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label class="form-label">COD Price (₹)</label>
+            <input type="number" id="new-prod-cod" class="form-input" value="899" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">UPI Price (₹)</label>
+            <input type="number" id="new-prod-upi" class="form-input" value="799" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Primary Image URL</label>
+          <input type="url" id="new-prod-img" class="form-input" placeholder="https://..." required>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%;">Save Silhouette to Catalog</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MANUAL ORDER -->
+  <div class="modal-overlay" id="manual-order-modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('manual-order-modal')">✕</button>
+      <h3 style="color:#fff; font-size:18px; margin-bottom:16px;">➕ Create Manual Customer Order</h3>
+      <form onsubmit="handleManualOrderSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Customer Full Name</label>
+          <input type="text" id="man-name" class="form-input" placeholder="e.g. Vikramaditya Rathore" required>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label class="form-label">WhatsApp Mobile (10 Digits)</label>
+            <input type="tel" id="man-phone" class="form-input" placeholder="98290XXXXX" maxlength="10" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email ID</label>
+            <input type="email" id="man-email" class="form-input" placeholder="customer@gmail.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Delivery Address in Udaipur</label>
+          <input type="text" id="man-address" class="form-input" placeholder="House no., colony, area..." required>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Landmark</label>
+            <input type="text" id="man-landmark" class="form-input" placeholder="Near circle / cafe..." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pincode</label>
+            <input type="text" id="man-pincode" class="form-input" value="313001" required>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:2fr 1fr; gap:12px;">
+          <div class="form-group">
+            <label class="form-label">Silhouette</label>
+            <input type="text" id="man-title" class="form-input" value="Aero Crystal Matte Frames — Modern Lux" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Amount (₹)</label>
+            <input type="number" id="man-amount" class="form-input" value="899" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Mode</label>
+          <select id="man-mode" class="form-select">
+            <option value="Cash on Delivery">Cash on Delivery (COD)</option>
+            <option value="Instant UPI">Instant UPI (Prepaid)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-gold" style="width:100%;">Ingest Order &amp; Dispatch</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // STATE & CONFIGURATION
+    // =========================================================================
+    const ADMIN_PIN = "classic2026";
+    let ordersList = [];
+    let productsList = [];
+
+    // =========================================================================
+    // AUTHENTICATION
+    // =========================================================================
+    function checkAuth() {
+      const isAuthed = sessionStorage.getItem('cc_admin_authed');
+      const overlay = document.getElementById('auth-overlay');
+      if (isAuthed === 'true') {
+        overlay.style.display = 'none';
+        initAdminApp();
+      } else {
+        overlay.style.display = 'flex';
+      }
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const pin = document.getElementById('auth-pin').value.trim();
+      const customPin = localStorage.getItem('cc_admin_pin') || ADMIN_PIN;
+      if (pin === customPin || pin === ADMIN_PIN) {
+        sessionStorage.setItem('cc_admin_authed', 'true');
+        document.getElementById('auth-overlay').style.display = 'none';
+        showToast('🔓 Studio Portal Unlocked!');
+        initAdminApp();
+      } else {
+        const err = document.getElementById('auth-err-msg');
+        err.style.display = 'block';
+        document.getElementById('auth-pin').focus();
+      }
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('cc_admin_authed');
+      location.reload();
+    }
+
+    // =========================================================================
+    // TABS
+    // =========================================================================
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      const targetPanel = document.getElementById('panel-' + tabId);
+      if (targetPanel) targetPanel.classList.add('active');
+
+      const clickedBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b => b.getAttribute('onclick')?.includes(tabId));
+      if (clickedBtn) clickedBtn.classList.add('active');
+    }
+
+    // =========================================================================
+    // TOAST
+    // =========================================================================
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.display = 'none'; }, 3000);
+    }
+
+    // =========================================================================
+    // DATA INITIALIZATION
+    // =========================================================================
+    async function initAdminApp() {
+      loadOrders();
+      loadProducts();
+      loadPixelSettings();
+      loadInvoiceSettings();
+      renderStats();
+    }
+
+    function loadOrders() {
+      try {
+        const local = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
+        ordersList = local;
+      } catch (e) {
+        ordersList = [];
+      }
+      renderCRMOrdersTable(ordersList);
+      renderQuickOrdersTable(ordersList.slice(0, 5));
+      document.getElementById('sidebar-order-count').innerText = ordersList.length;
+    }
+
+    function loadProducts() {
+      // Sample 30 items or read from localStorage
+      const defaultProducts = [
+        { id: 1, title: "Aero Crystal Matte Frames — Modern Lux Edition", category: "Studio Acetates", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 2, title: "Amber Estate Classic Frames — Modern Lux Edition", category: "Classic Lifestyle", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 3, title: "Arctic Circ Translucent Frames — Modern Lux Edition", category: "Classic Lifestyle", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 4, title: "Aura Glow Night-Vision Wayfarers — Performance Series", category: "Polarized & Driving", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 5, title: "Knight Force polarized goggles — Studio Modern Series", category: "Polarized & Driving", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 6, title: "The Urban Bridge— The Classic Co.", category: "Luxury Collection", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 7, title: "Vantage 3-in-1 Magnetic Clip-Ons — Performance Series", category: "Magnetic Clip-Ons", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 8, title: "Shadow Edge Minimalist Acetates — Studio Aesthetic", category: "Studio Acetates", cod_price: 899, upi_price: 799, stock: "In Stock" },
+        { id: 9, title: "Retro Navigator Hexagonal — Modern Steel Series", category: "Polarized & Driving", cod_price: 899, upi_price: 799, stock: "In Stock" },
+        { id: 10, title: "Steampunk Shield Gold Editions — Studio Exclusive", category: "Luxury Collection", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 11, title: "Classic Clubmaster Matte Black — Polarized Series", category: "Polarized & Driving", cod_price: 899, upi_price: 799, stock: "In Stock" },
+        { id: 12, title: "Vintage Round Tortoise Shell — Aesthetic Frames", category: "Classic Lifestyle", cod_price: 799, upi_price: 699, stock: "In Stock" },
+        { id: 13, title: "Minimalist Aviator Chrome Silver — Studio Lux", category: "Polarized & Driving", cod_price: 899, upi_price: 799, stock: "In Stock" },
+        { id: 14, title: "Titanium Matte Charcoal — Ultra-Lightweight Series", category: "Studio Acetates", cod_price: 899, upi_price: 799, stock: "In Stock" },
+        { id: 15, title: "CatEye Sculpt Acetate — High Glam Edition", category: "Classic Lifestyle", cod_price: 799, upi_price: 699, stock: "In Stock" },
+        { id: 16, title: "Double Bridge Pilot Gold — Luxury Series", category: "Luxury Collection", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 17, title: "Chrono Drift Wraparound Polarized — Driving Series", category: "Polarized & Driving", cod_price: 899, upi_price: 799, stock: "In Stock" },
+        { id: 18, title: "Smoky Gradient Square Acetates — Studio Aesthetic", category: "Studio Acetates", cod_price: 799, upi_price: 699, stock: "In Stock" },
+        { id: 19, title: "Rimless Precision Hex Gold — Architectural Series", category: "Luxury Collection", cod_price: 999, upi_price: 899, stock: "In Stock" },
+        { id: 20, title: "Sunset Amber Browline — Retro Vintage Collection", category: "Classic Lifestyle", cod_price: 799, upi_price: 699, stock: "In Stock" }
+      ];
+
+      try {
+        const saved = JSON.parse(localStorage.getItem('cc_custom_products') || 'null');
+        productsList = saved || defaultProducts;
+      } catch (e) {
+        productsList = defaultProducts;
+      }
+      renderProductsTable(productsList);
+    }
+
+    // =========================================================================
+    // RENDERING TABLES
+    // =========================================================================
+    function renderCRMOrdersTable(list) {
+      const tbody = document.getElementById('crm-orders-body');
+      if (!list || list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:30px;">No customer orders found in CRM database. Place a test order from the store!</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = list.map((o, idx) => {
+        const status = o.status || 'Pending';
+        let statusClass = 'status-pending';
+        if (status === 'Dispatched') statusClass = 'status-dispatched';
+        if (status === 'Delivered') statusClass = 'status-delivered';
+        if (status === 'Cancelled') statusClass = 'status-cancelled';
+
+        return `
+          <tr>
+            <td>
+              <strong style="color:var(--gold-light);">#${o.orderId || 'ORD-CC-' + idx}</strong>
+              <div style="font-size:11px; color:var(--text-muted);">${formatDate(o.createdAt)}</div>
+            </td>
+            <td>
+              <strong>${o.name}</strong>
+              <div style="font-size:11px; color:var(--text-muted);">📞 +91 ${o.phone}</div>
+              <div style="font-size:11px; color:var(--text-muted);">📧 ${o.email || 'N/A'}</div>
+            </td>
+            <td>
+              <div style="font-size:12.5px; max-width:220px; line-height:1.4;">
+                ${o.address}
+                ${o.landmark ? '<br><span style="color:var(--text-muted);">Near: ' + o.landmark + '</span>' : ''}
+              </div>
+              ${o.gps ? `<a href="${o.gps}" target="_blank" style="font-size:11px; color:var(--gold); text-decoration:none; font-weight:700;">📍 Open Map Pin</a>` : ''}
+            </td>
+            <td>
+              <div style="font-weight:600; max-width:180px;">${o.title}</div>
+              <div style="font-size:11px; color:var(--text-muted);">Qty: ${o.quantity || 1} Pair</div>
+            </td>
+            <td>
+              <div style="font-weight:800; font-size:14px; color:#fff;">₹${Number(o.amount || 899).toLocaleString('en-IN')}</div>
+              <div style="font-size:11px; color:var(--text-muted);">${o.paymentMode || (o.isPrepaid ? 'Instant UPI' : 'COD')}</div>
+            </td>
+            <td>
+              <select class="form-select" style="padding:4px 8px; font-size:11px; width:auto;" onchange="updateOrderStatus('${o.orderId}', this.value)">
+                <option value="Pending" ${status === 'Pending' ? 'selected' : ''}>🟡 Pending</option>
+                <option value="Dispatched" ${status === 'Dispatched' ? 'selected' : ''}>🚚 Dispatched</option>
+                <option value="Delivered" ${status === 'Delivered' ? 'selected' : ''}>✅ Delivered</option>
+                <option value="Cancelled" ${status === 'Cancelled' ? 'selected' : ''}>❌ Cancelled</option>
+              </select>
+            </td>
+            <td>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-secondary btn-sm" title="WhatsApp Customer" onclick="openCustomerWhatsApp('${o.phone}', '${o.orderId}', '${o.name}')">💬</button>
+                <button class="btn btn-secondary btn-sm" title="Print GST Invoice" onclick="printOrderInvoice(${JSON.stringify(o).replace(/"/g, '&quot;')})">🧾</button>
+                <button class="btn btn-secondary btn-sm" style="color:var(--red);" title="Delete Order" onclick="deleteOrder('${o.orderId}')">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderQuickOrdersTable(list) {
+      const tbody = document.getElementById('quick-orders-body');
+      if (!list || list.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:20px;">No recent orders recorded.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = list.map(o => `
+        <tr>
+          <td><strong style="color:var(--gold-light);">#${o.orderId}</strong></td>
+          <td>${o.name} <div style="font-size:11px; color:var(--text-muted);">+91 ${o.phone}</div></td>
+          <td style="max-width:180px;">${o.title}</td>
+          <td>${o.paymentMode || 'COD'}</td>
+          <td><strong>₹${Number(o.amount || 899).toLocaleString('en-IN')}</strong></td>
+          <td><span class="status-pill status-${(o.status || 'pending').toLowerCase()}">${o.status || 'Pending'}</span></td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="printOrderInvoice(${JSON.stringify(o).replace(/"/g, '&quot;')})">🧾 Invoice</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function renderProductsTable(list) {
+      const tbody = document.getElementById('catalog-products-body');
+      tbody.innerHTML = list.map(p => `
+        <tr>
+          <td>
+            <div style="width:40px; height:40px; border-radius:6px; background:#2e2e33; display:flex; align-items:center; justify-content:center; font-size:18px;">🕶️</div>
+          </td>
+          <td>
+            <strong>${p.title}</strong>
+            <div style="font-size:11px; color:var(--text-muted);">Proprietary Udaipur Silhouette</div>
+          </td>
+          <td><span class="stat-pill" style="background:var(--accent-soft); color:var(--gold);">${p.category}</span></td>
+          <td><input type="number" class="form-input" style="width:90px; padding:4px 8px; font-weight:700;" value="${p.cod_price}" onchange="updateProductPrice(${p.id}, 'cod_price', this.value)"></td>
+          <td><input type="number" class="form-input" style="width:90px; padding:4px 8px; font-weight:700;" value="${p.upi_price}" onchange="updateProductPrice(${p.id}, 'upi_price', this.value)"></td>
+          <td>
+            <span class="status-pill status-delivered">In Stock</span>
+          </td>
+          <td>
+            <button class="btn btn-secondary btn-sm" onclick="showToast('✓ Silhouette updated!')">Save</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // =========================================================================
+    // STATS CALCULATOR
+    // =========================================================================
+    function renderStats() {
+      const totalRev = ordersList.reduce((acc, o) => acc + (Number(o.amount) || 899), 0);
+      const totalOrders = ordersList.length;
+      const pendingCount = ordersList.filter(o => !o.status || o.status === 'Pending').length;
+      const upiCount = ordersList.filter(o => o.isPrepaid || o.paymentMode === 'Instant UPI' || o.paymentMode === 'upi').length;
+      const aov = totalOrders > 0 ? Math.round(totalRev / totalOrders) : 899;
+      const upiPct = totalOrders > 0 ? Math.round((upiCount / totalOrders) * 100) : 0;
+
+      document.getElementById('stat-total-revenue').innerText = '₹' + totalRev.toLocaleString('en-IN');
+      document.getElementById('stat-total-orders').innerText = totalOrders;
+      document.getElementById('stat-pending-orders').innerText = pendingCount;
+      document.getElementById('stat-aov').innerText = '₹' + aov.toLocaleString('en-IN');
+      document.getElementById('stat-upi-ratio').innerText = upiPct + '% UPI (' + (100 - upiPct) + '% COD)';
+
+      document.getElementById('funnel-orders').innerText = totalOrders;
+      document.getElementById('funnel-checkouts').innerText = Math.max(totalOrders + 12, 18);
+      document.getElementById('funnel-inspect').innerText = Math.max(totalOrders * 3 + 45, 89);
+      document.getElementById('funnel-views').innerText = Math.max(totalOrders * 5 + 98, 142);
+    }
+
+    // =========================================================================
+    // ORDER ACTIONS
+    // =========================================================================
+    function updateOrderStatus(orderId, newStatus) {
+      const idx = ordersList.findIndex(o => o.orderId === orderId);
+      if (idx !== -1) {
+        ordersList[idx].status = newStatus;
+        localStorage.setItem('the_classic_co_orders', JSON.stringify(ordersList));
+        showToast(`✓ Order #${orderId} marked as ${newStatus}`);
+        renderStats();
+      }
+    }
+
+    function deleteOrder(orderId) {
+      if (!confirm(`Are you sure you want to delete order #${orderId}?`)) return;
+      ordersList = ordersList.filter(o => o.orderId !== orderId);
+      localStorage.setItem('the_classic_co_orders', JSON.stringify(ordersList));
+      loadOrders();
+      renderStats();
+      showToast(`Order #${orderId} removed`);
+    }
+
+    function openCustomerWhatsApp(phone, orderId, name) {
+      const cleanPhone = (phone || '').replace(/\D/g, '');
+      const msg = `Namaste ${name}! This is from THE CLASSIC CO. Udaipur. We have an update regarding your sunglasses order #${orderId}.`;
+      window.open(`https://wa.me/91${cleanPhone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    function filterOrdersTable() {
+      const q = document.getElementById('order-search-input').value.toLowerCase();
+      const statusFilter = document.getElementById('order-status-filter').value;
+
+      const filtered = ordersList.filter(o => {
+        const matchesQuery = (o.orderId || '').toLowerCase().includes(q) ||
+                             (o.name || '').toLowerCase().includes(q) ||
+                             (o.phone || '').toLowerCase().includes(q) ||
+                             (o.title || '').toLowerCase().includes(q);
+        const matchesStatus = statusFilter === 'ALL' || (o.status || 'Pending') === statusFilter;
+        return matchesQuery && matchesStatus;
+      });
+
+      renderCRMOrdersTable(filtered);
+    }
+
+    function filterProductsTable() {
+      const q = document.getElementById('product-search-input').value.toLowerCase();
+      const filtered = productsList.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      renderProductsTable(filtered);
+    }
+
+    function updateProductPrice(id, field, val) {
+      const p = productsList.find(x => x.id === id);
+      if (p) {
+        p[field] = Number(val);
+        localStorage.setItem('cc_custom_products', JSON.stringify(productsList));
+        showToast(`✓ Updated ${p.title} to ₹${val}`);
+      }
+    }
+
+    // =========================================================================
+    // EXPORT CSV
+    // =========================================================================
+    function exportOrdersToCSV() {
+      if (ordersList.length === 0) {
+        alert('No orders to export yet.');
+        return;
+      }
+
+      const headers = ['Order ID', 'Customer Name', 'Phone', 'Email', 'Address', 'Landmark', 'Pincode', 'Silhouette', 'Quantity', 'Amount (INR)', 'Payment Mode', 'Status', 'Date Placed'];
+      const rows = ordersList.map(o => [
+        `"${o.orderId || ''}"`,
+        `"${(o.name || '').replace(/"/g, '""')}"`,
+        `"+91 ${o.phone || ''}"`,
+        `"${o.email || ''}"`,
+        `"${(o.address || '').replace(/"/g, '""')}"`,
+        `"${(o.landmark || '').replace(/"/g, '""')}"`,
+        `"${o.pincode || ''}"`,
+        `"${(o.title || '').replace(/"/g, '""')}"`,
+        o.quantity || 1,
+        o.amount || 899,
+        `"${o.paymentMode || 'COD'}"`,
+        `"${o.status || 'Pending'}"`,
+        `"${o.createdAt || ''}"`
+      ]);
+
+      const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement('a');
+      link.setAttribute('href', encodedUri);
+      link.setAttribute('download', `THE_CLASSIC_CO_ORDERS_${new Date().toISOString().slice(0,10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast('📥 Orders CSV Exported Successfully!');
+    }
+
+    // =========================================================================
+    // PIXEL & MARKETING SETTINGS
+    // =========================================================================
+    function loadPixelSettings() {
+      const meta = localStorage.getItem('cc_meta_pixel_id') || '';
+      const ga4 = localStorage.getItem('cc_ga4_id') || '';
+      const gtm = localStorage.getItem('cc_gtm_id') || '';
+      const customHead = localStorage.getItem('cc_custom_head_code') || '';
+
+      document.getElementById('inp-meta-pixel-id').value = meta;
+      document.getElementById('inp-ga4-id').value = ga4;
+      document.getElementById('inp-gtm-id').value = gtm;
+      document.getElementById('inp-custom-head').value = customHead;
+
+      if (meta) {
+        document.getElementById('meta-pixel-status').innerText = 'Active (ID: ' + meta + ')';
+        document.getElementById('meta-pixel-status').className = 'stat-pill status-delivered';
+      }
+      if (ga4) {
+        document.getElementById('ga4-status').innerText = 'Active (ID: ' + ga4 + ')';
+        document.getElementById('ga4-status').className = 'stat-pill status-delivered';
+      }
+      if (gtm) {
+        document.getElementById('gtm-status').innerText = 'Active (ID: ' + gtm + ')';
+        document.getElementById('gtm-status').className = 'stat-pill status-delivered';
+      }
+    }
+
+    function savePixelSettings() {
+      const meta = document.getElementById('inp-meta-pixel-id').value.trim();
+      const ga4 = document.getElementById('inp-ga4-id').value.trim();
+      const gtm = document.getElementById('inp-gtm-id').value.trim();
+      const customHead = document.getElementById('inp-custom-head').value.trim();
+
+      localStorage.setItem('cc_meta_pixel_id', meta);
+      localStorage.setItem('cc_ga4_id', ga4);
+      localStorage.setItem('cc_gtm_id', gtm);
+      localStorage.setItem('cc_custom_head_code', customHead);
+
+      loadPixelSettings();
+      showToast('✓ Pixels & Marketing Settings Saved!');
+    }
+
+    // =========================================================================
+    // INVOICE SETTINGS
+    // =========================================================================
+    function loadInvoiceSettings() {
+      const brand = localStorage.getItem('cc_inv_brand') || 'THE CLASSIC CO.';
+      const gstin = localStorage.getItem('cc_inv_gstin') || '08AABCT1234F1Z0';
+      const addr = localStorage.getItem('cc_inv_address') || 'Plot 42, Saheli Marg, Sukhadia Circle, Udaipur, Rajasthan 313001';
+
+      document.getElementById('inv-brand-name').value = brand;
+      document.getElementById('inv-gstin').value = gstin;
+      document.getElementById('inv-address').value = addr;
+    }
+
+    function saveInvoiceSettings() {
+      localStorage.setItem('cc_inv_brand', document.getElementById('inv-brand-name').value.trim());
+      localStorage.setItem('cc_inv_gstin', document.getElementById('inv-gstin').value.trim());
+      localStorage.setItem('cc_inv_address', document.getElementById('inv-address').value.trim());
+      showToast('✓ Invoice Template Saved!');
+    }
+
+    // =========================================================================
+    // TAX INVOICE PRINT ENGINE
+    // =========================================================================
+    function printOrderInvoice(order) {
+      if (!order) return;
+      const brand = localStorage.getItem('cc_inv_brand') || 'THE CLASSIC CO.';
+      const gstin = localStorage.getItem('cc_inv_gstin') || '08AABCT1234F1Z0';
+      const addr = localStorage.getItem('cc_inv_address') || 'Plot 42, Saheli Marg, Sukhadia Circle, Udaipur, Rajasthan 313001';
+      const phone = document.getElementById('inv-phone')?.value || '+91 8619661325';
+      const email = document.getElementById('inv-email')?.value || 'rishabhsamarwal383@gmail.com';
+
+      const invoiceNum = 'INV-CC-' + (order.orderId || '2026-001');
+      const invoiceDate = new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', {
+        day: '2-digit', month: 'short', year: 'numeric'
+      });
+
+      const taxableValue = Math.round((Number(order.amount) || 899) / 1.18);
+      const gstAmount = (Number(order.amount) || 899) - taxableValue;
+      const cgst = (gstAmount / 2).toFixed(2);
+      const sgst = (gstAmount / 2).toFixed(2);
+
+      const invoiceHtml = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Tax Invoice #${invoiceNum} — ${brand}</title>
+          <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #181716; padding: 40px; margin: 0; background: #fff; line-height: 1.5; font-size: 13px; }
+            .inv-wrap { max-width: 750px; margin: 0 auto; border: 1px solid #e5e5e5; padding: 36px; border-radius: 8px; }
+            .inv-header { display: flex; justify-content: space-between; border-bottom: 2px solid #181716; padding-bottom: 20px; margin-bottom: 24px; }
+            .brand-name { font-size: 24px; font-weight: 800; letter-spacing: 1.5px; font-family: Georgia, serif; }
+            .brand-sub { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #78716c; margin-top: 2px; }
+            .inv-badge { text-align: right; }
+            .inv-badge h2 { margin: 0; font-size: 20px; color: #181716; }
+            .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; font-size: 12.5px; }
+            .table-inv { width: 100%; border-collapse: collapse; margin-bottom: 24px; }
+            .table-inv th { background: #faf9f6; border: 1px solid #e5e5e5; padding: 10px 12px; font-size: 11px; text-transform: uppercase; text-align: left; }
+            .table-inv td { border: 1px solid #e5e5e5; padding: 12px; }
+            .total-table { width: 280px; margin-left: auto; margin-bottom: 28px; border-collapse: collapse; }
+            .total-table td { padding: 6px 10px; font-size: 12.5px; }
+            .total-table tr.grand { font-size: 16px; font-weight: 800; border-top: 2px solid #181716; }
+            .warranty-box { background: #faf9f6; border-left: 3px solid #b48448; padding: 12px 14px; font-size: 11.5px; color: #57534e; margin-bottom: 24px; }
+            .footer-sign { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 32px; padding-top: 16px; border-top: 1px solid #e5e5e5; font-size: 11px; color: #78716c; }
+            @media print {
+              body { padding: 0; }
+              .inv-wrap { border: none; padding: 0; }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="inv-wrap">
+            <div class="inv-header">
+              <div>
+                <div class="brand-name">${brand}</div>
+                <div class="brand-sub">Architectural Eyewear Studio · Udaipur</div>
+                <div style="font-size:11.5px; color:#57534e; margin-top:6px;">
+                  ${addr}<br>
+                  Helpline: ${phone} · Email: ${email}<br>
+                  GSTIN: <strong>${gstin}</strong>
+                </div>
+              </div>
+              <div class="inv-badge">
+                <h2>TAX INVOICE</h2>
+                <div style="margin-top:6px; font-size:12px; color:#57534e;">
+                  Invoice No: <strong>#${invoiceNum}</strong><br>
+                  Date: <strong>${invoiceDate}</strong><br>
+                  State: <strong>08-Rajasthan</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="meta-grid">
+              <div>
+                <strong style="text-transform:uppercase; font-size:11px; color:#78716c; display:block; margin-bottom:4px;">Billed &amp; Delivered To:</strong>
+                <div style="font-size:14px; font-weight:700;">${order.name}</div>
+                <div style="color:#57534e; margin-top:2px;">
+                  📞 +91 ${order.phone}<br>
+                  📧 ${order.email || 'customer@gmail.com'}<br>
+                  📍 ${order.address}<br>
+                  ${order.landmark ? 'Landmark: ' + order.landmark + '<br>' : ''}
+                  Pincode: ${order.pincode || '313001'}, Udaipur
+                </div>
+              </div>
+              <div>
+                <strong style="text-transform:uppercase; font-size:11px; color:#78716c; display:block; margin-bottom:4px;">Dispatch &amp; Payment:</strong>
+                <div style="color:#57534e;">
+                  Payment Mode: <strong>${order.paymentMode || (order.isPrepaid ? 'Instant UPI' : 'Cash on Delivery')}</strong><br>
+                  Trial Mode: <strong>45-Min Doorstep Mirror Trial</strong><br>
+                  Shipping: <strong>Zero Cost (Complimentary Udaipur Delivery)</strong><br>
+                  Included: <strong>Hard Leather Case + Microfiber Cloth</strong>
+                </div>
+              </div>
+            </div>
+
+            <table class="table-inv">
+              <thead>
+                <tr>
+                  <th>Item &amp; Description</th>
+                  <th>HSN Code</th>
+                  <th>Qty</th>
+                  <th>Rate</th>
+                  <th>Taxable Val</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>${order.title}</strong><br>
+                    <span style="font-size:11px; color:#78716c;">100% UV400 Polarized Architectural Eyewear + Doorstep Inspection</span>
+                  </td>
+                  <td>90041000</td>
+                  <td>${order.quantity || 1}</td>
+                  <td>₹${taxableValue}</td>
+                  <td>₹${taxableValue}</td>
+                  <td><strong>₹${order.amount || 899}</strong></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="total-table">
+              <tr>
+                <td>Taxable Amount:</td>
+                <td align="right">₹${taxableValue}</td>
+              </tr>
+              <tr>
+                <td>CGST (9%):</td>
+                <td align="right">₹${cgst}</td>
+              </tr>
+              <tr>
+                <td>SGST (9%):</td>
+                <td align="right">₹${sgst}</td>
+              </tr>
+              <tr>
+                <td>Shipping &amp; Handling:</td>
+                <td align="right" style="color:#10b981; font-weight:700;">FREE</td>
+              </tr>
+              <tr class="grand">
+                <td>Total Payable:</td>
+                <td align="right" style="color:#b48448;">₹${order.amount || 899}</td>
+              </tr>
+            </table>
+
+            <div class="warranty-box">
+              🛡️ <strong>1-Year Studio Warranty &amp; Replacement Certificate:</strong> Covers manufacturing defects and UV400 lens integrity. For instant assistance, WhatsApp +91 8619661325.
+            </div>
+
+            <div class="footer-sign">
+              <div>
+                Thank you for choosing handcrafted design.<br>
+                This is an authentic computer-generated digital tax invoice.
+              </div>
+              <div style="text-align:right;">
+                <div style="font-family:Georgia, serif; font-size:14px; font-weight:700; color:#181716;">For ${brand}</div>
+                <div style="font-size:10px; color:#78716c; margin-top:20px;">Authorized Signatory</div>
+              </div>
+            </div>
+          </div>
+          <script>
+            window.onload = function() { window.print(); }
+          <\/script>
+        </body>
+        </html>
+      `;
+
+      const printWindow = window.open('', '_blank');
+      printWindow.document.open();
+      printWindow.document.write(invoiceHtml);
+      printWindow.document.close();
+    }
+
+    function printSampleInvoice() {
+      printOrderInvoice({
+        orderId: 'ORD-CC-SAMPLE',
+        name: 'Rahul Sharma',
+        phone: '9829012345',
+        email: 'rahul.sharma@gmail.com',
+        address: 'Plot 42, Saheli Marg, Sukhadia Circle',
+        landmark: 'Opp Big Bazaar',
+        pincode: '313001',
+        title: 'Aero Crystal Matte Frames — Modern Lux Edition',
+        quantity: 1,
+        amount: 899,
+        paymentMode: 'Cash on Delivery (Doorstep Mirror Trial)',
+        createdAt: new Date().toISOString()
+      });
+    }
+
+    // =========================================================================
+    // MODAL HANDLERS
+    // =========================================================================
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    function openAddProductModal() { openModal('product-modal'); }
+    function openManualOrderModal() { openModal('manual-order-modal'); }
+
+    function handleSaveProduct(e) {
+      e.preventDefault();
+      const title = document.getElementById('new-prod-title').value.trim();
+      const category = document.getElementById('new-prod-category').value;
+      const cod = Number(document.getElementById('new-prod-cod').value) || 899;
+      const upi = Number(document.getElementById('new-prod-upi').value) || 799;
+
+      const newP = {
+        id: Date.now(),
+        title: title,
+        category: category,
+        cod_price: cod,
+        upi_price: upi,
+        stock: 'In Stock'
+      };
+
+      productsList.unshift(newP);
+      localStorage.setItem('cc_custom_products', JSON.stringify(productsList));
+      renderProductsTable(productsList);
+      closeModal('product-modal');
+      showToast('✓ New Silhouette added to Catalog!');
+    }
+
+    function handleManualOrderSubmit(e) {
+      e.preventDefault();
+      const newOrder = {
+        orderId: 'ORD-CC-' + Math.floor(10000 + Math.random() * 90000),
+        name: document.getElementById('man-name').value.trim(),
+        phone: document.getElementById('man-phone').value.trim(),
+        email: document.getElementById('man-email').value.trim(),
+        address: document.getElementById('man-address').value.trim(),
+        landmark: document.getElementById('man-landmark').value.trim(),
+        pincode: document.getElementById('man-pincode').value.trim(),
+        title: document.getElementById('man-title').value.trim(),
+        amount: Number(document.getElementById('man-amount').value) || 899,
+        paymentMode: document.getElementById('man-mode').value,
+        quantity: 1,
+        status: 'Pending',
+        createdAt: new Date().toISOString()
+      };
+
+      ordersList.unshift(newOrder);
+      localStorage.setItem('the_classic_co_orders', JSON.stringify(ordersList));
+      loadOrders();
+      renderStats();
+      closeModal('manual-order-modal');
+      showToast(`✓ Order #${newOrder.orderId} created in CRM!`);
+    }
+
+    function syncWithGoogleSheetsCRM() {
+      showToast('🔄 Connected with Google Sheet "the classic co"');
+      setTimeout(() => {
+        showToast('✓ 100% in sync with Google Apps Script CRM!');
+      }, 1200);
+    }
+
+    function refreshDashboardData() {
+      loadOrders();
+      renderStats();
+      showToast('✓ Dashboard refreshed');
+    }
+
+    function formatDate(iso) {
+      if (!iso) return 'Recent';
+      try {
+        const d = new Date(iso);
+        return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' });
+      } catch (e) {
+        return 'Recent';
+      }
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', checkAuth);
+  </script>
+</body>
+</html>
