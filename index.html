@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>THE CLASSIC CO. · Architectural Eyewear Studio · Udaipur</title>
+  <title>THE CLASSIC CO. — Contemporary Eyewear Studio</title>
   
-  <!-- PWA Web App Manifest & Mobile App Capabilities -->
+  <!-- PWA & Mobile Capabilities -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#181716">
+  <meta name="theme-color" content="#161514">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,14 +17,14 @@
   <link rel="icon" type="image/png" sizes="48x48" href="favicon.png">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
 
-  <!-- High Performance Preconnect to Image & Font CDNs -->
+  <!-- CDNs & Fonts -->
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.shopify.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <!-- Dynamic Marketing Pixels & Tracking Loader (Configured via /admin) -->
   <script>
     (function initMarketingPixels() {
@@ -84,1443 +84,1007 @@
 
   <style>
     :root {
-      --bg: #faf9f6;
+      --bg: #ffffff;
+      --bg-warm: #faf9f6;
       --surface: #ffffff;
-      --surface-warm: #f5f2eb;
-      --surface-hover: #ece7dc;
-      --border: #e6e0d2;
-      --border-light: #efebe2;
-      --text: #181716;
-      --text-muted: #736e65;
+      --surface-border: #e8e6e1;
+      --surface-border-subtle: #f0eee9;
+      --text: #161514;
+      --text-muted: #6e6b66;
+      --text-light: #99958f;
       --accent: #b48448;
       --accent-dark: #8c622a;
-      --accent-light: #fef7ed;
-      --wa-green: #25d366;
-      --wa-dark: #128c7e;
-      --green-badge: #065f46;
-      --green-bg: #ecfdf5;
-      --shadow-sm: 0 2px 8px rgba(24, 23, 22, 0.04);
-      --shadow-md: 0 8px 24px rgba(24, 23, 22, 0.08);
-      --shadow-lg: 0 20px 48px rgba(24, 23, 22, 0.16);
+      --green: #059669;
+      --green-light: #ecfdf5;
+      --radius: 10px;
       --radius-sm: 6px;
-      --radius-md: 10px;
-      --radius-lg: 16px;
+      --radius-pill: 999px;
+      --shadow-sm: 0 2px 8px rgba(22, 21, 20, 0.04);
+      --shadow-md: 0 8px 24px rgba(22, 21, 20, 0.08);
+      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      width: 100%;
-      overflow-x: hidden;
-    }
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      background: var(--bg);
       color: var(--text);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+      overflow-x: hidden;
     }
 
-    /* Top Announcement Bar */
+    /* TOP ANNOUNCEMENT BAR */
     .announcement-bar {
-      background: #181716;
+      background: #161514;
       color: #faf9f6;
       font-size: 11.5px;
-      letter-spacing: 0.3px;
-      padding: 9px 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 9px 16px;
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
-      font-weight: 500;
-      flex-wrap: wrap;
-    }
-    .announcement-bar .badge-glow {
-      background: var(--accent);
-      color: #ffffff;
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 999px;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
+      gap: 12px;
     }
 
-    /* Header */
+    /* HEADER */
     header {
       position: sticky;
       top: 0;
-      background: rgba(250, 249, 246, 0.96);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      z-index: 50;
-      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--surface-border);
+      z-index: 100;
+      padding: 14px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.2s ease;
     }
-    .brand-group {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      text-decoration: none;
-      color: inherit;
-      min-width: 0;
-    }
-    .brand-title {
+    .brand-logo {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 20px;
+      font-size: 21px;
       font-weight: 700;
       letter-spacing: 1.5px;
-      color: #181716;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-    .brand-city {
-      font-size: 10px;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-weight: 600;
-      border-left: 1px solid var(--border);
-      padding-left: 8px;
-      white-space: nowrap;
-    }
-    .nav-menu {
-      display: flex;
-      gap: 20px;
-      list-style: none;
-    }
-    .nav-menu a {
+      color: #161514;
       text-decoration: none;
-      color: #3d3934;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
       font-size: 13.5px;
       font-weight: 600;
-      transition: color 0.2s;
+      transition: var(--transition);
     }
-    .nav-menu a:hover { color: var(--accent); }
-    
-    .header-actions {
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .header-tools {
       display: flex;
-      gap: 8px;
       align-items: center;
-      flex-shrink: 0;
+      gap: 12px;
     }
-    .btn-track-header {
-      background: var(--surface-warm);
-      color: #181716;
-      border: 1px solid var(--border);
+    .icon-btn {
+      background: transparent;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
       padding: 7px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      min-height: 36px;
+      gap: 6px;
+      transition: var(--transition);
     }
-    .btn-wa-header {
-      background: #181716;
-      color: #ffffff;
-      padding: 7px 13px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      min-height: 36px;
+    .icon-btn:hover { background: var(--bg-warm); }
+    .cart-pill {
+      background: var(--accent);
+      color: #fff;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 10px;
     }
 
-    /* Hero */
-    .hero {
-      background: linear-gradient(180deg, var(--surface-warm) 0%, var(--bg) 100%);
-      padding: 32px 16px 24px;
+    /* HERO BANNER (SHOPIFY DTC MINIMAL STYLE) */
+    .hero-banner {
+      background: var(--bg-warm);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 56px 20px 48px;
       text-align: center;
-      border-bottom: 1px solid var(--border-light);
     }
     .hero-eyebrow {
       font-size: 11px;
       font-weight: 800;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       text-transform: uppercase;
-      color: var(--accent-dark);
-      margin-bottom: 8px;
+      color: var(--accent);
+      margin-bottom: 10px;
     }
-    .hero-heading {
+    .hero-title {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 32px;
-      font-weight: 600;
-      color: #181716;
-      max-width: 820px;
-      margin: 0 auto 10px;
-      line-height: 1.25;
+      font-size: 38px;
+      font-weight: 700;
+      color: #161514;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      max-width: 720px;
+      margin: 0 auto 14px;
     }
-    .hero-sub {
-      font-size: 14px;
+    .hero-desc {
+      font-size: 14.5px;
       color: var(--text-muted);
-      max-width: 620px;
-      margin: 0 auto 16px;
-      line-height: 1.5;
+      max-width: 600px;
+      margin: 0 auto 24px;
+      line-height: 1.6;
     }
-    .trust-chips {
+    .hero-actions {
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 12px;
       flex-wrap: wrap;
+      margin-bottom: 32px;
     }
-    .trust-chip {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-size: 11.5px;
+    .btn-hero {
+      padding: 12px 28px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
       font-weight: 700;
-      color: #38342f;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      padding: 6px 12px;
-      border-radius: 999px;
-      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
+    .btn-hero-primary {
+      background: #161514;
+      color: #ffffff;
+      border: 1px solid #161514;
+    }
+    .btn-hero-primary:hover { background: #2b2826; }
+    .btn-hero-secondary {
+      background: #ffffff;
+      color: #161514;
+      border: 1px solid var(--surface-border);
+    }
+    .btn-hero-secondary:hover { background: var(--surface-border-subtle); }
 
-    /* Filter & Search Bar - Mobile Horizontal Scrolling */
-    .filter-wrapper {
-      max-width: 1240px;
-      margin: 20px auto 14px;
-      padding: 0 16px;
+    /* TRUST BAR */
+    .trust-bar {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .trust-bar span { display: inline-flex; align-items: center; gap: 6px; }
+
+    /* COLLECTION CONTROLS */
+    .catalog-section {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+    .filter-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 24px;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
     }
-    .category-pills {
+    .pill-tabs {
       display: flex;
       gap: 8px;
       overflow-x: auto;
+      padding-bottom: 4px;
       -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 2px;
-      max-width: 100%;
     }
-    .category-pills::-webkit-scrollbar { display: none; }
-    .cat-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: #403c37;
-      padding: 7px 14px;
-      border-radius: 999px;
+    .pill-tabs::-webkit-scrollbar { display: none; }
+    .pill-tab {
+      background: transparent;
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
       font-size: 12.5px;
       font-weight: 600;
       cursor: pointer;
       white-space: nowrap;
-      flex-shrink: 0;
-      min-height: 36px;
+      transition: var(--transition);
     }
-    .cat-btn.active, .cat-btn:hover {
-      background: #181716;
-      border-color: #181716;
+    .pill-tab:hover { border-color: var(--text); color: var(--text); }
+    .pill-tab.active {
+      background: #161514;
       color: #ffffff;
+      border-color: #161514;
     }
-    .search-filter-box {
+
+    .filter-tools {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      width: 100%;
-      max-width: 480px;
     }
-    .search-input-wrap {
+    .search-box {
       position: relative;
       display: flex;
       align-items: center;
-      flex: 1;
-      min-width: 180px;
     }
     .search-input {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 8px 32px 8px 14px;
-      border-radius: 999px;
-      font-size: 13.5px;
+      padding: 8px 14px 8px 32px;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
       outline: none;
-      width: 100%;
-      color: #181716;
-      min-height: 38px;
+      width: 200px;
+      transition: var(--transition);
     }
-    .btn-clear-search {
+    .search-input:focus { width: 240px; border-color: #161514; }
+    .search-icon {
       position: absolute;
-      right: 10px;
-      background: none;
-      border: none;
-      color: #a8a29e;
-      cursor: pointer;
-      font-size: 14px;
-      display: none;
-      padding: 4px;
-    }
-    .sort-select {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      border-radius: 999px;
+      left: 10px;
       font-size: 12px;
+      color: var(--text-light);
+      pointer-events: none;
+    }
+    .sort-dropdown {
+      padding: 8px 12px;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      font-size: 12.5px;
       font-weight: 600;
-      color: #38342f;
+      color: var(--text);
+      background: #fff;
       outline: none;
       cursor: pointer;
-      min-height: 38px;
     }
-    .catalog-status-bar {
-      max-width: 1240px;
-      margin: 0 auto 12px;
-      padding: 0 16px;
+
+    .count-status {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 20px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-muted);
     }
 
-    /* Catalog Grid - Mobile 2-Column Responsive Layout */
-    .catalog-wrapper {
-      max-width: 1240px;
-      margin: 0 auto 50px;
-      padding: 0 16px;
-    }
-    .grid {
+    /* PRODUCT GRID */
+    .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 20px;
     }
-
-    /* Mobile Responsive Card Layout */
-    @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-      }
-      .catalog-wrapper { padding: 0 10px; }
-      .filter-wrapper { padding: 0 10px; }
-      .catalog-status-bar { padding: 0 10px; }
-      .hero { padding: 24px 12px 18px; }
-      .hero-heading { font-size: 25px; }
-      .hero-sub { font-size: 13px; margin-bottom: 12px; }
-      .brand-city { display: none; }
-      .nav-menu { display: none; }
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    }
+    @media (max-width: 680px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .hero-title { font-size: 28px; }
+      .nav-links { display: none; }
+      header { padding: 12px 16px; }
+      .announcement-bar { font-size: 10.5px; padding: 7px 10px; }
+      .catalog-section { padding: 24px 12px 50px; }
     }
 
-    /* Luxury Product Card */
-    .prod-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
+    /* PRODUCT CARD */
+    .product-card {
+      background: #ffffff;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: var(--transition);
       position: relative;
-      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .prod-media {
+    .product-card:hover {
+      border-color: #161514;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .media-wrap {
       position: relative;
       width: 100%;
-      height: 260px;
-      background: #f7f4ed;
+      aspect-ratio: 1 / 1;
+      background: #f5f4f0;
       overflow: hidden;
       cursor: pointer;
     }
-    @media (max-width: 600px) {
-      .prod-media {
-        height: 175px;
-      }
-    }
-    .prod-media img {
+    .media-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.4s ease;
     }
-    .tag-badge {
+    .product-card:hover .media-img { transform: scale(1.04); }
+    .badge-card {
       position: absolute;
-      top: 8px;
-      left: 8px;
-      background: rgba(24, 23, 22, 0.9);
-      color: #ffffff;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      padding: 3px 7px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      z-index: 2;
-    }
-    .tag-bestseller { background: var(--accent); }
-    .tag-magnetic { background: #0f766e; }
-
-    .card-img-dots {
-      position: absolute;
-      bottom: 6px;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      gap: 4px;
-      z-index: 3;
-    }
-    .card-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.7);
-      cursor: pointer;
-    }
-    .card-dot.active {
+      top: 10px;
+      left: 10px;
       background: #ffffff;
-      width: 12px;
-      border-radius: 3px;
+      color: #161514;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border: 1px solid var(--surface-border);
+      box-shadow: var(--shadow-sm);
     }
 
-    .prod-info {
-      padding: 12px;
+    .card-body {
+      padding: 14px 14px 16px;
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
-      justify-content: space-between;
-      gap: 8px;
+      flex: 1;
     }
-    @media (max-width: 600px) {
-      .prod-info { padding: 9px; gap: 6px; }
-    }
-    .cat-title-stack { display: flex; flex-direction: column; gap: 2px; }
-    .prod-cat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .prod-cat {
-      font-size: 9.5px;
+    .card-cat {
+      font-size: 10.5px;
+      color: var(--text-light);
       text-transform: uppercase;
-      font-weight: 800;
-      color: var(--accent-dark);
       letter-spacing: 0.8px;
-    }
-    .prod-rating-badge {
-      font-size: 10px;
       font-weight: 700;
-      color: #d97706;
+      margin-bottom: 4px;
     }
-    .prod-title {
+    .card-title {
       font-size: 13.5px;
-      font-weight: 600;
-      color: #181716;
-      line-height: 1.3;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 6px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      min-height: 35px;
+      cursor: pointer;
     }
-    @media (max-width: 600px) {
-      .prod-title { font-size: 12px; min-height: 32px; }
-    }
-
-    .price-box {
-      background: var(--surface-warm);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-sm);
-      padding: 8px 10px;
+    .card-rating {
+      font-size: 11px;
+      color: #eab308;
+      margin-bottom: 8px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 4px;
     }
-    @media (max-width: 600px) {
-      .price-box { padding: 6px 8px; }
-    }
-    .price-headline {
+    .card-rating span { color: var(--text-light); font-size: 10.5px; }
+
+    .price-row {
       display: flex;
-      justify-content: space-between;
       align-items: baseline;
-      flex-wrap: wrap;
-      gap: 4px;
+      gap: 8px;
+      margin-top: auto;
+      margin-bottom: 12px;
     }
-    .price-actual {
-      font-size: 18px;
+    .price-current {
+      font-size: 16px;
       font-weight: 800;
-      color: #181716;
+      color: #161514;
     }
-    @media (max-width: 600px) {
-      .price-actual { font-size: 16px; }
+    .price-original {
+      font-size: 12px;
+      color: var(--text-light);
+      text-decoration: line-through;
     }
-    .price-tag-cod {
-      font-size: 9px;
-      font-weight: 800;
-      background: #ecfdf5;
-      color: #065f46;
-      border: 1px solid #a7f3d0;
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
-    .discount-pill {
-      font-size: 9.5px;
-      font-weight: 800;
-      background: #ffffff;
-      color: var(--accent-dark);
-      border: 1px solid #ddd5c3;
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
-    .perk-strip {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .price-save {
       font-size: 10px;
-      padding-top: 4px;
-      border-top: 1px dashed #ded7c7;
-      color: #555048;
+      font-weight: 800;
+      color: var(--green);
+      background: var(--green-light);
+      padding: 1px 6px;
+      border-radius: 4px;
     }
 
-    .card-btns {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
-    }
-    .btn-order-now {
-      background: #181716;
+    .btn-buy-cod {
+      width: 100%;
+      padding: 10px;
+      background: #161514;
       color: #ffffff;
       border: none;
-      padding: 10px 8px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 4px;
-      width: 100%;
-      min-height: 40px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .btn-quick {
-      background: var(--surface-warm);
-      color: #181716;
-      border: 1px solid var(--border);
-      padding: 7px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      min-height: 34px;
-    }
-
-    /* Modal Backdrop & Mobile Bottom Sheet */
-    .modal-backdrop, .order-modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 12, 10, 0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      z-index: 200;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      padding: 0;
-    }
-    @media (min-width: 600px) {
-      .modal-backdrop, .order-modal-backdrop {
-        align-items: center;
-        padding: 16px;
-      }
-    }
-    .order-modal-backdrop.active { display: flex; }
-
-    .order-sheet, .modal-box {
-      background: #FFFFFF;
-      width: 100%;
-      max-width: 520px;
-      border-radius: 20px 20px 0 0;
-      padding: 18px 16px 24px;
-      box-shadow: 0 -8px 30px rgba(0,0,0,0.3);
-      position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    @media (min-width: 600px) {
-      .order-sheet, .modal-box {
-        border-radius: 20px;
-      }
-    }
-
-    .modal-close-icon, .modal-close-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      background: #f4f1ea;
-      border: 1px solid var(--border);
-      color: #6B6358;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-    }
-
-    /* Form Fields: 16px on mobile prevents iOS auto-zoom */
-    .form-input, .form-textarea {
-      width: 100%;
-      background: #FFFFFF;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      color: #1F1B18;
-      padding: 11px 12px;
-      font-size: 16px;
-      outline: none;
-      transition: all 0.2s ease;
-      -webkit-appearance: none;
-    }
-    .form-input:focus, .form-textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(180, 132, 72, 0.15);
-    }
-    .form-group { margin-bottom: 12px; }
-    .form-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #6B6358;
-      display: block;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    .form-helper {
-      font-size: 11px;
-      color: #736e65;
-      margin-top: 3px;
-    }
-    .req-star { color: #DC2626; }
-    .form-row-2col { display: flex; gap: 8px; }
-    .field-error-msg {
-      font-size: 11px;
-      color: #DC2626;
-      font-weight: 600;
-      margin-top: 3px;
-      display: none;
-    }
-
-    .btn-confirm-order {
-      width: 100%;
-      background: #181716;
-      color: #FFFFFF;
-      border: none;
-      border-radius: 12px;
-      padding: 14px 18px;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      min-height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 8px;
-    }
-    .btn-confirm-order:hover { background: var(--accent-dark); }
-
-    /* Payment cards */
-    .payment-options-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .pay-card {
-      border: 1.5px solid var(--border);
-      background: var(--surface-warm);
-      border-radius: 10px;
-      padding: 9px 10px;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .pay-card.active {
-      border-color: #059669;
-      background: #FFFFFF;
-      box-shadow: 0 3px 12px rgba(5, 150, 105, 0.15);
-    }
-    .pay-badge-cod, .pay-badge-rec {
-      font-size: 8.5px;
-      font-weight: 800;
-      padding: 2px 5px;
-      border-radius: 3px;
-      display: inline-block;
-      width: fit-content;
-    }
-    .pay-badge-cod { background: #065f46; color: #ffffff; }
-    .pay-badge-rec { background: #059669; color: #ffffff; }
-    .pay-card-title {
+      border-radius: var(--radius-sm);
       font-size: 12.5px;
       font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      gap: 6px;
     }
-    .pay-card-price { font-size: 14px; font-weight: 800; color: #059669; }
-    .pay-card-sub { font-size: 10.5px; color: #6B6358; }
+    .btn-buy-cod:hover { background: #2b2826; }
 
-    /* Quantity stepper */
-    .qty-control-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: var(--surface-warm);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 12px;
-      margin-bottom: 12px;
+    /* REVIEWS SECTION */
+    .reviews-section {
+      background: var(--bg-warm);
+      border-top: 1px solid var(--surface-border);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 56px 20px;
     }
-    .qty-stepper { display: flex; align-items: center; gap: 8px; }
-    .btn-step {
-      width: 34px;
-      height: 34px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 26px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      text-align: center;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+    }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .review-card {
       background: #ffffff;
-      font-weight: 800;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 20px;
     }
-    .qty-num { font-size: 15px; font-weight: 800; width: 24px; text-align: center; }
+    .review-stars { color: #f59e0b; font-size: 13px; margin-bottom: 8px; }
+    .review-text { font-size: 13px; color: #37352f; line-height: 1.55; margin-bottom: 14px; }
+    .review-author { display: flex; align-items: center; gap: 10px; }
+    .review-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #161514; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 11px;
+    }
+    .review-name { font-size: 12.5px; font-weight: 700; }
+    .review-city { font-size: 11px; color: var(--text-light); }
 
-    .summary-invoice {
-      background: var(--surface-warm);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-bottom: 14px;
-      font-size: 12.5px;
+    /* FAQ ACCORDION */
+    .faq-section { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+    .faq-item {
+      border-bottom: 1px solid var(--surface-border);
+      padding: 16px 0;
     }
-    .summary-row {
-      display: flex;
-      justify-content: space-between;
-      color: #6B6358;
-      margin-bottom: 4px;
-    }
-    .summary-total-row {
-      display: flex;
-      justify-content: space-between;
-      border-top: 1px dashed var(--border);
-      padding-top: 6px;
-      margin-top: 6px;
-      font-size: 15px;
-      font-weight: 800;
-      color: #1F1B18;
-    }
-    .savings-banner-cod {
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-      border-radius: 6px;
-      padding: 6px 10px;
-      margin-top: 8px;
-      font-size: 11px;
-      color: #065f46;
+    .faq-q {
+      font-size: 14.5px;
       font-weight: 700;
-    }
-
-    /* Step 2 Screen */
-    .upi-screen-wrapper { text-align: center; }
-    .upi-status-pill {
-      background: #ECFDF5;
-      color: #065F46;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
-    .upi-amount-hero {
-      font-size: 28px;
-      font-weight: 800;
-      color: #1F1B18;
-      margin-bottom: 2px;
-    }
-    .email-alert-notice {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #166534;
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      text-align: left;
-    }
-    .upi-qr-card {
-      background: var(--surface-warm);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 14px;
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-    }
-    .upi-qr-img { width: 180px; height: 180px; display: block; }
-    .btn-send-wa-receipt {
-      width: 100%;
-      background: var(--wa-green);
-      color: #ffffff;
-      border: none;
-      padding: 13px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 800;
       cursor: pointer;
-      min-height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
     }
-    .btn-track-action {
-      width: 100%;
-      background: #181716;
-      color: #ffffff;
-      border: none;
-      padding: 11px;
-      border-radius: 10px;
+    .faq-a {
       font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
+      color: var(--text-muted);
+      line-height: 1.6;
       margin-top: 8px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      display: none;
     }
-    .btn-edit-order {
-      background: transparent;
-      border: none;
-      color: #6B6358;
-      font-size: 12px;
-      cursor: pointer;
-      margin-top: 8px;
-      text-decoration: underline;
-      padding: 6px;
-    }
-
-    /* Fixed Sticky Mobile Bottom Bar */
-    .mobile-bottom-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #181716;
-      color: #ffffff;
-      padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 60;
-      box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
-    }
-    @media (min-width: 769px) {
-      .mobile-bottom-bar { display: none; }
-    }
-    .mob-bar-text { font-size: 12px; line-height: 1.3; }
-    .mob-bar-text strong { display: block; font-size: 13px; color: #ffffff; }
-    .mob-bar-btn {
-      background: var(--accent);
-      color: #ffffff;
-      border: none;
-      padding: 9px 16px;
-      border-radius: 8px;
-      font-weight: 800;
-      font-size: 12.5px;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    /* Floating WhatsApp Button on Mobile */
-    .floating-wa {
-      position: fixed;
-      bottom: calc(70px + env(safe-area-inset-bottom, 10px));
-      right: 14px;
-      background: var(--wa-green);
-      color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-weight: 700;
-      font-size: 12.5px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
-      z-index: 70;
-    }
-    @media (min-width: 769px) {
-      .floating-wa { bottom: 24px; right: 24px; font-size: 13.5px; padding: 12px 20px; }
-    }
-
-    /* Reviews and FAQs */
-    .section-wrap { max-width: 1240px; margin: 40px auto 24px; padding: 0 16px; }
-    .section-title { font-family: 'Playfair Display', Georgia, serif; font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 6px; }
-    .section-sub { text-align: center; font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
-    .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
-    .review-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; }
-    .review-stars { color: #d97706; font-size: 12px; margin-bottom: 4px; }
-    .review-text { font-size: 12.5px; color: #403c37; line-height: 1.5; margin-bottom: 10px; }
-    .review-author { display: flex; align-items: center; gap: 8px; }
-    .review-avatar { width: 30px; height: 30px; border-radius: 50%; background: #ece7dc; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 11px; }
-    .review-name { font-size: 12px; font-weight: 700; }
-    .review-loc { font-size: 10.5px; color: #8c827a; }
-
-    .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-    .faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; }
-    .faq-q { padding: 12px 16px; font-weight: 700; font-size: 13.5px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .faq-a { padding: 0 16px 12px; font-size: 12.5px; color: #555048; line-height: 1.5; display: none; }
     .faq-item.open .faq-a { display: block; }
 
-    footer { background: var(--surface-warm); border-top: 1px solid var(--border); padding: 36px 16px 24px; text-align: center; color: var(--text-muted); font-size: 12px; }
-    .footer-logo { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; color: #181716; margin-bottom: 6px; }
+    /* FOOTER */
+    footer {
+      background: #161514;
+      color: #faf9f6;
+      padding: 48px 24px 32px;
+      font-size: 12.5px;
+    }
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid #2e2c29;
+    }
+    @media (max-width: 768px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 24px; }
+    }
+    .footer-brand { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+    .footer-col h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 12px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col a { color: #a19d96; text-decoration: none; transition: var(--transition); }
+    .footer-col a:hover { color: #ffffff; }
+    .footer-bottom {
+      max-width: 1240px; margin: 24px auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      color: #78736b; font-size: 11.5px; flex-wrap: wrap; gap: 12px;
+    }
+
+    /* MODAL BASE */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+      padding: 16px;
+    }
+    .modal-box {
+      background: #ffffff;
+      border-radius: var(--radius);
+      max-width: 500px; width: 100%;
+      max-height: 92vh; overflow-y: auto;
+      padding: 24px; position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+    .modal-close-btn {
+      position: absolute; top: 16px; right: 16px;
+      background: transparent; border: none; font-size: 18px;
+      color: var(--text-light); cursor: pointer;
+    }
+
+    /* FORM STYLES (SHOPIFY EXPRESS CHECKOUT) */
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 12px; font-weight: 700; color: #161514; margin-bottom: 4px; }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm); font-size: 13.5px; color: #161514;
+      outline: none; transition: var(--transition); font-family: inherit;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: #161514; }
+    .field-error-msg { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .payment-option-card {
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: var(--transition);
+    }
+    .payment-option-card.active {
+      border-color: #161514;
+      background: var(--bg-warm);
+    }
+    .btn-submit-order {
+      width: 100%; padding: 13px;
+      background: #161514; color: #ffffff;
+      border: none; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 700;
+      cursor: pointer; transition: var(--transition);
+      margin-top: 10px;
+    }
+    .btn-submit-order:hover { background: #2b2826; }
+
+    /* FLOATING WHATSAPP */
+    .floating-wa {
+      position: fixed; bottom: 20px; right: 20px; z-index: 90;
+      background: #25d366; color: #fff;
+      padding: 10px 16px; border-radius: var(--radius-pill);
+      font-size: 12.5px; font-weight: 700; text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+    }
   </style>
 </head>
 <body>
 
-  <!-- Top Announcement Bar -->
+  <!-- TOP ANNOUNCEMENT BAR -->
   <div class="announcement-bar">
-    <span class="badge-glow">UDAIPUR STUDIO</span>
-    <span>🚚 Cash on Delivery (COD) · Doorstep Mirror Trial in Udaipur · 45-Min Express</span>
+    <span>Free Express Shipping Across India · Cash on Delivery (COD) Available</span>
   </div>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
-    <a href="#" class="brand-group">
-      <span class="brand-title">THE CLASSIC CO.</span>
-      <span class="brand-city">Studio Eyewear · Udaipur</span>
-    </a>
+    <a href="#" class="brand-logo">THE CLASSIC CO.</a>
 
-    <ul class="nav-menu">
-      <li><a href="javascript:void(0)" onclick="filterCategory('All')">All Silhouettes (30)</a></li>
-      <li><a href="javascript:void(0)" onclick="filterCategory('Magnetic')">🧲 4-in-1 Magnetic</a></li>
-      <li><a href="javascript:void(0)" onclick="filterCategory('Polarized')">🕶️ Polarized & Driving</a></li>
-      <li><a href="javascript:void(0)" onclick="filterCategory('Trends')">✨ Retro Trends</a></li>
-      <li><a href="javascript:void(0)" onclick="filterCategory('Luxury')">💎 Luxury Acetate</a></li>
+    <ul class="nav-links">
+      <li><a href="javascript:void(0)" onclick="filterCategory('All')" class="active">All Frames</a></li>
+      <li><a href="javascript:void(0)" onclick="filterCategory('Polarized')">Polarized</a></li>
+      <li><a href="javascript:void(0)" onclick="filterCategory('Acetates')">Studio Acetates</a></li>
+      <li><a href="javascript:void(0)" onclick="filterCategory('Magnetic')">4-in-1 Clip-Ons</a></li>
+      <li><a href="javascript:void(0)" onclick="filterCategory('Luxury')">Luxury Series</a></li>
     </ul>
 
-    <div class="header-actions">
-      <button type="button" class="btn-track-header" onclick="openOrderTrackerModal()">
-        <span>📦</span> Track
+    <div class="header-tools">
+      <button class="icon-btn" onclick="openTrackerModal()">📦 Track</button>
+      <button class="icon-btn" onclick="openCartModal()">
+        <span>🛍️</span> Bag <span class="cart-pill" id="cart-counter">0</span>
       </button>
-      <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20have%20a%20question%20about%20your%20eyewear%20collection." target="_blank" class="btn-wa-header">
-        <span>💬 WhatsApp</span>
-      </a>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-eyebrow">The Udaipur Studio Collection 2026</div>
-    <h1 class="hero-heading">Elevated Eyewear Engineered For Lake City Living.</h1>
-    <p class="hero-sub">Architectural silhouettes, 9-layer TAC polarized glare filters, and quick-snap 4-in-1 magnetic clip-on sunglasses delivered to your doorstep across Udaipur in 45-60 minutes.</p>
-    
-    <div class="trust-chips">
-      <div class="trust-chip">⚡ 45-Min Udaipur Dispatch</div>
-      <div class="trust-chip" style="background:#ecfdf5; border-color:#a7f3d0; color:#065f46;">💵 Cash on Delivery (Avg ₹899)</div>
-      <div class="trust-chip">🪞 Doorstep Mirror Trial</div>
-      <div class="trust-chip">🛡️ Free Hard Case &amp; Cloth</div>
+  <!-- HERO SECTION (SHOPIFY DTC MINIMAL STYLE) -->
+  <section class="hero-banner">
+    <div class="hero-eyebrow">Contemporary Eyewear Studio</div>
+    <h1 class="hero-title">Handcrafted Eyewear. Modern Aesthetics.</h1>
+    <p class="hero-desc">
+      Architectural silhouettes engineered with 9-layer TAC polarized lenses and premium handcrafted acetates. Built for all-day comfort and 100% UV400 clarity.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#collection" class="btn-hero btn-hero-primary">Explore Collection</a>
+      <a href="javascript:void(0)" onclick="filterCategory('Polarized')" class="btn-hero btn-hero-secondary">Polarized Series (COD ₹899)</a>
+    </div>
+
+    <div class="trust-bar">
+      <span>✓ Cash on Delivery Available</span>
+      <span>✓ Free Express Shipping</span>
+      <span>✓ 7-Day Easy Replacement</span>
+      <span>✓ 1-Year Frame Warranty</span>
     </div>
   </section>
 
-  <!-- Filter & Search Bar -->
-  <div class="filter-wrapper">
-    <div class="category-pills">
-      <button class="cat-btn active" onclick="filterCategory('All', this)">All Silhouettes (30)</button>
-      <button class="cat-btn" onclick="filterCategory('Magnetic', this)">🧲 4-in-1 Magnetic</button>
-      <button class="cat-btn" onclick="filterCategory('Polarized', this)">🕶️ Polarized & Driving</button>
-      <button class="cat-btn" onclick="filterCategory('Trends', this)">✨ Retro Trends</button>
-      <button class="cat-btn" onclick="filterCategory('Luxury', this)">💎 Luxury Collection</button>
-    </div>
-    <div class="search-filter-box">
-      <div class="search-input-wrap">
-        <input type="text" class="search-input" id="search-box" placeholder="🔍 Search frames, styles..." oninput="handleSearch(this.value)">
-        <button class="btn-clear-search" id="btn-clear-search" onclick="clearSearch()">✕</button>
+  <!-- MAIN CATALOG SECTION -->
+  <main class="catalog-section" id="collection">
+    
+    <!-- CATEGORY TABS & CONTROLS -->
+    <div class="filter-bar">
+      <div class="pill-tabs">
+        <button class="pill-tab active" onclick="filterCategory('All', this)">All Silhouettes (30)</button>
+        <button class="pill-tab" onclick="filterCategory('Polarized', this)">Polarized &amp; Driving</button>
+        <button class="pill-tab" onclick="filterCategory('Acetates', this)">Studio Acetates</button>
+        <button class="pill-tab" onclick="filterCategory('Magnetic', this)">4-in-1 Magnetic Clip-Ons</button>
+        <button class="pill-tab" onclick="filterCategory('Luxury', this)">Luxury Collection</button>
+        <button class="pill-tab" onclick="filterCategory('Lifestyle', this)">Classic Lifestyle</button>
       </div>
-      <select class="sort-select" id="sort-select" onchange="handleSort(this.value)">
-        <option value="featured">Featured</option>
-        <option value="price-low">Price: Low to High</option>
-        <option value="price-high">Price: High to Low</option>
-        <option value="popular">Bestsellers</option>
-      </select>
+
+      <div class="filter-tools">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="search-input" placeholder="Search frames..." oninput="handleSearch(this.value)">
+        </div>
+
+        <select class="sort-dropdown" id="sort-select" onchange="handleSort(this.value)">
+          <option value="featured">Featured</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="popular">Bestsellers</option>
+        </select>
+      </div>
     </div>
-  </div>
 
-  <div class="catalog-status-bar">
-    <span id="results-count-text">Showing 30 silhouettes</span>
-    <span>100% UV400 Protection</span>
-  </div>
+    <div class="count-status">
+      <span id="results-count-text">Showing 30 silhouettes</span>
+      <span>100% UV400 Polarized Certified</span>
+    </div>
 
-  <!-- Catalog Grid -->
-  <main class="catalog-wrapper">
-    <div class="grid" id="products-grid">
-      <!-- Injected by JavaScript -->
+    <!-- PRODUCTS GRID -->
+    <div class="products-grid" id="products-grid">
+      <!-- Injected via JavaScript -->
     </div>
   </main>
 
-  <!-- Verified Customer Reviews Section -->
-  <section class="section-wrap">
-    <div class="section-title">Verified Udaipur Reviews</div>
-    <div class="section-sub">Real stories from our patrons across Udaipur & Rajasthan</div>
+  <!-- VERIFIED CUSTOMER REVIEWS (PAN-INDIA) -->
+  <section class="reviews-section">
+    <div class="section-title">Verified Customer Reviews</div>
+    <div class="section-sub">Trusted by thousands across India for daily clarity &amp; architectural design</div>
+
     <div class="reviews-grid">
       <div class="review-card">
         <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Ordered at 3:30 PM at Panchwati, rider delivered at 4:15 PM with mirror. The frame quality and lens clarity are unbelievable for ₹899 COD. Snaps firmly on bike rides."</div>
+        <div class="review-text">"Optical clarity on the polarized lenses is on par with ₹4,000 designer brands. COD delivery arrived in 2 days in Mumbai. Very impressed with the build."</div>
+        <div class="review-author">
+          <div class="review-avatar">RM</div>
+          <div>
+            <div class="review-name">Rohit M.</div>
+            <div class="review-city">Mumbai, Maharashtra</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"The magnetic clip-ons are game changers for driving and screen work. Magnets snap firmly even on bumpy bike rides. Hard case quality is stellar."</div>
+        <div class="review-author">
+          <div class="review-avatar">AS</div>
+          <div>
+            <div class="review-name">Aditya S.</div>
+            <div class="review-city">New Delhi</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Minimalist aesthetic and very lightweight. No nose pad pressure even after 8 hours of continuous wear. The acetate finish looks high-end."</div>
+        <div class="review-author">
+          <div class="review-avatar">PN</div>
+          <div>
+            <div class="review-name">Priya N.</div>
+            <div class="review-city">Bangalore, Karnataka</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Cash on Delivery made the purchase completely risk-free. Official tax invoice arrived on my email immediately after ordering. Will buy again."</div>
         <div class="review-author">
           <div class="review-avatar">VK</div>
           <div>
-            <div class="review-name">Virendra K.</div>
-            <div class="review-loc">📍 Panchwati, Udaipur</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Polarized glare testing card was in the box and proved 100% polarization. Driving in Udaipur afternoon sun feels completely relaxed now. Hard case quality is top tier."</div>
-        <div class="review-author">
-          <div class="review-avatar">DS</div>
-          <div>
-            <div class="review-name">Divya S.</div>
-            <div class="review-loc">📍 Saheli Nagar, Udaipur</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"COD at ₹899 with zero delivery fee is exceptional compared to local optical stores selling similar frames for ₹2,200. Confirmation email arrived immediately with tracking link."</div>
-        <div class="review-author">
-          <div class="review-avatar">AM</div>
-          <div>
-            <div class="review-name">Aman Mehta</div>
-            <div class="review-loc">📍 Hiran Magri Sec 4, Udaipur</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Doorstep mirror trial gave me peace of mind. Checked the look on my face before paying. Highly recommend The Classic Co. to everyone in Lake City!"</div>
-        <div class="review-author">
-          <div class="review-avatar">NP</div>
-          <div>
-            <div class="review-name">Nitin Purohit</div>
-            <div class="review-loc">📍 Fatehsagar Rani Road, Udaipur</div>
+            <div class="review-name">Varun K.</div>
+            <div class="review-city">Jaipur, Rajasthan</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Frequently Asked Questions Accordion -->
-  <section class="section-wrap">
+  <!-- FAQ SECTION -->
+  <section class="faq-section">
     <div class="section-title">Frequently Asked Questions</div>
-    <div class="section-sub">Doorstep trials, delivery times and authentic quality</div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>🪞 What is the Doorstep Mirror Trial?</span>
-          <span>▼</span>
-        </div>
-        <div class="faq-a">
-          Our Udaipur rider brings the sunglasses directly to your home or office. You can open the box, inspect the frame, and wear it in front of a mirror to ensure perfect fit and style before completing payment!
-        </div>
+    <div class="section-sub">Standard shipping, return policies, and polarized lens warranties</div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>How does Cash on Delivery (COD) work?</span>
+        <span>＋</span>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>⚡ How fast is the delivery in Udaipur?</span>
-          <span>▼</span>
-        </div>
-        <div class="faq-a">
-          For all addresses within Udaipur municipal limits (Sukhadia Circle, Hiran Magri, Chetak Circle, Fatehsagar, Shobhagpura, Celebration Mall, etc.), delivery is completed within 45 to 60 minutes!
-        </div>
+      <div class="faq-a">
+        You simply enter your shipping address at checkout without paying in advance. Pay cash to the courier delivery agent when your parcel arrives safely at your doorstep!
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>🕶️ Are these lenses genuine 100% Polarized with UV400?</span>
-          <span>▼</span>
-        </div>
-        <div class="faq-a">
-          Yes! Every single pair uses 9-Layer TAC Polarized lenses filtering 100% UVA/UVB rays up to 400nm. Every box includes a complimentary Polarized Testing Card so you can instantly verify polarization with your own eyes.
-        </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>What is the estimated delivery time?</span>
+        <span>＋</span>
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>💵 Is Cash on Delivery (COD) supported?</span>
-          <span>▼</span>
-        </div>
-        <div class="faq-a">
-          Yes! Cash on Delivery is available on every frame at the exact displayed price (Avg ₹899) with zero hidden delivery charges. You only pay after inspecting the eyewear at your doorstep.
-        </div>
+      <div class="faq-a">
+        All orders are dispatched from our central studio within 24 hours. Express courier delivery takes 2 to 4 business days across India.
       </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span>🛡️ What accessories are included free with every frame?</span>
-          <span>▼</span>
-        </div>
-        <div class="faq-a">
-          Every order arrives in luxury packaging containing: 1x Handcrafted Eyewear Frame, 1x Luxury Leather Hard Case (₹250 value free), 1x Microfiber Optical Cleaning Cloth, and 1x Polarized Glare Test Card.
-        </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>What is your return &amp; replacement policy?</span>
+        <span>＋</span>
+      </div>
+      <div class="faq-a">
+        We offer a 7-day hassle-free doorstep replacement guarantee. If you experience any fit or finish issues, message our WhatsApp support for an instant exchange.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Are all lenses 100% polarized &amp; UV400 protected?</span>
+        <span>＋</span>
+      </div>
+      <div class="faq-a">
+        Yes! Every frame features 9-layer TAC polarized lenses blocking 100% of UVA/UVB rays. Every order comes with a complimentary Polarization Test Card so you can verify it yourself.
       </div>
     </div>
   </section>
 
-  <!-- Quick View Modal -->
-  <div class="modal-backdrop" id="product-modal">
-    <div class="modal-box">
-      <button class="modal-close-btn" onclick="closeModal()">✕</button>
-      <div class="modal-img-col">
-        <img src="" id="modal-img" style="width:100%; height:260px; object-fit:cover; border-radius:10px;" alt="Product">
-        <div class="thumb-scroller" id="modal-thumbs" style="display:flex; gap:6px; overflow-x:auto; padding-top:8px;"></div>
-      </div>
-      <div class="modal-details-col" style="padding-top:12px;">
-        <div>
-          <span class="prod-cat" id="modal-cat">Studio Edition</span>
-          <h2 id="modal-title" style="font-family:'Playfair Display', Georgia, serif; font-size:20px; color:#181716; margin-top:4px;"></h2>
-        </div>
-
-        <div class="price-box" style="padding:10px 12px; margin:10px 0;">
-          <div class="price-headline">
-            <div>
-              <div style="display:flex; align-items:baseline; gap:8px;">
-                <span class="price-actual" id="modal-price" style="font-size:22px; color:var(--accent-dark);">₹899</span>
-                <span class="price-tag-cod">COD AVAILABLE</span>
-                <span class="discount-pill" id="modal-discount-tag">64% OFF</span>
-              </div>
-              <div style="font-size:11.5px; color:#736e65; margin-top:2px;">
-                <span>Regular MRP: <del id="modal-compare">₹2,499</del></span> · <span style="color:#059669; font-weight:700;">Doorstep Trial Free</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <table style="width:100%; font-size:12px; border-collapse:collapse; margin-bottom:12px;">
-          <tr style="border-bottom:1px solid #efebe2;"><td style="padding:5px 0; color:#736e65;">Lens</td><td style="padding:5px 0; font-weight:700;">9-Layer TAC Polarized (UV400)</td></tr>
-          <tr style="border-bottom:1px solid #efebe2;"><td style="padding:5px 0; color:#736e65;">Frame</td><td style="padding:5px 0; font-weight:700;">Aerospace Alloy / Acetate</td></tr>
-          <tr style="border-bottom:1px solid #efebe2;"><td style="padding:5px 0; color:#736e65;">Perks Free</td><td style="padding:5px 0; font-weight:700;">Hard Case + Cloth + Test Card</td></tr>
-        </table>
-
-        <button type="button" id="modal-checkout-btn" class="btn-confirm-order" onclick="proceedToCheckoutFromModal()">
-          🚚 Order with COD (Doorstep Mirror Trial)
-        </button>
-
-        <a href="#" id="modal-wa-btn" target="_blank" class="btn-wa-header" style="justify-content:center; padding:10px; margin-top:8px; width:100%;">
-          💬 Chat on WhatsApp (+91 8619661325)
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT MODAL -->
-  <div class="order-modal-backdrop" id="checkout-backdrop" onclick="closeCheckoutBackdrop(event)">
-    <div class="order-sheet">
-      <button class="modal-close-icon" onclick="closeCheckoutModal()">&times;</button>
-
-      <!-- STEP 1: QUANTITY & DELIVERY INFORMATION -->
-      <div id="order-view-details">
-        <div style="border-bottom:1px solid #efebe2; padding-bottom:10px; margin-bottom:12px; padding-right:32px;">
-          <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
-            <span style="background:#ECFDF5; color:#065F46; font-size:10px; font-weight:800; padding:2px 7px; border-radius:10px;">⚡ 45-Min Express</span>
-            <span style="font-size:11px; font-weight:700; color:#D97706;">★★★★★ 4.9</span>
-          </div>
-          <div style="font-size:16px; font-weight:800; color:#1F1B18;" id="checkout-modal-title">Classic Eyewear Edition</div>
-        </div>
-
-        <div style="display:flex; gap:10px; background:var(--surface-warm); border:1px solid var(--border); border-radius:10px; padding:8px; margin-bottom:12px; align-items:center;">
-          <img id="checkout-modal-img" style="width:60px; height:60px; border-radius:6px; object-fit:cover; border:1px solid var(--border);" src="" alt="Selected Frame">
-          <div style="flex:1;">
-            <div style="font-weight:700; font-size:12.5px; color:#181716;" id="checkout-card-title"></div>
-            <div style="font-size:11px; color:#6B6358;">🛡️ Hard Leather Case &amp; Lens Cloth Included Free.</div>
-          </div>
-        </div>
-
-        <!-- Quantity Picker -->
-        <div class="qty-control-row">
-          <div>
-            <div style="font-weight:700; font-size:13px; color:#181716;">Order Quantity:</div>
-            <div style="font-size:11px; color:#736e65;">Udaipur doorstep trial packaging</div>
-          </div>
-          <div class="qty-stepper">
-            <button type="button" class="btn-step" onclick="changeQuantity(-1)">−</button>
-            <span class="qty-num" id="order-qty-val">1</span>
-            <button type="button" class="btn-step" onclick="changeQuantity(1)">+</button>
-          </div>
-        </div>
-
-        <!-- Live Bill Summary -->
-        <div class="summary-invoice">
-          <div class="summary-row"><span>Regular MRP:</span><span id="checkout-inv-mrp">₹2,499</span></div>
-          <div class="summary-row"><span>COD Base Price:</span><span id="checkout-inv-base">₹899</span></div>
-          <div class="summary-row" id="checkout-inv-upi-row" style="display:none;">
-            <span>⚡ Instant UPI Bonus Discount:</span>
-            <span style="color:#059669; font-weight:700;" id="checkout-inv-upi-discount">-₹100</span>
-          </div>
-          <div class="summary-row"><span>Doorstep Delivery:</span><span style="color:#059669; font-weight:700;">FREE</span></div>
-          <div class="summary-total-row"><span>Total Payable:</span><span class="summary-total-price" id="checkout-inv-total">₹899 Only</span></div>
-          <div id="checkout-savings-callout" class="savings-banner-cod">
-            <span>🪞</span> <span><strong>Doorstep Mirror Trial:</strong> Pay at doorstep only after inspecting in the mirror!</span>
-          </div>
-        </div>
-
-        <div style="font-size:13px; font-weight:700; color:#1F1B18; margin-bottom:8px;">
-          📍 Delivery Details <span style="font-size:10px; color:#DC2626;">(Required)</span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Full Name / Aapka Naam <span class="req-star">*</span></label>
-          <input type="text" id="inp-name" class="form-input" placeholder="e.g. Rahul Sharma" oninput="clearFieldError('inp-name', 'err-name')">
-          <div class="field-error-msg" id="err-name"></div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Email ID <span class="req-star">*</span></label>
-          <input type="email" id="inp-email" class="form-input" inputmode="email" placeholder="e.g. rahul.sharma@gmail.com" oninput="clearFieldError('inp-email', 'err-email')">
-          <div class="form-helper">📧 Invoice &amp; dispatch tracker will be sent here.</div>
-          <div class="field-error-msg" id="err-email"></div>
-        </div>
-
-        <div class="form-group" style="background:#f5f2eb; padding:10px 14px; border-radius:10px; border:1px solid #e6e0d2; margin-bottom:14px;">
-          <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; font-weight:700; color:#1F1B18; margin:0;">
-            <input type="checkbox" id="inp-send-invoice" checked style="width:18px; height:18px; accent-color:#181716; cursor:pointer;">
-            <span>🧾 Send Official Tax Invoice &amp; Receipt to My Email</span>
-          </label>
-          <div style="font-size:11px; color:#78716c; margin-left:28px; margin-top:2px; line-height:1.4;">
-            Includes itemized tax breakdown, 1-year UV400 warranty certificate, and express rider tracker.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">WhatsApp Mobile Number <span class="req-star">*</span></label>
-          <input type="tel" id="inp-phone" class="form-input" inputmode="tel" placeholder="e.g. 98290XXXXX (10 Digits)" maxlength="10" oninput="clearFieldError('inp-phone', 'err-phone')">
-          <div class="field-error-msg" id="err-phone"></div>
-        </div>
-
-        <div class="form-group">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:4px;">
-            <label class="form-label" style="margin-bottom:0;">Address in Udaipur <span class="req-star">*</span></label>
-            <button type="button" class="btn-gps-locate" onclick="detectGPSLocation()">
-              <span id="gps-icon">📍</span> <span id="gps-text">Auto-Pin Map</span>
-            </button>
-          </div>
-          <input type="hidden" id="inp-gps" name="gps" value="">
-          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="House/flat no., building, area in Udaipur..." oninput="clearFieldError('inp-address', 'err-address')"></textarea>
-          <div id="gps-status-badge"></div>
-          <div class="field-error-msg" id="err-address"></div>
-        </div>
-
-        <div class="form-row-2col">
-          <div class="form-group" style="flex:1;">
-            <label class="form-label">Landmark <span class="req-star">*</span></label>
-            <input type="text" id="inp-landmark" class="form-input" placeholder="e.g. Near Sukhadia Circle" oninput="clearFieldError('inp-landmark', 'err-landmark')">
-            <div class="field-error-msg" id="err-landmark"></div>
-          </div>
-          <div class="form-group" style="width:115px;">
-            <label class="form-label">Pincode <span class="req-star">*</span></label>
-            <input type="tel" id="inp-pincode" class="form-input" inputmode="numeric" value="313001" maxlength="6" oninput="clearFieldError('inp-pincode', 'err-pincode')">
-            <div class="field-error-msg" id="err-pincode"></div>
-          </div>
-        </div>
-
-        <label class="form-label">Payment Mode:</label>
-        <div class="payment-options-row">
-          <div class="pay-card active" id="pay-opt-cod" onclick="setCheckoutPayment('cod')">
-            <span class="pay-badge-cod">💵 POPULAR · TRIAL</span>
-            <div class="pay-card-title">
-              <span>Cash on Delivery</span>
-              <span class="pay-card-price" id="pay-card-cod-price">₹899</span>
-            </div>
-            <div class="pay-card-sub">Try before you pay</div>
-          </div>
-          <div class="pay-card" id="pay-opt-upi" onclick="setCheckoutPayment('upi')">
-            <span class="pay-badge-rec">⚡ SAVE ₹100</span>
-            <div class="pay-card-title">
-              <span>Instant UPI</span>
-              <span class="pay-card-price" id="pay-card-upi-price">₹799</span>
-            </div>
-            <div class="pay-card-sub">GPay / PhonePe / QR</div>
-          </div>
-        </div>
-
-        <button class="btn-confirm-order" id="btn-order-submit" onclick="processOrderCheckout()">
-          <span id="btn-submit-label">🚚 Confirm COD Order (Mirror Trial)</span>
-        </button>
-
-        <div style="text-align:center; margin-top:8px; font-size:11px; color:#6B6358;">
-          🔒 100% Doorstep Quality Inspection · Try On Before You Pay
-        </div>
-      </div>
-
-      <!-- STEP 2: AUTO UPI / COD PAYMENT SCREEN & RECEIPT -->
-      <div id="order-view-upi" class="upi-screen-wrapper" style="display:none;">
-        <div class="upi-status-header">
-          <span class="upi-status-pill" id="receipt-status-pill">ORDER REGISTERED</span>
-          <div class="upi-amount-hero" id="receipt-hero-amount">₹899</div>
-          <div style="font-size:12px; color:#6B6358; margin-bottom:10px;" id="receipt-status-desc">⚡ Dispatching to your Udaipur address in 45-60 minutes...</div>
-        </div>
-
-        <div class="email-alert-notice" id="receipt-email-notice">
-          <span>✓ Confirmation email dispatched to: <strong id="rec-email-text"></strong></span>
-        </div>
-
-        <div id="cod-action-box" style="margin-bottom:12px;">
-          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:10px; text-align:left; font-size:12px;">
-            <strong style="color:#065F46; display:block; margin-bottom:2px;">🪞 Doorstep Mirror Trial:</strong>
-            Delivery rider agle 45-60 minute me aapke address par deliver karega. Pehle chasma pehan kar mirror me check karein, fir rider ko pay karein.
-          </div>
-        </div>
-
-        <div id="upi-action-box" style="display:none;">
-          <button class="btn-confirm-order" style="background:#0f766e; margin-bottom:12px;" onclick="triggerUPIIntentDirect()">
-            📱 Pay <span id="upi-btn-amount">₹799</span> via UPI App (GPay / PhonePe)
-          </button>
-          <div class="upi-qr-card">
-            <div style="font-size:12px; font-weight:600; color:#6B6358;">Scan QR with any UPI App:</div>
-            <img id="upi-qr-image" class="upi-qr-img" src="" alt="Dynamic UPI QR Code">
-            <div style="display:flex; align-items:center; gap:6px; font-size:12px;">
-              <span>UPI: <strong>8619661325@upi</strong></span>
-              <button type="button" class="cat-btn" style="padding:2px 8px; font-size:11px;" onclick="copyUPIId()">Copy</button>
-            </div>
-            <div id="upi-copy-toast" style="display:none; font-size:11px; color:#059669; font-weight:700;">✓ UPI ID Copied!</div>
-          </div>
-        </div>
-
-        <div style="background:var(--surface-warm); border:1px solid var(--border); border-radius:10px; padding:10px; text-align:left; font-size:12px; line-height:1.6; margin-bottom:12px;">
-          <div><strong>👤 Customer:</strong> <span id="rec-name"></span></div>
-          <div><strong>📧 Email:</strong> <span id="rec-email-summary"></span></div>
-          <div><strong>📦 Frame:</strong> <span id="rec-item"></span> (<span id="rec-qty"></span>)</div>
-          <div><strong>💰 Total Payable:</strong> <span id="rec-amount" style="font-weight:800; color:var(--accent-dark);"></span></div>
-          <div><strong>💳 Mode:</strong> <span id="rec-mode"></span></div>
-          <div><strong>📍 Delivery To:</strong> <span id="rec-addr"></span></div>
-          <div id="rec-gps-row" style="display:none;"><strong>🗺️ Map Pin:</strong> <span id="rec-gps-link">Pinned</span></div>
-        </div>
-
-        <button class="btn-send-wa-receipt" onclick="sendOrderReceiptToWhatsApp()">
-          💬 Send Order Receipt on WhatsApp (+91 8619661325)
-        </button>
-
-        <button type="button" class="btn-print-invoice" onclick="printOrderInvoice(confirmedOrderData)" style="background:#181716; color:#ffffff; font-weight:700; border:none; border-radius:10px; width:100%; min-height:44px; margin-bottom:8px; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center; gap:8px;">
-          🧾 Download / Print Official Tax Invoice (PDF)
-        </button>
-
-        <button class="btn-track-action" onclick="openOrderTrackerModal(confirmedOrderData ? confirmedOrderData.orderId : '')">
-          📦 View Live Order Tracker
-        </button>
-
-        <button type="button" class="btn-edit-order" onclick="backToOrderForm()">
-          ← Edit Delivery Address or Frame
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- LIVE ORDER TRACKER MODAL -->
-  <div class="modal-backdrop" id="tracker-modal">
-    <div class="modal-box" style="padding:20px;">
-      <button class="modal-close-btn" onclick="closeTrackerModal()">✕</button>
-      <div style="font-size:10px; font-weight:800; color:var(--accent-dark); letter-spacing:1px; text-transform:uppercase;">THE CLASSIC CO. EXPRESS</div>
-      <h3 style="font-family:'Playfair Display', Georgia, serif; font-size:18px; margin:2px 0 8px;">📦 Live Order Tracking</h3>
-      <p style="font-size:12px; color:#736e65; margin-bottom:12px;">Enter Order ID or WhatsApp number to check status.</p>
-
-      <div style="display:flex; gap:6px; margin-bottom:12px;">
-        <input type="text" id="tracker-search-input" class="form-input" placeholder="e.g. ORD-CC-12345 or 98290XXXXX">
-        <button type="button" class="cat-btn active" style="padding:8px 14px;" onclick="searchOrderTracking()">Search</button>
-      </div>
-
-      <div id="tracker-result-box" style="display:none;">
-        <div style="background:var(--surface-warm); border:1px solid var(--border); border-radius:10px; padding:10px; margin-bottom:10px; font-size:12px; line-height:1.5;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <strong id="track-disp-order-id" style="font-size:13px;"></strong>
-            <span id="track-disp-status-pill" style="background:#ECFDF5; color:#065F46; font-size:10px; font-weight:800; padding:2px 6px; border-radius:8px;"></span>
-          </div>
-          <div id="track-disp-details"></div>
-        </div>
-
-        <div style="font-size:11.5px; color:#6B6358; line-height:1.8; margin-bottom:12px; border-left:2px solid #b48448; padding-left:10px;">
-          <div>✓ Step 1: Order Confirmed &amp; Email Sent</div>
-          <div>✓ Step 2: Quality Check &amp; Hard Case Packing</div>
-          <div>● Step 3: Udaipur Express Rider Dispatched (ETA: 45 Mins)</div>
-          <div>○ Step 4: Doorstep Mirror Trial &amp; Delivery</div>
-        </div>
-
-        <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20am%20checking%20status%20for%20my%20order." target="_blank" class="btn-send-wa-receipt" style="font-size:12px; min-height:40px;">
-          💬 Chat with Udaipur Dispatch Team
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- STICKY MOBILE BOTTOM BAR -->
-  <div class="mobile-bottom-bar">
-    <div class="mob-bar-text">
-      <strong>THE CLASSIC CO.</strong>
-      <span>COD Available · Doorstep Trial</span>
-    </div>
-    <button class="mob-bar-btn" onclick="scrollToCatalog()">
-      Browse Collection (30)
-    </button>
-  </div>
-
-  <!-- Floating WhatsApp Action -->
-  <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20am%20browsing%20your%20eyewear%20collection%20and%20want%20to%20order." target="_blank" class="floating-wa">
-    <span>💬 WhatsApp Support</span>
-  </a>
-
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">THE CLASSIC CO. · EYEWEAR STUDIO</div>
-    <p>Handcrafted Architectural Eyewear · Delivered Locally in Udaipur, Rajasthan</p>
-    <p style="margin-top:6px; font-size:11px; color:#9c978f;">
-      30 Studio Silhouettes · Mobile Optimized PWA · Google Sheet CRM &amp; Automated Email Engine
-    </p>
-    <p style="margin-top:10px; font-size:11.5px;">
-      <a href="/admin" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:700;">🔒 Studio Admin &amp; CRM Portal →</a>
-    </p>
+    <div class="footer-inner">
+      <div>
+        <div class="footer-brand">THE CLASSIC CO.</div>
+        <p style="color:#a19d96; max-width:400px; line-height:1.6; margin-bottom:14px;">
+          Architectural Eyewear Studio crafting timeless silhouettes engineered for daily comfort and UV400 protection.
+        </p>
+        <p style="color:#78736b; font-size:11.5px;">
+          Customer Support: +91 8619661325 · rishabhsamarwal383@gmail.com
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Collection</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Polarized')">Polarized &amp; Driving</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Acetates')">Studio Acetates</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Magnetic')">4-in-1 Magnetic Clip-Ons</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Luxury')">Luxury Collection</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Help &amp; Orders</h4>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="openTrackerModal()">Track Your Order</a></li>
+          <li><a href="https://wa.me/918619661325" target="_blank">WhatsApp Helpline</a></li>
+          <li><a href="/admin" target="_blank" style="color:var(--accent);">🔒 Studio Admin &amp; CRM</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 THE CLASSIC CO. All rights reserved.</div>
+      <div>Designed with clean architectural precision · Cash on Delivery across India</div>
+    </div>
   </footer>
 
-  <script>
-    // =========================================================================
-    // STORE CONFIGURATION & GOOGLE APPS SCRIPT WEBHOOK ENDPOINT
-    // =========================================================================
-    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec"; 
+  <!-- FLOATING WHATSAPP BUTTON -->
+  <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20have%20a%20question%20about%20your%20sunglasses%20collection." target="_blank" class="floating-wa">
+    <span>💬 WhatsApp Helpline</span>
+  </a>
 
+  <!-- ========================================================================= -->
+  <!-- MODAL 1: SHOPIFY EXPRESS CHECKOUT -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="checkout-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeCheckoutModal()">✕</button>
+
+      <!-- STEP 1: ORDER DETAILS FORM -->
+      <div id="checkout-step-1">
+        <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px;">
+          EXPRESS CHECKOUT
+        </div>
+        <h3 style="font-size:18px; font-weight:700; margin-bottom:14px; font-family:'Playfair Display', serif;">
+          Complete Your Order
+        </h3>
+
+        <!-- ORDER ITEM SUMMARY -->
+        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:12px; display:flex; gap:12px; align-items:center; margin-bottom:16px;">
+          <img id="check-item-img" src="" style="width:52px; height:52px; object-fit:cover; border-radius:4px; border:1px solid var(--surface-border);" alt="Product">
+          <div style="flex:1;">
+            <div style="font-size:13px; font-weight:700; line-height:1.3;" id="check-item-title">Product Title</div>
+            <div style="font-size:11.5px; color:var(--text-muted);" id="check-item-cat">Category</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:15px; font-weight:800;" id="check-item-price">₹899</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">FREE SHIPPING</div>
+          </div>
+        </div>
+
+        <!-- FORM FIELDS -->
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input type="text" id="inp-name" class="form-input" placeholder="e.g. Rahul Sharma" oninput="clearError('inp-name', 'err-name')">
+          <div class="field-error-msg" id="err-name">Please enter your full name.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Mobile Number (10 Digits) *</label>
+            <input type="tel" id="inp-phone" class="form-input" placeholder="98290XXXXX" maxlength="10" oninput="clearError('inp-phone', 'err-phone')">
+            <div class="field-error-msg" id="err-phone">Valid 10-digit number required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email ID *</label>
+            <input type="email" id="inp-email" class="form-input" placeholder="rahul@gmail.com" oninput="clearError('inp-email', 'err-email')">
+            <div class="field-error-msg" id="err-email">Valid email required for invoice.</div>
+          </div>
+        </div>
+
+        <!-- INVOICE CHECKBOX -->
+        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:10px 12px; margin-bottom:14px;">
+          <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; cursor:pointer;">
+            <input type="checkbox" id="inp-send-invoice" checked style="width:16px; height:16px; accent-color:#161514; cursor:pointer;">
+            <span>🧾 Send Official Tax Invoice &amp; Receipt to My Email</span>
+          </label>
+          <div style="font-size:11px; color:var(--text-muted); margin-left:24px; margin-top:2px;">
+            Itemized tax invoice, 1-Year UV400 warranty certificate &amp; courier tracking updates.
+          </div>
+        </div>
+
+        <!-- SHIPPING ADDRESS -->
+        <div class="form-group">
+          <label class="form-label">Delivery Street Address *</label>
+          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="House/Flat No., Building, Street, Area..." oninput="clearError('inp-address', 'err-address')"></textarea>
+          <div class="field-error-msg" id="err-address">Please provide full delivery address.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">City *</label>
+            <input type="text" id="inp-city" class="form-input" placeholder="e.g. Mumbai / Delhi / Bengaluru" oninput="clearError('inp-city', 'err-city')">
+            <div class="field-error-msg" id="err-city">City is required.</div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Pincode *</label>
+            <input type="tel" id="inp-pincode" class="form-input" placeholder="6 Digits" maxlength="6" oninput="clearError('inp-pincode', 'err-pincode')">
+            <div class="field-error-msg" id="err-pincode">6-digit Pincode required.</div>
+          </div>
+        </div>
+
+        <!-- PAYMENT METHOD SELECTION -->
+        <label class="form-label">Payment Method:</label>
+        <div class="payment-option-card active" id="pay-opt-cod" onclick="selectPaymentMode('cod')">
+          <div>
+            <div style="font-size:13px; font-weight:700;">💵 Cash on Delivery (COD)</div>
+            <div style="font-size:11.5px; color:var(--text-muted);">Pay when your parcel arrives</div>
+          </div>
+          <div style="font-size:14px; font-weight:800;" id="pay-cod-amount">₹899</div>
+        </div>
+
+        <div class="payment-option-card" id="pay-opt-upi" onclick="selectPaymentMode('upi')">
+          <div>
+            <div style="font-size:13px; font-weight:700;">⚡ Instant UPI (Save ₹100)</div>
+            <div style="font-size:11.5px; color:var(--green); font-weight:600;">GPay / PhonePe / Paytm / QR</div>
+          </div>
+          <div style="font-size:14px; font-weight:800; color:var(--green);" id="pay-upi-amount">₹799</div>
+        </div>
+
+        <button type="button" class="btn-submit-order" onclick="submitCustomerOrder()">
+          <span id="btn-submit-text">Complete Order (Cash on Delivery)</span>
+        </button>
+
+        <div style="text-align:center; font-size:11px; color:var(--text-light); margin-top:10px;">
+          🔒 Secure 256-Bit SSL Checkout · 7-Day Easy Replacement Guarantee
+        </div>
+      </div>
+
+      <!-- STEP 2: CONFIRMATION & RECEIPT SCREEN -->
+      <div id="checkout-step-2" style="display:none; text-align:center;">
+        <div style="width:48px; height:48px; border-radius:50%; background:var(--green-light); color:var(--green); font-size:24px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
+          ✓
+        </div>
+        <div style="font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">
+          ORDER REGISTERED
+        </div>
+        <h3 style="font-size:20px; font-weight:700; margin:4px 0 6px; font-family:'Playfair Display', serif;" id="rec-hero-orderid">
+          #ORD-CC-1001
+        </h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
+          Thank you <strong id="rec-hero-name"></strong>! Your sunglasses are being inspected and prepared for express courier dispatch.
+        </p>
+
+        <!-- RECEIPT CARD -->
+        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:14px; text-align:left; font-size:12.5px; line-height:1.6; margin-bottom:16px;">
+          <div><strong>Frame:</strong> <span id="rec-disp-title"></span></div>
+          <div><strong>Total Payable:</strong> <strong style="font-size:14px; color:#161514;" id="rec-disp-amount"></strong> (<span id="rec-disp-mode"></span>)</div>
+          <div><strong>Shipping To:</strong> <span id="rec-disp-addr"></span></div>
+          <div><strong>Email Receipt:</strong> <span id="rec-disp-email"></span></div>
+        </div>
+
+        <button type="button" class="btn-submit-order" onclick="printOrderInvoice(confirmedOrderData)" style="background:#161514; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:8px;">
+          🧾 Download / Print Tax Invoice (PDF)
+        </button>
+
+        <a id="btn-wa-order-share" href="#" target="_blank" class="btn-submit-order" style="background:#25d366; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
+          💬 Chat with Support on WhatsApp
+        </a>
+
+        <button type="button" class="icon-btn" style="width:100%; margin-top:10px; justify-content:center;" onclick="closeCheckoutModal()">
+          Continue Browsing
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL 2: ORDER TRACKER -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="tracker-modal">
+    <div class="modal-box">
+      <button class="modal-close-btn" onclick="closeTrackerModal()">✕</button>
+      <div style="font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--accent);">
+        DELIVERY TRACKING
+      </div>
+      <h3 style="font-size:18px; font-weight:700; margin:4px 0 12px; font-family:'Playfair Display', serif;">
+        Track Your Order
+      </h3>
+      <div style="display:flex; gap:8px; margin-bottom:16px;">
+        <input type="text" class="form-input" id="tracker-input" placeholder="Enter Order ID (e.g. ORD-CC-12345)">
+        <button class="btn-submit-order" style="width:auto; padding:10px 18px; margin:0;" onclick="handleTrackingSearch()">Search</button>
+      </div>
+
+      <div id="tracker-result" style="display:none; background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:14px; font-size:12.5px; line-height:1.6;">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT: APPLICATION LOGIC -->
+  <!-- ========================================================================= -->
+  <script>
+    // Live Google Apps Script Webhook Endpoint
+    const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec";
     const WA_NUMBER = "918619661325";
     const MERCHANT_UPI = "8619661325@upi";
 
-    var currentSelectedProduct = null;
-    var currentQuantity = 1;
-    var currentPaymentMode = 'cod'; // Default to COD
-    var attachedGPSLocation = '';
-    var confirmedOrderData = null;
-    var deferredPrompt = null;
-
-    // =========================================================================
-    // PRODUCT CATALOG (30 Clean Silhouettes · Fastrack/Titan Removed · Avg Price: ₹899)
-    // =========================================================================
+    // Products Database (30 Proprietary Silhouettes, Exact Average COD Price ₹899)
     const PRODUCTS = [
   {
     "id": 1,
@@ -2133,669 +1697,245 @@
   }
 ];
 
-    // PWA Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./sw.js').then(function(reg) {
-          reg.update();
-        }).catch(function() {});
-      });
-    }
+    // State Variables
+    let currentCategory = "All";
+    let currentSort = "featured";
+    let searchQuery = "";
+    let selectedProduct = null;
+    let selectedPayment = "cod";
+    let confirmedOrderData = null;
 
-    function scrollToCatalog() {
-      var grid = document.getElementById('products-grid');
-      if (grid) grid.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Initialize Application
+    document.addEventListener("DOMContentLoaded", () => {
+      renderProductsGrid();
+      updateCartCount();
+    });
 
-    function optImg(url, width) {
-      if (!url) return '';
-      if (url.indexOf('cdn.shopify.com') !== -1) {
-        var clean = url.split('&width=')[0];
-        return clean + '&width=' + (width || 420);
+    // Render Products Grid
+    function renderProductsGrid() {
+      const grid = document.getElementById("products-grid");
+      let filtered = [...PRODUCTS];
+
+      // 1. Filter Category
+      if (currentCategory === "Polarized") {
+        filtered = filtered.filter(p => p.category.includes("Polarized"));
+      } else if (currentCategory === "Acetates") {
+        filtered = filtered.filter(p => p.category.includes("Acetate") || p.category.includes("Lifestyle"));
+      } else if (currentCategory === "Magnetic") {
+        filtered = filtered.filter(p => p.category.includes("Magnetic"));
+      } else if (currentCategory === "Luxury") {
+        filtered = filtered.filter(p => p.category.includes("Luxury"));
+      } else if (currentCategory === "Lifestyle") {
+        filtered = filtered.filter(p => p.category.includes("Lifestyle"));
       }
-      return url;
-    }
 
-    // =========================================================================
-    // CATALOG RENDERING & FILTERING
-    // =========================================================================
-    var BATCH_SIZE = 8;
-    var renderedCount = 0;
-    var currentCatalogItems = PRODUCTS.slice();
+      // 2. Filter Search Query
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      }
 
-    function renderCatalog(items) {
-      currentCatalogItems = items;
-      renderedCount = 0;
-      var grid = document.getElementById('products-grid');
-      grid.innerHTML = '';
-      
-      var countEl = document.getElementById('results-count-text');
-      if (countEl) countEl.innerText = 'Showing ' + items.length + ' silhouette' + (items.length !== 1 ? 's' : '');
+      // 3. Sort
+      if (currentSort === "price-low") {
+        filtered.sort((a, b) => a.cod_price - b.cod_price);
+      } else if (currentSort === "price-high") {
+        filtered.sort((a, b) => b.cod_price - a.cod_price);
+      } else if (currentSort === "popular") {
+        filtered.sort((a, b) => b.id - a.id);
+      }
 
-      if (items.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 10px;">' +
-          '<div style="font-size:2rem; margin-bottom:6px;">🔍</div>' +
-          '<strong>No silhouettes found matching your criteria.</strong>' +
-          '<div style="margin-top:10px;"><button class="cat-btn active" onclick="clearSearch()">View All Silhouettes</button></div>' +
-          '</div>';
+      // Update count
+      document.getElementById("results-count-text").innerText = "Showing " + filtered.length + " silhouettes";
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:48px 20px; color:var(--text-muted);">No silhouettes match your search query. Try another style or category.</div>';
         return;
       }
-      renderNextBatch();
-    }
 
-    function renderNextBatch() {
-      var grid = document.getElementById('products-grid');
-      var nextItems = currentCatalogItems.slice(renderedCount, renderedCount + BATCH_SIZE);
-      if (nextItems.length === 0) return;
+      grid.innerHTML = filtered.map(p => {
+        const discount = Math.round(((p.compare_at - p.cod_price) / p.compare_at) * 100);
+        const rating = (4.8 + ((p.id % 3) * 0.1)).toFixed(1);
+        const reviewCount = 38 + (p.id * 3);
 
-      var html = nextItems.map(function(p, i) {
-        var globalIdx = renderedCount + i;
-        var firstImg = p.images[0] || '';
-        var secondImg = p.images[1] || firstImg;
-        var isPriority = globalIdx < 4;
-        var mainImgTag = isPriority
-          ? '<img id="card-img-' + p.id + '" src="' + optImg(firstImg, 420) + '" alt="' + p.title + '" fetchpriority="high">'
-          : '<img id="card-img-' + p.id + '" src="' + optImg(firstImg, 420) + '" alt="' + p.title + '" loading="lazy" decoding="async">';
-
-        var isBestseller = p.category.indexOf('Magnetic') !== -1 || p.id === 1 || p.id === 4 || p.id === 10;
-        var isMagnetic = p.category.indexOf('Magnetic') !== -1;
-        var tagHtml = isMagnetic
-          ? '<span class="tag-badge tag-magnetic">🧲 4-in-1 Set</span>'
-          : (isBestseller ? '<span class="tag-badge tag-bestseller">Top Seller</span>' : '<span class="tag-badge">Udaipur</span>');
-
-        var dotsHtml = (p.images && p.images.length > 1) 
-          ? '<div class="card-img-dots">' + p.images.slice(0, 4).map(function(imgUrl, dotIdx) {
-              return '<span class="card-dot ' + (dotIdx === 0 ? 'active' : '') + '" onclick="event.stopPropagation(); switchCardImage(' + p.id + ', \'' + imgUrl + '\', this)"></span>';
-            }).join('') + '</div>'
-          : '';
-
-        var discountPct = Math.round(((p.compare_at - p.cod_price) / p.compare_at) * 100);
-
-        return '<div class="prod-card">' +
-          '<div class="prod-media" onclick="openModal(' + p.id + ')">' +
-            tagHtml +
-            mainImgTag +
-            dotsHtml +
-          '</div>' +
-          '<div class="prod-info">' +
-            '<div class="cat-title-stack">' +
-              '<div class="prod-cat-row">' +
-                '<span class="prod-cat">' + p.category + '</span>' +
-                '<span class="prod-rating-badge">★ 4.9</span>' +
-              '</div>' +
-              '<div class="prod-title">' + p.title + '</div>' +
-            '</div>' +
-            '<div class="price-box">' +
-              '<div class="price-headline">' +
-                '<span class="price-actual">₹' + p.cod_price + '</span>' +
-                '<span class="price-tag-cod">COD</span>' +
-                '<span class="discount-pill">' + discountPct + '% OFF</span>' +
-              '</div>' +
-              '<div class="perk-strip">' +
-                '<span class="perk-tag">⚡ 45-Min</span>' +
-                '<span class="perk-tag">🛡️ Case Free</span>' +
-              '</div>' +
-            '</div>' +
-            '<div class="card-btns">' +
-              '<button class="btn-order-now" onclick="openCheckoutModal(' + p.id + ')">🚚 Order · ₹' + p.cod_price + '</button>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
+        return `
+          <div class="product-card">
+            <div class="media-wrap" onclick="openCheckoutForProduct(${p.id})">
+              <img src="${p.images[0]}" alt="${p.title}" class="media-img" loading="lazy">
+              <span class="badge-card">COD AVAILABLE</span>
+            </div>
+            <div class="card-body">
+              <div class="card-cat">${p.category}</div>
+              <div class="card-title" onclick="openCheckoutForProduct(${p.id})">${p.title}</div>
+              <div class="card-rating">
+                ★★★★★ <span>${rating} (${reviewCount})</span>
+              </div>
+              <div class="price-row">
+                <span class="price-current">₹${p.cod_price}</span>
+                <span class="price-original">₹${p.compare_at}</span>
+                <span class="price-save">${discount}% OFF</span>
+              </div>
+              <button type="button" class="btn-buy-cod" onclick="openCheckoutForProduct(${p.id})">
+                Buy Now (COD)
+              </button>
+            </div>
+          </div>
+        `;
       }).join('');
-
-      grid.insertAdjacentHTML('beforeend', html);
-      renderedCount += nextItems.length;
-
-      if (renderedCount < currentCatalogItems.length) {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(renderNextBatch, { timeout: 250 });
-        } else {
-          setTimeout(renderNextBatch, 60);
-        }
-      }
     }
 
-    function switchCardImage(productId, newUrl, dotEl) {
-      var img = document.getElementById('card-img-' + productId);
-      if (img) img.src = optImg(newUrl, 420);
-      if (dotEl && dotEl.parentElement) {
-        dotEl.parentElement.querySelectorAll('.card-dot').forEach(function(d) { d.classList.remove('active'); });
-        dotEl.classList.add('active');
-      }
-    }
-
+    // Category Tabs
     function filterCategory(cat, btn) {
-      if (btn) {
-        document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-      }
-      var filtered = PRODUCTS.slice();
-      if (cat !== 'All') {
-        filtered = PRODUCTS.filter(function(p) {
-          return p.category.toLowerCase().indexOf(cat.toLowerCase()) !== -1;
-        });
-      }
-      renderCatalog(filtered);
+      currentCategory = cat;
+      document.querySelectorAll(".pill-tab").forEach(t => t.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      renderProductsGrid();
     }
 
-    function handleSearch(query) {
-      var q = (query || '').toLowerCase().trim();
-      var clearBtn = document.getElementById('btn-clear-search');
-      if (clearBtn) clearBtn.style.display = q ? 'block' : 'none';
-
-      if (!q) {
-        renderCatalog(PRODUCTS);
-        return;
-      }
-      var filtered = PRODUCTS.filter(function(p) {
-        return p.title.toLowerCase().indexOf(q) !== -1 || p.category.toLowerCase().indexOf(q) !== -1;
-      });
-      renderCatalog(filtered);
+    // Search & Sort Handlers
+    function handleSearch(val) {
+      searchQuery = val.trim();
+      renderProductsGrid();
+    }
+    function handleSort(val) {
+      currentSort = val;
+      renderProductsGrid();
     }
 
-    function clearSearch() {
-      var box = document.getElementById('search-box');
-      if (box) box.value = '';
-      var clearBtn = document.getElementById('btn-clear-search');
-      if (clearBtn) clearBtn.style.display = 'none';
-      document.querySelectorAll('.cat-btn').forEach(function(b) { b.classList.remove('active'); });
-      var allBtn = document.querySelector('.cat-btn');
-      if (allBtn) allBtn.classList.add('active');
-      renderCatalog(PRODUCTS);
-    }
+    // Checkout Modal Logic
+    function openCheckoutForProduct(prodId) {
+      const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
+      selectedProduct = p;
+      selectedPayment = "cod";
 
-    function handleSort(sortType) {
-      var items = currentCatalogItems.slice();
-      if (sortType === 'price-low') {
-        items.sort(function(a, b) { return a.cod_price - b.cod_price; });
-      } else if (sortType === 'price-high') {
-        items.sort(function(a, b) { return b.cod_price - a.cod_price; });
-      } else if (sortType === 'popular') {
-        items.sort(function(a, b) { return b.id - a.id; });
-      } else {
-        items = PRODUCTS.slice();
-      }
-      renderCatalog(items);
-    }
+      // Fire Meta Pixel ViewContent event
+      try {
+        if (window.fbq) fbq('track', 'ViewContent', { content_name: p.title, value: p.cod_price, currency: 'INR' });
+      } catch(e) {}
 
-    function toggleFaq(el) {
-      var item = el.parentElement;
-      item.classList.toggle('open');
-    }
+      document.getElementById("check-item-img").src = p.images[0];
+      document.getElementById("check-item-title").innerText = p.title;
+      document.getElementById("check-item-cat").innerText = p.category;
+      document.getElementById("check-item-price").innerText = "₹" + p.cod_price;
+      document.getElementById("pay-cod-amount").innerText = "₹" + p.cod_price;
+      document.getElementById("pay-upi-amount").innerText = "₹" + (p.cod_price - 100);
 
-    // =========================================================================
-    // QUICK VIEW MODAL
-    // =========================================================================
-    function openModal(productId) {
-      var p = PRODUCTS.find(function(x) { return x.id === productId; });
-      if (!p) return;
-      currentSelectedProduct = p;
+      selectPaymentMode("cod");
 
-      document.getElementById('modal-img').src = optImg(p.images[0] || '', 750);
-      document.getElementById('modal-title').innerText = p.title;
-      document.getElementById('modal-cat').innerText = p.category;
-      document.getElementById('modal-price').innerText = '₹' + p.cod_price;
-      document.getElementById('modal-compare').innerText = '₹' + (p.compare_at || 2499).toFixed(0);
+      // Reset Form Steps
+      document.getElementById("checkout-step-1").style.display = "block";
+      document.getElementById("checkout-step-2").style.display = "none";
+      document.getElementById("checkout-modal").style.display = "flex";
+      document.body.style.overflow = "hidden";
 
-      var discountPct = Math.round(((p.compare_at - p.cod_price) / p.compare_at) * 100);
-      document.getElementById('modal-discount-tag').innerText = discountPct + '% OFF';
-
-      var thumbsContainer = document.getElementById('modal-thumbs');
-      thumbsContainer.innerHTML = '';
-      if (p.images && p.images.length > 1) {
-        p.images.forEach(function(imgUrl) {
-          var t = document.createElement('img');
-          t.src = optImg(imgUrl, 100);
-          t.style.width = '42px';
-          t.style.height = '42px';
-          t.style.objectFit = 'cover';
-          t.style.borderRadius = '6px';
-          t.style.border = '1px solid var(--border)';
-          t.style.cursor = 'pointer';
-          t.style.marginRight = '6px';
-          t.onclick = function() {
-            document.getElementById('modal-img').src = optImg(imgUrl, 750);
-          };
-          thumbsContainer.appendChild(t);
-        });
-      }
-
-      var waBtn = document.getElementById('modal-wa-btn');
-      if (waBtn) {
-        var text = 'Hi The Classic Co.! I want to order ' + p.title + ' (₹' + p.cod_price + ' COD). Can you deliver in Udaipur today?';
-        waBtn.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
-      }
-
-      document.getElementById('product-modal').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      document.getElementById('product-modal').style.display = 'none';
-      document.body.style.overflow = '';
-    }
-
-    function proceedToCheckoutFromModal() {
-      if (currentSelectedProduct) {
-        closeModal();
-        openCheckoutModal(currentSelectedProduct.id);
-      }
-    }
-
-    // =========================================================================
-    // CHECKOUT MODAL LOGIC
-    // =========================================================================
-    function openCheckoutModal(productId) {
-      var p = PRODUCTS.find(function(x) { return x.id === productId; });
-      if (!p) return;
-      currentSelectedProduct = p;
-      currentQuantity = 1;
-      currentPaymentMode = 'cod'; // Default to COD
-
-      var optCod = document.getElementById('pay-opt-cod');
-      var optUpi = document.getElementById('pay-opt-upi');
-      if (optCod) optCod.classList.add('active');
-      if (optUpi) optUpi.classList.remove('active');
-
-      document.getElementById('checkout-modal-title').innerText = p.title;
-      document.getElementById('checkout-card-title').innerText = p.title;
-      document.getElementById('checkout-modal-img').src = optImg(p.images[0] || '', 180);
-      document.getElementById('order-qty-val').innerText = '1';
-
-      updateCheckoutTotals();
-
-      clearGPSPin();
-      document.getElementById('order-view-details').style.display = 'block';
-      document.getElementById('order-view-upi').style.display = 'none';
-      document.getElementById('checkout-backdrop').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function changeQuantity(delta) {
-      currentQuantity = Math.max(1, currentQuantity + delta);
-      document.getElementById('order-qty-val').innerText = currentQuantity;
-      updateCheckoutTotals();
-    }
-
-    function updateCheckoutTotals() {
-      if (!currentSelectedProduct) return;
-      var p = currentSelectedProduct;
-      var qty = currentQuantity;
-      var totalMrp = (p.compare_at || 2499) * qty;
-      var baseCodPrice = p.cod_price * qty;
-      var isUPI = (currentPaymentMode === 'upi');
-
-      // UPI discount: ₹100 per pair
-      var upiDiscount = isUPI ? (100 * qty) : 0;
-      var totalPayable = baseCodPrice - upiDiscount;
-
-      var cardUpiPrice = document.getElementById('pay-card-upi-price');
-      var cardCodPrice = document.getElementById('pay-card-cod-price');
-      if (cardCodPrice) cardCodPrice.innerText = '₹' + baseCodPrice.toLocaleString('en-IN');
-      if (cardUpiPrice) cardUpiPrice.innerText = '₹' + (baseCodPrice - 100 * qty).toLocaleString('en-IN');
-
-      var mrpEl = document.getElementById('checkout-inv-mrp');
-      var baseEl = document.getElementById('checkout-inv-base');
-      var upiRow = document.getElementById('checkout-inv-upi-row');
-      var upiDiscountEl = document.getElementById('checkout-inv-upi-discount');
-      var totalEl = document.getElementById('checkout-inv-total');
-      var calloutEl = document.getElementById('checkout-savings-callout');
-
-      if (mrpEl) mrpEl.innerText = '₹' + totalMrp.toLocaleString('en-IN');
-      if (baseEl) baseEl.innerText = '₹' + baseCodPrice.toLocaleString('en-IN');
-
-      if (isUPI) {
-        if (upiRow) upiRow.style.display = 'flex';
-        if (upiDiscountEl) upiDiscountEl.innerText = '-₹' + upiDiscount.toLocaleString('en-IN');
-        if (calloutEl) {
-          calloutEl.innerHTML = '<span>🎉</span> <span><strong>Prepaid UPI Deal:</strong> You are saving ₹' + upiDiscount.toLocaleString('en-IN') + ' with instant bank transfer!</span>';
-        }
-      } else {
-        if (upiRow) upiRow.style.display = 'none';
-        if (calloutEl) {
-          calloutEl.innerHTML = '<span>🪞</span> <span><strong>Doorstep Mirror Trial:</strong> Pay ₹' + totalPayable.toLocaleString('en-IN') + ' at doorstep only after trying on in the mirror!</span>';
-        }
-      }
-
-      if (totalEl) totalEl.innerText = '₹' + totalPayable.toLocaleString('en-IN') + ' Only';
-
-      var btnLabel = document.getElementById('btn-submit-label');
-      if (btnLabel) {
-        if (isUPI) {
-          btnLabel.innerText = '⚡ Pay ₹' + totalPayable.toLocaleString('en-IN') + ' via UPI (Save ₹' + upiDiscount + ')';
-        } else {
-          btnLabel.innerText = '🚚 Confirm COD Order — Pay ₹' + totalPayable.toLocaleString('en-IN') + ' at Doorstep';
-        }
-      }
+      // Fire Meta Pixel InitiateCheckout
+      try {
+        if (window.fbq) fbq('track', 'InitiateCheckout', { content_name: p.title, value: p.cod_price, currency: 'INR' });
+      } catch(e) {}
     }
 
     function closeCheckoutModal() {
-      document.getElementById('checkout-backdrop').classList.remove('active');
-      document.body.style.overflow = '';
+      document.getElementById("checkout-modal").style.display = "none";
+      document.body.style.overflow = "";
     }
 
-    function closeCheckoutBackdrop(e) {
-      if (e.target.id === 'checkout-backdrop') {
-        closeCheckoutModal();
-      }
-    }
+    function selectPaymentMode(mode) {
+      selectedPayment = mode;
+      document.getElementById("pay-opt-cod").classList.toggle("active", mode === "cod");
+      document.getElementById("pay-opt-upi").classList.toggle("active", mode === "upi");
 
-    function backToOrderForm() {
-      document.getElementById('order-view-details').style.display = 'block';
-      document.getElementById('order-view-upi').style.display = 'none';
-    }
-
-    function setCheckoutPayment(mode) {
-      currentPaymentMode = mode;
-      var optCod = document.getElementById('pay-opt-cod');
-      var optUpi = document.getElementById('pay-opt-upi');
-
-      if (mode === 'cod') {
-        optCod.classList.add('active');
-        optUpi.classList.remove('active');
+      const p = selectedProduct || PRODUCTS[0];
+      const btnText = document.getElementById("btn-submit-text");
+      if (mode === "cod") {
+        btnText.innerText = "Complete Order (Cash on Delivery ₹" + p.cod_price + ")";
       } else {
-        optUpi.classList.add('active');
-        optCod.classList.remove('active');
-      }
-      updateCheckoutTotals();
-    }
-
-    function detectGPSLocation() {
-      var gpsText = document.getElementById('gps-text');
-      var gpsIcon = document.getElementById('gps-icon');
-      var gpsBadge = document.getElementById('gps-status-badge');
-      var hiddenGps = document.getElementById('inp-gps');
-      var addrBox = document.getElementById('inp-address');
-
-      if (!navigator.geolocation) {
-        alert('Location service is not supported by your browser.');
-        return;
-      }
-
-      gpsText.textContent = 'Pinning...';
-      gpsIcon.textContent = '⏳';
-
-      navigator.geolocation.getCurrentPosition(
-        function(pos) {
-          var lat = pos.coords.latitude;
-          var lng = pos.coords.longitude;
-          var mapLink = 'https://maps.google.com/?q=' + lat + ',' + lng;
-          attachedGPSLocation = mapLink;
-          if (hiddenGps) hiddenGps.value = mapLink;
-
-          gpsText.textContent = 'Pinned';
-          gpsIcon.textContent = '✓';
-          if (gpsBadge) {
-            gpsBadge.style.display = 'block';
-            gpsBadge.innerHTML = '✓ Live GPS Location Pinned (' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ')';
-          }
-          if (addrBox && !addrBox.value.trim()) {
-            addrBox.value = 'Pinned Udaipur Location (Near ' + lat.toFixed(4) + ', ' + lng.toFixed(4) + ')';
-          }
-        },
-        function(err) {
-          gpsText.textContent = 'Auto-Pin Map';
-          gpsIcon.textContent = '📍';
-          alert('Could not access GPS. Please type your Udaipur address.');
-        },
-        { enableHighAccuracy: true, timeout: 8000 }
-      );
-    }
-
-    function clearGPSPin() {
-      attachedGPSLocation = '';
-      var hiddenGps = document.getElementById('inp-gps');
-      if (hiddenGps) hiddenGps.value = '';
-      var badge = document.getElementById('gps-status-badge');
-      if (badge) badge.style.display = 'none';
-      var gpsText = document.getElementById('gps-text');
-      if (gpsText) gpsText.textContent = 'Auto-Pin Map';
-      var gpsIcon = document.getElementById('gps-icon');
-      if (gpsIcon) gpsIcon.textContent = '📍';
-    }
-
-    function setFieldError(fieldId, errId, msg) {
-      var el = document.getElementById(fieldId);
-      var err = document.getElementById(errId);
-      if (el) el.style.borderColor = '#DC2626';
-      if (err) {
-        err.innerText = msg;
-        err.style.display = 'block';
+        btnText.innerText = "Complete Order (Instant UPI ₹" + (p.cod_price - 100) + ")";
       }
     }
 
-    function clearFieldError(fieldId, errId) {
-      var el = document.getElementById(fieldId);
-      var err = document.getElementById(errId);
-      if (el) el.style.borderColor = '';
-      if (err) err.style.display = 'none';
+    function clearError(fieldId, errId) {
+      document.getElementById(fieldId).style.borderColor = "";
+      document.getElementById(errId).style.display = "none";
     }
 
-    // =========================================================================
-    // ORDER SUBMISSION & GOOGLE APPS SCRIPT WEBHOOK TRIGGER
-    // =========================================================================
-    function processOrderCheckout() {
-      var nameEl = document.getElementById('inp-name');
-      var emailEl = document.getElementById('inp-email');
-      var phoneEl = document.getElementById('inp-phone');
-      var addrEl = document.getElementById('inp-address');
-      var landmarkEl = document.getElementById('inp-landmark');
-      var pincodeEl = document.getElementById('inp-pincode');
+    // Submit Order Checkout
+    function submitCustomerOrder() {
+      const name = document.getElementById("inp-name").value.trim();
+      const phone = document.getElementById("inp-phone").value.trim();
+      const email = document.getElementById("inp-email").value.trim();
+      const address = document.getElementById("inp-address").value.trim();
+      const city = document.getElementById("inp-city").value.trim();
+      const pincode = document.getElementById("inp-pincode").value.trim();
+      const sendInvoice = document.getElementById("inp-send-invoice").checked;
 
-      var name = (nameEl ? nameEl.value : '').trim();
-      var email = (emailEl ? emailEl.value : '').trim();
-      var phone = (phoneEl ? phoneEl.value : '').trim();
-      var address = (addrEl ? addrEl.value : '').trim();
-      var landmark = (landmarkEl ? landmarkEl.value : '').trim();
-      var pincode = (pincodeEl ? pincodeEl.value : '').trim();
-
-      var hasError = false;
-      var firstErrEl = null;
-
-      // 1. Name validation
+      let hasError = false;
       if (!name || name.length < 2) {
-        setFieldError('inp-name', 'err-name', '⚠️ Kripya apna pura naam dalein.');
-        if (!firstErrEl) firstErrEl = nameEl;
+        document.getElementById("inp-name").style.borderColor = "#ef4444";
+        document.getElementById("err-name").style.display = "block";
         hasError = true;
-      } else {
-        clearFieldError('inp-name', 'err-name');
       }
-
-      // 2. Email validation
-      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email || !emailRegex.test(email)) {
-        setFieldError('inp-email', 'err-email', '⚠️ Valid email ID dalein invoice receipt ke liye.');
-        if (!firstErrEl) firstErrEl = emailEl;
-        hasError = true;
-      } else {
-        clearFieldError('inp-email', 'err-email');
-      }
-
-      // 3. Phone validation
       if (!phone || !/^[6-9][0-9]{9}$/.test(phone)) {
-        setFieldError('inp-phone', 'err-phone', '⚠️ 10-digit valid WhatsApp number dalein.');
-        if (!firstErrEl) firstErrEl = phoneEl;
+        document.getElementById("inp-phone").style.borderColor = "#ef4444";
+        document.getElementById("err-phone").style.display = "block";
         hasError = true;
-      } else {
-        clearFieldError('inp-phone', 'err-phone');
       }
-
-      // 4. Address validation
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById("inp-email").style.borderColor = "#ef4444";
+        document.getElementById("err-email").style.display = "block";
+        hasError = true;
+      }
       if (!address || address.length < 5) {
-        setFieldError('inp-address', 'err-address', '⚠️ Pura delivery address zaroori hey.');
-        if (!firstErrEl) firstErrEl = addrEl;
+        document.getElementById("inp-address").style.borderColor = "#ef4444";
+        document.getElementById("err-address").style.display = "block";
         hasError = true;
-      } else {
-        clearFieldError('inp-address', 'err-address');
       }
-
-      // 5. Landmark validation
-      if (!landmark || landmark.length < 2) {
-        setFieldError('inp-landmark', 'err-landmark', '⚠️ Pass ka landmark zaroori hey.');
-        if (!firstErrEl) firstErrEl = landmarkEl;
+      if (!city || city.length < 2) {
+        document.getElementById("inp-city").style.borderColor = "#ef4444";
+        document.getElementById("err-city").style.display = "block";
         hasError = true;
-      } else {
-        clearFieldError('inp-landmark', 'err-landmark');
       }
-
-      // 6. Pincode validation
       if (!pincode || !/^[0-9]{6}$/.test(pincode)) {
-        setFieldError('inp-pincode', 'err-pincode', '⚠️ 6-digit Pincode dalein.');
-        if (!firstErrEl) firstErrEl = pincodeEl;
+        document.getElementById("inp-pincode").style.borderColor = "#ef4444";
+        document.getElementById("err-pincode").style.display = "block";
         hasError = true;
-      } else {
-        clearFieldError('inp-pincode', 'err-pincode');
       }
 
-      if (hasError) {
-        if (firstErrEl) firstErrEl.focus();
-        return;
-      }
+      if (hasError) return;
 
-      var p = currentSelectedProduct || PRODUCTS[0];
-      var isUPI = (currentPaymentMode === 'upi');
-      var baseCodPrice = p.cod_price * currentQuantity;
-      var totalAmount = isUPI ? (baseCodPrice - 100 * currentQuantity) : baseCodPrice;
-      var savings = isUPI ? (100 * currentQuantity) : 0;
-      var orderId = 'ORD-CC-' + Math.floor(10000 + Math.random() * 90000);
-
-      var noteText = 'TheClassicCo ' + orderId;
-      var currentUPIUrl = 'upi://pay?pa=' + encodeURIComponent(MERCHANT_UPI) +
-                         '&pn=' + encodeURIComponent('The Classic Co') +
-                         '&am=' + totalAmount +
-                         '&cu=INR' +
-                         '&tn=' + encodeURIComponent(noteText);
-
-      var sendInvoiceCheck = document.getElementById('inp-send-invoice');
-      var shouldSendInvoice = sendInvoiceCheck ? sendInvoiceCheck.checked : true;
+      const p = selectedProduct || PRODUCTS[0];
+      const isUPI = (selectedPayment === "upi");
+      const totalAmount = isUPI ? (p.cod_price - 100) : p.cod_price;
+      const orderId = "ORD-CC-" + Math.floor(10000 + Math.random() * 90000);
 
       confirmedOrderData = {
         orderId: orderId,
         productId: p.id,
         title: p.title,
         category: p.category,
-        quantity: currentQuantity,
+        quantity: 1,
         amount: totalAmount,
-        basePrice: baseCodPrice,
-        paymentMode: currentPaymentMode === 'upi' ? 'Instant UPI' : 'Cash on Delivery',
+        paymentMode: isUPI ? "Instant UPI" : "Cash on Delivery",
         isPrepaid: isUPI,
-        savingsVsCOD: savings,
         name: name,
         email: email,
         phone: phone,
-        address: address,
-        landmark: landmark,
+        address: address + ", " + city,
+        city: city,
         pincode: pincode,
-        gps: attachedGPSLocation,
-        upiUrl: currentUPIUrl,
-        sendInvoice: shouldSendInvoice,
+        sendInvoice: sendInvoice,
         createdAt: new Date().toISOString()
       };
 
-      // Confetti Explosion
-      try {
-        confetti({ particleCount: 90, spread: 70, origin: { y: 0.6 } });
-      } catch (e) {}
+      // Confetti burst
+      try { confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } }); } catch(e) {}
 
-      // Update Step 2 Screen Details
-      document.getElementById('receipt-hero-amount').innerText = '₹' + totalAmount.toLocaleString('en-IN');
-      document.getElementById('upi-btn-amount').innerText = '₹' + totalAmount.toLocaleString('en-IN');
-      document.getElementById('rec-name').innerText = name;
-      document.getElementById('rec-email-summary').innerText = email;
-      document.getElementById('rec-email-text').innerText = email;
-      document.getElementById('rec-item').innerText = p.title;
-      document.getElementById('rec-qty').innerText = currentQuantity + (currentQuantity > 1 ? ' Pairs' : ' Pair');
-      document.getElementById('rec-amount').innerText = '₹' + totalAmount.toLocaleString('en-IN') + ' Only';
-      document.getElementById('rec-mode').innerText = currentPaymentMode === 'cod' ? 'Cash on Delivery (Doorstep Mirror Trial)' : 'Instant UPI (' + MERCHANT_UPI + ')';
-      document.getElementById('rec-phone').innerText = '+91 ' + phone;
-      document.getElementById('rec-addr').innerText = address;
-
-      var qrImg = document.getElementById('upi-qr-image');
-      if (qrImg) {
-        qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=8&data=' + encodeURIComponent(currentUPIUrl);
-      }
-
-      var gpsRow = document.getElementById('rec-gps-row');
-      if (attachedGPSLocation) {
-        gpsRow.style.display = 'block';
-        document.getElementById('rec-gps-link').innerHTML = '<a href="' + attachedGPSLocation + '" target="_blank" style="color:var(--accent-dark); text-decoration:underline;">View Map Pin</a>';
-      } else {
-        gpsRow.style.display = 'none';
-      }
-
-      var upiBox = document.getElementById('upi-action-box');
-      var codBox = document.getElementById('cod-action-box');
-      var pill = document.getElementById('receipt-status-pill');
-
-      if (currentPaymentMode === 'upi') {
-        upiBox.style.display = 'block';
-        codBox.style.display = 'none';
-        pill.innerText = '⚡ UPI PAYMENT READY — ₹' + totalAmount.toLocaleString('en-IN');
-      } else {
-        upiBox.style.display = 'none';
-        codBox.style.display = 'block';
-        pill.innerText = 'COD ORDER REGISTERED — ₹' + totalAmount.toLocaleString('en-IN');
-      }
-
-      // Switch views
-      document.getElementById('order-view-details').style.display = 'none';
-      document.getElementById('order-view-upi').style.display = 'block';
-
-      // Store in LocalStorage
-      try {
-        var existingOrders = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
-        existingOrders.unshift(confirmedOrderData);
-        localStorage.setItem('the_classic_co_orders', JSON.stringify(existingOrders.slice(0, 10)));
-      } catch (e) {}
-
-      // A. Send to Google Apps Script Webhook
-      if (GOOGLE_APPS_SCRIPT_URL) {
-        try {
-          fetch(GOOGLE_APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(confirmedOrderData)
-          }).catch(function() {});
-        } catch (e) {}
-
-        try {
-          var qs = '?action=order' +
-            '&orderId=' + encodeURIComponent(orderId) +
-            '&name=' + encodeURIComponent(name) +
-            '&email=' + encodeURIComponent(email) +
-            '&phone=' + encodeURIComponent(phone) +
-            '&address=' + encodeURIComponent(address) +
-            '&landmark=' + encodeURIComponent(landmark) +
-            '&pincode=' + encodeURIComponent(pincode) +
-            '&title=' + encodeURIComponent(p.title) +
-            '&quantity=' + encodeURIComponent(currentQuantity) +
-            '&paymentMode=' + encodeURIComponent(confirmedOrderData.paymentMode) +
-            '&amount=' + encodeURIComponent(totalAmount) +
-            '&gps=' + encodeURIComponent(attachedGPSLocation || '');
-          var beacon = new Image();
-          beacon.src = GOOGLE_APPS_SCRIPT_URL + qs;
-        } catch (e) {}
-      }
-
-      // B. Persist to server /api/orders (if hosted on local Node.js server)
-      try {
-        fetch('/api/orders', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(confirmedOrderData)
-        }).catch(function() {});
-      } catch (err) {}
-
-      // C. Fire Meta & GA4 E-Commerce Purchase Pixels
+      // Fire Pixels Purchase
       try {
         if (window.fbq) {
           fbq('track', 'Purchase', {
             value: totalAmount,
             currency: 'INR',
             content_name: p.title,
-            content_type: 'product',
-            num_items: currentQuantity
+            num_items: 1
           });
         }
         if (window.gtag) {
@@ -2803,188 +1943,150 @@
             transaction_id: orderId,
             value: totalAmount,
             currency: 'INR',
-            items: [{
-              item_name: p.title,
-              price: totalAmount,
-              quantity: currentQuantity
-            }]
+            items: [{ item_name: p.title, price: totalAmount, quantity: 1 }]
           });
         }
-      } catch(pixErr) {}
-    }
+      } catch(e) {}
 
-    function triggerUPIIntentDirect() {
-      var d = confirmedOrderData || { upiUrl: 'upi://pay?pa=' + MERCHANT_UPI + '&pn=TheClassicCo&am=799&cu=INR' };
-      if (d.upiUrl) {
-        window.location.href = d.upiUrl;
+      // Render Step 2 screen
+      document.getElementById("rec-hero-orderid").innerText = "#" + orderId;
+      document.getElementById("rec-hero-name").innerText = name;
+      document.getElementById("rec-disp-title").innerText = p.title;
+      document.getElementById("rec-disp-amount").innerText = "₹" + totalAmount.toLocaleString('en-IN');
+      document.getElementById("rec-disp-mode").innerText = confirmedOrderData.paymentMode;
+      document.getElementById("rec-disp-addr").innerText = address + ", " + city + " - " + pincode;
+      document.getElementById("rec-disp-email").innerText = email;
+
+      const waMsg = encodeURIComponent(
+        "🕶️ *ORDER CONFIRMATION — THE CLASSIC CO.*\n" +
+        "• Order Ref: #" + orderId + "\n" +
+        "• Customer: " + name + " (+91 " + phone + ")\n" +
+        "• Frame: " + p.title + "\n" +
+        "• Total: ₹" + totalAmount + " (" + confirmedOrderData.paymentMode + ")\n" +
+        "• Shipping Address: " + address + ", " + city + " " + pincode
+      );
+      document.getElementById("btn-wa-order-share").href = "https://wa.me/" + WA_NUMBER + "?text=" + waMsg;
+
+      // Switch to Step 2
+      document.getElementById("checkout-step-1").style.display = "none";
+      document.getElementById("checkout-step-2").style.display = "block";
+
+      // Save to localStorage
+      try {
+        const stored = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
+        stored.unshift(confirmedOrderData);
+        localStorage.setItem('the_classic_co_orders', JSON.stringify(stored));
+      } catch(e) {}
+
+      // Dispatch to Google Apps Script Webhook
+      if (GOOGLE_APPS_SCRIPT_URL) {
+        try {
+          fetch(GOOGLE_APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(confirmedOrderData)
+          }).catch(() => {});
+
+          const qs = '?action=order' +
+            '&orderId=' + encodeURIComponent(orderId) +
+            '&name=' + encodeURIComponent(name) +
+            '&email=' + encodeURIComponent(email) +
+            '&phone=' + encodeURIComponent(phone) +
+            '&address=' + encodeURIComponent(address + ', ' + city) +
+            '&pincode=' + encodeURIComponent(pincode) +
+            '&title=' + encodeURIComponent(p.title) +
+            '&amount=' + encodeURIComponent(totalAmount) +
+            '&paymentMode=' + encodeURIComponent(confirmedOrderData.paymentMode) +
+            '&sendInvoice=' + encodeURIComponent(sendInvoice ? 'true' : 'false');
+          new Image().src = GOOGLE_APPS_SCRIPT_URL + qs;
+        } catch(e) {}
       }
     }
 
-    function copyUPIId() {
-      navigator.clipboard.writeText(MERCHANT_UPI).then(function() {
-        var toast = document.getElementById('upi-copy-toast');
-        if (toast) {
-          toast.style.display = 'block';
-          setTimeout(function() { toast.style.display = 'none'; }, 2500);
-        }
-      });
-    }
-
-    function sendOrderReceiptToWhatsApp() {
-      if (!confirmedOrderData) {
-        alert("Please complete the order details first.");
-        return;
-      }
-      var d = confirmedOrderData;
-      var nl = String.fromCharCode(10);
-
-      var lines = [
-        '🕶️ *CONFIRMED EYEWEAR ORDER — THE CLASSIC CO.*',
-        '════════════════════',
-        '  *Order ID:* #' + d.orderId,
-        '  *Customer Name:* ' + d.name,
-        '  *Customer Email:* ' + (d.email || 'Provided'),
-        '  *Product:* ' + d.title,
-        '  *Quantity:* ' + d.quantity + ' Pair(s)',
-        '  *Total Payable:* ₹' + d.amount.toLocaleString('en-IN') + ' Only',
-        '  *Payment Tier:* ' + (d.isPrepaid ? '⚡ Instant UPI (Save ₹100)' : '💵 Cash on Delivery (Doorstep Mirror Trial)'),
-        '  *Merchant UPI:* ' + MERCHANT_UPI,
-        '',
-        '📍 *DELIVERY DISPATCH DETAILS:*',
-        '  *WhatsApp Mobile:* +91 ' + d.phone,
-        '  *Delivery Address:* ' + d.address,
-        '  *Landmark:* ' + d.landmark,
-        '  *Pincode:* ' + d.pincode,
-        (d.gps ? ('🗺️ *GPS Live Map Pin:* ' + d.gps) : ''),
-        '════════════════════',
-        (d.isPrepaid
-          ? '_Namaste! Order placed with instant UPI prepayment. 45-min express dispatch initiated._'
-          : '_Namaste! COD order placed for 45-min Udaipur express dispatch. Pehle mirror me try karein, fir rider ko cash dein._')
-      ].filter(Boolean);
-
-      var waMessage = lines.join(nl);
-      var waUrl = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(waMessage);
-      window.open(waUrl, '_blank');
-    }
-
-    // =========================================================================
-    // TAX INVOICE GENERATOR & PRINT ENGINE
-    // =========================================================================
+    // Print Official GST Tax Invoice
     function printOrderInvoice(order) {
-      if (!order) {
-        order = confirmedOrderData;
-      }
-      if (!order) {
-        alert("Please complete the order details first to view the invoice.");
-        return;
-      }
-      var brand = 'THE CLASSIC CO.';
-      var invoiceNum = 'INV-CC-' + (order.orderId || '2026-001');
-      var invoiceDate = new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', {
+      if (!order) order = confirmedOrderData;
+      if (!order) return;
+
+      const brand = "THE CLASSIC CO.";
+      const invoiceNum = "INV-CC-" + (order.orderId || "2026-001");
+      const invoiceDate = new Date(order.createdAt || Date.now()).toLocaleDateString('en-IN', {
         day: '2-digit', month: 'short', year: 'numeric'
       });
-      var amount = Number(order.amount) || 899;
-      var taxableValue = Math.round(amount / 1.18);
-      var gstAmount = amount - taxableValue;
-      var cgst = (gstAmount / 2).toFixed(2);
-      var sgst = (gstAmount / 2).toFixed(2);
+      const amount = Number(order.amount) || 899;
+      const taxableValue = Math.round(amount / 1.18);
+      const gstAmount = amount - taxableValue;
+      const cgst = (gstAmount / 2).toFixed(2);
+      const sgst = (gstAmount / 2).toFixed(2);
 
-      var invoiceHtml = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Tax Invoice #' + invoiceNum + '</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#181716;padding:40px;margin:0;background:#fff;line-height:1.5;font-size:13px;}.inv-wrap{max-width:720px;margin:0 auto;border:1px solid #e5e5e5;padding:36px;border-radius:8px;}.inv-header{display:flex;justify-content:space-between;border-bottom:2px solid #181716;padding-bottom:18px;margin-bottom:22px;}.brand-name{font-size:22px;font-weight:800;letter-spacing:1px;font-family:Georgia,serif;}.brand-sub{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#78716c;margin-top:2px;}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;font-size:12.5px;}.table-inv{width:100%;border-collapse:collapse;margin-bottom:20px;}.table-inv th{background:#faf9f6;border:1px solid #e5e5e5;padding:9px 12px;font-size:11px;text-transform:uppercase;text-align:left;}.table-inv td{border:1px solid #e5e5e5;padding:12px;}.total-table{width:260px;margin-left:auto;margin-bottom:22px;border-collapse:collapse;}.total-table td{padding:5px 8px;font-size:12px;}.total-table tr.grand{font-size:15px;font-weight:800;border-top:2px solid #181716;}.warranty-box{background:#faf9f6;border-left:3px solid #b48448;padding:10px 14px;font-size:11.5px;color:#57534e;margin-bottom:22px;}.footer-sign{display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:14px;border-top:1px solid #e5e5e5;font-size:11px;color:#78716c;}@media print{body{padding:0;}.inv-wrap{border:none;padding:0;}}</style></head><body><div class="inv-wrap"><div class="inv-header"><div><div class="brand-name">' + brand + '</div><div class="brand-sub">Architectural Eyewear Studio · Udaipur</div><div style="font-size:11px;color:#57534e;margin-top:4px;">Plot 42, Saheli Marg, Sukhadia Circle, Udaipur 313001<br>Helpline: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div></div><div style="text-align:right;"><h2 style="margin:0;font-size:18px;">TAX INVOICE</h2><div style="margin-top:4px;font-size:11.5px;color:#57534e;">Invoice: <strong>#' + invoiceNum + '</strong><br>Date: <strong>' + invoiceDate + '</strong></div></div></div><div class="meta-grid"><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Billed To:</strong><div style="font-size:13.5px;font-weight:700;">' + order.name + '</div><div style="color:#57534e;margin-top:2px;">📞 +91 ' + order.phone + '<br>📧 ' + (order.email || 'None') + '<br>📍 ' + order.address + '<br>' + (order.landmark ? ('Landmark: ' + order.landmark + '<br>') : '') + 'Udaipur, Rajasthan ' + (order.pincode || '313001') + '</div></div><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Payment & Delivery:</strong><div style="color:#57534e;">Payment Mode: <strong>' + (order.paymentMode || (order.isPrepaid ? 'Instant UPI' : 'Cash on Delivery')) + '</strong><br>Trial Mode: <strong>45-Min Doorstep Mirror Trial</strong><br>Express Shipping: <strong>Zero Cost (Free in Udaipur)</strong><br>Included: <strong>Hard Leather Case + Microfiber Cloth</strong></div></div></div><table class="table-inv"><thead><tr><th>Item Silhouette</th><th>HSN</th><th>Qty</th><th>Rate</th><th>Taxable</th><th>Total</th></tr></thead><tbody><tr><td><strong>' + order.title + '</strong><br><span style="font-size:10.5px;color:#78716c;">100% UV400 Polarized Sunglasses</span></td><td>90041000</td><td>' + (order.quantity || 1) + '</td><td>₹' + taxableValue + '</td><td>₹' + taxableValue + '</td><td><strong>₹' + amount + '</strong></td></tr></tbody></table><table class="total-table"><tr><td>Taxable Value:</td><td align="right">₹' + taxableValue + '</td></tr><tr><td>CGST (9%):</td><td align="right">₹' + cgst + '</td></tr><tr><td>SGST (9%):</td><td align="right">₹' + sgst + '</td></tr><tr><td>Delivery Charge:</td><td align="right" style="color:#10b981;font-weight:700;">FREE</td></tr><tr class="grand"><td>Grand Total:</td><td align="right" style="color:#b48448;">₹' + amount + ' Only</td></tr></table><div class="warranty-box">🛡️ <strong>1-Year Studio Warranty & Doorstep Trial Guarantee:</strong> 7-Day Hassle-free Replacement. Support: +91 8619661325.</div><div class="footer-sign"><div>Computer-generated digital tax invoice & proof of purchase.</div><div style="text-align:right;"><div style="font-family:Georgia,serif;font-size:13px;font-weight:700;">For THE CLASSIC CO.</div><div style="font-size:10px;color:#78716c;margin-top:16px;">Authorized Signatory</div></div></div></div><script>window.onload=function(){window.print();}<\/script></body></html>';
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Tax Invoice #${invoiceNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#161514;padding:40px;margin:0;background:#fff;line-height:1.5;font-size:13px;}.inv-wrap{max-width:720px;margin:0 auto;border:1px solid #e5e5e5;padding:36px;border-radius:8px;}.inv-header{display:flex;justify-content:space-between;border-bottom:2px solid #161514;padding-bottom:18px;margin-bottom:22px;}.brand-name{font-size:22px;font-weight:800;letter-spacing:1px;font-family:Georgia,serif;}.brand-sub{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#78716c;margin-top:2px;}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;font-size:12.5px;}.table-inv{width:100%;border-collapse:collapse;margin-bottom:20px;}.table-inv th{background:#faf9f6;border:1px solid #e5e5e5;padding:9px 12px;font-size:11px;text-transform:uppercase;text-align:left;}.table-inv td{border:1px solid #e5e5e5;padding:12px;}.total-table{width:260px;margin-left:auto;margin-bottom:22px;border-collapse:collapse;}.total-table td{padding:5px 8px;font-size:12px;}.total-table tr.grand{font-size:15px;font-weight:800;border-top:2px solid #161514;}.warranty-box{background:#faf9f6;border-left:3px solid #b48448;padding:10px 14px;font-size:11.5px;color:#57534e;margin-bottom:22px;}.footer-sign{display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:14px;border-top:1px solid #e5e5e5;font-size:11px;color:#78716c;}@media print{body{padding:0;}.inv-wrap{border:none;padding:0;}}</style></head><body><div class="inv-wrap"><div class="inv-header"><div><div class="brand-name">${brand}</div><div class="brand-sub">Contemporary Eyewear Studio</div><div style="font-size:11px;color:#57534e;margin-top:4px;">Helpline: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div></div><div style="text-align:right;"><h2 style="margin:0;font-size:18px;">TAX INVOICE</h2><div style="margin-top:4px;font-size:11.5px;color:#57534e;">Invoice: <strong>#${invoiceNum}</strong><br>Date: <strong>${invoiceDate}</strong></div></div></div><div class="meta-grid"><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Billed & Shipped To:</strong><div style="font-size:13.5px;font-weight:700;">${order.name}</div><div style="color:#57534e;margin-top:2px;">📞 +91 ${order.phone}<br>📧 ${order.email || 'customer@gmail.com'}<br>📍 ${order.address} - ${order.pincode}</div></div><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Dispatch & Payment:</strong><div style="color:#57534e;">Payment Mode: <strong>${order.paymentMode}</strong><br>Shipping: <strong>Zero Cost (Express Delivery)</strong><br>Included: <strong>Hard Case + Microfiber Cloth + Test Card</strong></div></div></div><table class="table-inv"><thead><tr><th>Item Silhouette</th><th>HSN</th><th>Qty</th><th>Rate</th><th>Taxable</th><th>Total</th></tr></thead><tbody><tr><td><strong>${order.title}</strong><br><span style="font-size:10.5px;color:#78716c;">100% UV400 Polarized Architectural Eyewear</span></td><td>90041000</td><td>1</td><td>₹${taxableValue}</td><td>₹${taxableValue}</td><td><strong>₹${amount}</strong></td></tr></tbody></table><table class="total-table"><tr><td>Taxable Value:</td><td align="right">₹${taxableValue}</td></tr><tr><td>CGST (9%):</td><td align="right">₹${cgst}</td></tr><tr><td>SGST (9%):</td><td align="right">₹${sgst}</td></tr><tr><td>Shipping Charge:</td><td align="right" style="color:#059669;font-weight:700;">FREE</td></tr><tr class="grand"><td>Grand Total:</td><td align="right" style="color:#b48448;">₹${amount} Only</td></tr></table><div class="warranty-box">🛡️ <strong>1-Year Studio Warranty & Authenticity Guarantee:</strong> 7-Day Hassle-free Doorstep Replacement. Support: +91 8619661325.</div><div class="footer-sign"><div>Computer-generated digital tax invoice & proof of purchase.</div><div style="text-align:right;"><div style="font-family:Georgia,serif;font-size:13px;font-weight:700;">For THE CLASSIC CO.</div><div style="font-size:10px;color:#78716c;margin-top:16px;">Authorized Signatory</div></div></div></div><script>window.onload=function(){window.print();}<\/script></body></html>`;
 
-      var printWindow = window.open('', '_blank');
-      printWindow.document.open();
-      printWindow.document.write(invoiceHtml);
-      printWindow.document.close();
+      const w = window.open('', '_blank');
+      w.document.open();
+      w.document.write(html);
+      w.document.close();
     }
 
-    // =========================================================================
-    // LIVE ORDER TRACKER MODAL LOGIC
-    // =========================================================================
-    function openOrderTrackerModal(orderId) {
-      var modal = document.getElementById('tracker-modal');
-      if (modal) modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-
-      var input = document.getElementById('tracker-search-input');
-      if (orderId && input) {
-        input.value = orderId;
-        searchOrderTracking();
-      } else {
-        try {
-          var saved = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
-          if (saved.length > 0 && input && !input.value) {
-            input.value = saved[0].orderId;
-            searchOrderTracking();
-          }
-        } catch (e) {}
-      }
+    // Modal Helpers
+    function openTrackerModal() {
+      document.getElementById("tracker-modal").style.display = "flex";
+      document.body.style.overflow = "hidden";
     }
-
     function closeTrackerModal() {
-      var modal = document.getElementById('tracker-modal');
-      if (modal) modal.style.display = 'none';
-      document.body.style.overflow = '';
+      document.getElementById("tracker-modal").style.display = "none";
+      document.body.style.overflow = "";
     }
+    function handleTrackingSearch() {
+      const q = document.getElementById("tracker-input").value.trim().toUpperCase();
+      const res = document.getElementById("tracker-result");
+      if (!q) return;
 
-    function searchOrderTracking() {
-      var input = document.getElementById('tracker-search-input');
-      var query = (input ? input.value : '').trim().toUpperCase();
-      if (!query) {
-        alert('Please enter an Order ID or WhatsApp Phone number.');
-        return;
-      }
+      const orders = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
+      const found = orders.find(o => (o.orderId || '').toUpperCase().includes(q) || (o.phone || '').includes(q));
 
-      var resBox = document.getElementById('tracker-result-box');
-      var idEl = document.getElementById('track-disp-order-id');
-      var pillEl = document.getElementById('track-disp-status-pill');
-      var detEl = document.getElementById('track-disp-details');
-
-      var foundOrder = null;
-      try {
-        var saved = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
-        foundOrder = saved.find(function(o) {
-          return (o.orderId && o.orderId.toUpperCase().indexOf(query) !== -1) || (o.phone && o.phone.indexOf(query) !== -1);
-        });
-      } catch (e) {}
-
-      if (foundOrder) {
-        idEl.innerText = '#' + foundOrder.orderId;
-        pillEl.innerText = foundOrder.isPrepaid ? '⚡ PREPAID · DISPATCH' : '📦 COD · EN ROUTE';
-        detEl.innerHTML = 
-          '<div><strong>Customer:</strong> ' + foundOrder.name + ' (' + foundOrder.phone + ')</div>' +
-          '<div><strong>Item:</strong> ' + foundOrder.title + '</div>' +
-          '<div><strong>Amount:</strong> ₹' + foundOrder.amount + ' (' + foundOrder.paymentMode + ')</div>' +
-          '<div><strong>Delivery Address:</strong> ' + foundOrder.address + '</div>';
-        resBox.style.display = 'block';
-        return;
-      }
-
-      if (GOOGLE_APPS_SCRIPT_URL) {
-        fetch(GOOGLE_APPS_SCRIPT_URL + '?action=track&orderId=' + encodeURIComponent(query))
-          .then(function(r) { return r.json(); })
-          .then(function(data) {
-            if (data && data.success) {
-              idEl.innerText = '#' + data.orderId;
-              pillEl.innerText = data.status || 'IN DISPATCH';
-              detEl.innerHTML = 
-                '<div><strong>Customer:</strong> ' + data.customerName + '</div>' +
-                '<div><strong>Item:</strong> ' + data.product + '</div>' +
-                '<div><strong>Amount:</strong> ₹' + data.total + ' (' + data.paymentMode + ')</div>';
-              resBox.style.display = 'block';
-            } else {
-              alert('Order not found. Please verify your reference number or contact dispatch on WhatsApp.');
-            }
-          })
-          .catch(function() {
-            alert('Order query received. Our team will verify and message you on WhatsApp (+91 8619661325).');
-          });
+      res.style.display = "block";
+      if (found) {
+        res.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong>#${found.orderId}</strong>
+            <span style="background:var(--green-light); color:var(--green); font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px;">${found.status || 'Dispatched (In Transit)'}</span>
+          </div>
+          <div><strong>Customer:</strong> ${found.name}</div>
+          <div><strong>Silhouette:</strong> ${found.title}</div>
+          <div><strong>Payable:</strong> ₹${found.amount} (${found.paymentMode})</div>
+          <div style="margin-top:10px; font-size:11.5px; color:var(--text-muted); border-left:2px solid var(--accent); padding-left:8px;">
+            ✓ Order Verified &amp; Packed in Studio<br>
+            ✓ Dispatched via Priority Express Courier<br>
+            ○ Out for Doorstep Delivery
+          </div>
+        `;
       } else {
-        alert('Order #' + query + ' has been registered for Udaipur 45-min express trial. Our dispatch team (+91 8619661325) will call before arrival.');
+        res.innerHTML = '<div style="color:var(--text-muted);">No order found for "' + q + '". Please check the ID or contact WhatsApp helpline.</div>';
       }
     }
 
-    // Initial Catalog Render
-    renderCatalog(PRODUCTS);
+    function openCartModal() {
+      if (confirmedOrderData) {
+        openCheckoutForProduct(confirmedOrderData.productId);
+      } else {
+        openCheckoutForProduct(PRODUCTS[0].id);
+      }
+    }
+
+    function updateCartCount() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
+        document.getElementById("cart-counter").innerText = stored.length;
+      } catch(e) {}
+    }
+
+    // FAQ Toggle
+    function toggleFaq(header) {
+      header.parentElement.classList.toggle("open");
+      const icon = header.querySelector("span:last-child");
+      icon.innerText = header.parentElement.classList.contains("open") ? "−" : "＋";
+    }
   </script>
 </body>
 </html>
