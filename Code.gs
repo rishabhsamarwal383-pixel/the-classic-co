@@ -30,10 +30,22 @@ var STORE_CONFIG = {
   whatsappNumber: '918619661325',
   merchantUpi: '8619661325@upi',
   currencySymbol: '₹',
-  prepaidPrice: 550,
-  codPrice: 998,
-  storeWebsite: 'https://the-classic-co.vercel.app'
+  prepaidPrice: 799,
+  codPrice: 899,
+  storeWebsite: 'https://the-classic-co.vercel.app',
+  spreadsheetId: '1G0tNE-qU13WOoX78EaEKq6BfXRaqjOuy0GF11QQ4L6c'
 };
+
+function getStoreSpreadsheet() {
+  if (STORE_CONFIG.spreadsheetId) {
+    try {
+      return SpreadsheetApp.openById(STORE_CONFIG.spreadsheetId);
+    } catch (e) {
+      Logger.log('openById error: ' + e.message);
+    }
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
 
 // ============================================================================
 // 1. WEBHOOK ENDPOINT: doPost (Handles Order Submissions from Website)
@@ -116,7 +128,7 @@ function doGet(e) {
 // 3. CORE ORDER INGESTION & SPREADSHEET LOGGING
 // ============================================================================
 function processIncomingOrder(data) {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getStoreSpreadsheet();
   var sheet = getOrCreateOrdersSheet(ss);
 
   // Normalize order data
@@ -565,7 +577,7 @@ function lookupOrderStatus(orderId) {
   if (!orderId) {
     return { success: false, error: 'Order ID is required' };
   }
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getStoreSpreadsheet();
   var sheet = ss.getSheetByName('Orders');
   if (!sheet) return { success: false, error: 'Orders sheet not found' };
 
@@ -679,7 +691,7 @@ function updateSummaryMetrics(ss) {
 }
 
 function menuRefreshDashboard() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getStoreSpreadsheet();
   updateSummaryMetrics(ss);
   SpreadsheetApp.getUi().alert('Dashboard metrics refreshed!');
 }
@@ -722,7 +734,7 @@ function parseFormUrlEncoded(text) {
 // 9. LIVE WEB DASHBOARD HTML (Served if Web App URL is opened in browser)
 // ============================================================================
 function renderAdminDashboardHtml() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = getStoreSpreadsheet();
   var sheet = ss.getSheetByName('Orders');
   var totalOrders = 0;
   var totalRevenue = 0;
