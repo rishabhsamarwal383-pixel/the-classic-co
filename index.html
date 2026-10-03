@@ -3222,7 +3222,7 @@
       });
     }
 
-    // GPS & Reverse Geocoding Autofill
+    // Smart Multi-Source GPS & Reverse Geocoding Autofill (Precise Landmark & Street)
     async function detectGPSAndAutofillAddress() {
       const btnText = document.getElementById("gps-btn-text");
       const btnIcon = document.getElementById("gps-btn-icon");
@@ -3233,7 +3233,7 @@
         return;
       }
 
-      btnText.innerText = "Accessing GPS location...";
+      btnText.innerText = "Detecting high-precision GPS...";
       btnIcon.innerText = "⏳";
 
       navigator.geolocation.getCurrentPosition(
@@ -3242,53 +3242,92 @@
           const lng = position.coords.longitude;
           attachedGPSMapUrl = "https://www.google.com/maps?q=" + lat + "," + lng;
 
-          btnText.innerText = "Fetching street & pincode...";
+          btnText.innerText = "Finding street & nearby landmark...";
 
           try {
-            // Use Nominatim reverse geocoding
-            const res = await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + lat + "&lon=" + lng, {
-              headers: { 'Accept': 'application/json' }
-            });
-            const data = await res.json();
-            const addr = data.address || {};
+            // Multi-source reverse geocoding: Photon (landmarks & streets) + Nominatim (hierarchy)
+            const photonUrl = `https://photon.komoot.io/reverse?lat=${lat}&lon=${lng}`;
+            const nomUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1&accept-language=en`;
 
-            // Extract Pincode
-            const postcode = addr.postcode || "";
+            const [photonRes, nomRes] = await Promise.allSettled([
+              fetch(photonUrl).then(r => r.json()).catch(() => null),
+              fetch(nomUrl, { headers: { 'Accept': 'application/json' } }).then(r => r.json()).catch(() => null)
+            ]);
+
+            const pData = (photonRes.status === 'fulfilled' && photonRes.value && photonRes.value.features && photonRes.value.features[0]) ? photonRes.value.features[0].properties : {};
+            const nData = (nomRes.status === 'fulfilled' && nomRes.value) ? nomRes.value : {};
+            const nAddr = nData.address || {};
+
+            // 1. Extract Pincode (6 digits)
+            const rawPin = pData.postcode || nAddr.postcode || "";
+            const postcode = rawPin.replace(/\D/g, '').slice(0, 6);
             if (postcode) {
               const pinInput = document.getElementById("inp-pincode");
               if (pinInput) {
-                pinInput.value = postcode.replace(/\D/g, '').slice(0, 6);
+                pinInput.value = postcode;
                 clearError("inp-pincode", "err-pincode");
               }
             }
 
-            // Extract City
-            const city = addr.city || addr.town || addr.village || addr.county || addr.state_district || "";
-            const cityInput = document.getElementById("inp-city");
-            if (cityInput && city) {
-              cityInput.value = city;
-              clearError("inp-city", "err-city");
+            // 2. Extract City
+            const city = pData.city || nAddr.city || nAddr.town || nAddr.village || nAddr.state_district || "";
+            if (city) {
+              const cityInput = document.getElementById("inp-city");
+              if (cityInput) {
+                cityInput.value = city;
+                clearError("inp-city", "err-city");
+              }
             }
 
-            // Extract Street / Area Address
-            const roadParts = [
-              addr.house_number,
-              addr.road || addr.suburb || addr.neighbourhood,
-              addr.residential || addr.commercial
-            ].filter(Boolean);
-            const streetText = roadParts.length ? roadParts.join(', ') : (data.display_name ? data.display_name.split(',').slice(0, 3).join(', ') : "");
+            // 3. Extract Locality / Suburb / Area
+            const locality = pData.district || pData.locality || nAddr.suburb || nAddr.neighbourhood || nAddr.residential || "";
+
+            // 4. Extract Street / Road
+            const street = pData.street || nAddr.road || nAddr.pedestrian || nAddr.street || "";
+
+            // 5. Extract House / Building Number
+            const house = pData.housenumber || nAddr.house_number || nAddr.building || "";
+
+            // 6. Extract Landmark / POI
+            let landmark = "";
+            if (pData.name && pData.name !== pData.street && pData.name !== pData.city && pData.name !== locality) {
+              landmark = pData.name;
+            } else if (nAddr.amenity || nAddr.shop || nAddr.tourism || nAddr.leisure || nAddr.building) {
+              landmark = nAddr.amenity || nAddr.shop || nAddr.tourism || nAddr.leisure || nAddr.building;
+            }
+
+            // 7. Compose courier-friendly street address with Landmark
+            const addressParts = [];
+            if (house) addressParts.push(`House/Flat No. ${house}`);
+            if (street) addressParts.push(street);
+            if (landmark) {
+              const isRedundant = street && (street.toLowerCase().includes(landmark.toLowerCase()) || landmark.toLowerCase().includes(street.toLowerCase()));
+              if (!isRedundant) {
+                addressParts.push(`Near ${landmark}`);
+              }
+            }
+            if (locality && locality !== street && locality !== city) {
+              addressParts.push(locality);
+            }
+
+            let fullAddress = addressParts.join(', ');
+            if (!fullAddress) {
+              const fallbackParts = [nAddr.road, nAddr.suburb, nAddr.neighbourhood, nAddr.county].filter(Boolean);
+              fullAddress = fallbackParts.length ? fallbackParts.join(', ') : (nData.display_name ? nData.display_name.split(',').slice(0, 3).join(', ') : "");
+            }
 
             const addrInput = document.getElementById("inp-address");
-            if (addrInput && streetText) {
-              addrInput.value = streetText;
+            if (addrInput && fullAddress) {
+              addrInput.value = fullAddress;
               clearError("inp-address", "err-address");
             }
 
-            btnText.innerText = "✓ Location Detected (Tap to update)";
+            btnText.innerText = "✓ Landmark & Location Detected (Tap to update)";
             btnIcon.innerText = "📍";
 
             badge.style.display = "block";
-            badge.innerHTML = "✓ Auto-detected: <strong>" + city + (postcode ? " - " + postcode : "") + "</strong> · <a href='" + attachedGPSMapUrl + "' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Live Google Maps Pin ↗</a>";
+            const landmarkBadgeText = landmark ? ` · Near <strong>${escapeHTML(landmark)}</strong>` : "";
+            badge.innerHTML = `✓ Auto-detected: <strong>${escapeHTML(city)}${postcode ? ' - ' + escapeHTML(postcode) : ''}</strong>${landmarkBadgeText} · <a href='${attachedGPSMapUrl}' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Live Google Maps Pin ↗</a><div style="font-size:11px; color:#047857; margin-top:3px;">📍 Add your Flat/House No. if needed before placing order.</div>`;
 
           } catch (e) {
             console.warn("Reverse geocode fallback", e);
@@ -3303,7 +3342,7 @@
           btnIcon.innerText = "📍";
           alert("Could not fetch location. Please check browser GPS permission or enter your address manually.");
         },
-        { enableHighAccuracy: true, timeout: 10000 }
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
       );
     }
 
