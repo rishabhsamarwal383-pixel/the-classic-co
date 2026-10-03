@@ -1980,8 +1980,14 @@
 
         <!-- SHIPPING ADDRESS -->
         <div class="form-group">
-          <label class="form-label">Delivery Street Address *</label>
-          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="Flat/House No., Street, Area, Colony..." oninput="clearError('inp-address', 'err-address')"></textarea>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <label class="form-label" style="margin-bottom:0;">Delivery Street Address *</label>
+            <span style="font-size:11px; color:#059669; font-weight:700; background:#ecfdf5; padding:2px 8px; border-radius:12px; border:1px solid #a7f3d0;">✏️ 100% Editable</span>
+          </div>
+          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="Flat / House / Plot No., Building Name, Street / Colony, Landmark..." oninput="clearError('inp-address', 'err-address')"></textarea>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:4px; line-height:1.4;">
+            💡 <strong>Fast Delivery Tip:</strong> You can freely edit this address. Add your House/Flat/Floor No. above so courier arrives directly at your door.
+          </div>
           <div class="field-error-msg" id="err-address">Please provide full delivery address.</div>
         </div>
 
@@ -3222,30 +3228,59 @@
       });
     }
 
+    // Helper: Haversine distance in meters
+    function calcDistMeters(lat1, lon1, lat2, lon2) {
+      const R = 6371e3;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      return Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    }
+
+    // Helper: Clean duplicate address tokens
+    function cleanAddressTokens(tokens) {
+      const result = [];
+      for (const t of tokens) {
+        if (!t) continue;
+        const clean = t.trim().replace(/^,\s*|,\s*$/g, '');
+        if (!clean) continue;
+        const lower = clean.toLowerCase();
+        const isDup = result.some(r => {
+          const rLower = r.toLowerCase();
+          return rLower === lower || (rLower.includes(lower) && rLower.length - lower.length < 15);
+        });
+        if (!isDup) result.push(clean);
+      }
+      return result;
+    }
+
     // Smart Multi-Source GPS & Reverse Geocoding Autofill (Precise Landmark & Street)
     async function detectGPSAndAutofillAddress() {
       const btnText = document.getElementById("gps-btn-text");
       const btnIcon = document.getElementById("gps-btn-icon");
       const badge = document.getElementById("gps-status-badge");
+      const addrInput = document.getElementById("inp-address");
 
       if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser. Please type your delivery address.");
         return;
       }
 
-      btnText.innerText = "Detecting high-precision GPS...";
+      btnText.innerText = "Accessing exact GPS pin...";
       btnIcon.innerText = "⏳";
 
       navigator.geolocation.getCurrentPosition(
         async (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
+          const accuracy = Math.round(position.coords.accuracy || 10);
           attachedGPSMapUrl = "https://www.google.com/maps?q=" + lat + "," + lng;
 
-          btnText.innerText = "Finding street & nearby landmark...";
+          btnText.innerText = "Detecting exact neighborhood & street...";
 
           try {
-            // Multi-source reverse geocoding: Photon (landmarks & streets) + Nominatim (hierarchy)
             const photonUrl = `https://photon.komoot.io/reverse?lat=${lat}&lon=${lng}`;
             const nomUrl = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1&accept-language=en`;
 
@@ -3254,11 +3289,12 @@
               fetch(nomUrl, { headers: { 'Accept': 'application/json' } }).then(r => r.json()).catch(() => null)
             ]);
 
-            const pData = (photonRes.status === 'fulfilled' && photonRes.value && photonRes.value.features && photonRes.value.features[0]) ? photonRes.value.features[0].properties : {};
+            const pFeature = (photonRes.status === 'fulfilled' && photonRes.value && photonRes.value.features && photonRes.value.features[0]) ? photonRes.value.features[0] : null;
+            const pData = pFeature ? pFeature.properties : {};
             const nData = (nomRes.status === 'fulfilled' && nomRes.value) ? nomRes.value : {};
             const nAddr = nData.address || {};
 
-            // 1. Extract Pincode (6 digits)
+            // 1. Pincode
             const rawPin = pData.postcode || nAddr.postcode || "";
             const postcode = rawPin.replace(/\D/g, '').slice(0, 6);
             if (postcode) {
@@ -3269,7 +3305,7 @@
               }
             }
 
-            // 2. Extract City
+            // 2. City
             const city = pData.city || nAddr.city || nAddr.town || nAddr.village || nAddr.state_district || "";
             if (city) {
               const cityInput = document.getElementById("inp-city");
@@ -3279,62 +3315,99 @@
               }
             }
 
-            // 3. Extract Locality / Suburb / Area
+            // 3. Locality / Suburb / Area
             const locality = pData.district || pData.locality || nAddr.suburb || nAddr.neighbourhood || nAddr.residential || "";
 
-            // 4. Extract Street / Road
+            // 4. Street / Road
             const street = pData.street || nAddr.road || nAddr.pedestrian || nAddr.street || "";
 
-            // 5. Extract House / Building Number
+            // 5. House / Building Number
             const house = pData.housenumber || nAddr.house_number || nAddr.building || "";
 
-            // 6. Extract Landmark / POI
-            let landmark = "";
+            // 6. Landmark & Distance Calculation
+            let rawLandmark = "";
+            let poiDist = 99999;
+            if (pFeature && pFeature.geometry && pFeature.geometry.coordinates) {
+              const [poiLng, poiLat] = pFeature.geometry.coordinates;
+              poiDist = calcDistMeters(lat, lng, poiLat, poiLng);
+            }
+
             if (pData.name && pData.name !== pData.street && pData.name !== pData.city && pData.name !== locality) {
-              landmark = pData.name;
+              rawLandmark = pData.name.split(',')[0].trim();
             } else if (nAddr.amenity || nAddr.shop || nAddr.tourism || nAddr.leisure || nAddr.building) {
-              landmark = nAddr.amenity || nAddr.shop || nAddr.tourism || nAddr.leisure || nAddr.building;
+              rawLandmark = (nAddr.amenity || nAddr.shop || nAddr.tourism || nAddr.leisure || nAddr.building).split(',')[0].trim();
             }
 
-            // 7. Compose courier-friendly street address with Landmark
-            const addressParts = [];
-            if (house) addressParts.push(`House/Flat No. ${house}`);
-            if (street) addressParts.push(street);
-            if (landmark) {
-              const isRedundant = street && (street.toLowerCase().includes(landmark.toLowerCase()) || landmark.toLowerCase().includes(street.toLowerCase()));
-              if (!isRedundant) {
-                addressParts.push(`Near ${landmark}`);
-              }
+            // Clean & Deduplicate Address Parts
+            const addressTokens = [];
+            if (house) addressTokens.push(`House/Flat No. ${house}`);
+            if (street) addressTokens.push(street);
+
+            // Only add 'Near Landmark' to the street text if it's truly close (<=180m)
+            if (rawLandmark && poiDist <= 180) {
+              addressTokens.push(`Near ${rawLandmark}`);
             }
+
             if (locality && locality !== street && locality !== city) {
-              addressParts.push(locality);
+              addressTokens.push(locality);
             }
 
-            let fullAddress = addressParts.join(', ');
-            if (!fullAddress) {
-              const fallbackParts = [nAddr.road, nAddr.suburb, nAddr.neighbourhood, nAddr.county].filter(Boolean);
-              fullAddress = fallbackParts.length ? fallbackParts.join(', ') : (nData.display_name ? nData.display_name.split(',').slice(0, 3).join(', ') : "");
+            const cleanParts = cleanAddressTokens(addressTokens);
+            let detectedAreaText = cleanParts.join(', ');
+            if (!detectedAreaText) {
+              const fallbackParts = cleanAddressTokens([nAddr.road, nAddr.suburb, nAddr.neighbourhood, nAddr.county]);
+              detectedAreaText = fallbackParts.length ? fallbackParts.join(', ') : (nData.display_name ? nData.display_name.split(',').slice(0, 2).join(', ') : "");
             }
 
-            const addrInput = document.getElementById("inp-address");
-            if (addrInput && fullAddress) {
-              addrInput.value = fullAddress;
-              clearError("inp-address", "err-address");
+            // Handle user editing: if user already typed their house/flat number, preserve it!
+            const existingText = (addrInput.value || "").trim();
+            let finalAddressValue = "";
+            if (existingText && !existingText.includes("House No.") && existingText.length > 2) {
+              finalAddressValue = existingText + (detectedAreaText ? ", " + detectedAreaText : "");
+            } else {
+              finalAddressValue = (house ? "" : "Flat / House No. __, ") + detectedAreaText;
             }
 
-            btnText.innerText = "✓ Landmark & Location Detected (Tap to update)";
+            addrInput.value = finalAddressValue;
+            clearError("inp-address", "err-address");
+
+            // Focus textarea so user can edit immediately
+            addrInput.focus();
+            if (!house && finalAddressValue.startsWith("Flat / House No. __")) {
+              addrInput.setSelectionRange(0, 19);
+            }
+
+            btnText.innerText = "✓ Exact GPS Pin & Area Attached (Tap to update)";
             btnIcon.innerText = "📍";
 
             badge.style.display = "block";
-            const landmarkBadgeText = landmark ? ` · Near <strong>${escapeHTML(landmark)}</strong>` : "";
-            badge.innerHTML = `✓ Auto-detected: <strong>${escapeHTML(city)}${postcode ? ' - ' + escapeHTML(postcode) : ''}</strong>${landmarkBadgeText} · <a href='${attachedGPSMapUrl}' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Live Google Maps Pin ↗</a><div style="font-size:11px; color:#047857; margin-top:3px;">📍 Add your Flat/House No. if needed before placing order.</div>`;
+            let landmarkInfo = "";
+            if (rawLandmark) {
+              if (poiDist <= 180) {
+                landmarkInfo = ` · Nearby: <strong>${escapeHTML(rawLandmark)}</strong> (~${poiDist}m)`;
+              } else if (poiDist <= 800) {
+                landmarkInfo = ` · Reference Landmark: <em>${escapeHTML(rawLandmark)} (~${Math.round(poiDist/50)*50}m away)</em>`;
+              }
+            }
+
+            badge.innerHTML = `
+              <div style="font-size:12px; font-weight:700; color:#065f46; margin-bottom:2px;">
+                ✓ Exact GPS Pin Attached (±${accuracy}m) · <a href='${attachedGPSMapUrl}' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Live Google Maps Pin ↗</a>
+              </div>
+              <div style="font-size:11.5px; color:#047857;">
+                📍 Area: <strong>${escapeHTML(locality || city)}</strong> (${escapeHTML(city)}${postcode ? ' - ' + escapeHTML(postcode) : ''})${landmarkInfo}
+              </div>
+              <div style="font-size:11px; color:#065f46; margin-top:4px; font-weight:600; background:rgba(255,255,255,0.7); padding:3px 6px; border-radius:4px; display:inline-block;">
+                ✏️ <strong>Address is 100% editable below:</strong> Please check &amp; add your Flat/House No. above!
+              </div>
+            `;
 
           } catch (e) {
             console.warn("Reverse geocode fallback", e);
-            btnText.innerText = "✓ GPS Pin Attached";
+            btnText.innerText = "✓ Exact GPS Pin Attached";
             btnIcon.innerText = "📍";
             badge.style.display = "block";
-            badge.innerHTML = "✓ GPS Coordinates Attached · <a href='" + attachedGPSMapUrl + "' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Google Maps Pin ↗</a>";
+            badge.innerHTML = "✓ Exact GPS Pin Attached · <a href='" + attachedGPSMapUrl + "' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Google Maps Pin ↗</a><div style='font-size:11px; color:#047857; margin-top:3px;'>✏️ Please add your house number and street in the editable box above.</div>";
           }
         },
         (err) => {
