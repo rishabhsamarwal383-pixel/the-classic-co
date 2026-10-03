@@ -1,5 +1,5 @@
-// The Classic Co. Udaipur - PWA Service Worker (Auto-Update & Offline Support)
-const CACHE_NAME = 'classic-co-v2';
+// The Classic Co. - PWA Service Worker (Auto-Update, Caching & Push Notifications)
+const CACHE_NAME = 'classic-co-v3';
 const ASSETS_TO_CACHE = [
   './',
   './manifest.json',
@@ -7,7 +7,12 @@ const ASSETS_TO_CACHE = [
   './icon-192.png',
   './icon-512.png',
   './apple-touch-icon.png',
-  './favicon.png'
+  './favicon.png',
+  './icons/gpay.svg',
+  './icons/phonepe.svg',
+  './icons/paytm.svg',
+  './icons/upi.svg',
+  './icons/amazonpay.svg'
 ];
 
 // Install: pre-cache assets and force immediate activation
@@ -90,7 +95,7 @@ self.addEventListener('notificationclick', (event) => {
 
 self.addEventListener('push', (event) => {
   let title = 'The Classic Co. Eyewear 🕶️';
-  let body = 'New luxury frames & express Udaipur dispatch updates!';
+  let body = 'New luxury frames & express courier dispatch updates!';
   let icon = 'icon.svg';
 
   if (event.data) {
