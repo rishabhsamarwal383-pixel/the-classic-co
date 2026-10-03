@@ -2039,6 +2039,70 @@
         </div>
       </div>
 
+      <!-- STEP 1.5: ACTIVE PREPAID UPI PAYMENT SCREEN (AWAITING PAYMENT) -->
+      <div id="checkout-step-upi-waiting" style="display:none; text-align:center;">
+        <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px;">
+          PREPAID UPI CHECKOUT
+        </div>
+        <h3 style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Playfair Display', serif;">
+          Complete Payment via UPI
+        </h3>
+        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">
+          Tap your preferred app below with pre-filled discounted amount:
+        </p>
+
+        <!-- AMOUNT & COUNTDOWN CARD -->
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-sm); padding:16px; margin-bottom:16px;">
+          <div style="font-size:11px; font-weight:700; color:#166534; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px;">
+            Total Payable (₹100 Instant Discount Applied)
+          </div>
+          <div style="font-size:32px; font-weight:800; color:#15803d; line-height:1.1;" id="upi-waiting-amount">
+            ₹799
+          </div>
+          <div style="font-size:12px; color:#166534; font-weight:600; margin-top:6px;" id="upi-waiting-timer">
+            ⏳ Complete payment in 04:59
+          </div>
+        </div>
+
+        <!-- DIRECT 1-CLICK UPI APP LAUNCHERS -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:#161514; margin-bottom:8px; text-align:left;">
+            ⚡ Tap Your Preferred App to Pay:
+          </div>
+          <div class="upi-app-buttons-grid">
+            <button type="button" class="btn-upi-app btn-upi-paytm" onclick="launchDirectUpiApp('paytm')">🔷 Open Paytm</button>
+            <button type="button" class="btn-upi-app btn-upi-phonepe" onclick="launchDirectUpiApp('phonepe')">🟣 Open PhonePe</button>
+            <button type="button" class="btn-upi-app btn-upi-gpay" onclick="launchDirectUpiApp('gpay')">🔵 Open Google Pay</button>
+            <button type="button" class="btn-upi-app btn-upi-generic" onclick="launchDirectUpiApp('generic')">⚡ Any Other UPI App (CRED / BHIM / Navi)</button>
+          </div>
+        </div>
+
+        <!-- MERCHANT VPA & COPY BUTTON -->
+        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:10px 14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <div style="text-align:left;">
+            <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Merchant UPI ID</div>
+            <div style="font-size:13px; font-weight:800; color:#161514;">8619661325@upi</div>
+          </div>
+          <button type="button" class="icon-btn" onclick="copyUpiVpa(this)" style="font-size:12px; padding:6px 12px; font-weight:700; border-radius:4px;">
+            📋 Copy ID
+          </button>
+        </div>
+
+        <!-- ACTION BUTTONS: I HAVE PAID & SWITCH TO COD -->
+        <button type="button" class="btn-submit-order" style="background:#059669; padding:14px; font-size:14px; margin-bottom:10px;" onclick="confirmUpiPaymentSuccess()">
+          ✓ I Have Paid · Confirm Order &amp; Invoice
+        </button>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <button type="button" onclick="switchToCodFromUpi()" style="background:none; border:none; color:var(--accent); font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;">
+            💵 Change to Cash on Delivery (COD)
+          </button>
+          <button type="button" onclick="backToOrderDetails()" style="background:none; border:none; color:var(--text-muted); font-size:12px; cursor:pointer;">
+            ← Edit Details
+          </button>
+        </div>
+      </div>
+
       <!-- STEP 2: CONFIRMATION & RECEIPT SCREEN -->
       <div id="checkout-step-2" style="display:none; text-align:center;">
         <div style="width:48px; height:48px; border-radius:50%; background:var(--green-light); color:var(--green); font-size:24px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
@@ -2060,22 +2124,6 @@
           <div><strong>Total Payable:</strong> <strong style="font-size:14px; color:#161514;" id="rec-disp-amount"></strong> (<span id="rec-disp-mode"></span>)</div>
           <div><strong>Shipping To:</strong> <span id="rec-disp-addr"></span></div>
           <div><strong>Email Receipt:</strong> <span id="rec-disp-email"></span></div>
-        </div>
-
-        <!-- DIRECT UPI PAYMENT APPS (WHEN INSTANT UPI CHOSEN) -->
-        <div id="rec-upi-pay-box" style="display:none; margin-bottom:16px;">
-          <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:#059669; margin-bottom:8px;">
-            ⚡ Complete Payment via Any UPI App:
-          </div>
-          <div class="upi-app-buttons-grid">
-            <button type="button" class="btn-upi-app btn-upi-phonepe" onclick="launchDirectUpiApp('phonepe')">🟣 PhonePe</button>
-            <button type="button" class="btn-upi-app btn-upi-gpay" onclick="launchDirectUpiApp('gpay')">🔵 Google Pay</button>
-            <button type="button" class="btn-upi-app btn-upi-paytm" onclick="launchDirectUpiApp('paytm')">🔷 Paytm</button>
-            <button type="button" class="btn-upi-app btn-upi-generic" onclick="launchDirectUpiApp('generic')">⚡ Any Other UPI App (CRED / BHIM)</button>
-          </div>
-          <div style="margin-top:10px; font-size:11px; color:var(--text-muted);">
-            Merchant UPI: <strong>8619661325@upi</strong> (The Classic Co.)
-          </div>
         </div>
 
         <button type="button" class="btn-submit-order" onclick="printOrderInvoice(confirmedOrderData)" style="background:#161514; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:8px;">
@@ -2746,6 +2794,8 @@
     let selectedProduct = null;
     let selectedPayment = "cod";
     let confirmedOrderData = null;
+    let pendingOrderData = null;
+    let upiTimerInterval = null;
     let mobileShowAll = false;
     const MOBILE_INITIAL_COUNT = 6;
 
@@ -2978,7 +3028,10 @@
 
       // Reset Form Steps
       document.getElementById("checkout-step-1").style.display = "block";
+      const upiWait = document.getElementById("checkout-step-upi-waiting");
+      if (upiWait) upiWait.style.display = "none";
       document.getElementById("checkout-step-2").style.display = "none";
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
       document.getElementById("checkout-modal").style.display = "flex";
       document.body.style.overflow = "hidden";
 
@@ -2991,6 +3044,7 @@
     function closeCheckoutModal() {
       document.getElementById("checkout-modal").style.display = "none";
       document.body.style.overflow = "";
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
     }
 
     function selectPaymentMode(mode) {
@@ -3001,9 +3055,9 @@
       const p = selectedProduct || PRODUCTS[0];
       const btnText = document.getElementById("btn-submit-text");
       if (mode === "cod") {
-        btnText.innerText = "Place Order · ₹" + p.cod_price;
+        btnText.innerText = "Place Order · ₹" + p.cod_price + " (Cash on Delivery)";
       } else {
-        btnText.innerText = "Place Order · ₹" + (p.cod_price - 100);
+        btnText.innerText = "⚡ Pay ₹" + (p.cod_price - 100) + " via UPI App (Save ₹100)";
       }
     }
 
@@ -3061,24 +3115,126 @@
       const totalAmount = isUPI ? (p.cod_price - 100) : p.cod_price;
       const orderId = "ORD-CC-" + Math.floor(10000 + Math.random() * 90000);
 
-      confirmedOrderData = {
+      const fullAddress = address + ", " + city + (attachedGPSMapUrl ? " [GPS: " + attachedGPSMapUrl + "]" : "");
+
+      pendingOrderData = {
         orderId: orderId,
         productId: p.id,
         title: p.title,
         category: p.category,
         quantity: 1,
         amount: totalAmount,
-        paymentMode: isUPI ? "Instant UPI" : "Cash on Delivery",
+        paymentMode: isUPI ? "Instant UPI (Awaiting Confirmation)" : "Cash on Delivery",
         isPrepaid: isUPI,
         name: name,
         email: email,
         phone: phone,
-        address: address + ", " + city,
+        address: fullAddress,
         city: city,
         pincode: pincode,
         sendInvoice: sendInvoice,
         createdAt: new Date().toISOString()
       };
+
+      if (isUPI) {
+        // PREPAID UPI FLOW:
+        // 1. Hide Step 1
+        document.getElementById("checkout-step-1").style.display = "none";
+        // 2. Setup Step 1.5 Awaiting Payment screen
+        const amtEl = document.getElementById("upi-waiting-amount");
+        if (amtEl) amtEl.innerText = "₹" + totalAmount;
+        document.getElementById("checkout-step-upi-waiting").style.display = "block";
+        document.getElementById("checkout-step-2").style.display = "none";
+        // 3. Start 5-minute countdown timer
+        startUpiCountdownTimer(300);
+        // 4. Auto-launch standard UPI intent on mobile
+        const upiDeepLink = "upi://pay?pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + totalAmount + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId) + "&tr=" + encodeURIComponent(orderId);
+        window.location.href = upiDeepLink;
+      } else {
+        // COD FLOW: Finalize order directly
+        finalizeConfirmedOrder(pendingOrderData);
+      }
+    }
+
+    // Timer for UPI Waiting Screen
+    function startUpiCountdownTimer(seconds) {
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
+      let remaining = seconds;
+      const timerEl = document.getElementById("upi-waiting-timer");
+      function renderTime() {
+        const m = Math.floor(remaining / 60);
+        const s = remaining % 60;
+        const fmt = (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+        if (timerEl) {
+          if (remaining > 0) {
+            timerEl.innerText = "⏳ Complete payment in " + fmt;
+            timerEl.style.color = "#166534";
+          } else {
+            timerEl.innerText = "⚠️ Payment session timed out. Tap an app below or switch to COD.";
+            timerEl.style.color = "#b91c1c";
+          }
+        }
+      }
+      renderTime();
+      upiTimerInterval = setInterval(() => {
+        remaining--;
+        renderTime();
+        if (remaining <= 0) {
+          clearInterval(upiTimerInterval);
+        }
+      }, 1000);
+    }
+
+    // Copy Merchant UPI VPA
+    function copyUpiVpa(btn) {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(MERCHANT_UPI).then(() => {
+          const orig = btn.innerHTML;
+          btn.innerHTML = "✓ Copied!";
+          btn.style.background = "#dcfce7";
+          btn.style.color = "#15803d";
+          setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.background = "";
+            btn.style.color = "";
+          }, 2000);
+        }).catch(() => {
+          prompt("Copy UPI ID:", MERCHANT_UPI);
+        });
+      } else {
+        prompt("Copy UPI ID:", MERCHANT_UPI);
+      }
+    }
+
+    // Step 1.5 Actions:
+    function confirmUpiPaymentSuccess() {
+      if (!pendingOrderData) return;
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
+      pendingOrderData.paymentMode = "Instant UPI (Verified Prepaid)";
+      pendingOrderData.isPrepaid = true;
+      finalizeConfirmedOrder(pendingOrderData);
+    }
+
+    function switchToCodFromUpi() {
+      if (!pendingOrderData) return;
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
+      const p = selectedProduct || PRODUCTS[0];
+      pendingOrderData.amount = p.cod_price;
+      pendingOrderData.paymentMode = "Cash on Delivery";
+      pendingOrderData.isPrepaid = false;
+      finalizeConfirmedOrder(pendingOrderData);
+    }
+
+    function backToOrderDetails() {
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
+      document.getElementById("checkout-step-upi-waiting").style.display = "none";
+      document.getElementById("checkout-step-1").style.display = "block";
+    }
+
+    // Finalize Order (Displays Confirmation & PDF Invoice Screen)
+    function finalizeConfirmedOrder(orderData) {
+      confirmedOrderData = orderData;
+      if (upiTimerInterval) clearInterval(upiTimerInterval);
 
       // Confetti burst
       try { confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } }); } catch(e) {}
@@ -3087,51 +3243,45 @@
       try {
         if (window.fbq) {
           fbq('track', 'Purchase', {
-            value: totalAmount,
+            value: orderData.amount,
             currency: 'INR',
-            content_name: p.title,
+            content_name: orderData.title,
             num_items: 1
           });
         }
         if (window.gtag) {
           gtag('event', 'purchase', {
-            transaction_id: orderId,
-            value: totalAmount,
+            transaction_id: orderData.orderId,
+            value: orderData.amount,
             currency: 'INR',
-            items: [{ item_name: p.title, price: totalAmount, quantity: 1 }]
+            items: [{ item_name: orderData.title, price: orderData.amount, quantity: 1 }]
           });
         }
       } catch(e) {}
 
       // Render Step 2 screen
-      document.getElementById("rec-hero-orderid").innerText = "#" + orderId;
-      document.getElementById("rec-hero-name").innerText = name;
-      document.getElementById("rec-disp-title").innerText = p.title;
-      document.getElementById("rec-disp-amount").innerText = "₹" + totalAmount.toLocaleString('en-IN');
-      document.getElementById("rec-disp-mode").innerText = confirmedOrderData.paymentMode;
-      document.getElementById("rec-disp-addr").innerText = address + ", " + city + " - " + pincode;
-      document.getElementById("rec-disp-email").innerText = email;
+      document.getElementById("rec-hero-orderid").innerText = "#" + orderData.orderId;
+      document.getElementById("rec-hero-name").innerText = orderData.name;
+      document.getElementById("rec-disp-title").innerText = orderData.title;
+      document.getElementById("rec-disp-amount").innerText = "₹" + orderData.amount.toLocaleString('en-IN');
+      document.getElementById("rec-disp-mode").innerText = orderData.paymentMode;
+      document.getElementById("rec-disp-addr").innerText = orderData.address + " - " + orderData.pincode;
+      document.getElementById("rec-disp-email").innerText = orderData.email;
 
       const waMsg = encodeURIComponent(
         "🕶️ *ORDER CONFIRMATION — THE CLASSIC CO.*\n" +
-        "• Order Ref: #" + orderId + "\n" +
-        "• Customer: " + name + " (+91 " + phone + ")\n" +
-        "• Frame: " + p.title + "\n" +
-        "• Total: ₹" + totalAmount + " (" + confirmedOrderData.paymentMode + ")\n" +
-        "• Shipping Address: " + address + ", " + city + " " + pincode
+        "• Order Ref: #" + orderData.orderId + "\n" +
+        "• Customer: " + orderData.name + " (+91 " + orderData.phone + ")\n" +
+        "• Frame: " + orderData.title + "\n" +
+        "• Total: ₹" + orderData.amount + " (" + orderData.paymentMode + ")\n" +
+        "• Shipping Address: " + orderData.address + " " + orderData.pincode
       );
       document.getElementById("btn-wa-order-share").href = "https://wa.me/" + WA_NUMBER + "?text=" + waMsg;
 
-      // Switch to Step 2
+      // Show Step 2, hide Step 1 & Step 1.5
       document.getElementById("checkout-step-1").style.display = "none";
-      
-      // Auto launch UPI on mobile if Instant UPI selected
-      if (selectedPayment === "upi") {
-        setTimeout(() => {
-          const upiDeepLink = "upi://pay?pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + totalAmount + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId);
-          window.location.href = upiDeepLink;
-        }, 600);
-      }
+      const upiWait = document.getElementById("checkout-step-upi-waiting");
+      if (upiWait) upiWait.style.display = "none";
       document.getElementById("checkout-step-2").style.display = "block";
 
       // Save to localStorage
@@ -3152,16 +3302,16 @@
           }).catch(() => {});
 
           const qs = '?action=order' +
-            '&orderId=' + encodeURIComponent(orderId) +
-            '&name=' + encodeURIComponent(name) +
-            '&email=' + encodeURIComponent(email) +
-            '&phone=' + encodeURIComponent(phone) +
-            '&address=' + encodeURIComponent(address + ', ' + city) +
-            '&pincode=' + encodeURIComponent(pincode) +
-            '&title=' + encodeURIComponent(p.title) +
-            '&amount=' + encodeURIComponent(totalAmount) +
-            '&paymentMode=' + encodeURIComponent(confirmedOrderData.paymentMode) +
-            '&sendInvoice=' + encodeURIComponent(sendInvoice ? 'true' : 'false');
+            '&orderId=' + encodeURIComponent(orderData.orderId) +
+            '&name=' + encodeURIComponent(orderData.name) +
+            '&email=' + encodeURIComponent(orderData.email) +
+            '&phone=' + encodeURIComponent(orderData.phone) +
+            '&address=' + encodeURIComponent(orderData.address) +
+            '&pincode=' + encodeURIComponent(orderData.pincode) +
+            '&title=' + encodeURIComponent(orderData.title) +
+            '&amount=' + encodeURIComponent(orderData.amount) +
+            '&paymentMode=' + encodeURIComponent(orderData.paymentMode) +
+            '&sendInvoice=' + encodeURIComponent(orderData.sendInvoice ? 'true' : 'false');
           new Image().src = GOOGLE_APPS_SCRIPT_URL + qs;
         } catch(e) {}
       }
@@ -3419,12 +3569,13 @@
       );
     }
 
-    // Direct UPI App Launcher (PhonePe, GPay, Paytm)
+    // Direct UPI App Launcher (PhonePe, GPay, Paytm, Generic)
     function launchDirectUpiApp(app) {
-      if (!confirmedOrderData) return;
-      const payable = confirmedOrderData.amount || 799;
-      const orderId = confirmedOrderData.orderId || "2026-001";
-      const upiBase = "pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + payable + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId);
+      const order = pendingOrderData || confirmedOrderData;
+      const p = selectedProduct || PRODUCTS[0];
+      const payable = (order && order.amount) ? order.amount : (p.cod_price - 100);
+      const orderId = (order && order.orderId) ? order.orderId : ("ORD-CC-" + Math.floor(10000 + Math.random() * 90000));
+      const upiBase = "pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + payable + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId) + "&tr=" + encodeURIComponent(orderId);
 
       let targetUrl = "upi://pay?" + upiBase;
       if (app === "phonepe") {
@@ -3436,6 +3587,13 @@
       }
 
       window.location.href = targetUrl;
+
+      // On some mobile devices, if specific scheme is not registered, fallback to standard upi://
+      if (app !== "generic") {
+        setTimeout(() => {
+          window.location.href = "upi://pay?" + upiBase;
+        }, 1500);
+      }
     }
   
     // Modal Helpers
