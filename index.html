@@ -617,6 +617,86 @@
       color: #0f172a;
     }
 
+    /* HEADER TOOLS & NOTIFICATION BELL */
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-action-btn {
+      position: relative;
+      background: #fafafa;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-action-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    .notif-pulse-dot {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #eab308;
+      border: 1.5px solid #ffffff;
+      animation: pulseDot 2s infinite;
+    }
+    @keyframes pulseDot {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(234, 179, 8, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(234, 179, 8, 0); }
+    }
+    .header-install-chip {
+      background: #161514;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+    .header-install-chip:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+    }
+    
+    /* PWA INSTALL FLOATING BANNER */
+    #pwa-install-banner {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 16px;
+      right: 16px;
+      max-width: 480px;
+      margin: 0 auto;
+      background: #161514;
+      color: #ffffff;
+      padding: 12px 16px;
+      border-radius: 12px;
+      z-index: 9000;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.35);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid #333;
+    }
+
     /* FORM STYLES (SHOPIFY EXPRESS CHECKOUT) */
     .form-group { margin-bottom: 16px; }
     .form-label { display: block; font-size: 12px; font-weight: 700; color: #161514; margin-bottom: 6px; letter-spacing: 0.2px; }
@@ -1625,6 +1705,14 @@
           </ul>
         </div>
 
+        <!-- DELIVERY NOTIFICATIONS & APP INSTALL -->
+        <div style="border-top:1px solid var(--surface-border); padding-top:16px; margin-bottom:14px;">
+          <ul class="drawer-nav-list" style="font-size:13px;">
+            <li><a href="javascript:void(0)" onclick="closeMenuDrawer(); openNotificationModal();"><span>🔔 Live Delivery Alerts</span><span id="drawer-notif-status" style="font-size:11.5px; color:#16a34a; font-weight:700;">Enable</span></a></li>
+            <li id="drawer-install-li" style="display:none;"><a href="javascript:void(0)" onclick="triggerPwaInstall()"><span>📱 Install Web App</span><span style="font-size:11px; background:#f1f5f9; padding:2px 6px; border-radius:4px; font-weight:700;">1-Tap</span></a></li>
+          </ul>
+        </div>
+
         <!-- TRACK ORDER -->
         <div style="border-top:1px solid var(--surface-border); padding-top:18px;">
           <div class="drawer-section-title">Track Order</div>
@@ -1660,7 +1748,20 @@
   <header>
     <a href="#" class="brand-logo">THE CLASSIC CO.</a>
 
-    <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation">
+    <div class="header-tools">
+      <button type="button" class="header-action-btn" id="btn-header-notif" onclick="openNotificationModal()" aria-label="Delivery Alerts" title="Order & Delivery Alerts">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+        <span class="notif-pulse-dot" id="notif-header-dot"></span>
+      </button>
+
+      <button type="button" class="header-install-chip" id="btn-header-install" onclick="triggerPwaInstall()" style="display:none;" aria-label="Install App">
+        <span>📲 Install</span>
+      </button>
+
+      <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation">
       <div class="hamburger-icon">
         <span></span>
         <span></span>
@@ -1929,9 +2030,24 @@
             <span class="price-save" id="detail-discount">55% OFF</span>
           </div>
 
-          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
-            <span class="spec-badge-chip">📦 Hard Case &amp; Cloth Included</span>
+          <!-- SPECIFICATIONS & BOX CONTENTS FOR SKEPTICAL BUYERS -->
+          <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:16px; font-size:12px; line-height:1.6;">
+            <div style="font-weight:700; color:#161514; margin-bottom:6px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.5px;">Architectural Frame Specifications:</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; color:#334155;">
+              <div>📏 <strong>Dimensions:</strong> 53-19-145 mm</div>
+              <div>👤 <strong>Face Fit:</strong> Universal Fit</div>
+              <div>🛡️ <strong>Lens:</strong> Polarized TAC UV400</div>
+              <div>⚖️ <strong>Weight:</strong> Ultra-Light 28g</div>
+            </div>
+            <div style="border-top:1px dashed #e2e8f0; margin-top:8px; padding-top:6px; font-size:11.5px; color:#475569;">
+              📦 <strong>In the Box:</strong> Hard Leatherette Case + Microfiber Cloth + Authenticity Card
+            </div>
+          </div>
+
+          <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;">
+            <span class="spec-badge-chip">🛡️ 7-Day Easy Exchange</span>
             <span class="spec-badge-chip">🚚 Free Express Delivery</span>
+            <span class="spec-badge-chip">💵 COD Available</span>
           </div>
 
           <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:4px;">
@@ -2040,6 +2156,12 @@
           </div>
         </div>
 
+        <!-- DYNAMIC ESTIMATED DELIVERY DATE -->
+        <div id="checkout-delivery-estimate" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px; font-size:12px; color:#334155; margin-bottom:14px; display:flex; align-items:center; gap:8px;">
+          <span>🚚</span>
+          <span><strong>Express Courier:</strong> Arrives by <strong id="est-delivery-date" style="color:#0f172a;"></strong> · Free Express Shipping Across India</span>
+        </div>
+
         <!-- PAYMENT METHOD SELECTION -->
         <label class="form-label">Payment Method:</label>
         <div class="payment-option-card active" id="pay-opt-cod" onclick="selectPaymentMode('cod')">
@@ -2082,7 +2204,7 @@
         </button>
 
         <div style="text-align:center; font-size:11px; color:var(--text-light); margin-top:10px;">
-          🔒 Secure SSL Checkout · Cash on Delivery Available Across India
+          🔒 256-Bit SSL Encrypted · 7-Day Easy Exchange · Inspect Parcel Before Paying on COD
         </div>
       </div>
       
@@ -2191,6 +2313,19 @@
         <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.5;">
           Thank you <strong id="rec-hero-name" style="color:#161514;"></strong>! Your order has been placed and will be dispatched via express courier.
         </p>
+
+        <!-- ORDER TRACKING & LIVE NOTIFICATIONS PROMPT -->
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:14px; margin-bottom:16px; text-align:left;">
+          <div style="font-size:13px; font-weight:700; color:#166534; display:flex; align-items:center; gap:6px;">
+            <span>🔔</span> Track Order in Real-Time
+          </div>
+          <div style="font-size:11.5px; color:#15803d; margin-top:3px; line-height:1.4;">
+            Enable instant browser alerts so you know the exact minute your sunglasses are out for delivery.
+          </div>
+          <button type="button" onclick="requestBrowserNotificationPermission()" style="margin-top:8px; background:#166534; color:#fff; border:none; padding:8px 16px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">
+            🔔 Enable Live Tracking Alerts
+          </button>
+        </div>
 
         <!-- RECEIPT CARD -->
         <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:16px; text-align:left; font-size:13px; line-height:1.7; margin-bottom:20px;">
@@ -3460,7 +3595,75 @@
       const cgst = (gstAmount / 2).toFixed(2);
       const sgst = (gstAmount / 2).toFixed(2);
 
-      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Tax Invoice #${invoiceNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#161514;padding:40px;margin:0;background:#fff;line-height:1.5;font-size:13px;}.inv-wrap{max-width:720px;margin:0 auto;border:1px solid #e5e5e5;padding:36px;border-radius:8px;}.inv-header{display:flex;justify-content:space-between;border-bottom:2px solid #161514;padding-bottom:18px;margin-bottom:22px;}.brand-name{font-size:22px;font-weight:800;letter-spacing:1px;font-family:Georgia,serif;}.brand-sub{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#78716c;margin-top:2px;}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;font-size:12.5px;}.table-inv{width:100%;border-collapse:collapse;margin-bottom:20px;}.table-inv th{background:#faf9f6;border:1px solid #e5e5e5;padding:9px 12px;font-size:11px;text-transform:uppercase;text-align:left;}.table-inv td{border:1px solid #e5e5e5;padding:12px;}.total-table{width:260px;margin-left:auto;margin-bottom:22px;border-collapse:collapse;}.total-table td{padding:5px 8px;font-size:12px;}.total-table tr.grand{font-size:15px;font-weight:800;border-top:2px solid #161514;}.support-box{background:#faf9f6;border-left:3px solid #b48448;padding:10px 14px;font-size:11.5px;color:#57534e;margin-bottom:22px;}.footer-sign{display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:14px;border-top:1px solid #e5e5e5;font-size:11px;color:#78716c;}@media print{body{padding:0;}.inv-wrap{border:none;padding:0;}}</style></head><body><div class="inv-wrap"><div class="inv-header"><div><div class="brand-name">${brand}</div><div class="brand-sub">Contemporary Eyewear Studio</div><div style="font-size:11px;color:#57534e;margin-top:4px;">Helpline: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div></div><div style="text-align:right;"><h2 style="margin:0;font-size:18px;">TAX INVOICE</h2><div style="margin-top:4px;font-size:11.5px;color:#57534e;">Invoice: <strong>#${invoiceNum}</strong><br>Date: <strong>${invoiceDate}</strong></div></div></div><div class="meta-grid"><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Billed & Shipped To:</strong><div style="font-size:13.5px;font-weight:700;">${order.name}</div><div style="color:#57534e;margin-top:2px;">📞 +91 ${order.phone}<br>📧 ${order.email || 'customer@gmail.com'}<br>📍 ${order.address} - ${order.pincode}</div></div><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Dispatch & Payment:</strong><div style="color:#57534e;">Payment Mode: <strong>${order.paymentMode}</strong><br>Shipping: <strong>Zero Cost (Express Delivery)</strong><br>Included: <strong>Hard Case + Microfiber Cloth + Test Card</strong></div></div></div><table class="table-inv"><thead><tr><th>Item Silhouette</th><th>HSN</th><th>Qty</th><th>Rate</th><th>Taxable</th><th>Total</th></tr></thead><tbody><tr><td><strong>${order.title}</strong><br><span style="font-size:10.5px;color:#78716c;">100% UV400 Polarized Architectural Eyewear</span></td><td>90041000</td><td>1</td><td>₹${taxableValue}</td><td>₹${taxableValue}</td><td><strong>₹${amount}</strong></td></tr></tbody></table><table class="total-table"><tr><td>Taxable Value:</td><td align="right">₹${taxableValue}</td></tr><tr><td>CGST (9%):</td><td align="right">₹${cgst}</td></tr><tr><td>SGST (9%):</td><td align="right">₹${sgst}</td></tr><tr><td>Shipping Charge:</td><td align="right" style="color:#059669;font-weight:700;">FREE</td></tr><tr class="grand"><td>Grand Total:</td><td align="right" style="color:#b48448;">₹${amount} Only</td></tr></table><div class="support-box">📦 <strong>Customer Support:</strong> For parcel updates or order inquiries, contact WhatsApp: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div><div class="footer-sign"><div>Computer-generated digital tax invoice & proof of purchase.</div><div style="text-align:right;"><div style="font-family:Georgia,serif;font-size:13px;font-weight:700;">For THE CLASSIC CO.</div><div style="font-size:10px;color:#78716c;margin-top:16px;">Authorized Signatory</div></div></div></div><script>window.onload=function(){window.print();}<\/script></body></html>`;
+      const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Tax Invoice #${invoiceNum}</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#161514;padding:40px;margin:0;background:#fff;line-height:1.5;font-size:13px;}.inv-wrap{max-width:720px;margin:0 auto;border:1px solid #e5e5e5;padding:36px;border-radius:8px;}.inv-header{display:flex;justify-content:space-between;border-bottom:2px solid #161514;padding-bottom:18px;margin-bottom:22px;}.brand-name{font-size:22px;font-weight:800;letter-spacing:1px;font-family:Georgia,serif;}.brand-sub{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#78716c;margin-top:2px;}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;font-size:12.5px;}.table-inv{width:100%;border-collapse:collapse;margin-bottom:20px;}.table-inv th{background:#faf9f6;border:1px solid #e5e5e5;padding:9px 12px;font-size:11px;text-transform:uppercase;text-align:left;}.table-inv td{border:1px solid #e5e5e5;padding:12px;}.total-table{width:260px;margin-left:auto;margin-bottom:22px;border-collapse:collapse;}.total-table td{padding:5px 8px;font-size:12px;}.total-table tr.grand{font-size:15px;font-weight:800;border-top:2px solid #161514;}.support-box{background:#faf9f6;border-left:3px solid #b48448;padding:10px 14px;font-size:11.5px;color:#57534e;margin-bottom:22px;}.footer-sign{display:flex;justify-content:space-between;align-items:flex-end;margin-top:28px;padding-top:14px;border-top:1px solid #e5e5e5;font-size:11px;color:#78716c;}@media print{body{padding:0;}.inv-wrap{border:none;padding:0;}}</style></head><body><div class="inv-wrap"><div class="inv-header"><div><div class="brand-name">${brand}</div><div class="brand-sub">Contemporary Eyewear Studio</div><div style="font-size:11px;color:#57534e;margin-top:4px;">Helpline: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div></div><div style="text-align:right;"><h2 style="margin:0;font-size:18px;">TAX INVOICE</h2><div style="margin-top:4px;font-size:11.5px;color:#57534e;">Invoice: <strong>#${invoiceNum}</strong><br>Date: <strong>${invoiceDate}</strong></div></div></div><div class="meta-grid"><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Billed & Shipped To:</strong><div style="font-size:13.5px;font-weight:700;">${order.name}</div><div style="color:#57534e;margin-top:2px;">📞 +91 ${order.phone}<br>📧 ${order.email || 'customer@gmail.com'}<br>📍 ${order.address} - ${order.pincode}</div></div><div><strong style="text-transform:uppercase;font-size:10.5px;color:#78716c;display:block;margin-bottom:3px;">Dispatch & Payment:</strong><div style="color:#57534e;">Payment Mode: <strong>${order.paymentMode}</strong><br>Shipping: <strong>Zero Cost (Express Delivery)</strong><br>Included: <strong>Hard Case + Microfiber Cloth + Test Card</strong></div></div></div><table class="table-inv"><thead><tr><th>Item Silhouette</th><th>HSN</th><th>Qty</th><th>Rate</th><th>Taxable</th><th>Total</th></tr></thead><tbody><tr><td><strong>${order.title}</strong><br><span style="font-size:10.5px;color:#78716c;">100% UV400 Polarized Architectural Eyewear</span></td><td>90041000</td><td>1</td><td>₹${taxableValue}</td><td>₹${taxableValue}</td><td><strong>₹${amount}</strong></td></tr></tbody></table><table class="total-table"><tr><td>Taxable Value:</td><td align="right">₹${taxableValue}</td></tr><tr><td>CGST (9%):</td><td align="right">₹${cgst}</td></tr><tr><td>SGST (9%):</td><td align="right">₹${sgst}</td></tr><tr><td>Shipping Charge:</td><td align="right" style="color:#059669;font-weight:700;">FREE</td></tr><tr class="grand"><td>Grand Total:</td><td align="right" style="color:#b48448;">₹${amount} Only</td></tr></table><div class="support-box">📦 <strong>Customer Support:</strong> For parcel updates or order inquiries, contact WhatsApp: +91 8619661325 · Email: rishabhsamarwal383@gmail.com</div><div class="footer-sign"><div>Computer-generated digital tax invoice & proof of purchase.</div><div style="text-align:right;"><div style="font-family:Georgia,serif;font-size:13px;font-weight:700;">For THE CLASSIC CO.</div><div style="font-size:10px;color:#78716c;margin-top:16px;">Authorized Signatory</div></div></div></div><script>window.onload=function(){window.print();}<\/script>
+  <!-- ========================================================================= -->
+  <!-- INTERNAL NOTIFICATION PRE-PERMISSION MODAL (SOFT-ASK BEFORE BROWSER NATIVE) -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="notif-pre-permission-modal" onclick="handleNotifModalBackdrop(event)">
+    <div class="modal-box" style="max-width:440px; text-align:center; padding:28px 22px;">
+      <div class="modal-sticky-header">
+        <button type="button" class="modal-close-btn" onclick="closeNotifModal()" aria-label="Close modal">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"></line><line x1="13" y1="1" x2="1" y2="13"></line></svg>
+        </button>
+      </div>
+
+      <div style="width:56px; height:56px; border-radius:50%; background:#f8fafc; border:1.5px solid #e2e8f0; display:inline-flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:14px; box-shadow:0 4px 12px rgba(0,0,0,0.06);">
+        🔔
+      </div>
+
+      <h3 style="font-size:20px; font-weight:700; margin-bottom:8px; font-family:'Playfair Display', serif; color:#161514;">
+        Live Delivery &amp; Dispatch Updates
+      </h3>
+
+      <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
+        Never wonder where your parcel is. Get instant alerts when your sunglasses are dispatched, out for delivery, and arrive at your doorstep.
+      </p>
+
+      <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:14px; text-align:left; margin-bottom:22px; font-size:12.5px; line-height:1.7;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <span>🚚</span>
+          <span style="color:#334155;"><strong>Real-Time Tracking:</strong> Know when courier is out for delivery</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+          <span>⚡</span>
+          <span style="color:#334155;"><strong>VIP Studio Drops:</strong> Early alerts on limited edition restocks</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span>🛡️</span>
+          <span style="color:#334155;"><strong>Zero Spam Guarantee:</strong> Strictly essential order &amp; delivery updates</span>
+        </div>
+      </div>
+
+      <button type="button" class="btn-submit-order" onclick="requestBrowserNotificationPermission()" style="margin-bottom:10px; padding:14px; font-size:14px; font-weight:700;">
+        🔔 Enable Order &amp; Delivery Alerts
+      </button>
+
+      <button type="button" onclick="postponeNotificationPermission()" style="background:none; border:none; color:var(--text-light); font-size:12.5px; cursor:pointer; padding:6px 12px;">
+        Maybe Later
+      </button>
+    </div>
+  </div>
+
+  <!-- FLOATING PWA INSTALL BANNER -->
+  <div id="pwa-install-banner">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <img src="icon-192.png" alt="App Icon" style="width:38px; height:38px; border-radius:8px; object-fit:cover;">
+      <div>
+        <div style="font-size:12.5px; font-weight:700; color:#fff;">The Classic Co. App</div>
+        <div style="font-size:11px; color:#a1a1aa;">1-Tap Access &amp; Instant Live Tracking</div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:8px;">
+      <button type="button" onclick="triggerPwaInstall()" style="background:#ffffff; color:#161514; border:none; padding:8px 14px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">
+        Install
+      </button>
+      <button type="button" onclick="dismissPwaBanner()" style="background:none; border:none; color:#a1a1aa; font-size:16px; cursor:pointer; padding:4px;">
+        ✕
+      </button>
+    </div>
+  </div>
+
+  </body></html>`;
 
       const w = window.open('', '_blank');
       w.document.open();
@@ -3840,6 +4043,166 @@
         closeMenuDrawer();
       }
     });
+  
+    // =========================================================================
+    // PWA & SERVICE WORKER REGISTRATION
+    // =========================================================================
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then(reg => {
+          console.log('[PWA] Service Worker registered:', reg.scope);
+          window.swRegistration = reg;
+        }).catch(err => {
+          console.warn('[PWA] Service Worker registration failed:', err);
+        });
+      });
+    }
+
+    // PWA Install Prompt Engine
+    let pwaInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      pwaInstallPrompt = e;
+
+      const banner = document.getElementById("pwa-install-banner");
+      const headerBtn = document.getElementById("btn-header-install");
+      const drawerLi = document.getElementById("drawer-install-li");
+
+      if (headerBtn) headerBtn.style.display = "inline-flex";
+      if (drawerLi) drawerLi.style.display = "block";
+
+      const dismissed = localStorage.getItem('classic_pwa_dismissed');
+      if (!dismissed && banner) {
+        setTimeout(() => { banner.style.display = "flex"; }, 6000);
+      }
+    });
+
+    function triggerPwaInstall() {
+      if (pwaInstallPrompt) {
+        pwaInstallPrompt.prompt();
+        pwaInstallPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('[PWA] User accepted the install prompt');
+            dismissPwaBanner();
+          }
+          pwaInstallPrompt = null;
+        });
+      } else {
+        alert("To install The Classic Co. app, tap your browser's share icon (iOS) or 3-dots menu (Android) and select 'Add to Home Screen'.");
+      }
+    }
+
+    function dismissPwaBanner() {
+      const banner = document.getElementById("pwa-install-banner");
+      if (banner) banner.style.display = "none";
+      localStorage.setItem('classic_pwa_dismissed', 'true');
+    }
+
+    // =========================================================================
+    // INTERNAL NOTIFICATION PRE-PERMISSION SYSTEM (SOFT-ASK)
+    // =========================================================================
+    function openNotificationModal() {
+      const modal = document.getElementById("notif-pre-permission-modal");
+      if (modal) modal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeNotifModal() {
+      const modal = document.getElementById("notif-pre-permission-modal");
+      if (modal) modal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function handleNotifModalBackdrop(e) {
+      if (e.target.id === "notif-pre-permission-modal") {
+        closeNotifModal();
+      }
+    }
+
+    function postponeNotificationPermission() {
+      closeNotifModal();
+      localStorage.setItem('classic_notif_postponed', Date.now());
+    }
+
+    async function requestBrowserNotificationPermission() {
+      closeNotifModal();
+      if (!('Notification' in window)) {
+        alert("Notifications are not supported by your browser.");
+        return;
+      }
+
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          localStorage.setItem('classic_notifications_active', 'true');
+          updateNotificationBadgeUI(true);
+
+          if (window.swRegistration && window.swRegistration.showNotification) {
+            window.swRegistration.showNotification('The Classic Co. Alerts Active 🕶️', {
+              body: 'You will receive real-time updates when your frames are dispatched!',
+              icon: 'icon-192.png',
+              badge: 'icon.svg'
+            });
+          } else {
+            new Notification('The Classic Co. Alerts Active 🕶️', {
+              body: 'You will receive real-time updates when your frames are dispatched!',
+              icon: 'icon-192.png'
+            });
+          }
+        } else {
+          localStorage.setItem('classic_notifications_active', 'denied');
+          updateNotificationBadgeUI(false);
+        }
+      } catch (err) {
+        console.warn("Notification permission error:", err);
+      }
+    }
+
+    function updateNotificationBadgeUI(isActive) {
+      const dot = document.getElementById("notif-header-dot");
+      const drawerStatus = document.getElementById("drawer-notif-status");
+      if (dot) {
+        dot.style.background = isActive ? "#16a34a" : "#eab308";
+        dot.style.animation = isActive ? "none" : "pulseDot 2s infinite";
+      }
+      if (drawerStatus) {
+        drawerStatus.innerText = isActive ? "✓ Active" : "Enable";
+        drawerStatus.style.color = isActive ? "#16a34a" : "#64748b";
+      }
+    }
+
+    // Dynamic Delivery Date Helper
+    function updateEstimatedDeliveryDate() {
+      const date = new Date();
+      date.setDate(date.getDate() + 3);
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const str = `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]}`;
+      const el = document.getElementById("est-delivery-date");
+      if (el) el.innerText = str;
+    }
+    updateEstimatedDeliveryDate();
+
+    // Check existing notification state on load
+    window.addEventListener('DOMContentLoaded', () => {
+      const active = localStorage.getItem('classic_notifications_active') === 'true' || (window.Notification && Notification.permission === 'granted');
+      updateNotificationBadgeUI(active);
+    });
+
+    // Auto-prompt gently after 14 seconds if never asked
+    setTimeout(() => {
+      const status = localStorage.getItem('classic_notifications_active');
+      const postponed = localStorage.getItem('classic_notif_postponed');
+      if (!status && !postponed) {
+        const checkoutModal = document.getElementById("checkout-modal");
+        const prodModal = document.getElementById("product-detail-modal");
+        const isCheckoutOpen = checkoutModal && checkoutModal.style.display === "flex";
+        const isProdOpen = prodModal && prodModal.style.display === "flex";
+        if (!isCheckoutOpen && !isProdOpen) {
+          openNotificationModal();
+        }
+      }
+    }, 14000);
   </script>
 </body>
 </html>
