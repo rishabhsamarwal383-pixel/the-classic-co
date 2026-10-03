@@ -1,5 +1,5 @@
 // The Classic Co. - PWA Service Worker (Auto-Update, Caching & Push Notifications)
-const CACHE_NAME = 'classic-co-v3';
+const CACHE_NAME = 'classic-co-v4';
 const ASSETS_TO_CACHE = [
   './',
   './manifest.json',
@@ -8,6 +8,8 @@ const ASSETS_TO_CACHE = [
   './icon-512.png',
   './apple-touch-icon.png',
   './favicon.png',
+  './screenshot-mobile.png',
+  './screenshot-wide.png',
   './icons/gpay.svg',
   './icons/phonepe.svg',
   './icons/paytm.svg',
