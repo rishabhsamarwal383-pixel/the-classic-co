@@ -581,34 +581,38 @@
     .modal-box {
       background: #ffffff;
       border-radius: var(--radius);
-      max-width: 500px; width: 100%;
+      max-width: 520px; width: 100%;
       max-height: 92vh; overflow-y: auto;
-      padding: 24px; position: relative;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      padding: 28px 24px; position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
     }
     .modal-close-btn {
-      position: absolute; top: 16px; right: 16px;
+      position: absolute; top: 18px; right: 18px;
       background: transparent; border: none; font-size: 18px;
       color: var(--text-light); cursor: pointer;
     }
 
     /* FORM STYLES (SHOPIFY EXPRESS CHECKOUT) */
-    .form-group { margin-bottom: 14px; }
-    .form-label { display: block; font-size: 12px; font-weight: 700; color: #161514; margin-bottom: 4px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { display: block; font-size: 12px; font-weight: 700; color: #161514; margin-bottom: 6px; letter-spacing: 0.2px; }
     .form-input, .form-textarea, .form-select {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--surface-border);
+      width: 100%; padding: 11px 14px; border: 1.5px solid var(--surface-border);
       border-radius: var(--radius-sm); font-size: 13.5px; color: #161514;
       outline: none; transition: var(--transition); font-family: inherit;
+      background: #fafafa;
     }
-    .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: #161514; }
-    .field-error-msg { color: #ef4444; font-size: 11px; margin-top: 3px; display: none; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: #161514;
+      background: #ffffff;
+    }
+    .field-error-msg { color: #ef4444; font-size: 11.5px; margin-top: 4px; display: none; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .payment-option-card {
-      border: 1px solid var(--surface-border);
+      border: 1.5px solid var(--surface-border);
       border-radius: var(--radius-sm);
-      padding: 12px 14px;
-      margin-bottom: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
@@ -620,23 +624,29 @@
       background: var(--bg-warm);
     }
     .btn-submit-order {
-      width: 100%; padding: 13px;
+      width: 100%; padding: 14px;
       background: #161514; color: #ffffff;
       border: none; border-radius: var(--radius-sm);
       font-size: 14px; font-weight: 700;
       cursor: pointer; transition: var(--transition);
-      margin-top: 10px;
+      margin-top: 8px;
     }
     .btn-submit-order:hover { background: #2b2826; }
 
-    /* FLOATING WHATSAPP */
+    /* FLOATING HELPLINE BUTTON (ELEGANT DARK LUXURY) */
     .floating-wa {
       position: fixed; bottom: 20px; right: 20px; z-index: 90;
-      background: #25d366; color: #fff;
+      background: #161514; color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.18);
       padding: 10px 16px; border-radius: var(--radius-pill);
-      font-size: 12.5px; font-weight: 700; text-decoration: none;
-      display: flex; align-items: center; gap: 6px;
-      box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+      font-size: 12px; font-weight: 600; text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
+      transition: var(--transition);
+    }
+    .floating-wa:hover {
+      background: #2b2826;
+      transform: translateY(-2px);
     }
 
     /* =======================================================================
@@ -1835,9 +1845,12 @@
     </div>
   </footer>
 
-  <!-- FLOATING WHATSAPP BUTTON -->
-  <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20have%20a%20question%20about%20your%20sunglasses%20collection." target="_blank" class="floating-wa">
-    <span>💬 WhatsApp Helpline</span>
+  <!-- FLOATING HELPLINE BUTTON -->
+  <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20have%20a%20question%20about%20your%20sunglasses%20collection." target="_blank" class="floating-wa" aria-label="WhatsApp Helpline">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <span>Helpline</span>
   </a>
 
   <!-- ========================================================================= -->
@@ -1855,7 +1868,6 @@
         <!-- LEFT: GALLERY -->
         <div>
           <div class="prod-gallery-wrap">
-            <div class="touch-swipe-hint">👈 Swipe Photos 👉</div>
             <div class="prod-gallery-carousel" id="detail-gallery-carousel" onscroll="handleGalleryScroll()">
               <!-- Slides injected by JS -->
             </div>
@@ -1887,18 +1899,17 @@
           </div>
 
           <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
-            <span class="spec-badge-chip">🕶️ 100% UV400 Polarized</span>
             <span class="spec-badge-chip">📦 Hard Case &amp; Cloth Included</span>
             <span class="spec-badge-chip">🚚 Free Express Delivery</span>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:10px;">
-            <button type="button" class="btn-submit-order" style="padding:14px; font-size:14px; margin:0;" onclick="orderProductFromDetail()">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:4px;">
+            <button type="button" class="btn-card-action" style="padding:14px; font-size:13.5px; font-weight:700; background:#ffffff; border:1.5px solid #161514; color:#161514; border-radius:6px; cursor:pointer;" onclick="addToCartFromDetail()">
+              🛍️ Add to Cart
+            </button>
+            <button type="button" class="btn-submit-order" style="padding:14px; font-size:13.5px; margin:0;" onclick="orderProductFromDetail()">
               ⚡ Order Now
             </button>
-            <a id="detail-wa-btn" href="#" target="_blank" class="btn-card-action" style="background:#25d366; border-color:#25d366; text-decoration:none; display:flex; justify-content:center; align-items:center; gap:8px;">
-              💬 Inquire on WhatsApp
-            </a>
           </div>
 
           <div style="font-size:11.5px; color:var(--text-muted); margin-top:14px; line-height:1.5;">
@@ -1955,39 +1966,30 @@
           </div>
         </div>
 
-        <!-- INVOICE CHECKBOX -->
-        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:10px 12px; margin-bottom:14px;">
-          <label style="display:flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; cursor:pointer;">
+        <!-- INVOICE & NOTIFICATION CHECKBOX -->
+        <div style="margin-bottom:16px;">
+          <label style="display:flex; align-items:center; gap:10px; font-size:12.5px; color:#475569; cursor:pointer; user-select:none;">
             <input type="checkbox" id="inp-send-invoice" checked style="width:16px; height:16px; accent-color:#161514; cursor:pointer;">
-            <span>🧾 Send Official Tax Invoice &amp; Receipt to My Email</span>
+            <span>Order details and dispatch updates will be sent via email</span>
           </label>
-          <div style="font-size:11px; color:var(--text-muted); margin-left:24px; margin-top:2px;">
-            Itemized tax invoice, order summary &amp; courier tracking updates.
-          </div>
         </div>
 
         <!-- SHIPPING ADDRESS -->
         <!-- MAP / GPS LIVE LOCATION DETECTOR & AUTOFILL -->
-        <div class="map-autofill-box">
-          <button type="button" class="btn-map-detect" onclick="detectGPSAndAutofillAddress()">
+        <div class="map-autofill-box" style="margin-bottom:14px;">
+          <button type="button" class="btn-map-detect" onclick="detectGPSAndAutofillAddress()" style="padding:10px 14px; font-size:13px; font-weight:600; border-radius:6px;">
             <span id="gps-btn-icon">📍</span>
-            <span id="gps-btn-text">Auto-Fill Address &amp; Pincode via GPS / Map Location</span>
+            <span id="gps-btn-text">Pin Location</span>
           </button>
-          <div id="gps-status-badge" class="gps-status-badge">
+          <div id="gps-status-badge" class="gps-status-badge" style="display:none; margin-top:8px; padding:8px 12px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px;">
             <!-- Populated on GPS detect -->
           </div>
         </div>
 
         <!-- SHIPPING ADDRESS -->
         <div class="form-group">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-            <label class="form-label" style="margin-bottom:0;">Delivery Street Address *</label>
-            <span style="font-size:11px; color:#059669; font-weight:700; background:#ecfdf5; padding:2px 8px; border-radius:12px; border:1px solid #a7f3d0;">✏️ 100% Editable</span>
-          </div>
-          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="Flat / House / Plot No., Building Name, Street / Colony, Landmark..." oninput="clearError('inp-address', 'err-address')"></textarea>
-          <div style="font-size:11px; color:var(--text-muted); margin-top:4px; line-height:1.4;">
-            💡 <strong>Fast Delivery Tip:</strong> You can freely edit this address. Add your House/Flat/Floor No. above so courier arrives directly at your door.
-          </div>
+          <label class="form-label">Delivery Street Address *</label>
+          <textarea id="inp-address" class="form-textarea" rows="2" placeholder="House / Flat No., Apartment / Street, Landmark..." oninput="clearError('inp-address', 'err-address')"></textarea>
           <div class="field-error-msg" id="err-address">Please provide full delivery address.</div>
         </div>
 
@@ -2008,24 +2010,52 @@
         <label class="form-label">Payment Method:</label>
         <div class="payment-option-card active" id="pay-opt-cod" onclick="selectPaymentMode('cod')">
           <div>
-            <div style="font-size:13px; font-weight:700;">💵 Cash on Delivery (COD)</div>
-            <div style="font-size:11.5px; color:var(--text-muted);">Pay when your parcel arrives</div>
+            <div style="font-size:13.5px; font-weight:700; color:#161514;">💵 Cash on Delivery (COD)</div>
+            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">Pay when your parcel arrives</div>
           </div>
           <div style="font-size:14px; font-weight:800;" id="pay-cod-amount">₹899</div>
         </div>
 
         <div class="payment-option-card" id="pay-opt-upi" onclick="selectPaymentMode('upi')">
           <div style="flex:1;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2px;">
-              <span style="font-size:13px; font-weight:700;">⚡ Instant UPI (Save ₹100)</span>
-              <span style="font-size:14px; font-weight:800; color:var(--green);" id="pay-upi-amount">₹799</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:13.5px; font-weight:700; color:#161514;">⚡ Instant UPI (Save ₹100)</span>
+              <span style="font-size:14px; font-weight:800; color:#15803d;" id="pay-upi-amount">₹799</span>
             </div>
-            <div class="upi-brands-row">
-              <span class="upi-brand-pill upi-pill-gpay">GPay</span>
-              <span class="upi-brand-pill upi-pill-phonepe">PhonePe</span>
-              <span class="upi-brand-pill upi-pill-paytm">Paytm</span>
-              <span class="upi-brand-pill upi-pill-cred">CRED</span>
-              <span class="upi-brand-pill upi-pill-upi">BHIM UPI</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <!-- Google Pay Logo -->
+              <span style="display:inline-flex; align-items:center; justify-content:center; background:#fff; border:1px solid #e2e8f0; border-radius:4px; padding:3px 6px; box-shadow:0 1px 2px rgba(0,0,0,0.05);" title="Google Pay">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                  <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7v3.1h3.9c2.3-2.1 3.5-5.2 3.5-9z"/>
+                  <path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.9-3.1c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5H1.1v3.2C3.1 21.3 7.3 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.2 14.1c-.3-.8-.4-1.7-.4-2.6 0-.9.2-1.8.4-2.6V5.7H1.1C.4 7.2 0 8.9 0 10.7s.4 3.5 1.1 5l4.1-1.6z"/>
+                  <path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.1 2.7 1.1 6.7l4.1 3.2c1-2.9 3.7-5.1 6.8-5.1z"/>
+                </svg>
+              </span>
+              <!-- PhonePe Logo -->
+              <span style="display:inline-flex; align-items:center; justify-content:center; background:#5f259f; border-radius:4px; padding:3px 7px; box-shadow:0 1px 2px rgba(0,0,0,0.05);" title="PhonePe">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-9h4c1.66 0 3 1.34 3 3s-1.34 3-3 3h-2v3zm0-5h2c.55 0 1-.45 1-1s-.45-1-1-1h-2v2z"/>
+                </svg>
+              </span>
+              <!-- Paytm Logo -->
+              <span style="display:inline-flex; align-items:center; justify-content:center; background:#002e6e; border-radius:4px; padding:3px 6px; box-shadow:0 1px 2px rgba(0,0,0,0.05);" title="Paytm">
+                <span style="color:#00baf2; font-weight:900; font-size:9.5px; font-family:sans-serif; letter-spacing:0.5px;">paytm</span>
+              </span>
+              <!-- UPI Chevron Logo -->
+              <span style="display:inline-flex; align-items:center; justify-content:center; background:#fff; border:1px solid #e2e8f0; border-radius:4px; padding:2px 6px; box-shadow:0 1px 2px rgba(0,0,0,0.05);" title="BHIM UPI">
+                <svg viewBox="0 0 36 20" width="24" height="13">
+                  <path d="M14 3l-6 14h4l3.5-7.5L19 17h4l-5-14z" fill="#097939"/>
+                  <path d="M21 3l-6 14h4l3.5-7.5L26 17h4l-5-14z" fill="#ed752e"/>
+                </svg>
+              </span>
+              <!-- CRED Logo -->
+              <span style="display:inline-flex; align-items:center; justify-content:center; background:#000; border-radius:4px; padding:3px 6px; box-shadow:0 1px 2px rgba(0,0,0,0.05);" title="CRED">
+                <svg viewBox="0 0 20 20" width="13" height="13" fill="#ffffff">
+                  <rect x="2" y="2" width="16" height="16" rx="3" fill="none" stroke="#fff" stroke-width="2"/>
+                  <circle cx="10" cy="10" r="2.5" fill="#fff"/>
+                </svg>
+              </span>
             </div>
           </div>
         </div>
@@ -2044,97 +2074,137 @@
         <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px;">
           PREPAID UPI CHECKOUT
         </div>
-        <h3 style="font-size:20px; font-weight:700; margin-bottom:4px; font-family:'Playfair Display', serif;">
-          Complete Payment via UPI
+        <h3 style="font-size:22px; font-weight:700; margin-bottom:4px; font-family:'Playfair Display', serif;">
+          Complete Payment
         </h3>
-        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:14px;">
-          Tap your preferred app below with pre-filled discounted amount:
+        <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:16px;">
+          Scan QR on desktop or tap your UPI app below on mobile:
         </p>
 
         <!-- AMOUNT & COUNTDOWN CARD -->
-        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:var(--radius-sm); padding:16px; margin-bottom:16px;">
-          <div style="font-size:11px; font-weight:700; color:#166534; text-transform:uppercase; letter-spacing:1px; margin-bottom:2px;">
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:16px; margin-bottom:18px;">
+          <div style="font-size:11px; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">
             Total Payable (₹100 Instant Discount Applied)
           </div>
-          <div style="font-size:32px; font-weight:800; color:#15803d; line-height:1.1;" id="upi-waiting-amount">
+          <div style="font-size:32px; font-weight:800; color:#161514; line-height:1.1;" id="upi-waiting-amount">
             ₹799
           </div>
-          <div style="font-size:12px; color:#166534; font-weight:600; margin-top:6px;" id="upi-waiting-timer">
+          <div style="font-size:12px; color:#64748b; font-weight:600; margin-top:6px;" id="upi-waiting-timer">
             ⏳ Complete payment in 04:59
           </div>
         </div>
 
+        <!-- DYNAMIC UPI QR CODE -->
+        <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:16px; margin-bottom:18px;">
+          <div style="font-size:11.5px; font-weight:700; color:#161514; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:10px;">
+            Scan QR with Any UPI App
+          </div>
+          <img id="upi-qr-image" src="" alt="Scan UPI QR Code" style="width:160px; height:160px; border-radius:8px; border:1px solid #e2e8f0; padding:6px; background:#fff; margin:0 auto 8px; display:block;">
+          <div style="font-size:11px; color:#64748b;">
+            Paytm · Google Pay · PhonePe · BHIM
+          </div>
+        </div>
+
         <!-- DIRECT 1-CLICK UPI APP LAUNCHERS -->
-        <div style="margin-bottom:16px;">
-          <div style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; color:#161514; margin-bottom:8px; text-align:left;">
-            ⚡ Tap Your Preferred App to Pay:
+        <div style="margin-bottom:18px;">
+          <div style="font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; color:#161514; margin-bottom:10px; text-align:left;">
+            Or Tap Your App to Pay:
           </div>
           <div class="upi-app-buttons-grid">
-            <button type="button" class="btn-upi-app btn-upi-paytm" onclick="launchDirectUpiApp('paytm')">🔷 Open Paytm</button>
-            <button type="button" class="btn-upi-app btn-upi-phonepe" onclick="launchDirectUpiApp('phonepe')">🟣 Open PhonePe</button>
-            <button type="button" class="btn-upi-app btn-upi-gpay" onclick="launchDirectUpiApp('gpay')">🔵 Open Google Pay</button>
-            <button type="button" class="btn-upi-app btn-upi-generic" onclick="launchDirectUpiApp('generic')">⚡ Any Other UPI App (CRED / BHIM / Navi)</button>
+            <!-- Paytm -->
+            <button type="button" class="btn-upi-app" onclick="launchDirectUpiApp('paytm')" style="background:#f0f9ff; border:1.5px solid #00baf2; color:#002e6e;">
+              <span style="background:#002e6e; padding:3px 7px; border-radius:4px; display:inline-flex; align-items:center;">
+                <span style="color:#00baf2; font-weight:900; font-size:10px; font-family:sans-serif;">paytm</span>
+              </span>
+              <span>Open Paytm</span>
+            </button>
+            <!-- PhonePe -->
+            <button type="button" class="btn-upi-app" onclick="launchDirectUpiApp('phonepe')" style="background:#faf5ff; border:1.5px solid #a855f7; color:#581c87;">
+              <span style="background:#5f259f; padding:3px 6px; border-radius:4px; display:inline-flex; align-items:center;">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="#ffffff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14.5h-2v-9h4c1.66 0 3 1.34 3 3s-1.34 3-3 3h-2v3zm0-5h2c.55 0 1-.45 1-1s-.45-1-1-1h-2v2z"/></svg>
+              </span>
+              <span>Open PhonePe</span>
+            </button>
+            <!-- Google Pay -->
+            <button type="button" class="btn-upi-app" onclick="launchDirectUpiApp('gpay')" style="background:#ffffff; border:1.5px solid #cbd5e1; color:#1e293b;">
+              <span style="background:#fff; border:1px solid #e2e8f0; padding:2px 5px; border-radius:4px; display:inline-flex; align-items:center;">
+                <svg viewBox="0 0 24 24" width="14" height="14"><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7v3.1h3.9c2.3-2.1 3.5-5.2 3.5-9z"/><path fill="#34A853" d="M12 24c3.2 0 6-1.1 8-3l-3.9-3.1c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.8-5H1.1v3.2C3.1 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.2 14.1c-.3-.8-.4-1.7-.4-2.6 0-.9.2-1.8.4-2.6V5.7H1.1C.4 7.2 0 8.9 0 10.7s.4 3.5 1.1 5l4.1-1.6z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4C18 1.2 15.2 0 12 0 7.3 0 3.1 2.7 1.1 6.7l4.1 3.2c1-2.9 3.7-5.1 6.8-5.1z"/></svg>
+              </span>
+              <span>Google Pay</span>
+            </button>
+            <!-- Generic UPI -->
+            <button type="button" class="btn-upi-app" onclick="launchDirectUpiApp('generic')" style="background:#fafafa; border:1.5px solid #cbd5e1; color:#0f172a; grid-column:1 / -1;">
+              <span style="background:#fff; border:1px solid #e2e8f0; padding:2px 6px; border-radius:4px; display:inline-flex; align-items:center;">
+                <svg viewBox="0 0 36 20" width="22" height="12"><path d="M14 3l-6 14h4l3.5-7.5L19 17h4l-5-14z" fill="#097939"/><path d="M21 3l-6 14h4l3.5-7.5L26 17h4l-5-14z" fill="#ed752e"/></svg>
+              </span>
+              <span>CRED / BHIM / Any Other UPI App</span>
+            </button>
           </div>
         </div>
 
-        <!-- MERCHANT VPA & COPY BUTTON -->
-        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:10px 14px; display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-          <div style="text-align:left;">
-            <div style="font-size:10px; color:var(--text-muted); text-transform:uppercase; font-weight:700;">Merchant UPI ID</div>
-            <div style="font-size:13px; font-weight:800; color:#161514;">8619661325@upi</div>
+        <!-- TRANSACTION ID / UTR VERIFICATION -->
+        <div style="background:#fafafa; border:1.5px solid #e2e8f0; border-radius:var(--radius-sm); padding:16px; margin-bottom:18px; text-align:left;">
+          <label class="form-label" style="margin-bottom:6px;">Enter 12-Digit UPI Ref / UTR No. *</label>
+          <input type="tel" id="inp-upi-utr" class="form-input" placeholder="e.g. 427189012345" maxlength="12" style="font-size:15px; font-weight:700; letter-spacing:1px; background:#fff;" oninput="clearUtrError()">
+          <div id="err-upi-utr" style="display:none; color:#ef4444; font-size:11.5px; margin-top:5px; font-weight:600;">
+            Please enter the valid 12-digit UTR number from your payment receipt to confirm.
           </div>
-          <button type="button" class="icon-btn" onclick="copyUpiVpa(this)" style="font-size:12px; padding:6px 12px; font-weight:700; border-radius:4px;">
-            📋 Copy ID
-          </button>
+          <div style="font-size:11px; color:#64748b; margin-top:6px; line-height:1.4;">
+            ℹ️ You will find the 12-digit UTR / UPI Ref ID in your payment app transaction history.
+          </div>
         </div>
 
-        <!-- ACTION BUTTONS: I HAVE PAID & SWITCH TO COD -->
-        <button type="button" class="btn-submit-order" style="background:#059669; padding:14px; font-size:14px; margin-bottom:10px;" onclick="confirmUpiPaymentSuccess()">
-          ✓ I Have Paid · Confirm Order &amp; Invoice
+        <button type="button" class="btn-submit-order" style="background:#161514; padding:15px; font-size:14px; margin-bottom:12px;" onclick="confirmUpiPaymentSuccess()">
+          Verify &amp; Confirm Order
         </button>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-          <button type="button" onclick="switchToCodFromUpi()" style="background:none; border:none; color:var(--accent); font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;">
-            💵 Change to Cash on Delivery (COD)
-          </button>
+        <div style="text-align:center;">
           <button type="button" onclick="backToOrderDetails()" style="background:none; border:none; color:var(--text-muted); font-size:12px; cursor:pointer;">
-            ← Edit Details
+            ← Edit Delivery Details
           </button>
         </div>
       </div>
 
       <!-- STEP 2: CONFIRMATION & RECEIPT SCREEN -->
-      <div id="checkout-step-2" style="display:none; text-align:center;">
-        <div style="width:48px; height:48px; border-radius:50%; background:var(--green-light); color:var(--green); font-size:24px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px;">
+      <div id="checkout-step-2" style="display:none; text-align:center; padding:10px 0;">
+        <div style="width:48px; height:48px; border-radius:50%; background:#f0fdf4; color:#16a34a; font-size:22px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px; border:1px solid #bbf7d0;">
           ✓
         </div>
-        <div style="font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1px;">
-          ORDER REGISTERED
+        <div style="font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px;">
+          ORDER CONFIRMED
         </div>
-        <h3 style="font-size:20px; font-weight:700; margin:4px 0 6px; font-family:'Playfair Display', serif;" id="rec-hero-orderid">
+        <h3 style="font-size:22px; font-weight:700; margin:0 0 8px; font-family:'Playfair Display', serif;" id="rec-hero-orderid">
           #ORD-CC-1001
         </h3>
-        <p style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
-          Thank you <strong id="rec-hero-name"></strong>! Your sunglasses are being inspected and prepared for express courier dispatch.
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.5;">
+          Thank you <strong id="rec-hero-name" style="color:#161514;"></strong>! Your order has been placed and will be dispatched via express courier.
         </p>
 
         <!-- RECEIPT CARD -->
-        <div style="background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:14px; text-align:left; font-size:12.5px; line-height:1.6; margin-bottom:16px;">
-          <div><strong>Frame:</strong> <span id="rec-disp-title"></span></div>
-          <div><strong>Total Payable:</strong> <strong style="font-size:14px; color:#161514;" id="rec-disp-amount"></strong> (<span id="rec-disp-mode"></span>)</div>
-          <div><strong>Shipping To:</strong> <span id="rec-disp-addr"></span></div>
-          <div><strong>Email Receipt:</strong> <span id="rec-disp-email"></span></div>
+        <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:16px; text-align:left; font-size:13px; line-height:1.7; margin-bottom:20px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="color:#64748b;">Frame:</span>
+            <strong id="rec-disp-title" style="color:#161514; text-align:right;"></strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="color:#64748b;">Amount:</span>
+            <span style="color:#161514;"><strong id="rec-disp-amount" style="font-size:14px;"></strong> (<span id="rec-disp-mode" style="font-size:12px;"></span>)</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+            <span style="color:#64748b;">Shipping To:</span>
+            <span id="rec-disp-addr" style="color:#161514; text-align:right; max-width:65%;"></span>
+          </div>
+          <div style="display:flex; justify-content:space-between;">
+            <span style="color:#64748b;">Confirmation:</span>
+            <span id="rec-disp-email" style="color:#161514; text-align:right;"></span>
+          </div>
         </div>
 
-        <button type="button" class="btn-submit-order" onclick="printOrderInvoice(confirmedOrderData)" style="background:#161514; margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:8px;">
-          🧾 Download / Print Tax Invoice (PDF)
+        <button type="button" class="btn-submit-order" onclick="printOrderInvoice(confirmedOrderData)" style="background:#161514; margin-bottom:10px; padding:14px; font-size:13.5px;">
+          Download Invoice (PDF)
         </button>
 
-        <a id="btn-wa-order-share" href="#" target="_blank" class="btn-submit-order" style="background:#25d366; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px;">
-          💬 Chat with Support on WhatsApp
-        </a>
-
-        <button type="button" class="icon-btn" style="width:100%; margin-top:10px; justify-content:center;" onclick="closeCheckoutModal()">
+        <button type="button" class="icon-btn" style="width:100%; justify-content:center; padding:12px; font-size:13px;" onclick="closeCheckoutModal()">
           Continue Browsing
         </button>
       </div>
@@ -2976,9 +3046,12 @@
         `).join('');
       }
 
-      // WhatsApp link
-      const waText = encodeURIComponent("Hi The Classic Co! I am interested in: " + p.title + " (₹" + p.cod_price + ")");
-      document.getElementById("detail-wa-btn").href = "https://wa.me/" + WA_NUMBER + "?text=" + waText;
+      // WhatsApp link (optional fallback)
+      const waBtn = document.getElementById("detail-wa-btn");
+      if (waBtn) {
+        const waText = encodeURIComponent("Hi The Classic Co! I am interested in: " + p.title + " (₹" + p.cod_price + ")");
+        waBtn.href = "https://wa.me/" + WA_NUMBER + "?text=" + waText;
+      }
 
       // Meta Pixel ViewContent
       try {
@@ -3006,6 +3079,13 @@
         openCheckoutForProduct(viewingProduct.id);
       }
     }
+
+    function addToCartFromDetail() {
+      if (!viewingProduct) return;
+      currentBagItem = viewingProduct;
+      closeProductDetailModal();
+      openCheckoutForProduct(viewingProduct.id);
+    }
   
     function openCheckoutForProduct(prodId) {
       const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
@@ -3032,6 +3112,10 @@
       if (upiWait) upiWait.style.display = "none";
       document.getElementById("checkout-step-2").style.display = "none";
       if (upiTimerInterval) clearInterval(upiTimerInterval);
+      const utrInp = document.getElementById("inp-upi-utr");
+      if (utrInp) { utrInp.value = ""; utrInp.style.borderColor = ""; }
+      const utrErr = document.getElementById("err-upi-utr");
+      if (utrErr) utrErr.style.display = "none";
       document.getElementById("checkout-modal").style.display = "flex";
       document.body.style.overflow = "hidden";
 
@@ -3143,12 +3227,17 @@
         // 2. Setup Step 1.5 Awaiting Payment screen
         const amtEl = document.getElementById("upi-waiting-amount");
         if (amtEl) amtEl.innerText = "₹" + totalAmount;
+        // Generate dynamic QR Code for desktop/tablet scanning
+        const upiDeepLink = "upi://pay?pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + totalAmount + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId) + "&tr=" + encodeURIComponent(orderId);
+        const qrEl = document.getElementById("upi-qr-image");
+        if (qrEl) {
+          qrEl.src = "https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=6&data=" + encodeURIComponent(upiDeepLink);
+        }
         document.getElementById("checkout-step-upi-waiting").style.display = "block";
         document.getElementById("checkout-step-2").style.display = "none";
         // 3. Start 5-minute countdown timer
         startUpiCountdownTimer(300);
         // 4. Auto-launch standard UPI intent on mobile
-        const upiDeepLink = "upi://pay?pa=" + MERCHANT_UPI + "&pn=The%20Classic%20Co&am=" + totalAmount + "&cu=INR&tn=" + encodeURIComponent("The Classic Co Order #" + orderId) + "&tr=" + encodeURIComponent(orderId);
         window.location.href = upiDeepLink;
       } else {
         // COD FLOW: Finalize order directly
@@ -3170,7 +3259,7 @@
             timerEl.innerText = "⏳ Complete payment in " + fmt;
             timerEl.style.color = "#166534";
           } else {
-            timerEl.innerText = "⚠️ Payment session timed out. Tap an app below or switch to COD.";
+            timerEl.innerText = "⚠️ Payment session timed out. Tap an app below to pay.";
             timerEl.style.color = "#b91c1c";
           }
         }
@@ -3185,43 +3274,30 @@
       }, 1000);
     }
 
-    // Copy Merchant UPI VPA
-    function copyUpiVpa(btn) {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(MERCHANT_UPI).then(() => {
-          const orig = btn.innerHTML;
-          btn.innerHTML = "✓ Copied!";
-          btn.style.background = "#dcfce7";
-          btn.style.color = "#15803d";
-          setTimeout(() => {
-            btn.innerHTML = orig;
-            btn.style.background = "";
-            btn.style.color = "";
-          }, 2000);
-        }).catch(() => {
-          prompt("Copy UPI ID:", MERCHANT_UPI);
-        });
-      } else {
-        prompt("Copy UPI ID:", MERCHANT_UPI);
-      }
+    function clearUtrError() {
+      const inp = document.getElementById("inp-upi-utr");
+      if (inp) inp.style.borderColor = "";
+      const err = document.getElementById("err-upi-utr");
+      if (err) err.style.display = "none";
     }
 
-    // Step 1.5 Actions:
+    // Step 1.5 Actions: Verify 12-digit UTR before confirming
     function confirmUpiPaymentSuccess() {
       if (!pendingOrderData) return;
-      if (upiTimerInterval) clearInterval(upiTimerInterval);
-      pendingOrderData.paymentMode = "Instant UPI (Verified Prepaid)";
-      pendingOrderData.isPrepaid = true;
-      finalizeConfirmedOrder(pendingOrderData);
-    }
+      const inp = document.getElementById("inp-upi-utr");
+      const err = document.getElementById("err-upi-utr");
+      const utrVal = inp ? inp.value.trim() : "";
 
-    function switchToCodFromUpi() {
-      if (!pendingOrderData) return;
+      if (!utrVal || !/^\d{12}$/.test(utrVal)) {
+        if (inp) inp.style.borderColor = "#ef4444";
+        if (err) err.style.display = "block";
+        return;
+      }
+
       if (upiTimerInterval) clearInterval(upiTimerInterval);
-      const p = selectedProduct || PRODUCTS[0];
-      pendingOrderData.amount = p.cod_price;
-      pendingOrderData.paymentMode = "Cash on Delivery";
-      pendingOrderData.isPrepaid = false;
+      pendingOrderData.utr = utrVal;
+      pendingOrderData.paymentMode = "Prepaid UPI (UTR: " + utrVal + ")";
+      pendingOrderData.isPrepaid = true;
       finalizeConfirmedOrder(pendingOrderData);
     }
 
@@ -3265,18 +3341,22 @@
       document.getElementById("rec-disp-title").innerText = orderData.title;
       document.getElementById("rec-disp-amount").innerText = "₹" + orderData.amount.toLocaleString('en-IN');
       document.getElementById("rec-disp-mode").innerText = orderData.paymentMode;
-      document.getElementById("rec-disp-addr").innerText = orderData.address + " - " + orderData.pincode;
-      document.getElementById("rec-disp-email").innerText = orderData.email;
+      const cleanAddr = (orderData.address || '').replace(/\s*\[GPS:[^\]]+\]/, '');
+      document.getElementById("rec-disp-addr").innerText = cleanAddr + " - " + orderData.pincode;
+      document.getElementById("rec-disp-email").innerText = orderData.email || 'Email sent';
 
-      const waMsg = encodeURIComponent(
-        "🕶️ *ORDER CONFIRMATION — THE CLASSIC CO.*\n" +
-        "• Order Ref: #" + orderData.orderId + "\n" +
-        "• Customer: " + orderData.name + " (+91 " + orderData.phone + ")\n" +
-        "• Frame: " + orderData.title + "\n" +
-        "• Total: ₹" + orderData.amount + " (" + orderData.paymentMode + ")\n" +
-        "• Shipping Address: " + orderData.address + " " + orderData.pincode
-      );
-      document.getElementById("btn-wa-order-share").href = "https://wa.me/" + WA_NUMBER + "?text=" + waMsg;
+      const waBtn = document.getElementById("btn-wa-order-share");
+      if (waBtn) {
+        const waMsg = encodeURIComponent(
+          "🕶️ *ORDER CONFIRMATION — THE CLASSIC CO.*\n" +
+          "• Order Ref: #" + orderData.orderId + "\n" +
+          "• Customer: " + orderData.name + " (+91 " + orderData.phone + ")\n" +
+          "• Frame: " + orderData.title + "\n" +
+          "• Total: ₹" + orderData.amount + " (" + orderData.paymentMode + ")\n" +
+          "• Shipping Address: " + cleanAddr + " " + orderData.pincode
+        );
+        waBtn.href = "https://wa.me/" + WA_NUMBER + "?text=" + waMsg;
+      }
 
       // Show Step 2, hide Step 1 & Step 1.5
       document.getElementById("checkout-step-1").style.display = "none";
@@ -3509,59 +3589,43 @@
               detectedAreaText = fallbackParts.length ? fallbackParts.join(', ') : (nData.display_name ? nData.display_name.split(',').slice(0, 2).join(', ') : "");
             }
 
-            // Handle user editing: if user already typed their house/flat number, preserve it!
+            // Handle user editing: if user already typed, preserve it cleanly
             const existingText = (addrInput.value || "").trim();
             let finalAddressValue = "";
-            if (existingText && !existingText.includes("House No.") && existingText.length > 2) {
+            if (existingText && existingText.length > 2) {
               finalAddressValue = existingText + (detectedAreaText ? ", " + detectedAreaText : "");
             } else {
-              finalAddressValue = (house ? "" : "Flat / House No. __, ") + detectedAreaText;
+              finalAddressValue = (house ? ("House/Flat No. " + house + ", ") : "") + detectedAreaText;
             }
 
             addrInput.value = finalAddressValue;
             clearError("inp-address", "err-address");
 
-            // Focus textarea so user can edit immediately
-            addrInput.focus();
-            if (!house && finalAddressValue.startsWith("Flat / House No. __")) {
-              addrInput.setSelectionRange(0, 19);
-            }
-
-            btnText.innerText = "✓ Exact GPS Pin & Area Attached (Tap to update)";
+            btnText.innerText = "✓ Location Pinned";
             btnIcon.innerText = "📍";
 
             badge.style.display = "block";
-            let landmarkInfo = "";
-            if (rawLandmark) {
-              if (poiDist <= 180) {
-                landmarkInfo = ` · Nearby: <strong>${escapeHTML(rawLandmark)}</strong> (~${poiDist}m)`;
-              } else if (poiDist <= 800) {
-                landmarkInfo = ` · Reference Landmark: <em>${escapeHTML(rawLandmark)} (~${Math.round(poiDist/50)*50}m away)</em>`;
-              }
-            }
-
             badge.innerHTML = `
-              <div style="font-size:12px; font-weight:700; color:#065f46; margin-bottom:2px;">
-                ✓ Exact GPS Pin Attached (±${accuracy}m) · <a href='${attachedGPSMapUrl}' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Live Google Maps Pin ↗</a>
-              </div>
-              <div style="font-size:11.5px; color:#047857;">
-                📍 Area: <strong>${escapeHTML(locality || city)}</strong> (${escapeHTML(city)}${postcode ? ' - ' + escapeHTML(postcode) : ''})${landmarkInfo}
-              </div>
-              <div style="font-size:11px; color:#065f46; margin-top:4px; font-weight:600; background:rgba(255,255,255,0.7); padding:3px 6px; border-radius:4px; display:inline-block;">
-                ✏️ <strong>Address is 100% editable below:</strong> Please check &amp; add your Flat/House No. above!
+              <div style="font-size:12px; font-weight:600; color:#065f46; display:flex; justify-content:space-between; align-items:center;">
+                <span>📍 Location pinned (${escapeHTML(locality || city)})</span>
+                <a href='${attachedGPSMapUrl}' target='_blank' style='color:#065f46; font-size:11.5px; text-decoration:underline;'>View Map ↗</a>
               </div>
             `;
 
           } catch (e) {
             console.warn("Reverse geocode fallback", e);
-            btnText.innerText = "✓ Exact GPS Pin Attached";
+            btnText.innerText = "✓ Location Pinned";
             btnIcon.innerText = "📍";
             badge.style.display = "block";
-            badge.innerHTML = "✓ Exact GPS Pin Attached · <a href='" + attachedGPSMapUrl + "' target='_blank' style='color:#065f46; font-weight:700; text-decoration:underline;'>View Google Maps Pin ↗</a><div style='font-size:11px; color:#047857; margin-top:3px;'>✏️ Please add your house number and street in the editable box above.</div>";
+            badge.innerHTML = `
+              <div style="font-size:12px; font-weight:600; color:#065f46;">
+                📍 Location pinned · <a href='${attachedGPSMapUrl}' target='_blank' style='color:#065f46; font-size:11.5px; text-decoration:underline;'>View Map ↗</a>
+              </div>
+            `;
           }
         },
         (err) => {
-          btnText.innerText = "Auto-Fill Address via GPS / Map Location";
+          btnText.innerText = "Pin Location";
           btnIcon.innerText = "📍";
           alert("Could not fetch location. Please check browser GPS permission or enter your address manually.");
         },
