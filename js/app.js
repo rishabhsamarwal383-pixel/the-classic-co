@@ -61,5 +61,26 @@ function openMenuDrawer() {
         closeMenuDrawer();
       }
     });
+
+    // High-Fashion Editorial Hero Lookbook Switcher
+    function switchHeroPhoto(src, pillEl, sealText) {
+      const img = document.getElementById('hero-main-photo');
+      const seal = document.getElementById('hero-seal-sub');
+      if (!img) return;
+      img.style.opacity = '0.35';
+      img.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        img.src = src;
+        img.style.opacity = '1';
+        img.style.transform = 'scale(1)';
+      }, 160);
+      if (seal && sealText) {
+        seal.textContent = sealText;
+      }
+      document.querySelectorAll('.hero-pill-thumb').forEach(p => p.classList.remove('active'));
+      if (pillEl) {
+        pillEl.classList.add('active');
+      }
+    }
   
     // =========================================================================
