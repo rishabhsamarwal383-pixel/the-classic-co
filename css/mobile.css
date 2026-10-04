@@ -1,0 +1,210 @@
+/* =======================================================================
+       COMPREHENSIVE LUXURY MOBILE UI ENHANCEMENTS (RESPONSIVE OPTIMIZATION)
+       ======================================================================= */
+    @media (max-width: 680px) {
+      /* Header: Perfectly balanced, no wrap, no overflow */
+      header {
+        padding: 10px 14px !important;
+      }
+      .brand-logo {
+        font-size: 16px !important;
+        letter-spacing: 1px !important;
+        font-weight: 800 !important;
+      }
+      .header-tools {
+        gap: 6px !important;
+      }
+      .header-action-btn {
+        width: 33px !important;
+        height: 33px !important;
+        border-radius: 7px !important;
+      }
+      .header-install-chip {
+        padding: 5px 9px !important;
+        font-size: 11px !important;
+        gap: 3px !important;
+        border-radius: 6px !important;
+      }
+      .hamburger-btn {
+        padding: 5px 9px !important;
+        font-size: 11px !important;
+        gap: 5px !important;
+        border-radius: 6px !important;
+      }
+      .hamburger-icon span {
+        width: 13px !important;
+        height: 1.5px !important;
+      }
+
+      /* Top Announcement Bar */
+      .announcement-bar {
+        font-size: 10.5px !important;
+        padding: 6px 12px !important;
+        letter-spacing: 0.3px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+
+      /* Hero Section on Mobile */
+      .hero-editorial {
+        padding: 20px 14px 24px !important;
+      }
+      .hero-editorial-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+      .hero-edition-tag {
+        font-size: 10px !important;
+        letter-spacing: 2px !important;
+        padding: 4px 10px !important;
+        margin-bottom: 10px !important;
+      }
+      .hero-main-title {
+        font-size: 28px !important;
+        line-height: 1.2 !important;
+        margin-bottom: 8px !important;
+      }
+      .hero-sub-title {
+        font-size: 13px !important;
+        line-height: 1.45 !important;
+        margin-bottom: 16px !important;
+      }
+      .btn-hero-explore {
+        padding: 11px 20px !important;
+        font-size: 13px !important;
+      }
+
+      /* Filter Bar & Search */
+      .filter-bar {
+        margin-bottom: 16px !important;
+        gap: 10px !important;
+      }
+      .pill-tabs {
+        width: 100% !important;
+        padding-bottom: 4px !important;
+        gap: 6px !important;
+      }
+      .pill-tab {
+        padding: 6px 12px !important;
+        font-size: 11.5px !important;
+      }
+      .filter-tools {
+        width: 100% !important;
+        display: flex !important;
+        gap: 8px !important;
+      }
+      .search-box {
+        flex: 1 !important;
+        min-width: 0 !important;
+      }
+      .search-input {
+        width: 100% !important;
+        font-size: 12px !important;
+        padding: 7px 10px 7px 28px !important;
+        border-radius: 6px !important;
+      }
+      .search-input:focus {
+        width: 100% !important;
+      }
+      .search-icon {
+        left: 8px !important;
+        font-size: 11px !important;
+      }
+      .sort-dropdown {
+        font-size: 11.5px !important;
+        padding: 7px 10px !important;
+        border-radius: 6px !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* Products Grid & Cards */
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+      }
+      .product-card {
+        border-radius: 8px !important;
+      }
+      .card-body {
+        padding: 10px 10px 12px !important;
+      }
+      .card-cat {
+        font-size: 9.5px !important;
+        margin-bottom: 2px !important;
+        letter-spacing: 0.6px !important;
+      }
+      .card-title {
+        font-size: 12.5px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 4px !important;
+        height: 32px !important;
+        overflow: hidden !important;
+      }
+      .card-rating {
+        font-size: 10px !important;
+        margin-bottom: 6px !important;
+      }
+      .price-row {
+        gap: 6px !important;
+        margin-top: 4px !important;
+        margin-bottom: 8px !important;
+      }
+      .price-current {
+        font-size: 14.5px !important;
+      }
+      .price-original {
+        font-size: 11px !important;
+      }
+      .price-save {
+        font-size: 9px !important;
+        padding: 2px 4px !important;
+      }
+      .btn-card-action {
+        padding: 9px 8px !important;
+        font-size: 12px !important;
+        border-radius: 6px !important;
+      }
+
+      /* Modals on Mobile */
+      .modal-backdrop {
+        padding: 10px !important;
+      }
+      .modal-box {
+        padding: 18px 14px !important;
+        max-height: 94vh !important;
+        border-radius: 12px !important;
+      }
+      .prod-modal-box {
+        padding: 16px 14px 18px !important;
+        max-height: 94vh !important;
+        border-radius: 12px !important;
+      }
+      .prod-modal-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      /* Floating WhatsApp button on Mobile */
+      .floating-wa {
+        bottom: 16px !important;
+        right: 14px !important;
+        padding: 8px 13px !important;
+        font-size: 11.5px !important;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .brand-logo {
+        font-size: 14.5px !important;
+        letter-spacing: 0.5px !important;
+      }
+      .header-install-chip {
+        padding: 5px 7px !important;
+        font-size: 10px !important;
+      }
+      .hamburger-btn {
+        padding: 5px 7px !important;
+        font-size: 10px !important;
+      }
+    }
