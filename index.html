@@ -187,22 +187,109 @@
 
   <!-- HERO SECTION (SHOPIFY DTC MINIMAL STYLE) -->
   <!-- ========================================================================= -->
-  <!-- HERO SECTION: UNOBSTRUCTED LUXURY EDITORIAL SHOWCASE -->
+  <!-- HIGH-FASHION EDITORIAL HERO SHOWCASE (THE CLASSIC CO. PRIVATE ARCHIVE) -->
   <!-- ========================================================================= -->
   <section class="hero-editorial">
     <div class="hero-editorial-grid">
+      
+      <!-- EDITORIAL COPY -->
       <div class="hero-text-col">
-        <span class="hero-edition-tag">THE CLASSIC CO. · 2026</span>
-        <h1 class="hero-main-title">Curated Eyewear.</h1>
+        <div class="hero-edition-badge">
+          <span class="hero-edition-dot"></span>
+          <span>HAUTE OPTICS · PRIVATE ARCHIVE 2026</span>
+        </div>
+        
+        <h1 class="hero-main-title">
+          Architectural Eyewear.<br>
+          <span class="hero-title-accent">Crafted for Distinction.</span>
+        </h1>
+        
         <p class="hero-sub-title">
-          Trending polarized silhouettes crafted for modern aesthetics. Available with Cash on Delivery across India.
+          Precision-engineered TAC polarized silhouettes crafted in limited batch runs. Hand-finished Italian acetates and aerospace metals, delivered with complimentary express shipping and Cash on Delivery across India.
         </p>
-        <div>
-          <a href="#collection" class="btn-hero-explore">Explore 30 Styles →</a>
+        
+        <div class="hero-actions-group">
+          <a href="#collection" class="btn-hero-explore">
+            <span>Explore 30 Silhouettes</span>
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+          <a href="https://wa.me/918619661325?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20The%20Classic%20Co.%20luxury%20collection" target="_blank" class="btn-hero-concierge">
+            <span>💬 Concierge VIP</span>
+          </a>
+        </div>
+
+        <div class="hero-metrics-strip">
+          <div class="hero-metric-item">
+            <span class="metric-num">30</span>
+            <span class="metric-lbl">Proprietary Silhouettes</span>
+          </div>
+          <div class="hero-metric-divider"></div>
+          <div class="hero-metric-item">
+            <span class="metric-num">100%</span>
+            <span class="metric-lbl">UV400 TAC Polarized</span>
+          </div>
+          <div class="hero-metric-divider"></div>
+          <div class="hero-metric-item">
+            <span class="metric-num">₹999</span>
+            <span class="metric-lbl">COD Pan-India</span>
+          </div>
         </div>
       </div>
+
+      <!-- EDITORIAL VISUAL SHOWCASE -->
       <div class="hero-visual-col">
-        <img src="hero_luxury_bg.jpg" alt="The Classic Co. Luxury Polarized Sunglasses" class="hero-luxury-image">
+        <div class="hero-visual-stage">
+          <img src="hero_luxury_aviator.jpg" alt="The Classic Co. Luxury Polarized Sunglasses" class="hero-luxury-image" id="hero-main-photo">
+          
+          <!-- FLOATING EDITORIAL SPECS BADGE -->
+          <div class="hero-floating-seal">
+            <div class="seal-icon">✦</div>
+            <div class="seal-text">
+              <span class="seal-title">ARCHIVE SELECTION</span>
+              <span class="seal-sub" id="hero-seal-sub">24K Gilt · TAC Polarized</span>
+            </div>
+          </div>
+
+          <!-- FLOATING DELIVERY CHIP -->
+          <div class="hero-delivery-chip">
+            <span class="delivery-pulse"></span>
+            <span>Pan-India 48h Express Dispatch</span>
+          </div>
+
+          <!-- EDITORIAL LOOKBOOK SWITCHER -->
+          <div class="hero-switcher-bar">
+            <button type="button" class="hero-pill-thumb active" onclick="switchHeroPhoto('hero_luxury_aviator.jpg', this, '24K Gilt · TAC Polarized')">
+              <span>01 Gilt Aviator</span>
+            </button>
+            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_round.jpg', this, 'Studio Round · Carrara Marble')">
+              <span>02 Studio Round</span>
+            </button>
+            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_riviera.jpg', this, 'Riviera Acetate · Amber UV400')">
+              <span>03 Riviera Sunset</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- EDITORIAL TRUST STRIP -->
+    <div class="hero-editorial-trust">
+      <div class="trust-pill-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>TAC 1.1mm UV400 Polarized</span>
+      </div>
+      <div class="trust-pill-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>Handcrafted Italian Acetates</span>
+      </div>
+      <div class="trust-pill-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        <span>Complimentary Pan-India Shipping</span>
+      </div>
+      <div class="trust-pill-item">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Cash on Delivery Available</span>
       </div>
     </div>
   </section>
