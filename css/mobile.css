@@ -46,33 +46,101 @@
         text-overflow: ellipsis !important;
       }
 
-      /* Hero Section on Mobile */
+      /* High-Fashion Editorial Hero on Mobile */
       .hero-editorial {
-        padding: 20px 14px 24px !important;
+        padding: 24px 14px 28px !important;
       }
       .hero-editorial-grid {
         grid-template-columns: 1fr !important;
-        gap: 16px !important;
+        gap: 22px !important;
       }
-      .hero-edition-tag {
+      .hero-visual-col {
+        order: -1;
+      }
+      .hero-visual-stage {
+        aspect-ratio: 16 / 10 !important;
+        border-radius: 12px !important;
+      }
+      .hero-edition-badge {
         font-size: 10px !important;
         letter-spacing: 2px !important;
-        padding: 4px 10px !important;
-        margin-bottom: 10px !important;
+        padding: 5px 12px !important;
+        margin-bottom: 12px !important;
       }
       .hero-main-title {
-        font-size: 28px !important;
-        line-height: 1.2 !important;
-        margin-bottom: 8px !important;
+        font-size: 30px !important;
+        line-height: 1.18 !important;
+        margin-bottom: 10px !important;
       }
       .hero-sub-title {
-        font-size: 13px !important;
-        line-height: 1.45 !important;
-        margin-bottom: 16px !important;
+        font-size: 13.5px !important;
+        line-height: 1.5 !important;
+        margin-bottom: 20px !important;
+      }
+      .hero-actions-group {
+        display: flex !important;
+        width: 100% !important;
+        gap: 8px !important;
+        margin-bottom: 20px !important;
       }
       .btn-hero-explore {
-        padding: 11px 20px !important;
+        flex: 1 !important;
+        padding: 12px 16px !important;
         font-size: 13px !important;
+        justify-content: center !important;
+      }
+      .btn-hero-concierge {
+        padding: 12px 14px !important;
+        font-size: 12px !important;
+      }
+      .hero-metrics-strip {
+        gap: 12px !important;
+        padding-top: 16px !important;
+        max-width: 100% !important;
+        justify-content: space-between !important;
+      }
+      .metric-num {
+        font-size: 17px !important;
+      }
+      .metric-lbl {
+        font-size: 9.5px !important;
+      }
+      .hero-floating-seal {
+        top: 10px !important;
+        left: 10px !important;
+        padding: 5px 9px !important;
+      }
+      .seal-title {
+        font-size: 8.5px !important;
+      }
+      .seal-sub {
+        font-size: 10px !important;
+      }
+      .hero-delivery-chip {
+        top: 10px !important;
+        right: 10px !important;
+        padding: 4px 8px !important;
+        font-size: 10px !important;
+      }
+      .hero-switcher-bar {
+        bottom: 8px !important;
+        padding: 3px 4px !important;
+        gap: 4px !important;
+      }
+      .hero-pill-thumb {
+        font-size: 10px !important;
+        padding: 4px 8px !important;
+      }
+      .hero-editorial-trust {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 8px !important;
+        margin-top: 24px !important;
+        padding-top: 18px !important;
+      }
+      .trust-pill-item {
+        font-size: 11px !important;
+        padding: 8px 10px !important;
+        gap: 6px !important;
       }
 
       /* Filter Bar & Search */
