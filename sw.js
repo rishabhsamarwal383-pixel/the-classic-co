@@ -1,8 +1,17 @@
 // The Classic Co. - PWA Service Worker (Auto-Update, Caching & Push Notifications)
-const CACHE_NAME = 'classic-co-v4';
+const CACHE_NAME = 'classic-co-v5';
 const ASSETS_TO_CACHE = [
   './',
+  './index.html',
   './manifest.json',
+  './css/style.css',
+  './css/mobile.css',
+  './js/products-data.js',
+  './js/catalog.js',
+  './js/checkout.js',
+  './js/cart.js',
+  './js/app.js',
+  './js/pwa.js',
   './icon.svg',
   './icon-192.png',
   './icon-512.png',
