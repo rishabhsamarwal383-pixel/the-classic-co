@@ -5,6 +5,75 @@
 // =========================================================================
 let userPickedPayment = false;
 let isSubmittingOrder = false;
+let activeDiscountPercent = 0;
+let activeDiscountCode = "";
+
+function getFinalAmount(baseAmount) {
+  if (!activeDiscountPercent) return baseAmount;
+  const saved = Math.round(baseAmount * (activeDiscountPercent / 100));
+  return Math.max(1, baseAmount - saved);
+}
+
+function updateCheckoutPriceDisplay() {
+  const p = selectedProduct || PRODUCTS[0];
+  const finalCod = getFinalAmount(p.cod_price);
+  const finalUpi = getFinalAmount(p.upi_price);
+
+  const priceEl = document.getElementById("check-item-price");
+  const codEl = document.getElementById("pay-cod-amount");
+  const upiEl = document.getElementById("pay-upi-amount");
+
+  if (activeDiscountPercent > 0) {
+    if (priceEl) priceEl.innerHTML = `<span style="text-decoration:line-through; color:#94a3b8; font-size:13px; margin-right:6px;">₹${p.cod_price}</span>₹${finalCod}`;
+    if (codEl) codEl.innerHTML = `<span style="text-decoration:line-through; color:#94a3b8; font-size:12px; margin-right:4px;">₹${p.cod_price}</span>₹${finalCod}`;
+    if (upiEl) upiEl.innerHTML = `<span style="text-decoration:line-through; color:#94a3b8; font-size:12px; margin-right:4px;">₹${p.upi_price}</span>₹${finalUpi}`;
+  } else {
+    if (priceEl) priceEl.innerText = "₹" + p.cod_price;
+    if (codEl) codEl.innerText = "₹" + p.cod_price;
+    if (upiEl) upiEl.innerText = "₹" + p.upi_price;
+  }
+
+  const btnText = document.getElementById("btn-submit-text");
+  if (btnText) {
+    if (selectedPayment === "cod") {
+      btnText.innerText = "Place Order · ₹" + finalCod + " (Cash on Delivery)";
+    } else {
+      btnText.innerText = "Pay ₹" + finalUpi + " via UPI";
+    }
+  }
+}
+
+function applyCouponCode() {
+  const inp = document.getElementById("inp-coupon");
+  const statusEl = document.getElementById("coupon-status");
+  if (!inp || !statusEl) return;
+  const code = (inp.value || "").trim().toUpperCase();
+
+  if (code === "CLASSIC15") {
+    activeDiscountPercent = 15;
+    activeDiscountCode = "CLASSIC15";
+    statusEl.style.display = "block";
+    statusEl.style.color = "#15803d";
+    statusEl.innerHTML = `✓ Voucher <strong>CLASSIC15</strong> applied! 15% discount active.`;
+    updateCheckoutPriceDisplay();
+  } else if (code === "CLASSIC10") {
+    activeDiscountPercent = 10;
+    activeDiscountCode = "CLASSIC10";
+    statusEl.style.display = "block";
+    statusEl.style.color = "#15803d";
+    statusEl.innerHTML = `✓ Voucher <strong>CLASSIC10</strong> applied! 10% discount active.`;
+    updateCheckoutPriceDisplay();
+  } else if (!code) {
+    activeDiscountPercent = 0;
+    activeDiscountCode = "";
+    statusEl.style.display = "none";
+    updateCheckoutPriceDisplay();
+  } else {
+    statusEl.style.display = "block";
+    statusEl.style.color = "#b91c1c";
+    statusEl.innerHTML = `✕ Invalid voucher. Play Sunset Drive game to win!`;
+  }
+}
 
 function isCompletePincode(pin) { return /^[0-9]{6}$/.test(pin || ""); }
 function isLocalPincode(pin) { return isCompletePincode(pin) && pin.indexOf(LOCAL_PINCODE_PREFIX) === 0; }
@@ -38,9 +107,16 @@ function openCheckoutForProduct(prodId) {
   document.getElementById("check-item-img").src = p.images[0];
   document.getElementById("check-item-title").innerText = p.title;
   document.getElementById("check-item-cat").innerText = p.category;
-  document.getElementById("check-item-price").innerText = "₹" + p.cod_price;
-  document.getElementById("pay-cod-amount").innerText = "₹" + p.cod_price;
-  document.getElementById("pay-upi-amount").innerText = "₹" + p.upi_price;
+  
+  // Auto-apply saved coupon from session (e.g. from Sunset Drive game)
+  try {
+    const savedCode = sessionStorage.getItem('classic_discount_code');
+    const inp = document.getElementById("inp-coupon");
+    if (savedCode && inp && !inp.value) {
+      inp.value = savedCode;
+    }
+  } catch (e) {}
+  applyCouponCode();
 
   updateDeliveryOptions();
 
@@ -118,13 +194,7 @@ function selectPaymentMode(mode) {
   document.getElementById("pay-opt-cod").classList.toggle("active", mode === "cod");
   document.getElementById("pay-opt-upi").classList.toggle("active", mode === "upi");
 
-  const p = selectedProduct || PRODUCTS[0];
-  const btnText = document.getElementById("btn-submit-text");
-  if (mode === "cod") {
-    btnText.innerText = "Place Order · ₹" + p.cod_price + " (Cash on Delivery)";
-  } else {
-    btnText.innerText = "Pay ₹" + p.upi_price + " via UPI";
-  }
+  updateCheckoutPriceDisplay();
 }
 
 function clearError(fieldId, errId) {
@@ -164,7 +234,7 @@ function submitCustomerOrder() {
   const local = isLocalPincode(pincode);
   // Re-check the rule at submit time: COD only for Udaipur pincodes
   const isUPI = (selectedPayment === "upi") || !local;
-  const totalAmount = isUPI ? p.upi_price : p.cod_price;
+  const totalAmount = isUPI ? getFinalAmount(p.upi_price) : getFinalAmount(p.cod_price);
   const orderId = generateOrderId();
   const fullAddress = address + ", " + city + (attachedGPSMapUrl ? " [GPS: " + attachedGPSMapUrl + "]" : "");
 
@@ -179,6 +249,8 @@ function submitCustomerOrder() {
     category: p.category,
     quantity: 1,
     amount: totalAmount,
+    discountCode: activeDiscountCode || null,
+    discountPercent: activeDiscountPercent || 0,
     paymentMode: isUPI ? "UPI" : "Cash on Delivery",
     paymentStatus: isUPI ? "UPI started - not paid yet" : "COD - collect on delivery",
     zone: local ? "Udaipur (24h)" : "Rest of India (2-4 days)",

@@ -92,6 +92,7 @@
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Premium Styles')"><span>Premium Styles</span><span>→</span></a></li>
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Classic Lifestyle')"><span>Classic Lifestyle</span><span>→</span></a></li>
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Trending')"><span>Trending</span><span>→</span></a></li>
+            <li style="border-top:1px dashed var(--surface-border); margin-top:8px; padding-top:6px;"><a href="javascript:void(0)" onclick="closeMenuDrawer(); window.ClassicGame.openModal();" style="color:#d97706; font-weight:700;"><span>🎮 Play Sunset Drive (Win 15% Off)</span><span>→</span></a></li>
           </ul>
         </div>
 
@@ -211,6 +212,28 @@
     <span class="delivery-strip-sep">|</span>
     <span><strong>Rest of India:</strong> prepaid UPI</span>
   </div>
+
+  <!-- ARCADE GAME BANNER (Interactive Dwell-Time & Conversion Engine) -->
+  <section class="game-banner-section">
+    <div class="game-banner-card">
+      <div class="game-banner-content">
+        <div class="game-banner-tag">🕶️ THE CLASSIC ARCADE · LAKE CITY SUNSET DRIVE</div>
+        <h3 class="game-banner-heading">Dodge The Road Glare. Win Up To 15% OFF!</h3>
+        <p class="game-banner-desc">Take our vintage roadster along Udaipur's lake roads at golden hour. Tap/Space to jump over blinding glare, collect polarized lenses, and earn discount vouchers!</p>
+        <div class="game-banner-stats">
+          <span>🏆 50 pts = 10% OFF</span>
+          <span>·</span>
+          <span>⭐ 100 pts = 15% OFF</span>
+        </div>
+      </div>
+      <div class="game-banner-cta">
+        <button type="button" class="btn-play-arcade" onclick="window.ClassicGame.openModal()">
+          <span>🎮 Play &amp; Win Voucher</span>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l6 5-6 5"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
 
   <!-- MAIN CATALOG SECTION -->
   <main class="catalog-section" id="collection">
@@ -394,6 +417,12 @@
     <span>Helpline</span>
   </a>
 
+  <!-- FLOATING GAME TRIGGER PILL -->
+  <button type="button" class="floating-game-pill" onclick="window.ClassicGame.openModal()" aria-label="Play Sunset Drive and Win 15% Off">
+    <span class="game-pill-icon">🎮</span>
+    <span class="game-pill-text">Play &amp; Win 15% Off</span>
+  </button>
+
   <!-- ========================================================================= -->
   <!-- MODAL 1: CHECKOUT -->
   <!-- ========================================================================= -->
@@ -541,6 +570,19 @@
         </div>
 
         <div id="delivery-note" style="display:block; margin-bottom:14px; padding:10px 12px; border:1px solid #e2e8f0; border-radius:8px; background:#f8fafc; color:#475569; font-size:12.5px; line-height:1.5; font-weight:600;">Enter your 6-digit pincode to see delivery options.</div>
+
+        <!-- COUPON / VOUCHER CODE (From Sunset Drive or Promotion) -->
+        <div class="coupon-box" style="margin-bottom:16px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <label class="form-label" for="inp-coupon" style="margin:0; font-size:12px; font-weight:700; color:#475569;">Voucher / Discount Code:</label>
+            <a href="javascript:void(0)" onclick="closeCheckoutModal(); window.ClassicGame.openModal();" style="font-size:11.5px; color:#d97706; font-weight:700; text-decoration:none;">🎮 Play &amp; Win 15% Off</a>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="inp-coupon" placeholder="e.g. CLASSIC15" style="flex:1; padding:8px 12px; border:1.5px solid #cbd5e1; border-radius:6px; font-size:13px; text-transform:uppercase; font-weight:700; letter-spacing:1px; outline:none;" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCouponCode();}">
+            <button type="button" onclick="applyCouponCode()" style="padding:8px 16px; background:#161514; color:#ffffff; border:none; border-radius:6px; font-size:12.5px; font-weight:700; cursor:pointer;">Apply</button>
+          </div>
+          <div id="coupon-status" style="display:none; font-size:12px; font-weight:700; margin-top:6px; line-height:1.4;"></div>
+        </div>
 
         <!-- PAYMENT METHOD SELECTION -->
         <label class="form-label">Payment Method:</label>
@@ -723,9 +765,42 @@
   </div>
 
   <!-- ========================================================================= -->
-    <!-- Application Logic (js/products-data.js is loaded in <head>) -->
+  <!-- MODAL: THE CLASSIC ARCADE (SUNSET DRIVE MINI-GAME) -->
+  <!-- ========================================================================= -->
+  <div class="arcade-modal-backdrop" id="classic-arcade-modal" style="display:none;" onclick="if(event.target===this) window.ClassicGame.closeModal()">
+    <div class="arcade-modal-box" onclick="event.stopPropagation()">
+      <div class="arcade-modal-header">
+        <div class="arcade-title-group">
+          <div class="arcade-badge">THE CLASSIC ARCADE</div>
+          <h3 class="arcade-title">Sunset Drive: Dodge The Glare 🕶️</h3>
+        </div>
+        <div class="arcade-controls-top">
+          <button type="button" class="arcade-btn-icon" id="arcade-sound-btn" onclick="window.ClassicGame.toggleMute()" title="Mute/Unmute">🔊</button>
+          <button type="button" class="arcade-btn-close" onclick="window.ClassicGame.closeModal()" title="Close Arcade">✕</button>
+        </div>
+      </div>
+
+      <div class="arcade-canvas-wrap">
+        <canvas id="classic-arcade-canvas"></canvas>
+        <div id="arcade-overlay" class="arcade-overlay"></div>
+      </div>
+
+      <div class="arcade-footer-bar">
+        <div class="arcade-instruction">
+          <span>📱 <strong>Tap Screen</strong> or press <strong>Spacebar</strong> to Jump over glare!</span>
+        </div>
+        <button type="button" class="btn-arcade-jump" onclick="window.ClassicGame.jump()">
+          <span>JUMP (TAP)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- Application Logic (js/products-data.js is loaded in <head>) -->
   <script src="js/catalog.js?v=20261005"></script>
   <script src="js/checkout.js?v=20261005"></script>
+  <script src="js/game.js?v=20261005"></script>
   <script src="js/app.js?v=20261005"></script>
   <script src="js/pwa.js?v=20261005"></script>
 </body>
