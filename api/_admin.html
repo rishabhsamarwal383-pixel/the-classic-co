@@ -42,7 +42,7 @@
     --p-shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.16);
   }
 
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     margin: 0;
     background: var(--p-bg);
@@ -71,7 +71,7 @@
   .topbar-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
   }
 
   .shopify-store-badge {
@@ -85,16 +85,11 @@
   }
 
   .shopify-bag-icon {
-    width: 28px;
-    height: 28px;
-    background: #008060;
-    color: #fff;
+    width: 32px;
+    height: 32px;
     border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    font-weight: 800;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
   }
 
   .store-tag {
@@ -120,7 +115,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    height: 34px;
+    height: 36px;
     padding: 0 12px;
     border-radius: 6px;
     font-size: 13px;
@@ -166,7 +161,7 @@
   }
 
   .btn-sm {
-    height: 28px;
+    height: 30px;
     padding: 0 9px;
     font-size: 12px;
   }
@@ -177,6 +172,19 @@
     border-color: #cbe8ba;
   }
 
+  /* MOBILE SUB-BAR FOR QUICK ACTIONS */
+  .mobile-sub-actions {
+    display: none;
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+    padding: 8px 12px;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-sub-actions::-webkit-scrollbar { display: none; }
+
   /* SHOPIFY SUB-NAV TABS */
   .shopify-tabs-bar {
     background: #ffffff;
@@ -185,7 +193,10 @@
     display: flex;
     gap: 6px;
     overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+  .shopify-tabs-bar::-webkit-scrollbar { display: none; }
 
   .tab-link {
     display: inline-flex;
@@ -327,19 +338,21 @@
     gap: 10px;
     flex: 1;
     min-width: 280px;
+    flex-wrap: wrap;
   }
 
   .search-input-wrap {
     position: relative;
     flex: 1;
+    min-width: 200px;
   }
   .search-input-wrap input {
     width: 100%;
-    height: 36px;
-    padding: 0 12px 0 32px;
+    height: 38px;
+    padding: 0 12px 0 34px;
     border: 1px solid var(--p-border);
     border-radius: 6px;
-    font-size: 13px;
+    font-size: 13.5px;
     background: #ffffff;
     color: var(--p-text);
     outline: none;
@@ -360,7 +373,7 @@
   }
 
   .filter-select {
-    height: 36px;
+    height: 38px;
     padding: 0 10px;
     border: 1px solid var(--p-border);
     border-radius: 6px;
@@ -374,7 +387,7 @@
     border-color: var(--p-green);
   }
 
-  /* SHOPIFY DATA TABLE */
+  /* SHOPIFY DATA TABLE (DESKTOP) */
   .table-responsive {
     overflow-x: auto;
     width: 100%;
@@ -470,24 +483,25 @@
   .toggle-switch-label {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--p-text-subdued);
   }
   .switch-container {
     position: relative;
     display: inline-block;
-    width: 34px;
-    height: 20px;
+    width: 36px;
+    height: 22px;
+    flex-shrink: 0;
   }
   .switch-container input { opacity: 0; width: 0; height: 0; }
   .switch-slider {
     position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #c9cccf; transition: .2s; border-radius: 20px;
+    background-color: #c9cccf; transition: .2s; border-radius: 22px;
   }
   .switch-slider:before {
-    position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px;
+    position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
     background-color: white; transition: .2s; border-radius: 50%;
   }
   input:checked + .switch-slider { background-color: var(--p-green); }
@@ -506,7 +520,7 @@
   }
   .form-control {
     width: 100%;
-    height: 36px;
+    height: 38px;
     padding: 0 12px;
     border: 1px solid var(--p-border);
     border-radius: 6px;
@@ -580,7 +594,7 @@
   .modal-close-btn {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     color: var(--p-text-subdued);
     padding: 4px 8px;
@@ -653,11 +667,255 @@
     gap: 10px;
   }
 
+  /* ========================================================================= */
+  /* MOBILE FRIENDLY ADAPTIVE DESIGN (<= 768px) */
+  /* ========================================================================= */
+  .mobile-cards-view { display: none; }
+
   @media (max-width: 768px) {
-    .shopify-topbar { padding: 0 12px; }
+    body {
+      font-size: 13.5px;
+      padding-bottom: 90px;
+    }
+    .shopify-topbar {
+      padding: 0 12px;
+      height: 52px;
+    }
+    .shopify-store-badge span {
+      font-size: 14.5px;
+    }
     .store-tag { display: none; }
-    .page-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .form-grid-2 { grid-template-columns: 1fr; }
+    
+    .topbar-right { gap: 6px; }
+    .btn-desktop-only { display: none !important; }
+    
+    .mobile-sub-actions {
+      display: flex;
+    }
+
+    .shopify-tabs-bar {
+      padding: 0 8px;
+      gap: 2px;
+    }
+    .tab-link {
+      padding: 10px 10px;
+      font-size: 13px;
+    }
+
+    .shopify-main {
+      margin: 14px auto;
+      padding: 0 10px;
+    }
+
+    .page-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .page-header button {
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+    }
+    .page-title {
+      font-size: 18px;
+    }
+
+    .metrics-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .metric-box {
+      padding: 12px 10px;
+    }
+    .metric-label {
+      font-size: 10.5px;
+    }
+    .metric-value {
+      font-size: 18px;
+    }
+
+    .table-controls {
+      padding: 10px;
+      gap: 8px;
+    }
+    .controls-group {
+      min-width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .search-input-wrap input {
+      font-size: 16px; /* Prevents auto zoom in mobile browser */
+      height: 40px;
+    }
+    .filter-select {
+      width: 100%;
+      height: 40px;
+      font-size: 13.5px;
+    }
+
+    /* Switch from Wide Table to Mobile Card View */
+    .desktop-table-view {
+      display: none !important;
+    }
+    .mobile-cards-view {
+      display: flex !important;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    /* Mobile Product Card */
+    .mobile-prod-card {
+      background: #ffffff;
+      border: 1px solid var(--p-border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .mobile-prod-card.is-hidden {
+      background: #fbfbfc;
+      opacity: 0.88;
+    }
+    .mobile-prod-top {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .mobile-prod-thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #f4f4f4;
+      border: 1px solid var(--p-border);
+      flex-shrink: 0;
+    }
+    .mobile-prod-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .mobile-prod-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--p-text);
+      line-height: 1.3;
+      cursor: pointer;
+    }
+    .mobile-prod-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .mobile-prod-price {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--p-text);
+      margin-top: 4px;
+    }
+    .mobile-prod-price small {
+      font-weight: 500;
+      color: var(--p-text-subdued);
+      margin-left: 6px;
+      font-size: 12px;
+    }
+
+    /* Mobile Quick Toggles Strip */
+    .mobile-toggles-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4px;
+      background: #f8f9fa;
+      border: 1px solid var(--p-border-subdued);
+      border-radius: 6px;
+      padding: 8px 4px;
+    }
+    .mobile-toggle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--p-text-subdued);
+      text-align: center;
+    }
+
+    /* Mobile Actions Buttons */
+    .mobile-actions-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .mobile-actions-row .btn {
+      flex: 1;
+      height: 36px;
+      font-size: 12.5px;
+    }
+
+    /* Mobile Order Card */
+    .mobile-order-card {
+      background: #ffffff;
+      border: 1px solid var(--p-border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    /* Forms on Mobile */
+    .form-grid-2 {
+      grid-template-columns: 1fr !important;
+      gap: 12px;
+    }
+    .form-control {
+      font-size: 16px !important; /* Prevents auto zoom in iOS Safari */
+      height: 42px;
+    }
+    textarea.form-control {
+      height: auto;
+      min-height: 90px;
+    }
+
+    /* Full-Screen Sheet Modal on Mobile */
+    .shopify-modal {
+      width: 100% !important;
+      max-height: 100% !important;
+      height: 100% !important;
+      border-radius: 0 !important;
+      border: none !important;
+    }
+    .modal-backdrop {
+      padding: 0 !important;
+    }
+    .modal-header {
+      padding: 14px 16px;
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 10;
+    }
+    .modal-body {
+      padding: 16px;
+      flex: 1;
+    }
+    .modal-footer {
+      padding: 14px 16px;
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      z-index: 10;
+    }
   }
 </style>
 </head>
@@ -670,32 +928,32 @@
   <header class="shopify-topbar">
     <div class="topbar-left">
       <a href="/admin" class="shopify-store-badge">
-        <div class="shopify-bag-icon">🛍️</div>
+        <img src="/icon-192.png" class="shopify-bag-icon" alt="The Classic Co.">
         <span>The Classic Co.</span>
       </a>
       <span class="store-tag">Shopify Admin</span>
-      <span class="badge badge-success" id="badge-sync-status" style="font-size:11px;">● All Saved</span>
+      <span class="badge badge-success" id="badge-sync-status" style="font-size:11px;">● Saved</span>
     </div>
 
     <div class="topbar-right">
       <!-- Test Cha-Ching button -->
-      <button class="btn btn-secondary btn-sm" id="btn-test-chaching" onclick="testChaChingSound()" title="Test authentic Shopify cash register sound">
+      <button class="btn btn-secondary btn-sm btn-desktop-only" id="btn-test-chaching" onclick="testChaChingSound()" title="Test authentic Shopify cash register sound">
         🔔 <span>Test Cha-Ching</span>
       </button>
 
       <!-- Sound Toggle -->
-      <button class="btn btn-secondary btn-sm btn-sound-on" id="btn-toggle-sound" onclick="toggleSoundAlerts()">
+      <button class="btn btn-secondary btn-sm btn-sound-on btn-desktop-only" id="btn-toggle-sound" onclick="toggleSoundAlerts()">
         <span id="sound-icon">🔔</span> <span id="sound-text">Alerts: ON</span>
       </button>
 
       <!-- PWA Install Button -->
       <button class="btn btn-secondary btn-sm" id="btn-install-pwa" style="display:none;" onclick="installPWA()">
-        📲 <span>Install App</span>
+        📲 <span>Install</span>
       </button>
 
       <!-- View Online Store -->
-      <a href="/" target="_blank" class="btn btn-secondary btn-sm">
-        ↗ <span>View Store</span>
+      <a href="/" target="_blank" class="btn btn-secondary btn-sm btn-desktop-only">
+        ↗ <span>Store</span>
       </a>
 
       <!-- Publish Live -->
@@ -709,6 +967,19 @@
     </div>
   </header>
 
+  <!-- MOBILE SUB-BAR FOR QUICK ACTIONS -->
+  <div class="mobile-sub-actions">
+    <button class="btn btn-secondary btn-sm" onclick="testChaChingSound()">
+      🔔 Test Cha-Ching
+    </button>
+    <button class="btn btn-secondary btn-sm btn-sound-on" id="btn-toggle-sound-m" onclick="toggleSoundAlerts()">
+      <span id="sound-icon-m">🔔</span> <span id="sound-text-m">Alerts: ON</span>
+    </button>
+    <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+      ↗ View Store
+    </a>
+  </div>
+
   <!-- SHOPIFY TABS BAR -->
   <nav class="shopify-tabs-bar">
     <button class="tab-link active" onclick="switchTab('products', this)">
@@ -720,13 +991,13 @@
       <span class="tab-badge" id="badge-orders-count">0</span>
     </button>
     <button class="tab-link" onclick="switchTab('pricing', this)">
-      <span>🏷️ Pricing & Delivery</span>
+      <span>🏷️ Pricing</span>
     </button>
     <button class="tab-link" onclick="switchTab('promises', this)">
-      <span>✍️ Store Promises</span>
+      <span>✍️ Promises</span>
     </button>
     <button class="tab-link" onclick="switchTab('settings', this)">
-      <span>⚙️ Settings & Backup</span>
+      <span>⚙️ Settings</span>
     </button>
   </nav>
 
@@ -739,7 +1010,7 @@
       <div class="page-header">
         <div>
           <h1 class="page-title">Products</h1>
-          <div class="page-subtitle">Manage all 30 sunglasses, visibility in stock, pricing, and homepage bestsellers.</div>
+          <div class="page-subtitle">Manage all 30 sunglasses, visibility, stock, pricing, and homepage bestsellers.</div>
         </div>
         <button class="btn btn-primary" onclick="openAddProductModal()">
           + Add product
@@ -749,7 +1020,7 @@
       <div class="banner-info">
         <span>💡</span>
         <div>
-          <strong>Shopify Quick Control:</strong> Changes are immediately active in this browser. To sync live across all visitors, tap the green <strong>"Publish Live"</strong> button in the top right.
+          <strong>Quick Control:</strong> Changes are immediately active in this browser. To sync live across all visitors, tap the green <strong>"Publish Live"</strong> button in the top right.
         </div>
       </div>
 
@@ -759,8 +1030,14 @@
           <div class="controls-group">
             <div class="search-input-wrap">
               <span class="search-icon">🔍</span>
-              <input type="text" id="prod-search" placeholder="Filter products by title or category..." oninput="renderProductsTable()">
+              <input type="text" id="prod-search" placeholder="Search by title or category..." oninput="renderProductsTable()">
             </div>
+
+            <select id="prod-vis-filter" class="filter-select" onchange="renderProductsTable()">
+              <option value="ALL">All Products (Live &amp; Hidden)</option>
+              <option value="LIVE">Live on Store Only</option>
+              <option value="HIDDEN">Hidden from Store Only</option>
+            </select>
 
             <select id="prod-cat-filter" class="filter-select" onchange="renderProductsTable()">
               <option value="ALL">All Categories</option>
@@ -777,12 +1054,6 @@
               <option value="OUT_OF_STOCK">Out of Stock Only</option>
             </select>
 
-            <select id="prod-vis-filter" class="filter-select" onchange="renderProductsTable()">
-              <option value="ALL">All Products (Live &amp; Hidden)</option>
-              <option value="LIVE">Live on Store Only</option>
-              <option value="HIDDEN">Hidden from Store Only</option>
-            </select>
-
             <select id="prod-feat-filter" class="filter-select" onchange="renderProductsTable()">
               <option value="ALL">All Homepage Status</option>
               <option value="BESTSELLER">Bestsellers (Homepage)</option>
@@ -795,8 +1066,8 @@
           </div>
         </div>
 
-        <!-- Products Table -->
-        <div class="table-responsive">
+        <!-- Desktop Products Table -->
+        <div class="table-responsive desktop-table-view">
           <table class="shopify-table">
             <thead>
               <tr>
@@ -817,6 +1088,12 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Mobile Products Cards View -->
+        <div class="mobile-cards-view" id="products-mobile-container">
+          <!-- Rendered via JavaScript -->
+        </div>
+
       </div>
     </section>
 
@@ -829,7 +1106,7 @@
           <h1 class="page-title">Orders</h1>
           <div class="page-subtitle">Real-time incoming orders with automatic Shopify Cha-Ching sound alerts.</div>
         </div>
-        <div style="display:flex; gap:8px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
           <a id="btn-open-sheet" href="#" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="display:none;">
             📊 Google Sheet ↗
           </a>
@@ -858,7 +1135,7 @@
         </div>
         <div class="metric-box">
           <div class="metric-label">COD / UPI Split</div>
-          <div class="metric-value" id="stat-cod-upi-split" style="font-size:18px; margin-top:12px;">0 COD / 0 UPI</div>
+          <div class="metric-value" id="stat-cod-upi-split" style="font-size:16px; margin-top:8px;">0 COD / 0 UPI</div>
         </div>
       </div>
 
@@ -881,7 +1158,8 @@
           </div>
         </div>
 
-        <div class="table-responsive">
+        <!-- Desktop Orders Table -->
+        <div class="table-responsive desktop-table-view">
           <table class="shopify-table">
             <thead>
               <tr>
@@ -899,6 +1177,12 @@
             </tbody>
           </table>
         </div>
+
+        <!-- Mobile Orders Cards View -->
+        <div class="mobile-cards-view" id="orders-mobile-container">
+          <!-- Rendered via JavaScript -->
+        </div>
+
       </div>
     </section>
 
@@ -1064,7 +1348,7 @@
             <input type="password" id="cfg-github-token" class="form-control" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
             <div class="form-hint">Pre-configured on Vercel environment or enter your token here.</div>
           </div>
-          <div style="display:flex; gap:10px; margin-top:14px;">
+          <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
             <button class="btn btn-primary" onclick="publishLiveChanges()">
               🚀 Publish All Live to Vercel
             </button>
@@ -1090,6 +1374,20 @@
       <form id="product-form" onsubmit="saveProductModal(event)">
         <div class="modal-body">
           <input type="hidden" id="edit-prod-id">
+
+          <!-- Visibility Hide Card -->
+          <div class="form-row" style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:12px 14px; margin-bottom:14px;">
+            <label class="toggle-switch-label" style="align-items:flex-start;">
+              <span class="switch-container" style="margin-top:2px;">
+                <input type="checkbox" id="edit-prod-hidden">
+                <span class="switch-slider"></span>
+              </span>
+              <div>
+                <div style="font-weight:700; color:var(--p-text);">Hide from Storefront (Draft / Unpublished)</div>
+                <div style="font-size:11.5px; color:var(--p-text-subdued); margin-top:2px;">When enabled, this specific product is completely hidden from customers on the website, search results, and bestsellers.</div>
+              </div>
+            </label>
+          </div>
 
           <div class="form-row">
             <label>Title</label>
@@ -1122,19 +1420,6 @@
               <label>UPI Price (₹)</label>
               <input type="number" id="edit-prod-upi" class="form-control" required>
             </div>
-          </div>
-
-          <div class="form-row" style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:12px 14px; margin-bottom:14px;">
-            <label class="toggle-switch-label" style="align-items:flex-start;">
-              <span class="switch-container" style="margin-top:2px;">
-                <input type="checkbox" id="edit-prod-hidden">
-                <span class="switch-slider"></span>
-              </span>
-              <div>
-                <div style="font-weight:700; color:var(--p-text);">Hide from Storefront (Draft / Unpublished)</div>
-                <div style="font-size:11.5px; color:var(--p-text-subdued); margin-top:2px;">When enabled, this specific product is completely hidden from customers on the website, search results, and bestsellers.</div>
-              </div>
-            </label>
           </div>
 
           <div class="form-grid-2" style="margin-bottom:16px;">
@@ -1811,7 +2096,8 @@
       deferredInstallPrompt.prompt();
       deferredInstallPrompt.userChoice.then(function() {
         deferredInstallPrompt = null;
-        document.getElementById('btn-install-pwa').style.display = 'none';
+        var btn = document.getElementById('btn-install-pwa');
+        if (btn) btn.style.display = 'none';
       });
     }
   }
@@ -1885,14 +2171,16 @@
     var btn = document.getElementById('btn-toggle-sound');
     var icon = document.getElementById('sound-icon');
     var text = document.getElementById('sound-text');
+    var btnM = document.getElementById('btn-toggle-sound-m');
+    var iconM = document.getElementById('sound-icon-m');
+    var textM = document.getElementById('sound-text-m');
+
     if (soundAlertsEnabled) {
-      btn.className = 'btn btn-secondary btn-sm btn-sound-on';
-      icon.innerText = '🔔';
-      text.innerText = 'Alerts: ON';
+      if (btn) { btn.className = 'btn btn-secondary btn-sm btn-sound-on btn-desktop-only'; icon.innerText = '🔔'; text.innerText = 'Alerts: ON'; }
+      if (btnM) { btnM.className = 'btn btn-secondary btn-sm btn-sound-on'; iconM.innerText = '🔔'; textM.innerText = 'Alerts: ON'; }
     } else {
-      btn.className = 'btn btn-secondary btn-sm';
-      icon.innerText = '🔕';
-      text.innerText = 'Alerts: OFF';
+      if (btn) { btn.className = 'btn btn-secondary btn-sm btn-desktop-only'; icon.innerText = '🔕'; text.innerText = 'Alerts: OFF'; }
+      if (btnM) { btnM.className = 'btn btn-secondary btn-sm'; iconM.innerText = '🔕'; textM.innerText = 'Alerts: OFF'; }
     }
   }
 
@@ -1938,9 +2226,9 @@
       // 3. Promises
       currentPromises = Object.assign({
         announcement: "UV400 polarized · Hard case & cloth included · 7-day exchange",
-        heroTitle: "Polarized sunglasses,<br><span class=\"hero-title-accent\">delivered to your door.</span>",
+        heroTitle: "Polarized sunglasses,<br><span class="hero-title-accent">delivered to your door.</span>",
         heroSubtitle: "UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.",
-        deliveryStrip: "<span><strong>Udaipur:</strong> 1-day delivery + COD</span><span class=\"delivery-strip-sep\">|</span><span><strong>Rest of India:</strong> prepaid UPI</span>",
+        deliveryStrip: "<span><strong>Udaipur:</strong> 1-day delivery + COD</span><span class="delivery-strip-sep">|</span><span><strong>Rest of India:</strong> prepaid UPI</span>",
         founder: "Run by a local founder in Udaipur. Questions? WhatsApp us."
       }, custom.promises || {});
 
@@ -2020,19 +2308,20 @@
     if (btn) btn.classList.add('active');
     var target = document.getElementById('tab-' + tabName);
     if (target) target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // -------------------------------------------------------------------------
-  // TAB 1: SHOPIFY PRODUCTS TABLE & MANAGEMENT
+  // TAB 1: SHOPIFY PRODUCTS TABLE & MANAGEMENT (DESKTOP & MOBILE ADAPTIVE)
   // -------------------------------------------------------------------------
   function renderProductsTable() {
     var tbody = document.getElementById('products-table-body');
+    var mobileContainer = document.getElementById('products-mobile-container');
     var search = (document.getElementById('prod-search').value || '').toLowerCase().trim();
+    var visFilter = (document.getElementById('prod-vis-filter') ? document.getElementById('prod-vis-filter').value : 'ALL');
     var catFilter = document.getElementById('prod-cat-filter').value;
     var stockFilter = document.getElementById('prod-stock-filter').value;
     var featFilter = document.getElementById('prod-feat-filter').value;
-
-    var visFilter = (document.getElementById('prod-vis-filter') ? document.getElementById('prod-vis-filter').value : 'ALL');
 
     var list = currentProducts.filter(function(p) {
       var matchSearch = !search || p.title.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
@@ -2047,10 +2336,13 @@
     document.getElementById('prod-results-text').innerText = 'Showing ' + list.length + ' of ' + currentProducts.length + ' products';
 
     if (!list.length) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:36px; color:var(--p-text-subdued);">No products found matching your filters.</td></tr>';
+      var emptyMsg = 'No products found matching your filters.';
+      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</td></tr>';
+      mobileContainer.innerHTML = '<div style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</div>';
       return;
     }
 
+    // 1. Render Desktop Table Rows
     tbody.innerHTML = list.map(function(p) {
       var isHidden = Boolean(p.hidden);
       var isInStock = p.inStock !== false;
@@ -2102,6 +2394,71 @@
         '</td>' +
       '</tr>';
     }).join('');
+
+    // 2. Render Mobile Native Product Cards
+    mobileContainer.innerHTML = list.map(function(p) {
+      var isHidden = Boolean(p.hidden);
+      var isInStock = p.inStock !== false;
+      var isFeatured = Boolean(p.featured);
+      var thumb = (p.images && p.images.length) ? p.images[0] : '';
+
+      return '<div class="mobile-prod-card ' + (isHidden ? 'is-hidden' : '') + '">' +
+        '<div class="mobile-prod-top">' +
+          '<img src="' + thumb + '" class="mobile-prod-thumb" alt="' + escapeHTML(p.title) + '" loading="lazy" onclick="openEditProductModal(' + p.id + ')">' +
+          '<div class="mobile-prod-info">' +
+            '<div class="mobile-prod-title" onclick="openEditProductModal(' + p.id + ')">' +
+              escapeHTML(p.title) +
+              (isHidden ? ' <span class="badge badge-warning" style="font-size:10px; padding:1px 5px;">HIDDEN</span>' : '') +
+            '</div>' +
+            '<div class="mobile-prod-meta">' +
+              '<span class="badge badge-category">' + escapeHTML(p.category) + '</span>' +
+              '<span class="badge ' + (isHidden ? 'badge-subdued' : 'badge-success') + '">' + (isHidden ? '👁️ Hidden' : '● Live') + '</span>' +
+              (isFeatured ? '<span class="badge badge-warning">★ Bestseller</span>' : '') +
+            '</div>' +
+            '<div class="mobile-prod-price">' +
+              '₹' + p.cod_price +
+              '<small>UPI: ₹' + p.upi_price + '</small>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="mobile-toggles-strip">' +
+          '<div class="mobile-toggle-item">' +
+            '<span>' + (isHidden ? 'Hidden' : 'Live') + '</span>' +
+            '<label class="switch-container">' +
+              '<input type="checkbox" ' + (!isHidden ? 'checked' : '') + ' onchange="toggleProductVisibility(' + p.id + ', !this.checked)">' +
+              '<span class="switch-slider"></span>' +
+            '</label>' +
+          '</div>' +
+          '<div class="mobile-toggle-item">' +
+            '<span>' + (isInStock ? 'In Stock' : 'Out Stock') + '</span>' +
+            '<label class="switch-container">' +
+              '<input type="checkbox" ' + (isInStock ? 'checked' : '') + ' onchange="toggleProductStock(' + p.id + ', this.checked)">' +
+              '<span class="switch-slider"></span>' +
+            '</label>' +
+          '</div>' +
+          '<div class="mobile-toggle-item">' +
+            '<span>Bestseller</span>' +
+            '<label class="switch-container">' +
+              '<input type="checkbox" ' + (isFeatured ? 'checked' : '') + ' onchange="toggleProductFeatured(' + p.id + ', this.checked)">' +
+              '<span class="switch-slider"></span>' +
+            '</label>' +
+          '</div>' +
+        '</div>' +
+
+        '<div class="mobile-actions-row">' +
+          '<button class="btn btn-secondary" onclick="toggleProductVisibility(' + p.id + ', ' + (!isHidden) + ')">' +
+            (isHidden ? '👁️ Show' : '🚫 Hide') +
+          '</button>' +
+          '<button class="btn btn-secondary" onclick="openEditProductModal(' + p.id + ')">' +
+            '✏️ Edit' +
+          '</button>' +
+          '<button class="btn btn-danger" style="flex:0 0 44px;" onclick="quickDeleteProduct(' + p.id + ')">' +
+            '🗑️' +
+          '</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
   }
 
   function toggleProductVisibility(id, isHidden) {
@@ -2144,7 +2501,8 @@
     document.getElementById('edit-prod-hidden').checked = Boolean(p.hidden);
     document.getElementById('edit-prod-instock').checked = p.inStock !== false;
     document.getElementById('edit-prod-featured').checked = Boolean(p.featured);
-    document.getElementById('edit-prod-images').value = (p.images || []).join('\n');
+    document.getElementById('edit-prod-images').value = (p.images || []).join('
+');
     document.getElementById('btn-delete-prod').style.display = 'inline-flex';
     updateImagePreviews();
     document.getElementById('product-modal').style.display = 'flex';
@@ -2174,10 +2532,11 @@
 
   function updateImagePreviews() {
     var val = document.getElementById('edit-prod-images').value;
-    var urls = val.split('\n').map(function(s) { return s.trim(); }).filter(Boolean);
+    var urls = val.split('
+').map(function(s) { return s.trim(); }).filter(Boolean);
     var container = document.getElementById('edit-prod-img-previews');
     container.innerHTML = urls.map(function(u) {
-      return '<img src="' + u + '" class="img-preview-card" onerror="this.style.display=\'none\'">';
+      return '<img src="' + u + '" class="img-preview-card" onerror="this.style.display='none'">';
     }).join('');
   }
 
@@ -2193,7 +2552,8 @@
     var inStock = document.getElementById('edit-prod-instock').checked;
     var featured = document.getElementById('edit-prod-featured').checked;
     var rawImages = document.getElementById('edit-prod-images').value;
-    var images = rawImages.split('\n').map(function(s) { return s.trim(); }).filter(Boolean);
+    var images = rawImages.split('
+').map(function(s) { return s.trim(); }).filter(Boolean);
 
     var p = currentProducts.find(function(x) { return x.id === id; });
     if (p) {
@@ -2320,11 +2680,15 @@
     });
 
     var tbody = document.getElementById('orders-table-body');
+    var mobileOrders = document.getElementById('orders-mobile-container');
     if (!filtered.length) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:36px; color:var(--p-text-subdued);">No orders placed yet.</td></tr>';
+      var emptyMsg = 'No orders placed yet.';
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</td></tr>';
+      mobileOrders.innerHTML = '<div style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</div>';
       return;
     }
 
+    // Desktop Orders Rows
     tbody.innerHTML = filtered.map(function(o) {
       var st = o.status || 'Pending';
       var opts = STATUSES.map(function(s) { return '<option ' + (s === st ? 'selected' : '') + '>' + s + '</option>'; }).join('');
@@ -2351,7 +2715,7 @@
           '<span class="badge ' + (isPendingVerif ? 'badge-warning' : 'badge-success') + '">' + (o.paymentStatus || st) + '</span>' +
         '</td>' +
         '<td>' +
-          '<select class="filter-select" onchange="updateOrderStatus(\'' + o.orderId + '\', this.value)" style="height:30px; font-size:12px;">' +
+          '<select class="filter-select" onchange="updateOrderStatus(\'' + o.orderId + '\', this.value)" style="height:32px; font-size:12px;">' +
             opts +
           '</select>' +
         '</td>' +
@@ -2361,6 +2725,43 @@
           '</a>' +
         '</td>' +
       '</tr>';
+    }).join('');
+
+    // Mobile Orders Cards
+    mobileOrders.innerHTML = filtered.map(function(o) {
+      var st = o.status || 'Pending';
+      var opts = STATUSES.map(function(s) { return '<option ' + (s === st ? 'selected' : '') + '>' + s + '</option>'; }).join('');
+      var isPendingVerif = st === 'Payment pending verification';
+
+      return '<div class="mobile-order-card">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
+          '<strong>#' + o.orderId + '</strong>' +
+          '<span class="badge ' + (isPendingVerif ? 'badge-warning' : 'badge-success') + '">' + (o.paymentStatus || st) + '</span>' +
+        '</div>' +
+        '<div style="font-size:12px; color:var(--p-text-subdued);">' +
+          (o.createdAt || '').slice(0, 16).replace('T', ' ') + ' · ' + o.paymentMode +
+        '</div>' +
+        '<div style="font-weight:600; margin-top:4px;">' +
+          escapeHTML(o.name || 'Customer') + ' (+91 ' + escapeHTML(o.phone) + ')' +
+        '</div>' +
+        '<div style="font-size:12px; color:var(--p-text-subdued);">' +
+          escapeHTML(o.city || '') + ' · ' + escapeHTML(o.pincode) +
+        '</div>' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:6px; border-top:1px solid #f1f2f4;">' +
+          '<span>' + escapeHTML(o.title || 'Classic Frame') + '</span>' +
+          '<strong style="font-size:15px;">₹' + Number(o.amount).toLocaleString('en-IN') + '</strong>' +
+        '</div>' +
+        '<div style="margin-top:6px;">' +
+          '<select class="filter-select" onchange="updateOrderStatus(\'' + o.orderId + '\', this.value)" style="width:100%; height:38px;">' +
+            opts +
+          '</select>' +
+        '</div>' +
+        '<div style="margin-top:6px;">' +
+          '<a class="btn btn-primary" style="width:100%; height:40px; text-decoration:none;" target="_blank" rel="noopener" href="' + waCustomerUrl(o) + '">' +
+            'Chat with Customer on WhatsApp ↗' +
+          '</a>' +
+        '</div>' +
+      '</div>';
     }).join('');
   }
 
