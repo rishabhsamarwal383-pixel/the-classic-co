@@ -2013,15 +2013,15 @@
   background: #ffffff;
   border: 1px solid #e7e5e4;
   border-radius: 18px;
-  width: 100%;
-  max-width: 620px;
+  width: 95vw;
+  max-width: 980px;
   overflow: hidden;
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
   display: flex;
   flex-direction: column;
 }
 .arcade-modal-header {
-  padding: 14px 18px;
+  padding: 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2036,7 +2036,7 @@
   text-transform: uppercase;
 }
 .arcade-title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   color: #161514;
   margin: 2px 0 0;
@@ -2068,7 +2068,7 @@
 .arcade-canvas-wrap {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 440px;
   background: #fed7aa;
   overflow: hidden;
 }
@@ -2090,7 +2090,7 @@
   z-index: 10;
 }
 .arcade-footer-bar {
-  padding: 12px 18px;
+  padding: 14px 20px;
   background: #fafaf9;
   border-top: 1px solid #e7e5e4;
   display: flex;
@@ -2099,7 +2099,7 @@
   gap: 12px;
 }
 .arcade-instruction {
-  font-size: 12px;
+  font-size: 12.5px;
   color: #78716c;
 }
 .arcade-instruction strong {
@@ -2110,8 +2110,8 @@
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 9px 18px;
-  font-size: 12.5px;
+  padding: 10px 22px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.5px;
   cursor: pointer;
@@ -2139,7 +2139,7 @@
     justify-content: center;
   }
   .arcade-canvas-wrap {
-    height: 250px;
+    height: 340px;
   }
 }
 

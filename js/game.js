@@ -1,15 +1,15 @@
 /**
  * =============================================================================
- * THE CLASSIC CO. - SUNSET DRIVE: UDAIPUR HERITAGE EDITION (Interactive Web Game)
+ * THE CLASSIC CO. - SUNSET DRIVE: UDAIPUR CONTINUOUS JOURNEY EDITION
  * =============================================================================
- * Luxury D2C interactive experience matching The Classic Co. brand aesthetic.
- * Features:
- * - Iconic Vintage Indian Hindustan Ambassador car (transparent sprite)
- * - Udaipur Lake Pichola, City Palace & Ghats panorama scrolling in background
- * - The Classic Co. roadside billboards passing continuously
- * - Heritage Udaipur streetlamps and chhatris along the scenic promenade
- * - Polarized sunglasses collectible with temporary anti-glare shield
- * - Reward Tiers: 50 pts -> 10% OFF (CLASSIC10), 100 pts -> 15% OFF (CLASSIC15)
+ * - Continuous, seamless 2940px panorama through Udaipur's famous landmarks:
+ *   [1] Lake Pichola & Gangaur Ghat
+ *   [2] Fateh Sagar Lake & Rani Road
+ *   [3] Jag Mandir Island Palace & City Palace
+ * - Prominent "THE CLASSIC CO." roadside hoardings passing regularly
+ * - Vintage White Hindustan Ambassador car (scaled for large cinematic viewport)
+ * - Anti-glare Polarized Sunglasses collectibles + UV400 shield
+ * - Milestone discounts: 50 pts -> 10% OFF (CLASSIC10), 100 pts -> 15% OFF (CLASSIC15)
  * =============================================================================
  */
 
@@ -41,25 +41,25 @@
 
       if (type === 'jump') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(200, now);
-        osc.frequency.exponentialRampToValueAtTime(540, now + 0.14);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0.01, now + 0.14);
+        osc.frequency.setValueAtTime(190, now);
+        osc.frequency.exponentialRampToValueAtTime(540, now + 0.15);
+        gain.gain.setValueAtTime(0.22, now);
+        gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
         osc.start(now);
-        osc.stop(now + 0.15);
+        osc.stop(now + 0.16);
       } else if (type === 'collect') {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(440, now);
         osc.frequency.setValueAtTime(659.25, now + 0.08);
         osc.frequency.setValueAtTime(880, now + 0.16);
-        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.setValueAtTime(0.28, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
         osc.start(now);
         osc.stop(now + 0.26);
       } else if (type === 'crash') {
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(140, now);
-        osc.frequency.exponentialRampToValueAtTime(45, now + 0.22);
+        osc.frequency.exponentialRampToValueAtTime(40, now + 0.22);
         gain.gain.setValueAtTime(0.3, now);
         gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
         osc.start(now);
@@ -81,11 +81,14 @@
     } catch (e) {}
   }
 
-  // --- ASSET PRELOADER ---
+  // --- ASSETS LOADING ---
   const assets = {
     car: { src: 'images/ambassador_car.png', img: null, loaded: false },
-    bg: { src: 'images/udaipur_sunset_bg.jpg', img: null, loaded: false },
-    billboard: { src: 'images/classic_billboard.png', img: null, loaded: false },
+    bg: { src: 'images/udaipur_seamless_journey.jpg', img: null, loaded: false },
+    hoarding1: { src: 'images/classic_hoarding_1.png', img: null, loaded: false },
+    hoarding2: { src: 'images/classic_hoarding_2.png', img: null, loaded: false },
+    hoarding3: { src: 'images/classic_hoarding_3.png', img: null, loaded: false },
+    hoarding4: { src: 'images/classic_hoarding_4.png', img: null, loaded: false },
     lamp: { src: 'images/udaipur_streetlamp.png', img: null, loaded: false },
     chhatri: { src: 'images/udaipur_chhatri.png', img: null, loaded: false }
   };
@@ -107,35 +110,35 @@
   let gameState = 'START'; // 'START', 'PLAYING', 'GAMEOVER'
   let score = 0;
   let highScore = parseInt(localStorage.getItem('classic_high_score') || '0', 10);
-  let speed = 4.8;
+  let speed = 5.0;
   let gameTime = 0;
   let bgScrollX = 0;
   let isPolarizedShieldActive = false;
   let polarizedShieldTimer = 0;
 
-  // Indian Ambassador Car physics
+  // Indian Ambassador Car (Scaled up for cinematic viewport)
   const car = {
-    x: 55,
+    x: 70,
     y: 0,
-    width: 86,
-    height: 38,
+    width: 108,
+    height: 44,
     baseY: 0,
     vy: 0,
-    gravity: 0.65,
-    jumpPower: -11.2,
+    gravity: 0.72,
+    jumpPower: -12.4,
     isGrounded: true,
     rotation: 0,
     suspensionBob: 0
   };
 
   // World Elements
-  let roadsideProps = [];
+  let hoardingsList = [];
   let obstacles = [];
   let pickups = [];
   let particles = [];
-  let nextObstacleTimer = 85;
-  let nextPickupTimer = 175;
-  let nextPropTimer = 50;
+  let nextObstacleTimer = 90;
+  let nextPickupTimer = 180;
+  let nextHoardingTimer = 40; // Spawn first hoarding quickly!
 
   // --- CANVAS RESIZE ---
   function resizeCanvas() {
@@ -152,49 +155,46 @@
     canvas.logicalWidth = rect.width;
     canvas.logicalHeight = rect.height;
 
-    car.baseY = canvas.logicalHeight - 56;
+    // Road is at bottom 64px
+    car.baseY = canvas.logicalHeight - 74;
     if (car.isGrounded) car.y = car.baseY;
   }
 
   // --- SPAWNING ---
-  function spawnRoadsideProp() {
-    // Alternate between The Classic Co. billboards, heritage chhatris, and streetlamps
-    const types = ['billboard', 'chhatri', 'lamp', 'billboard'];
-    const type = types[Math.floor(Math.random() * types.length)];
-    let width = 75, height = 48;
-    if (type === 'billboard') { width = 90; height = 55; }
-    else if (type === 'chhatri') { width = 50; height = 80; }
-    else if (type === 'lamp') { width = 30; height = 70; }
+  function spawnHoarding() {
+    const hoardingKeys = ['hoarding1', 'hoarding2', 'hoarding3', 'hoarding4'];
+    const key = hoardingKeys[Math.floor(Math.random() * hoardingKeys.length)];
 
-    roadsideProps.push({
+    // Prominent, large roadside billboard standing on the lake promenade
+    hoardingsList.push({
       x: canvas.logicalWidth + 30,
-      y: car.baseY - height + 10,
-      width: width,
-      height: height,
-      type: type
+      y: car.baseY - 76,
+      width: 142,
+      height: 88,
+      key: key
     });
   }
 
   function spawnObstacle() {
-    const types = ['glare_cone', 'sun_flare', 'road_bump'];
+    const types = ['sun_glare', 'glare_barrier', 'heat_mirage'];
     const type = types[Math.floor(Math.random() * types.length)];
     obstacles.push({
       x: canvas.logicalWidth + 20,
-      y: car.baseY - (type === 'sun_flare' ? 32 : 14),
-      width: type === 'sun_flare' ? 34 : 26,
-      height: type === 'sun_flare' ? 34 : 36,
+      y: car.baseY - (type === 'sun_glare' ? 38 : 16),
+      width: type === 'sun_glare' ? 38 : 28,
+      height: type === 'sun_glare' ? 38 : 42,
       type: type,
       pulse: 0
     });
   }
 
   function spawnPickup() {
-    // Floating Polarized Sunglasses
+    // Floating The Classic Co. Polarized Sunglasses
     pickups.push({
       x: canvas.logicalWidth + 40,
-      y: car.baseY - 48 - Math.random() * 32,
-      width: 44,
-      height: 22,
+      y: car.baseY - 55 - Math.random() * 40,
+      width: 48,
+      height: 24,
       floatOffset: 0
     });
   }
@@ -203,27 +203,45 @@
     particles.push({
       x: x,
       y: y,
-      vx: -(speed * 0.4 + Math.random() * 2),
-      vy: (Math.random() - 0.5) * 1.5,
-      radius: Math.random() * 3.5 + 1.5,
-      alpha: 0.65,
+      vx: -(speed * 0.45 + Math.random() * 2),
+      vy: (Math.random() - 0.5) * 1.6,
+      radius: Math.random() * 4 + 2,
+      alpha: 0.7,
       color: '#e7e5e4'
     });
   }
 
   function createConfetti() {
     const colors = ['#b45309', '#059669', '#3b82f6', '#f59e0b', '#ec4899'];
-    for (let i = 0; i < 45; i++) {
+    for (let i = 0; i < 50; i++) {
       particles.push({
         x: canvas.logicalWidth / 2,
         y: canvas.logicalHeight / 2 - 30,
-        vx: (Math.random() - 0.5) * 11,
-        vy: (Math.random() - 0.85) * 10,
+        vx: (Math.random() - 0.5) * 12,
+        vy: (Math.random() - 0.85) * 11,
         radius: Math.random() * 5 + 3,
         alpha: 1,
         color: colors[Math.floor(Math.random() * colors.length)],
         gravity: 0.22
       });
+    }
+  }
+
+  // Current landmark indicator
+  function getCurrentLandmark() {
+    if (!assets.bg.loaded || !assets.bg.img) return 'Udaipur Lakeside Drive';
+    const img = assets.bg.img;
+    const bgAspect = img.width / img.height;
+    const bgDrawH = canvas.logicalHeight - 55;
+    const bgDrawW = bgDrawH * bgAspect;
+
+    const normX = ((-bgScrollX) % bgDrawW) / bgDrawW;
+    if (normX < 0.33) {
+      return '📍 Lake Pichola & Gangaur Ghat';
+    } else if (normX < 0.66) {
+      return '📍 Fateh Sagar Lake & Rani Road';
+    } else {
+      return '📍 Jag Mandir Island & City Palace';
     }
   }
 
@@ -233,31 +251,31 @@
     const h = canvas.logicalHeight;
 
     if (assets.bg.loaded && assets.bg.img) {
-      // Seamless scrolling panorama of Udaipur Palaces & Ghats
       const img = assets.bg.img;
       const bgAspect = img.width / img.height;
-      const bgDrawH = h - 42;
+      const bgDrawH = h - 55;
       const bgDrawW = bgDrawH * bgAspect;
 
-      bgScrollX = (bgScrollX - speed * 0.35) % bgDrawW;
+      // Continuous infinite scroll without cuts
+      bgScrollX = (bgScrollX - speed * 0.32) % bgDrawW;
       let startX = bgScrollX;
       while (startX < w) {
         ctx.drawImage(img, startX, 0, bgDrawW, bgDrawH);
         startX += bgDrawW;
       }
     } else {
-      // Elegant warm sunset gradient fallback
-      const skyGrad = ctx.createLinearGradient(0, 0, 0, h - 50);
-      skyGrad.addColorStop(0, '#f97316');
-      skyGrad.addColorStop(0.5, '#fbbf24');
-      skyGrad.addColorStop(1, '#fed7aa');
+      // Warm golden hour gradient
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, h - 60);
+      skyGrad.addColorStop(0, '#ea580c');
+      skyGrad.addColorStop(0.5, '#f59e0b');
+      skyGrad.addColorStop(1, '#fde68a');
       ctx.fillStyle = skyGrad;
       ctx.fillRect(0, 0, w, h);
     }
 
-    // Polarized Shield Tint Overlay (Cool crystal view when shield is on)
+    // Polarized Shield Tint Overlay (Cool anti-glare crystal clarity)
     if (isPolarizedShieldActive) {
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.45)';
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.42)';
       ctx.fillRect(0, 0, w, h);
     }
   }
@@ -265,63 +283,60 @@
   function drawPromenadeAndRoad() {
     const w = canvas.logicalWidth;
     const h = canvas.logicalHeight;
-    const roadY = h - 46;
+    const roadY = h - 60;
 
-    // Stone Ghat railing along the lake promenade
-    ctx.fillStyle = '#e7e5e4';
-    ctx.fillRect(0, roadY - 10, w, 10);
-    // Railing posts
+    // Heritage lakeside promenade stone railing (Gangaur / Rani Road railing)
+    ctx.fillStyle = '#f5f5f4';
+    ctx.fillRect(0, roadY - 14, w, 14);
+    // Railing balusters / posts
     ctx.fillStyle = '#a8a29e';
-    for (let x = -((gameTime * speed) % 24); x < w; x += 24) {
-      ctx.fillRect(x, roadY - 14, 4, 14);
+    for (let x = -((gameTime * speed) % 28); x < w; x += 28) {
+      ctx.fillRect(x, roadY - 20, 5, 20);
     }
-    // Top handrail
+    // Top marble handrail
     ctx.fillStyle = '#78716c';
-    ctx.fillRect(0, roadY - 14, w, 3);
+    ctx.fillRect(0, roadY - 20, w, 4);
 
-    // Smooth Road Tarmac
-    ctx.fillStyle = '#292524';
-    ctx.fillRect(0, roadY, w, 46);
+    // Clean dark road tarmac
+    ctx.fillStyle = '#1c1917';
+    ctx.fillRect(0, roadY, w, 60);
 
     // Warm curb stripe
     ctx.fillStyle = '#d97706';
-    ctx.fillRect(0, roadY, w, 3);
+    ctx.fillRect(0, roadY, w, 4);
 
-    // Road dashed center line
+    // Road dashed white centerlines
     ctx.fillStyle = '#ffffff';
-    const dashW = 28;
-    const gapW = 24;
+    const dashW = 34;
+    const gapW = 28;
     const cycle = dashW + gapW;
     const offset = (gameTime * speed * 1.8) % cycle;
     for (let x = -offset; x < w; x += cycle) {
-      ctx.fillRect(x, roadY + 20, dashW, 2.5);
+      ctx.fillRect(x, roadY + 26, dashW, 3.5);
     }
   }
 
-  function drawRoadsideProps() {
-    for (let p of roadsideProps) {
-      if (p.type === 'billboard' && assets.billboard.loaded && assets.billboard.img) {
-        ctx.drawImage(assets.billboard.img, p.x, p.y, p.width, p.height);
-      } else if (p.type === 'chhatri' && assets.chhatri.loaded && assets.chhatri.img) {
-        ctx.drawImage(assets.chhatri.img, p.x, p.y, p.width, p.height);
-      } else if (p.type === 'lamp' && assets.lamp.loaded && assets.lamp.img) {
-        ctx.drawImage(assets.lamp.img, p.x, p.y, p.width, p.height);
-      } else if (p.type === 'billboard') {
-        // Fallback Vector The Classic Co. Billboard
-        ctx.fillStyle = '#443a30';
-        ctx.fillRect(p.x + 8, p.y + 20, 6, p.height - 20);
-        ctx.fillRect(p.x + p.width - 14, p.y + 20, 6, p.height - 20);
+  function drawRoadsideHoardings() {
+    for (let p of hoardingsList) {
+      const a = assets[p.key];
+      if (a && a.loaded && a.img) {
+        ctx.drawImage(a.img, p.x, p.y, p.width, p.height);
+      } else {
+        // Fallback Vector The Classic Co. Hoarding
+        ctx.fillStyle = '#44403c';
+        ctx.fillRect(p.x + 10, p.y + 30, 8, p.height - 30);
+        ctx.fillRect(p.x + p.width - 18, p.y + 30, 8, p.height - 30);
         ctx.fillStyle = '#161514';
-        ctx.fillRect(p.x, p.y, p.width, 36);
+        ctx.fillRect(p.x, p.y, p.width, 50);
         ctx.strokeStyle = '#fbbf24';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(p.x, p.y, p.width, 36);
+        ctx.lineWidth = 2;
+        ctx.strokeRect(p.x, p.y, p.width, 50);
         ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 9px sans-serif';
-        ctx.fillText('THE CLASSIC CO.', p.x + 8, p.y + 16);
+        ctx.font = 'bold 11px sans-serif';
+        ctx.fillText('THE CLASSIC CO.', p.x + 12, p.y + 22);
         ctx.fillStyle = '#ffffff';
-        ctx.font = '7px sans-serif';
-        ctx.fillText('POLARIZED EYEWEAR', p.x + 8, p.y + 28);
+        ctx.font = '9px sans-serif';
+        ctx.fillText('UV400 POLARIZED', p.x + 12, p.y + 38);
       }
     }
   }
@@ -332,50 +347,49 @@
     ctx.rotate(car.rotation);
 
     if (assets.car.loaded && assets.car.img) {
-      // Draw Authentic Vintage Indian Ambassador Car
+      // Draw Vintage White Indian Ambassador Car
       ctx.drawImage(assets.car.img, -car.width / 2, -car.height / 2 + car.suspensionBob, car.width, car.height);
     } else {
-      // High-precision vector Ambassador fallback
-      ctx.fillStyle = '#f8fafc';
+      // High-precision vector fallback
+      ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.roundRect(-car.width / 2, -car.height / 2 + 8, car.width, car.height - 14, 8);
+      ctx.roundRect(-car.width / 2, -car.height / 2 + 10, car.width, car.height - 16, 10);
       ctx.fill();
       ctx.strokeStyle = '#475569';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Chrome wheel hubs
-      [-car.width / 2 + 18, car.width / 2 - 18].forEach(wx => {
+      [-car.width / 2 + 22, car.width / 2 - 22].forEach(wx => {
         ctx.fillStyle = '#0f172a';
         ctx.beginPath();
-        ctx.arc(wx, car.height / 2 - 6, 8, 0, Math.PI * 2);
+        ctx.arc(wx, car.height / 2 - 6, 10, 0, Math.PI * 2);
         ctx.fill();
         ctx.fillStyle = '#cbd5e1';
         ctx.beginPath();
-        ctx.arc(wx, car.height / 2 - 6, 4, 0, Math.PI * 2);
+        ctx.arc(wx, car.height / 2 - 6, 5, 0, Math.PI * 2);
         ctx.fill();
       });
     }
 
-    // Glowing Headlight Beam at sunset
-    const beamGrad = ctx.createLinearGradient(car.width / 2, 0, car.width / 2 + 75, 0);
-    beamGrad.addColorStop(0, 'rgba(254, 240, 138, 0.55)');
+    // Glowing Sunset Headlight Beam forward
+    const beamGrad = ctx.createLinearGradient(car.width / 2, 0, car.width / 2 + 90, 0);
+    beamGrad.addColorStop(0, 'rgba(254, 240, 138, 0.6)');
     beamGrad.addColorStop(1, 'rgba(254, 240, 138, 0)');
     ctx.fillStyle = beamGrad;
     ctx.beginPath();
     ctx.moveTo(car.width / 2 - 4, -4);
-    ctx.lineTo(car.width / 2 + 75, -12);
-    ctx.lineTo(car.width / 2 + 75, 16);
-    ctx.lineTo(car.width / 2 - 4, 8);
+    ctx.lineTo(car.width / 2 + 90, -14);
+    ctx.lineTo(car.width / 2 + 90, 20);
+    ctx.lineTo(car.width / 2 - 4, 10);
     ctx.closePath();
     ctx.fill();
 
     // Polarized Shield Aura
     if (isPolarizedShieldActive) {
       ctx.strokeStyle = '#38bdf8';
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.ellipse(0, car.suspensionBob, car.width * 0.62, car.height * 0.72, 0, 0, Math.PI * 2);
+      ctx.ellipse(0, car.suspensionBob, car.width * 0.65, car.height * 0.78, 0, 0, Math.PI * 2);
       ctx.stroke();
     }
 
@@ -386,8 +400,8 @@
     ctx.save();
     obs.pulse = (obs.pulse + 0.12) % (Math.PI * 2);
 
-    if (obs.type === 'sun_flare') {
-      // Blinding Road Glare Orb
+    if (obs.type === 'sun_glare') {
+      // Blinding High-Beam Sun Glare Orb
       const grad = ctx.createRadialGradient(obs.x + obs.width / 2, obs.y + obs.height / 2, 4, obs.x + obs.width / 2, obs.y + obs.height / 2, obs.width);
       grad.addColorStop(0, '#ffffff');
       grad.addColorStop(0.35, '#f59e0b');
@@ -397,7 +411,7 @@
       ctx.arc(obs.x + obs.width / 2, obs.y + obs.height / 2, obs.width, 0, Math.PI * 2);
       ctx.fill();
     } else {
-      // Road hazard / glare triangle
+      // Road hazard / glare barrier
       ctx.fillStyle = '#ea580c';
       ctx.beginPath();
       ctx.moveTo(obs.x + obs.width / 2, obs.y);
@@ -407,12 +421,12 @@
       ctx.fill();
 
       ctx.strokeStyle = '#fef08a';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 2.5;
       ctx.stroke();
 
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
-      ctx.arc(obs.x + obs.width / 2, obs.y + 12, 3.5, 0, Math.PI * 2);
+      ctx.arc(obs.x + obs.width / 2, obs.y + 14, 4, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.restore();
@@ -420,50 +434,50 @@
 
   function drawSunglassesPickup(p) {
     ctx.save();
-    p.floatOffset = Math.sin(gameTime * 0.12) * 4;
+    p.floatOffset = Math.sin(gameTime * 0.12) * 5;
     const y = p.y + p.floatOffset;
 
-    // Glowing protective aura
-    const aura = ctx.createRadialGradient(p.x + p.width / 2, y + p.height / 2, 4, p.x + p.width / 2, y + p.height / 2, 26);
-    aura.addColorStop(0, 'rgba(56, 189, 248, 0.7)');
+    // Glowing aura
+    const aura = ctx.createRadialGradient(p.x + p.width / 2, y + p.height / 2, 4, p.x + p.width / 2, y + p.height / 2, 28);
+    aura.addColorStop(0, 'rgba(56, 189, 248, 0.75)');
     aura.addColorStop(1, 'rgba(56, 189, 248, 0)');
     ctx.fillStyle = aura;
     ctx.beginPath();
-    ctx.arc(p.x + p.width / 2, y + p.height / 2, 26, 0, Math.PI * 2);
+    ctx.arc(p.x + p.width / 2, y + p.height / 2, 28, 0, Math.PI * 2);
     ctx.fill();
 
     // Gold Aviator Frames & Polarized Dark Lenses
     ctx.fillStyle = '#0f172a';
     ctx.strokeStyle = '#fbbf24';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2.5;
 
     // Left & Right Lenses
     ctx.beginPath();
-    ctx.roundRect(p.x + 2, y + 2, 17, 14, [4, 4, 8, 8]);
+    ctx.roundRect(p.x + 2, y + 2, 19, 15, [4, 4, 8, 8]);
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.roundRect(p.x + 23, y + 2, 17, 14, [4, 4, 8, 8]);
+    ctx.roundRect(p.x + 25, y + 2, 19, 15, [4, 4, 8, 8]);
     ctx.fill();
     ctx.stroke();
 
     // Double bridge
     ctx.beginPath();
-    ctx.moveTo(p.x + 19, y + 6);
-    ctx.lineTo(p.x + 23, y + 6);
+    ctx.moveTo(p.x + 21, y + 6);
+    ctx.lineTo(p.x + 25, y + 6);
     ctx.moveTo(p.x + 4, y + 2);
-    ctx.lineTo(p.x + 38, y + 2);
+    ctx.lineTo(p.x + 42, y + 2);
     ctx.stroke();
 
-    // Polarized Sheen reflection
+    // Polarized sheen
     ctx.strokeStyle = '#38bdf8';
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 1.8;
     ctx.beginPath();
-    ctx.moveTo(p.x + 6, y + 12);
-    ctx.lineTo(p.x + 12, y + 5);
-    ctx.moveTo(p.x + 27, y + 12);
-    ctx.lineTo(p.x + 33, y + 5);
+    ctx.moveTo(p.x + 6, y + 13);
+    ctx.lineTo(p.x + 13, y + 5);
+    ctx.moveTo(p.x + 29, y + 13);
+    ctx.lineTo(p.x + 36, y + 5);
     ctx.stroke();
 
     ctx.restore();
@@ -472,10 +486,10 @@
   function drawHUD() {
     const w = canvas.logicalWidth;
 
-    // Score Card (Editorial Minimalist Luxury Style)
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+    // Score Pill
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
     ctx.beginPath();
-    ctx.roundRect(14, 12, 126, 34, 17);
+    ctx.roundRect(14, 12, 130, 36, 18);
     ctx.fill();
     ctx.strokeStyle = '#e7e5e4';
     ctx.lineWidth = 1.5;
@@ -483,51 +497,44 @@
 
     ctx.fillStyle = '#161514';
     ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.fillText('SCORE: ' + Math.floor(score), 26, 34);
+    ctx.fillText('SCORE: ' + Math.floor(score), 28, 35);
 
-    // High Score Badge
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
+    // Current Location Journey Badge (Top Center)
+    const landmarkText = getCurrentLandmark();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.font = 'bold 12.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    const landmarkWidth = ctx.measureText(landmarkText).width;
     ctx.beginPath();
-    ctx.roundRect(w - 138, 12, 124, 34, 17);
+    ctx.roundRect(w / 2 - landmarkWidth / 2 - 14, 12, landmarkWidth + 28, 36, 18);
+    ctx.fill();
+    ctx.strokeStyle = '#d97706';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = '#92400e';
+    ctx.fillText(landmarkText, w / 2 - landmarkWidth / 2, 35);
+
+    // Best Score Badge (Top Right)
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.beginPath();
+    ctx.roundRect(w - 140, 12, 126, 36, 18);
     ctx.fill();
     ctx.strokeStyle = '#e7e5e4';
     ctx.lineWidth = 1.5;
     ctx.stroke();
 
     ctx.fillStyle = '#78716c';
-    ctx.font = '600 12.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.fillText('BEST: ' + highScore, w - 122, 34);
-
-    // Target Milestone Pill
-    let tierText = 'Target: 50 pts → 10% OFF';
-    let tierColor = '#b45309';
-    if (score >= 100) {
-      tierText = '🎉 15% OFF UNLOCKED!';
-      tierColor = '#059669';
-    } else if (score >= 50) {
-      tierText = '✓ 10% OFF! Next: 100 → 15%';
-      tierColor = '#059669';
-    }
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-    const textWidth = ctx.measureText(tierText).width;
-    ctx.beginPath();
-    ctx.roundRect(w / 2 - textWidth / 2 - 12, 12, textWidth + 24, 34, 17);
-    ctx.fill();
-    ctx.strokeStyle = tierColor;
-    ctx.stroke();
-
-    ctx.fillStyle = tierColor;
-    ctx.font = 'bold 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-    ctx.fillText(tierText, w / 2 - textWidth / 2, 34);
+    ctx.font = '600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillText('BEST: ' + highScore, w - 124, 35);
 
     // Polarized Shield Indicator
     if (isPolarizedShieldActive) {
       const shieldRatio = Math.max(0, polarizedShieldTimer / 240);
       ctx.fillStyle = '#0284c7';
-      ctx.fillRect(14, 52, 126 * shieldRatio, 5);
+      ctx.fillRect(14, 54, 130 * shieldRatio, 5);
       ctx.fillStyle = '#0369a1';
-      ctx.font = 'bold 10.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
-      ctx.fillText('🕶️ POLARIZED SHIELD ON', 14, 70);
+      ctx.font = 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillText('🕶️ POLARIZED SHIELD ACTIVE', 14, 74);
     }
   }
 
@@ -544,7 +551,6 @@
       car.vy = 0;
       car.isGrounded = true;
       car.rotation = 0;
-      // Gentle vintage car suspension bob while driving on road
       car.suspensionBob = Math.sin(gameTime * 0.35) * 1.5;
 
       if (gameTime % 4 === 0) {
@@ -553,12 +559,12 @@
     } else {
       car.isGrounded = false;
       car.suspensionBob = 0;
-      car.rotation = Math.min(Math.max(car.vy * 0.025, -0.3), 0.3);
+      car.rotation = Math.min(Math.max(car.vy * 0.024, -0.28), 0.28);
     }
 
     // Score & Speed
     score += 0.12;
-    speed = 4.8 + Math.min(score * 0.022, 3.8);
+    speed = 5.0 + Math.min(score * 0.02, 3.5);
 
     // Shield Timer
     if (isPolarizedShieldActive) {
@@ -566,18 +572,19 @@
       if (polarizedShieldTimer <= 0) isPolarizedShieldActive = false;
     }
 
-    // Spawn Roadside Props (The Classic Co. billboards, chhatris, lamps)
-    nextPropTimer--;
-    if (nextPropTimer <= 0) {
-      spawnRoadsideProp();
-      nextPropTimer = Math.floor(90 + Math.random() * 80);
+    // Spawn Roadside Hoardings with The Classic Co. name
+    nextHoardingTimer--;
+    if (nextHoardingTimer <= 0) {
+      spawnHoarding();
+      // Spawn new hoarding every 140 - 200 frames (every ~3-4 seconds continuously)
+      nextHoardingTimer = Math.floor(140 + Math.random() * 60);
     }
 
-    // Update Roadside Props
-    for (let i = roadsideProps.length - 1; i >= 0; i--) {
-      roadsideProps[i].x -= speed;
-      if (roadsideProps[i].x + roadsideProps[i].width < -60) {
-        roadsideProps.splice(i, 1);
+    // Update Hoardings
+    for (let i = hoardingsList.length - 1; i >= 0; i--) {
+      hoardingsList[i].x -= speed;
+      if (hoardingsList[i].x + hoardingsList[i].width < -80) {
+        hoardingsList.splice(i, 1);
       }
     }
 
@@ -597,9 +604,9 @@
 
     // Check Obstacles Collision
     const carHitbox = {
-      x: car.x + 8,
+      x: car.x + 10,
       y: car.y + 6,
-      width: car.width - 16,
+      width: car.width - 20,
       height: car.height - 10
     };
 
@@ -616,7 +623,6 @@
 
       if (collides) {
         if (isPolarizedShieldActive) {
-          // Polarized lenses destroy road glare!
           obstacles.splice(i, 1);
           playSound('collect');
           score += 15;
@@ -669,7 +675,7 @@
     ctx.clearRect(0, 0, canvas.logicalWidth, canvas.logicalHeight);
 
     drawParallaxUdaipur();
-    drawRoadsideProps();
+    drawRoadsideHoardings();
     drawPromenadeAndRoad();
 
     // Dust particles
@@ -717,11 +723,11 @@
     initAudio();
     gameState = 'PLAYING';
     score = 0;
-    speed = 4.8;
+    speed = 5.0;
     gameTime = 0;
     obstacles = [];
     pickups = [];
-    roadsideProps = [];
+    hoardingsList = [];
     particles = [];
     isPolarizedShieldActive = false;
     polarizedShieldTimer = 0;
@@ -748,7 +754,7 @@
     showGameOverScreen(finalScore);
   }
 
-  // --- REWARD SCREEN (MATCHING WEBSITE'S LUXURY EDITORIAL STYLE) ---
+  // --- REWARD SCREEN ---
   function showGameOverScreen(finalScore) {
     const overlay = document.getElementById('arcade-overlay');
     if (!overlay) return;
@@ -847,11 +853,11 @@
       ctx = canvas.getContext('2d');
       resizeCanvas();
 
-      // Start Screen matching the Website's Editorial Luxury Vibe
+      // Start Screen
       const overlay = document.getElementById('arcade-overlay');
       if (overlay) {
         overlay.innerHTML = `
-          <div class="arcade-card-content" style="max-width:390px; width:92%; text-align:center; background:#ffffff; border:1px solid #e7e5e4; border-radius:18px; padding:24px 20px; box-shadow:0 15px 35px rgba(0,0,0,0.12);">
+          <div class="arcade-card-content" style="max-width:420px; width:92%; text-align:center; background:#ffffff; border:1px solid #e7e5e4; border-radius:18px; padding:24px 22px; box-shadow:0 15px 35px rgba(0,0,0,0.12);">
             <div style="display:inline-block; background:#fffbeb; color:#b45309; border:1px solid #fef3c7; font-size:10.5px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:3px 10px; border-radius:20px; margin-bottom:8px;">
               THE CLASSIC CO. · UDAIPUR DRIVE
             </div>
@@ -859,7 +865,7 @@
               Sunset Drive: Dodge The Glare 🕶️
             </h2>
             <p style="font-size:13px; color:#78716c; line-height:1.5; margin-bottom:16px;">
-              Cruise along Lake Pichola in our vintage Ambassador. Tap/Space to jump over road glare, collect polarized lenses, and unlock exclusive discounts!
+              Cruise past <strong>Lake Pichola</strong>, <strong>Fateh Sagar</strong> &amp; <strong>Jag Mandir</strong> in our vintage Ambassador. Tap/Space to jump over road glare, collect polarized lenses, and win discount vouchers!
             </p>
             <div style="display:flex; justify-content:space-around; background:#fafaf9; border:1px solid #e7e5e4; border-radius:10px; padding:10px; margin-bottom:18px; font-size:12px;">
               <div><strong style="color:#d97706; font-size:14px;">50 pts</strong><br><span style="color:#78716c; font-weight:600;">10% OFF</span></div>
