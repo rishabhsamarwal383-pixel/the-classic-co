@@ -2,142 +2,1333 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Admin | The Classic Co.</title>
+<meta name="theme-color" content="#161514">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CC Admin">
+<link rel="manifest" href="/admin-manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<title>Admin Operations Studio | The Classic Co.</title>
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- Load base storefront products data -->
+<script src="/js/products-data.js?v=20261005"></script>
+
 <style>
-  :root{--bg:#161514;--card:#1f1e1c;--line:#33312e;--text:#f5f3ee;--muted:#a19d96;--gold:#b48448;--green:#16a34a;--amber:#d97706}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.5}
-  header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
-  header b{letter-spacing:2px;font-size:14px}
-  a{color:var(--gold)}
-  main{max-width:1000px;margin:0 auto;padding:18px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
-  h2{font-size:15px;margin:0 0 6px}
-  .muted{color:var(--muted);font-size:12.5px}
-  .btn{display:inline-block;background:var(--gold);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none}
-  .btn.sec{background:#2b2a27;color:var(--text);border:1px solid var(--line)}
-  .btn.wa{background:var(--green)}
-  .btn.sm{padding:6px 10px;font-size:12px}
-  table{width:100%;border-collapse:collapse}
-  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
-  th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
-  select{background:#111;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px}
-  .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;background:#2b2a27}
-  .pill.warn{background:#4a3410;color:#fbbf24}
-  .pill.ok{background:#12351f;color:#4ade80}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .scroll{overflow-x:auto}
+  :root {
+    --bg: #121110;
+    --card: #1c1b18;
+    --card-hover: #24221f;
+    --line: #2d2b27;
+    --text: #f5f3ee;
+    --muted: #a19d96;
+    --gold: #b48448;
+    --gold-hover: #9a6f3b;
+    --green: #16a34a;
+    --green-bg: #12351f;
+    --amber: #d97706;
+    --amber-bg: #4a3410;
+    --red: #ef4444;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-bottom: 60px;
+  }
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    background: #181715;
+    border-bottom: 1px solid var(--line);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .brand-group { display: flex; align-items: center; gap: 10px; }
+  .brand-group b { letter-spacing: 2px; font-size: 14px; color: #fff; }
+  .pwa-badge {
+    background: #2b261e;
+    color: var(--gold);
+    border: 1px solid #4a3b25;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .header-actions { display: flex; align-items: center; gap: 10px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold);
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn:hover { background: var(--gold-hover); }
+  .btn.sec { background: #262421; color: var(--text); border: 1px solid var(--line); }
+  .btn.sec:hover { background: #33302b; }
+  .btn.wa { background: var(--green); }
+  .btn.danger { background: #991b1b; }
+  .btn.sm { padding: 5px 10px; font-size: 12px; }
+  .btn.icon-only { padding: 6px 9px; }
+
+  /* NAVIGATION TABS */
+  .tabs-bar {
+    display: flex;
+    gap: 4px;
+    background: #181715;
+    border-bottom: 1px solid var(--line);
+    padding: 0 16px;
+    overflow-x: auto;
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    padding: 12px 16px;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+  .tab-badge {
+    background: #2c2822;
+    color: var(--gold);
+    font-size: 10.5px;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* CARDS & GRIDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 18px;
+  }
+  .card h2 { font-size: 15px; margin: 0 0 6px; display: flex; align-items: center; justify-content: space-between; }
+  .muted { color: var(--muted); font-size: 12.5px; }
+
+  /* METRICS STRIP */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .stat-val { font-size: 24px; font-weight: 800; color: #fff; margin: 4px 0 2px; }
+  .stat-lbl { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+  table { width: 100%; border-collapse: collapse; min-width: 700px; }
+  th, td { text-align: left; padding: 11px 10px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 13px; }
+  th { background: #181715; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  tr:hover { background: rgba(255,255,255,0.02); }
+  select, input[type="text"], input[type="number"], textarea {
+    background: #11100f;
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  select:focus, input:focus, textarea:focus { border-color: var(--gold); }
+  .pill { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; background: #262421; }
+  .pill.warn { background: var(--amber-bg); color: #fbbf24; }
+  .pill.ok { background: var(--green-bg); color: #4ade80; }
+
+  /* PRODUCT CATALOG CARDS */
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .prod-manage-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .prod-manage-card:hover { border-color: #4a453e; }
+  .prod-thumb-row { display: flex; gap: 12px; align-items: center; }
+  .prod-thumb-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #000;
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+  .prod-info-col { flex: 1; min-width: 0; }
+  .prod-title { font-weight: 700; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .prod-cat { font-size: 11px; color: var(--gold); font-weight: 600; text-transform: uppercase; }
+  .prod-toggles { display: flex; gap: 8px; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 8px; font-size: 12px; }
+  
+  /* TOGGLE SWITCH */
+  .switch-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 11.5px; color: var(--muted); }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 32px;
+    height: 18px;
+  }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #333; transition: .2s; border-radius: 18px;
+  }
+  .slider:before {
+    position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px;
+    background-color: white; transition: .2s; border-radius: 50%;
+  }
+  input:checked + .slider { background-color: var(--gold); }
+  input:checked + .slider.green { background-color: var(--green); }
+  input:checked + .slider:before { transform: translateX(14px); }
+
+  /* FORM CONTROLS */
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .form-group label { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* NEW ORDER ALERT TOAST */
+  #sale-toast {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #14532d;
+    border: 2px solid #22c55e;
+    color: #fff;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 1000;
+    animation: popIn 0.3s ease;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  /* MODAL */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(4px);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-panel {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 22px;
+    width: min(500px, 100%);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
 </style>
 </head>
 <body>
+
+<!-- Hidden Audio for Shopify Cha-Ching -->
+<audio id="audio-chaching" preload="auto" src="/chaching.ogg"></audio>
+
+<!-- HEADER -->
 <header>
-  <b>THE CLASSIC CO. ADMIN</b>
-  <a href="/admin?logout=1">Log out</a>
-</header>
-<main>
-  <div class="card">
-    <h2>Real orders</h2>
-    <p class="muted">Every customer order is written to your Google Sheet. That is your source of truth. Orders from UPI show <b>"UPI - Payment pending verification"</b> until you check your UPI app and confirm them yourself.</p>
-    <div class="row" id="sheet-row"></div>
+  <div class="brand-group">
+    <b>THE CLASSIC CO.</b>
+    <span class="pwa-badge">Operations PWA</span>
   </div>
 
-  <div class="card">
-    <h2>Orders placed in this browser</h2>
-    <p class="muted">This list only shows orders placed on this phone or computer (for example your own test orders). Customer orders do not appear here, they go to the Google Sheet.</p>
-    <div class="row" style="margin:10px 0">
-      <button class="btn sec sm" onclick="exportCSV()">Export CSV</button>
-      <button class="btn sec sm" onclick="clearTests()">Clear this list</button>
+  <div class="header-actions">
+    <button class="btn sec sm" id="btn-sound-toggle" onclick="toggleSoundAlerts()" title="Toggle Cha-Ching Alerts">
+      <span id="sound-icon">🔔</span> <span id="sound-text">Alerts: ON</span>
+    </button>
+    <button class="btn sm" onclick="testChaChingSound()" title="Play Cha-Ching Cash Register">
+      <span>💰 Test Cha-Ching</span>
+    </button>
+    <button class="btn sec sm" id="btn-pwa-install" onclick="triggerPWAInstall()" style="display:none;">
+      <span>📱 Install App</span>
+    </button>
+    <a href="/admin?logout=1" class="btn sec sm">Log out</a>
+  </div>
+</header>
+
+<!-- TABS BAR -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="switchTab('orders', this)">
+    <span>📦 Orders &amp; CRM</span>
+    <span class="tab-badge" id="badge-orders-count">0</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('products', this)">
+    <span>🕶️ Products Catalog</span>
+    <span class="tab-badge" id="badge-prod-count">30</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('pricing', this)">
+    <span>🏷️ Pricing &amp; Rules</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('promises', this)">
+    <span>✨ Promises &amp; Copy</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('publish', this)">
+    <span>🚀 Publish Live</span>
+    <span class="tab-badge" id="badge-sync-status" style="background:#4ade80; color:#052e16;">Synced</span>
+  </button>
+</div>
+
+<!-- MAIN CONTENT -->
+<main>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 1: ORDERS & CRM -->
+  <!-- ========================================================================= -->
+  <div id="tab-orders" class="tab-content active">
+    <!-- METRICS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-lbl">Total Orders</div>
+        <div class="stat-val" id="stat-total-orders">0</div>
+        <div class="muted" id="stat-orders-today">Live tracking</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Gross Revenue</div>
+        <div class="stat-val" id="stat-total-revenue">₹0</div>
+        <div class="muted">Combined COD &amp; UPI</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">Pending Dispatch</div>
+        <div class="stat-val" style="color:#fbbf24;" id="stat-pending-orders">0</div>
+        <div class="muted">Awaiting confirmation</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-lbl">COD / UPI Split</div>
+        <div class="stat-val" style="font-size:18px;" id="stat-cod-upi-split">0 / 0</div>
+        <div class="muted">Udaipur vs India</div>
+      </div>
     </div>
-    <div class="scroll">
-      <table>
-        <thead><tr><th>Order</th><th>Customer</th><th>Item</th><th>Amount</th><th>Payment</th><th>Status</th><th>Message</th></tr></thead>
-        <tbody id="orders-body"></tbody>
-      </table>
+
+    <!-- ORDERS ACTIONS & TABLE -->
+    <div class="card">
+      <h2>
+        <span>Customer Orders</span>
+        <div style="display:flex; gap:8px;">
+          <button class="btn sec sm" onclick="exportCSV()">Export CSV</button>
+          <button class="btn sec sm" onclick="clearTests()">Clear Browser Tests</button>
+          <a class="btn sm" id="btn-open-sheet" target="_blank" rel="noopener" style="display:none;">Open Google Sheet</a>
+        </div>
+      </h2>
+      <p class="muted" style="margin-bottom:14px;">
+        All orders automatically ring with the <b>Shopify "Cha-Ching" chime</b> and notify your phone. Click any customer to open direct WhatsApp conversation.
+      </p>
+
+      <div style="display:flex; gap:10px; margin-bottom:12px; flex-wrap:wrap;">
+        <input type="text" id="order-search" placeholder="Search customer, phone, order ID..." style="flex:1; min-width:200px;" oninput="renderOrders()">
+        <select id="order-status-filter" onchange="renderOrders()">
+          <option value="ALL">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Payment pending verification">Payment pending verification</option>
+          <option value="Dispatched">Dispatched</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Amount</th>
+              <th>Payment</th>
+              <th>Status</th>
+              <th>WhatsApp</th>
+            </tr>
+          </thead>
+          <tbody id="orders-body"></tbody>
+        </table>
+      </div>
     </div>
   </div>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 2: PRODUCTS CATALOG EDITOR -->
+  <!-- ========================================================================= -->
+  <div id="tab-products" class="tab-content">
+    <div class="card">
+      <h2>
+        <span>Product Inventory &amp; Styles</span>
+        <button class="btn sm" onclick="openAddProductModal()">➕ Add New Product</button>
+      </h2>
+      <p class="muted">
+        Toggle <b>In-Stock</b> to instantly hide or show products on the store. Toggle <b>Featured</b> to pick which 6 bestsellers appear on the homepage.
+      </p>
+
+      <div style="display:flex; gap:10px; margin:14px 0; flex-wrap:wrap;">
+        <input type="text" id="prod-search" placeholder="Search styles by name or category..." style="flex:1; min-width:220px;" oninput="renderProductsEditor()">
+        <select id="prod-cat-filter" onchange="renderProductsEditor()">
+          <option value="ALL">All Categories</option>
+          <option value="Premium Styles">Premium Styles</option>
+          <option value="Polarized &amp; Driving">Polarized &amp; Driving</option>
+          <option value="Magnetic Clip-Ons">Magnetic Clip-Ons</option>
+          <option value="Classic Lifestyle">Classic Lifestyle</option>
+          <option value="Trending">Trending</option>
+        </select>
+      </div>
+
+      <div class="products-grid" id="manage-products-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 3: PRICING & DELIVERY RULES -->
+  <!-- ========================================================================= -->
+  <div id="tab-pricing" class="tab-content">
+    <div class="card">
+      <h2>Store Pricing &amp; Regional Logistics</h2>
+      <p class="muted">These rules control checkout calculations and payment options for every visitor.</p>
+
+      <form id="form-pricing" onsubmit="savePricingRules(event)" style="margin-top:16px;">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Standard COD Price (₹)</label>
+            <input type="number" id="cfg-price-standard" required>
+            <span class="muted">Default price paid for Cash on Delivery in Udaipur.</span>
+          </div>
+
+          <div class="form-group">
+            <label>Prepaid UPI Price (₹)</label>
+            <input type="number" id="cfg-price-upi" required>
+            <span class="muted">Discounted price for 1-click UPI payments (₹100 OFF).</span>
+          </div>
+
+          <div class="form-group">
+            <label>Local Pincode Prefix (Udaipur)</label>
+            <input type="text" id="cfg-pincode-prefix" required maxlength="5">
+            <span class="muted">Prefix that unlocks COD &amp; 24h delivery (Default: 313).</span>
+          </div>
+
+          <div class="form-group">
+            <label>Support WhatsApp Number</label>
+            <input type="text" id="cfg-wa-number" required>
+            <span class="muted">Format: 918619661325 (with country code).</span>
+          </div>
+
+          <div class="form-group">
+            <label>Store Merchant UPI VPA</label>
+            <input type="text" id="cfg-merchant-upi" required>
+            <span class="muted">Receives instant payments (e.g. 8619661325@upi).</span>
+          </div>
+
+          <div class="form-group">
+            <label>Google Sheet Webhook URL</label>
+            <input type="text" id="cfg-gas-url" placeholder="https://script.google.com/macros/s/..." required>
+            <span class="muted">Captures all orders into your Google Sheet backend.</span>
+          </div>
+
+          <div class="form-group">
+            <label>Meta Pixel ID (Ads Tracking)</label>
+            <input type="text" id="cfg-meta-pixel" placeholder="e.g. 1234567890">
+            <span class="muted">Loads Facebook/Instagram pixel for all visitors.</span>
+          </div>
+
+          <div class="form-group">
+            <label>Google Analytics 4 ID (GA4)</label>
+            <input type="text" id="cfg-ga4-id" placeholder="e.g. G-XXXXXXXXXX">
+            <span class="muted">Loads Google Analytics tracking.</span>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;">
+          <button type="submit" class="btn">💾 Save Pricing &amp; Rules</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 4: PROMISES & STORE COPY -->
+  <!-- ========================================================================= -->
+  <div id="tab-promises" class="tab-content">
+    <div class="card">
+      <h2>Store Promises, Headlines &amp; Copy</h2>
+      <p class="muted">Change announcements, guarantees, and headlines across the live site.</p>
+
+      <form id="form-copy" onsubmit="saveSiteCopy(event)" style="margin-top:16px;">
+        <div class="form-group">
+          <label>Top Announcement Bar</label>
+          <input type="text" id="copy-announcement" style="width:100%;" required>
+        </div>
+
+        <div class="form-group">
+          <label>Hero Main Headline (HTML allowed)</label>
+          <input type="text" id="copy-hero-title" style="width:100%;" required>
+        </div>
+
+        <div class="form-group">
+          <label>Hero Subtitle</label>
+          <textarea id="copy-hero-subtitle" rows="2" style="width:100%;" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Delivery Strip Text (HTML allowed)</label>
+          <input type="text" id="copy-delivery-strip" style="width:100%;" required>
+        </div>
+
+        <div class="form-group">
+          <label>Founder Section Line</label>
+          <input type="text" id="copy-founder" style="width:100%;" required>
+        </div>
+
+        <div style="margin-top:16px;">
+          <button type="submit" class="btn">💾 Save Promises &amp; Copy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- TAB 5: PUBLISH LIVE -->
+  <!-- ========================================================================= -->
+  <div id="tab-publish" class="tab-content">
+    <div class="card">
+      <h2>Publish Changes Live to Worldwide Visitors</h2>
+      <p class="muted">
+        When you make changes in this Admin PWA, they are immediately active in your browser. Clicking <b>"Publish Live to Website"</b> compiles your changes and commits them directly to GitHub main, triggering automatic Vercel deployment across the globe.
+      </p>
+
+      <div style="background:#181715; border:1px solid var(--line); border-radius:10px; padding:16px; margin:16px 0;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-weight:700; font-size:14px;" id="publish-status-title">Ready to Publish</div>
+            <div class="muted" id="publish-status-desc">All products, prices, and copy are compiled into production format.</div>
+          </div>
+          <button class="btn" id="btn-publish-live" onclick="publishLiveChanges()">
+            🚀 Publish Live to Website
+          </button>
+        </div>
+        <div id="publish-progress" style="display:none; margin-top:14px; padding:12px; border-radius:8px; background:#1e293b; color:#93c5fd; font-size:13px;">
+          <!-- Progress feedback -->
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-top:20px;">
+        <label>GitHub Deploy Token (Optional Override)</label>
+        <input type="password" id="cfg-github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%; max-width:400px;" onchange="saveGithubToken(this.value)">
+        <span class="muted">If GITHUB_TOKEN is set in Vercel environment variables, this is already automated.</span>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+        <button class="btn sec" onclick="downloadBackupFile()">📥 Download `products-data.js` Backup</button>
+        <a href="/" target="_blank" class="btn sec">👁️ Preview Storefront</a>
+        <button class="btn danger" onclick="resetToDefaults()">🔄 Reset to Original Defaults</button>
+      </div>
+    </div>
+  </div>
+
 </main>
 
-<script>
-  const ORDERS_SHEET_URL = __ORDERS_SHEET_URL__;
-  const STATUSES = ['Pending', 'Payment pending verification', 'Payment confirmed', 'Dispatched', 'Delivered', 'Cancelled'];
-  const KEY = 'the_classic_co_orders';
+<!-- NEW ORDER POPUP TOAST -->
+<div id="sale-toast">
+  <div style="display:flex; align-items:center; gap:12px;">
+    <span style="font-size:28px;">💰</span>
+    <div>
+      <div style="font-weight:800; font-size:15px;" id="toast-title">Cha-Ching! New Sale!</div>
+      <div style="font-size:12.5px; opacity:0.9;" id="toast-body">Order received</div>
+    </div>
+    <button class="btn sm wa" id="toast-wa-btn" style="margin-left:8px;">WhatsApp</button>
+    <button onclick="document.getElementById('sale-toast').style.display='none'" style="background:none; border:none; color:#fff; font-size:18px; cursor:pointer;">✕</button>
+  </div>
+</div>
 
-  function esc(v) {
-    return String(v == null ? '' : v).replace(/[&<>"']/g, function (m) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+<!-- PRODUCT EDIT / ADD MODAL -->
+<div class="modal-backdrop" id="product-modal">
+  <div class="modal-panel">
+    <h2 id="modal-title">Edit Product</h2>
+    <form id="form-edit-prod" onsubmit="saveProductModal(event)">
+      <input type="hidden" id="edit-prod-id">
+      
+      <div class="form-group">
+        <label>Product Title</label>
+        <input type="text" id="edit-prod-title" required style="width:100%;">
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select id="edit-prod-category" style="width:100%;">
+          <option>Premium Styles</option>
+          <option>Polarized &amp; Driving</option>
+          <option>Magnetic Clip-Ons</option>
+          <option>Classic Lifestyle</option>
+          <option>Trending</option>
+        </select>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div class="form-group">
+          <label>COD Price (₹)</label>
+          <input type="number" id="edit-prod-cod" required style="width:100%;">
+        </div>
+        <div class="form-group">
+          <label>UPI Price (₹)</label>
+          <input type="number" id="edit-prod-upi" required style="width:100%;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Image URLs (one per line or comma separated)</label>
+        <textarea id="edit-prod-images" rows="3" style="width:100%;" required></textarea>
+      </div>
+
+      <div style="display:flex; gap:14px; margin:12px 0;">
+        <label class="switch-label">
+          <span class="switch">
+            <input type="checkbox" id="edit-prod-instock">
+            <span class="slider green"></span>
+          </span>
+          <span>In Stock</span>
+        </label>
+
+        <label class="switch-label">
+          <span class="switch">
+            <input type="checkbox" id="edit-prod-featured">
+            <span class="slider"></span>
+          </span>
+          <span>Featured on Homepage</span>
+        </label>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; margin-top:20px;">
+        <button type="button" class="btn sec" onclick="closeProductModal()">Cancel</button>
+        <button type="submit" class="btn">Save Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Configuration injected by Serverless Function
+  const ORDERS_SHEET_URL = __ORDERS_SHEET_URL__;
+  const GITHUB_TOKEN_AVAILABLE = __GITHUB_TOKEN_AVAILABLE__;
+
+  const STATUSES = ['Pending', 'Payment pending verification', 'Payment confirmed', 'Dispatched', 'Delivered', 'Cancelled'];
+  const STORAGE_KEY_ORDERS = 'the_classic_co_orders';
+  const STORAGE_KEY_CONFIG = 'classic_co_custom_config';
+  const STORAGE_KEY_TOKEN = 'classic_co_github_token';
+  const STORAGE_KEY_SOUND = 'classic_co_sound_enabled';
+
+  let currentProducts = [];
+  let currentSettings = {};
+  let currentPromises = {};
+  let knownOrderIds = new Set();
+  let soundAlertsEnabled = localStorage.getItem(STORAGE_KEY_SOUND) !== 'false';
+  let deferredPrompt = null;
+
+  // Initialize PWA Installation listener
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById('btn-pwa-install');
+    if (btn) btn.style.display = 'inline-flex';
+  });
+
+  // Register Admin Service Worker
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/admin-sw.js', { scope: '/' }).catch(() => {});
+  }
+
+  function triggerPWAInstall() {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choice) => {
+        if (choice.outcome === 'accepted') {
+          document.getElementById('btn-pwa-install').style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    } else {
+      alert("To install on iOS: Tap Share ➔ 'Add to Home Screen'.\nOn Android: Tap browser menu (⋮) ➔ 'Install App'.");
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // SHOPIFY CHA-CHING AUDIO ENGINE & NOTIFICATIONS
+  // -------------------------------------------------------------------------
+  function playChaChingFallback() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(1567.98, ctx.currentTime);
+      osc1.frequency.exponentialRampToValueAtTime(1975.53, ctx.currentTime + 0.08);
+      gain1.gain.setValueAtTime(0.7, ctx.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.8);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start();
+      osc1.stop(ctx.currentTime + 0.8);
+
+      setTimeout(() => {
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(2349.32, ctx.currentTime);
+        gain2.gain.setValueAtTime(0.5, ctx.currentTime);
+        gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start();
+        osc2.stop(ctx.currentTime + 0.6);
+      }, 70);
+    } catch (e) {}
+  }
+
+  function playChaChingSound() {
+    if (!soundAlertsEnabled) return;
+    const audio = document.getElementById('audio-chaching');
+    if (audio) {
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        playChaChingFallback();
+      });
+    } else {
+      playChaChingFallback();
+    }
+    if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
+  }
+
+  function testChaChingSound() {
+    playChaChingSound();
+    if (window.confetti) {
+      confetti({ particleCount: 40, spread: 60, origin: { y: 0.8 } });
+    }
+    showToast({
+      orderId: 'TEST-1001',
+      title: 'Aero Crystal Matte Frames',
+      amount: '899',
+      name: 'Rishabh Samarwal',
+      phone: '8619661325'
     });
   }
-  function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
-  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
 
-  function wa(order, kind) {
-    var phone = String(order.phone || '').replace(/\D/g, '');
-    var name = order.name || '';
-    var text = kind === 'paid'
-      ? 'Hi ' + name + ', we received your payment for order ' + order.orderId + '. Your sunglasses will ship in 2-4 business days. Thank you!'
-      : kind === 'local'
-        ? 'Hi ' + name + ', this is The Classic Co. Your order ' + order.orderId + ' is confirmed. We will deliver within 24 hours via Cash on Delivery.'
-        : 'Hi ' + name + ', this is The Classic Co. about your order ' + order.orderId + '.';
+  function toggleSoundAlerts() {
+    soundAlertsEnabled = !soundAlertsEnabled;
+    localStorage.setItem(STORAGE_KEY_SOUND, soundAlertsEnabled);
+    updateSoundUI();
+    if (soundAlertsEnabled && 'Notification' in window && Notification.permission !== 'granted') {
+      Notification.requestPermission();
+    }
+  }
+
+  function updateSoundUI() {
+    document.getElementById('sound-icon').innerText = soundAlertsEnabled ? '🔔' : '🔕';
+    document.getElementById('sound-text').innerText = soundAlertsEnabled ? 'Alerts: ON' : 'Alerts: OFF';
+  }
+
+  function showToast(order) {
+    const toast = document.getElementById('sale-toast');
+    document.getElementById('toast-title').innerText = `💰 Cha-Ching! ₹${order.amount} Sale!`;
+    document.getElementById('toast-body').innerText = `#${order.orderId} · ${order.name} (${order.title})`;
+    const waBtn = document.getElementById('toast-wa-btn');
+    waBtn.onclick = () => window.open(waCustomerUrl(order), '_blank');
+    toast.style.display = 'block';
+  }
+
+  // -------------------------------------------------------------------------
+  // INITIALIZATION & STORE STATE
+  // -------------------------------------------------------------------------
+  function loadStoredConfig() {
+    try {
+      const custom = JSON.parse(localStorage.getItem(STORAGE_KEY_CONFIG) || '{}');
+      currentProducts = (custom.products && custom.products.length) ? custom.products : (window.PRODUCTS || []);
+      
+      currentSettings = Object.assign({
+        priceStandard: (window.PRICE_STANDARD || 899),
+        priceUpi: (window.PRICE_UPI || 799),
+        pincodePrefix: (window.LOCAL_PINCODE_PREFIX || '313'),
+        waNumber: (window.WA_NUMBER || '918619661325'),
+        merchantUpi: (window.MERCHANT_UPI || '8619661325@upi'),
+        gasUrl: (window.GOOGLE_APPS_SCRIPT_URL || ''),
+        metaPixelId: (window.META_PIXEL_ID || ''),
+        ga4Id: (window.GA4_ID || '')
+      }, custom.settings || {});
+
+      currentPromises = Object.assign({
+        announcement: "UV400 polarized · Hard case & cloth included · 7-day exchange",
+        heroTitle: "Polarized sunglasses,<br><span class=\"hero-title-accent\">delivered to your door.</span>",
+        heroSubtitle: "UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.",
+        deliveryStrip: "<span><strong>Udaipur:</strong> 1-day delivery + COD</span><span class=\"delivery-strip-sep\">|</span><span><strong>Rest of India:</strong> prepaid UPI</span>",
+        founder: "Run by a local founder in Udaipur. Questions? WhatsApp us."
+      }, custom.promises || {});
+
+    } catch (e) {
+      currentProducts = window.PRODUCTS || [];
+    }
+  }
+
+  function saveStoredConfig() {
+    const data = {
+      products: currentProducts,
+      settings: currentSettings,
+      promises: currentPromises,
+      updatedAt: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(data));
+    document.getElementById('badge-sync-status').innerText = 'Unpublished Edits';
+    document.getElementById('badge-sync-status').style.background = '#fef08a';
+    document.getElementById('badge-sync-status').style.color = '#854d0e';
+  }
+
+  function initUI() {
+    loadStoredConfig();
+    updateSoundUI();
+
+    // Populate Pricing & Rules Inputs
+    document.getElementById('cfg-price-standard').value = currentSettings.priceStandard;
+    document.getElementById('cfg-price-upi').value = currentSettings.priceUpi;
+    document.getElementById('cfg-pincode-prefix').value = currentSettings.pincodePrefix;
+    document.getElementById('cfg-wa-number').value = currentSettings.waNumber;
+    document.getElementById('cfg-merchant-upi').value = currentSettings.merchantUpi;
+    document.getElementById('cfg-gas-url').value = currentSettings.gasUrl;
+    document.getElementById('cfg-meta-pixel').value = currentSettings.metaPixelId;
+    document.getElementById('cfg-ga4-id').value = currentSettings.ga4Id;
+
+    // Populate Promises Inputs
+    document.getElementById('copy-announcement').value = currentPromises.announcement;
+    document.getElementById('copy-hero-title').value = currentPromises.heroTitle;
+    document.getElementById('copy-hero-subtitle').value = currentPromises.heroSubtitle;
+    document.getElementById('copy-delivery-strip').value = currentPromises.deliveryStrip;
+    document.getElementById('copy-founder').value = currentPromises.founder;
+
+    // GitHub token
+    const token = localStorage.getItem(STORAGE_KEY_TOKEN) || '';
+    if (token) document.getElementById('cfg-github-token').value = token;
+
+    if (ORDERS_SHEET_URL) {
+      const btn = document.getElementById('btn-open-sheet');
+      btn.href = ORDERS_SHEET_URL;
+      btn.style.display = 'inline-flex';
+    }
+
+    renderOrders();
+    renderProductsEditor();
+
+    // Request notification permission if enabled
+    if (soundAlertsEnabled && 'Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    // Start background order monitoring loop
+    setInterval(pollForNewOrders, 8000);
+  }
+
+  // -------------------------------------------------------------------------
+  // TAB SWITCHER
+  // -------------------------------------------------------------------------
+  function switchTab(tabName, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    const target = document.getElementById('tab-' + tabName);
+    if (target) target.classList.add('active');
+  }
+
+  // -------------------------------------------------------------------------
+  // ORDERS MANAGEMENT & REAL-TIME CHA-CHING POLLER
+  // -------------------------------------------------------------------------
+  function loadOrders() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY_ORDERS) || '[]'); }
+    catch (e) { return []; }
+  }
+  function saveOrders(list) {
+    try { localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(list)); } catch (e) {}
+  }
+
+  function pollForNewOrders() {
+    const list = loadOrders();
+    let hasNew = false;
+    list.forEach(o => {
+      if (!knownOrderIds.has(o.orderId)) {
+        if (knownOrderIds.size > 0) { // Only sound on subsequent additions
+          hasNew = true;
+          playChaChingSound();
+          showToast(o);
+          if (window.confetti) confetti({ particleCount: 60, spread: 80, origin: { y: 0.8 } });
+          if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('💰 New Sale Received!', {
+              body: `Order #${o.orderId} - ₹${o.amount} by ${o.name}`,
+              icon: '/icon-192.png'
+            });
+          }
+        }
+        knownOrderIds.add(o.orderId);
+      }
+    });
+    if (hasNew) renderOrders();
+  }
+
+  function waCustomerUrl(order) {
+    const phone = String(order.phone || '').replace(/\D/g, '');
+    const name = order.name || 'Customer';
+    const isUpi = order.paymentMode === 'UPI';
+    const text = isUpi
+      ? `Hi ${name}, we received your payment for order #${order.orderId}. Your sunglasses will ship in 2-4 business days. Thank you!`
+      : `Hi ${name}, this is The Classic Co. Your order #${order.orderId} is confirmed. We will deliver within 24 hours via Cash on Delivery.`;
     return 'https://wa.me/91' + phone + '?text=' + encodeURIComponent(text);
   }
 
-  function render() {
-    var list = load();
-    var body = document.getElementById('orders-body');
-    if (!list.length) {
-      body.innerHTML = '<tr><td colspan="7" class="muted" style="padding:20px">No orders placed from this browser yet.</td></tr>';
+  function renderOrders() {
+    const list = loadOrders();
+    list.forEach(o => knownOrderIds.add(o.orderId));
+
+    // Update Metrics
+    let revenue = 0;
+    let pendingCount = 0;
+    let codCount = 0;
+    let upiCount = 0;
+
+    list.forEach(o => {
+      revenue += Number(o.amount || 0);
+      if (o.status === 'Pending' || o.status === 'Payment pending verification') pendingCount++;
+      if (o.paymentMode === 'UPI') upiCount++; else codCount++;
+    });
+
+    document.getElementById('stat-total-orders').innerText = list.length;
+    document.getElementById('stat-total-revenue').innerText = '₹' + revenue.toLocaleString('en-IN');
+    document.getElementById('stat-pending-orders').innerText = pendingCount;
+    document.getElementById('stat-cod-upi-split').innerText = `${codCount} COD / ${upiCount} UPI`;
+    document.getElementById('badge-orders-count').innerText = list.length;
+
+    // Filter
+    const search = (document.getElementById('order-search').value || '').toLowerCase();
+    const statusFilter = document.getElementById('order-status-filter').value;
+
+    let filtered = list.filter(o => {
+      const matchSearch = !search ||
+        (o.orderId && o.orderId.toLowerCase().includes(search)) ||
+        (o.name && o.name.toLowerCase().includes(search)) ||
+        (o.phone && o.phone.includes(search));
+      const matchStatus = statusFilter === 'ALL' || o.status === statusFilter;
+      return matchSearch && matchStatus;
+    });
+
+    const body = document.getElementById('orders-body');
+    if (!filtered.length) {
+      body.innerHTML = '<tr><td colspan="7" class="muted" style="text-align:center; padding:24px;">No orders found.</td></tr>';
       return;
     }
-    body.innerHTML = list.map(function (o, i) {
-      var st = o.status || 'Pending';
-      var opts = STATUSES.map(function (s) { return '<option' + (s === st ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('');
-      var isUpi = o.paymentMode === 'UPI';
-      var pillClass = (st === 'Payment pending verification') ? 'pill warn' : 'pill';
-      return '<tr>' +
-        '<td><b>#' + esc(o.orderId) + '</b><div class="muted">' + esc((o.createdAt || '').slice(0, 16).replace('T', ' ')) + '</div></td>' +
-        '<td>' + esc(o.name) + '<div class="muted">+91 ' + esc(o.phone) + '</div><div class="muted">' + esc(o.pincode) + '</div></td>' +
-        '<td>' + esc(o.title) + '</td>' +
-        '<td>₹' + esc(o.amount) + '</td>' +
-        '<td>' + esc(o.paymentMode) + '<div><span class="' + pillClass + '">' + esc(o.paymentStatus || '') + '</span></div></td>' +
-        '<td><select onchange="setStatus(' + i + ', this.value)">' + opts + '</select></td>' +
-        '<td><a class="btn wa sm" target="_blank" rel="noopener" href="' + wa(o, isUpi ? 'paid' : 'local') + '">WhatsApp</a></td>' +
-        '</tr>';
+
+    body.innerHTML = filtered.map((o, idx) => {
+      const st = o.status || 'Pending';
+      const opts = STATUSES.map(s => `<option ${s === st ? 'selected' : ''}>${s}</option>`).join('');
+      const isPendingVerif = st === 'Payment pending verification';
+      return `
+        <tr>
+          <td>
+            <b>#${o.orderId}</b>
+            <div class="muted">${(o.createdAt || '').slice(0, 16).replace('T', ' ')}</div>
+          </td>
+          <td>
+            <b>${o.name || 'Anonymous'}</b>
+            <div class="muted">+91 ${o.phone}</div>
+            <div class="muted">${o.city || ''} · ${o.pincode}</div>
+          </td>
+          <td>
+            <div style="font-weight:600;">${o.title || 'Classic Frame'}</div>
+          </td>
+          <td><b>₹${Number(o.amount).toLocaleString('en-IN')}</b></td>
+          <td>
+            <div>${o.paymentMode}</div>
+            <span class="pill ${isPendingVerif ? 'warn' : 'ok'}">${o.paymentStatus || st}</span>
+          </td>
+          <td>
+            <select onchange="updateOrderStatus('${o.orderId}', this.value)">
+              ${opts}
+            </select>
+          </td>
+          <td>
+            <a class="btn wa sm" target="_blank" rel="noopener" href="${waCustomerUrl(o)}">WhatsApp</a>
+          </td>
+        </tr>
+      `;
     }).join('');
   }
 
-  function setStatus(i, value) {
-    var list = load();
-    if (list[i]) { list[i].status = value; save(list); render(); }
-  }
-  function clearTests() {
-    if (confirm('Remove all orders stored in this browser? (Your Google Sheet is not affected.)')) { save([]); render(); }
-  }
-  function exportCSV() {
-    var list = load();
-    if (!list.length) { alert('Nothing to export.'); return; }
-    function q(v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
-    var rows = [['Order ID', 'Name', 'Phone', 'Email', 'Address', 'Pincode', 'Item', 'Amount', 'Payment', 'Status', 'Date']];
-    list.forEach(function (o) {
-      rows.push([o.orderId, o.name, o.phone, o.email, o.address, o.pincode, o.title, o.amount, o.paymentMode, o.status, o.createdAt]);
-    });
-    var csv = rows.map(function (r) { return r.map(q).join(','); }).join('\n');
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-    a.download = 'classic-co-orders-' + new Date().toISOString().slice(0, 10) + '.csv';
-    document.body.appendChild(a); a.click(); a.remove();
+  function updateOrderStatus(orderId, newStatus) {
+    const list = loadOrders();
+    const idx = list.findIndex(o => o.orderId === orderId);
+    if (idx >= 0) {
+      list[idx].status = newStatus;
+      saveOrders(list);
+      renderOrders();
+    }
   }
 
-  (function init() {
-    var row = document.getElementById('sheet-row');
-    if (ORDERS_SHEET_URL) {
-      row.innerHTML = '<a class="btn" target="_blank" rel="noopener" href="' + esc(ORDERS_SHEET_URL) + '">Open orders Google Sheet</a>';
-    } else {
-      row.innerHTML = '<span class="muted">Tip: add your Google Sheet link as <b>ORDERS_SHEET_URL</b> in Vercel and a button will show here.</span>';
+  function clearTests() {
+    if (confirm('Clear test orders stored in this browser? (Your Google Sheet is untouched).')) {
+      saveOrders([]);
+      renderOrders();
     }
-    render();
-  })();
+  }
+
+  function exportCSV() {
+    const list = loadOrders();
+    if (!list.length) return alert('No orders to export.');
+    const q = v => `"${String(v || '').replace(/"/g, '""')}"`;
+    const rows = [['Order ID', 'Date', 'Customer Name', 'Phone', 'Address', 'Pincode', 'Product', 'Amount', 'Payment Mode', 'Status']];
+    list.forEach(o => {
+      rows.push([o.orderId, o.createdAt, o.name, o.phone, o.address, o.pincode, o.title, o.amount, o.paymentMode, o.status]);
+    });
+    const csv = rows.map(r => r.map(q).join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    a.download = `classic-co-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+  }
+
+  // -------------------------------------------------------------------------
+  // PRODUCTS CATALOG EDITOR (FULL CONTROL)
+  // -------------------------------------------------------------------------
+  function renderProductsEditor() {
+    const grid = document.getElementById('manage-products-grid');
+    const search = (document.getElementById('prod-search').value || '').toLowerCase();
+    const cat = document.getElementById('prod-cat-filter').value;
+
+    let list = currentProducts.filter(p => {
+      const matchSearch = !search || p.title.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
+      const matchCat = cat === 'ALL' || p.category === cat;
+      return matchSearch && matchCat;
+    });
+
+    document.getElementById('badge-prod-count').innerText = currentProducts.length;
+
+    if (!list.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:30px;" class="muted">No products match your filter.</div>';
+      return;
+    }
+
+    grid.innerHTML = list.map(p => `
+      <div class="prod-manage-card">
+        <div class="prod-thumb-row">
+          <img src="${p.images[0]}" class="prod-thumb-img" alt="${p.title}" loading="lazy">
+          <div class="prod-info-col">
+            <div class="prod-cat">${p.category}</div>
+            <div class="prod-title" title="${p.title}">${p.title}</div>
+            <div style="font-weight:700; margin-top:2px;">
+              <span>₹${p.cod_price}</span>
+              <span class="muted" style="font-size:11px; margin-left:6px;">(UPI: ₹${p.upi_price})</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="prod-toggles">
+          <label class="switch-label">
+            <span class="switch">
+              <input type="checkbox" ${p.inStock !== false ? 'checked' : ''} onchange="toggleProductStock(${p.id}, this.checked)">
+              <span class="slider green"></span>
+            </span>
+            <span>${p.inStock !== false ? 'In Stock' : 'Out of Stock'}</span>
+          </label>
+
+          <label class="switch-label">
+            <span class="switch">
+              <input type="checkbox" ${p.featured ? 'checked' : ''} onchange="toggleProductFeatured(${p.id}, this.checked)">
+              <span class="slider"></span>
+            </span>
+            <span>Bestseller</span>
+          </label>
+
+          <button class="btn sec sm" onclick="openEditProductModal(${p.id})">✏️ Edit</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function toggleProductStock(id, inStock) {
+    const p = currentProducts.find(x => x.id === id);
+    if (p) {
+      p.inStock = inStock;
+      saveStoredConfig();
+      renderProductsEditor();
+    }
+  }
+
+  function toggleProductFeatured(id, featured) {
+    const p = currentProducts.find(x => x.id === id);
+    if (p) {
+      p.featured = featured;
+      saveStoredConfig();
+      renderProductsEditor();
+    }
+  }
+
+  function openEditProductModal(id) {
+    const p = currentProducts.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('modal-title').innerText = 'Edit Product #' + p.id;
+    document.getElementById('edit-prod-id').value = p.id;
+    document.getElementById('edit-prod-title').value = p.title;
+    document.getElementById('edit-prod-category').value = p.category;
+    document.getElementById('edit-prod-cod').value = p.cod_price;
+    document.getElementById('edit-prod-upi').value = p.upi_price;
+    document.getElementById('edit-prod-images').value = p.images.join('\n');
+    document.getElementById('edit-prod-instock').checked = p.inStock !== false;
+    document.getElementById('edit-prod-featured').checked = Boolean(p.featured);
+    document.getElementById('product-modal').style.display = 'flex';
+  }
+
+  function openAddProductModal() {
+    const newId = currentProducts.length ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
+    document.getElementById('modal-title').innerText = 'Add New Product';
+    document.getElementById('edit-prod-id').value = newId;
+    document.getElementById('edit-prod-title').value = '';
+    document.getElementById('edit-prod-category').value = 'Premium Styles';
+    document.getElementById('edit-prod-cod').value = currentSettings.priceStandard || 899;
+    document.getElementById('edit-prod-upi').value = currentSettings.priceUpi || 799;
+    document.getElementById('edit-prod-images').value = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';
+    document.getElementById('edit-prod-instock').checked = true;
+    document.getElementById('edit-prod-featured').checked = false;
+    document.getElementById('product-modal').style.display = 'flex';
+  }
+
+  function closeProductModal() {
+    document.getElementById('product-modal').style.display = 'none';
+  }
+
+  function saveProductModal(e) {
+    e.preventDefault();
+    const id = Number(document.getElementById('edit-prod-id').value);
+    const title = document.getElementById('edit-prod-title').value.trim();
+    const category = document.getElementById('edit-prod-category').value;
+    const cod = Number(document.getElementById('edit-prod-cod').value);
+    const upi = Number(document.getElementById('edit-prod-upi').value);
+    const imagesRaw = document.getElementById('edit-prod-images').value.trim();
+    const inStock = document.getElementById('edit-prod-instock').checked;
+    const featured = document.getElementById('edit-prod-featured').checked;
+
+    const images = imagesRaw.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
+
+    let p = currentProducts.find(x => x.id === id);
+    if (p) {
+      p.title = title;
+      p.category = category;
+      p.cod_price = cod;
+      p.upi_price = upi;
+      p.images = images.length ? images : p.images;
+      p.inStock = inStock;
+      p.featured = featured;
+    } else {
+      currentProducts.push({
+        id: id,
+        handle: title.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        title: title,
+        category: category,
+        cod_price: cod,
+        upi_price: upi,
+        images: images,
+        inStock: inStock,
+        featured: featured
+      });
+    }
+
+    saveStoredConfig();
+    closeProductModal();
+    renderProductsEditor();
+    alert('Product saved!');
+  }
+
+  // -------------------------------------------------------------------------
+  // PRICING & PROMISES SAVERS
+  // -------------------------------------------------------------------------
+  function savePricingRules(e) {
+    e.preventDefault();
+    currentSettings.priceStandard = Number(document.getElementById('cfg-price-standard').value);
+    currentSettings.priceUpi = Number(document.getElementById('cfg-price-upi').value);
+    currentSettings.pincodePrefix = document.getElementById('cfg-pincode-prefix').value.trim();
+    currentSettings.waNumber = document.getElementById('cfg-wa-number').value.trim();
+    currentSettings.merchantUpi = document.getElementById('cfg-merchant-upi').value.trim();
+    currentSettings.gasUrl = document.getElementById('cfg-gas-url').value.trim();
+    currentSettings.metaPixelId = document.getElementById('cfg-meta-pixel').value.trim();
+    currentSettings.ga4Id = document.getElementById('cfg-ga4-id').value.trim();
+
+    saveStoredConfig();
+    alert('Pricing & store rules saved locally! Go to "Publish Live" to push to live website.');
+  }
+
+  function saveSiteCopy(e) {
+    e.preventDefault();
+    currentPromises.announcement = document.getElementById('copy-announcement').value.trim();
+    currentPromises.heroTitle = document.getElementById('copy-hero-title').value.trim();
+    currentPromises.heroSubtitle = document.getElementById('copy-hero-subtitle').value.trim();
+    currentPromises.deliveryStrip = document.getElementById('copy-delivery-strip').value.trim();
+    currentPromises.founder = document.getElementById('copy-founder').value.trim();
+
+    saveStoredConfig();
+    alert('Promises and copy saved locally! Go to "Publish Live" to push to live website.');
+  }
+
+  function saveGithubToken(val) {
+    localStorage.setItem(STORAGE_KEY_TOKEN, val.trim());
+  }
+
+  // -------------------------------------------------------------------------
+  // PUBLISH LIVE TO GITHUB & VERCEL
+  // -------------------------------------------------------------------------
+  function generateProductsDataJs() {
+    return `// ---------------------------------------------------------------------------
+// STORE CONFIG (Auto-generated by Admin PWA Operations Studio)
+// ---------------------------------------------------------------------------
+let GOOGLE_APPS_SCRIPT_URL = ${JSON.stringify(currentSettings.gasUrl || '')};
+let WA_NUMBER = ${JSON.stringify(currentSettings.waNumber || '918619661325')};
+let MERCHANT_UPI = ${JSON.stringify(currentSettings.merchantUpi || '8619661325@upi')};
+let META_PIXEL_ID = ${JSON.stringify(currentSettings.metaPixelId || '')};
+let GA4_ID = ${JSON.stringify(currentSettings.ga4Id || '')};
+let LOCAL_PINCODE_PREFIX = ${JSON.stringify(currentSettings.pincodePrefix || '313')};
+let PRICE_STANDARD = ${currentSettings.priceStandard || 899};
+let PRICE_UPI = ${currentSettings.priceUpi || 799};
+
+// Site Promises & Editorial Copy
+let SITE_PROMISES = ${JSON.stringify(currentPromises, null, 2)};
+
+// ---------------------------------------------------------------------------
+// PRODUCTS CATALOG (${currentProducts.length} Items)
+// ---------------------------------------------------------------------------
+let PRODUCTS = ${JSON.stringify(currentProducts, null, 2)};
+
+// Dynamic client override check
+try {
+  const localConfig = JSON.parse(localStorage.getItem('classic_co_custom_config') || '{}');
+  if (localConfig && typeof localConfig === 'object') {
+    if (Array.isArray(localConfig.products) && localConfig.products.length) PRODUCTS = localConfig.products;
+    if (localConfig.settings) {
+      if (localConfig.settings.priceStandard) PRICE_STANDARD = Number(localConfig.settings.priceStandard);
+      if (localConfig.settings.priceUpi) PRICE_UPI = Number(localConfig.settings.priceUpi);
+      if (localConfig.settings.waNumber) WA_NUMBER = String(localConfig.settings.waNumber);
+      if (localConfig.settings.merchantUpi) MERCHANT_UPI = String(localConfig.settings.merchantUpi);
+      if (localConfig.settings.pincodePrefix) LOCAL_PINCODE_PREFIX = String(localConfig.settings.pincodePrefix);
+    }
+    if (localConfig.promises) Object.assign(SITE_PROMISES, localConfig.promises);
+  }
+} catch (e) {}
+`;
+  }
+
+  async function publishLiveChanges() {
+    const btn = document.getElementById('btn-publish-live');
+    const prog = document.getElementById('publish-progress');
+    const token = localStorage.getItem(STORAGE_KEY_TOKEN) || '';
+
+    btn.disabled = true;
+    prog.style.display = 'block';
+    prog.innerHTML = '⏳ Compiling updated catalog, prices, and copy...';
+
+    const newCode = generateProductsDataJs();
+
+    try {
+      prog.innerHTML = '🚀 Sending commit to GitHub main branch...';
+      const res = await fetch('/admin?action=publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          token: token,
+          filePath: 'js/products-data.js',
+          content: newCode,
+          message: `🚀 Live update via Admin PWA: ${currentProducts.length} products, pricing & copy`
+        })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        prog.style.background = '#064e3b';
+        prog.style.color = '#6ee7b7';
+        prog.innerHTML = `✅ <b>DEPLOYED TO GITHUB MAIN!</b><br>${data.message}<br><small>Vercel is building your update right now. It will appear live in ~20 seconds.</small>`;
+        document.getElementById('badge-sync-status').innerText = 'Live Synced';
+        document.getElementById('badge-sync-status').style.background = '#4ade80';
+        document.getElementById('badge-sync-status').style.color = '#052e16';
+        if (window.confetti) confetti({ particleCount: 80, spread: 70 });
+      } else {
+        prog.style.background = '#7f1d1d';
+        prog.style.color = '#fca5a5';
+        prog.innerHTML = `❌ <b>Publish Failed:</b> ${data.error || 'Unknown error'}.<br><small>Tip: Paste your GitHub token in Settings below, or download the backup file.</small>`;
+      }
+    } catch (err) {
+      prog.style.background = '#7f1d1d';
+      prog.style.color = '#fca5a5';
+      prog.innerHTML = `❌ Network Error: ${err.message}`;
+    } finally {
+      btn.disabled = false;
+    }
+  }
+
+  function downloadBackupFile() {
+    const code = generateProductsDataJs();
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+    a.download = 'products-data.js';
+    a.click();
+  }
+
+  function resetToDefaults() {
+    if (confirm('Reset all catalog and promises back to original factory defaults?')) {
+      localStorage.removeItem(STORAGE_KEY_CONFIG);
+      location.reload();
+    }
+  }
+
+  // Run on start
+  window.addEventListener('DOMContentLoaded', initUI);
 </script>
 </body>
 </html>
