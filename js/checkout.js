@@ -27,7 +27,7 @@ function generateOrderId() {
 }
 
 function openCheckoutForProduct(prodId) {
-  const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
+  const p = PRODUCTS.find(x => x.id === prodId && x.inStock !== false && !x.hidden) || PRODUCTS.find(x => x.inStock !== false && !x.hidden) || PRODUCTS[0];
   selectedProduct = p;
   userPickedPayment = false;
   isSubmittingOrder = false;
