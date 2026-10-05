@@ -1,28 +1,37 @@
 // ---------------------------------------------------------------------------
 // STORE CONFIG
 // ---------------------------------------------------------------------------
-const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec";
-const WA_NUMBER = "918619661325";
-const MERCHANT_UPI = "8619661325@upi";
+let GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec";
+let WA_NUMBER = "918619661325";
+let MERCHANT_UPI = "8619661325@upi";
 
 // Marketing IDs. Paste your IDs here (inside the quotes) and redeploy.
 // Leave empty ("") to turn a tracker off. These now load for EVERY visitor.
-const META_PIXEL_ID = "";
-const GA4_ID = "";
+let META_PIXEL_ID = "";
+let GA4_ID = "";
 
 // Delivery rule: pincodes starting with this prefix = Udaipur (COD + 24h delivery).
-const LOCAL_PINCODE_PREFIX = "313";
+let LOCAL_PINCODE_PREFIX = "313";
 
 // Prices (single price, UPI discount of Rs 100)
-const PRICE_STANDARD = 899;
-const PRICE_UPI = 799;
+let PRICE_STANDARD = 899;
+let PRICE_UPI = 799;
+
+// Site Promises & Editorial Copy
+let SITE_PROMISES = {
+  announcement: "UV400 polarized · Hard case & cloth included · 7-day exchange",
+  heroTitle: "Polarized sunglasses,<br><span class=\"hero-title-accent\">delivered to your door.</span>",
+  heroSubtitle: "UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.",
+  deliveryStrip: "<span><strong>Udaipur:</strong> 1-day delivery + COD</span><span class=\"delivery-strip-sep\">|</span><span><strong>Rest of India:</strong> prepaid UPI</span>",
+  founder: "Run by a local founder in Udaipur. Questions? WhatsApp us."
+};
 
 // ---------------------------------------------------------------------------
 // PRODUCTS
 // inStock: false  -> product is hidden from the site
 // featured: true  -> product shows under "Bestsellers" (keep 6)
 // ---------------------------------------------------------------------------
-const PRODUCTS = [
+let PRODUCTS = [
   {
     "id": 1,
     "handle": "untitled-11apr_15-24",
@@ -603,3 +612,22 @@ const PRODUCTS = [
     ]
   }
 ];
+
+// Dynamic client override check
+try {
+  const localConfig = JSON.parse(localStorage.getItem('classic_co_custom_config') || '{}');
+  if (localConfig && typeof localConfig === 'object') {
+    if (Array.isArray(localConfig.products) && localConfig.products.length) PRODUCTS = localConfig.products;
+    if (localConfig.settings) {
+      if (localConfig.settings.priceStandard) PRICE_STANDARD = Number(localConfig.settings.priceStandard);
+      if (localConfig.settings.priceUpi) PRICE_UPI = Number(localConfig.settings.priceUpi);
+      if (localConfig.settings.waNumber) WA_NUMBER = String(localConfig.settings.waNumber);
+      if (localConfig.settings.merchantUpi) MERCHANT_UPI = String(localConfig.settings.merchantUpi);
+      if (localConfig.settings.pincodePrefix) LOCAL_PINCODE_PREFIX = String(localConfig.settings.pincodePrefix);
+      if (localConfig.settings.gasUrl) GOOGLE_APPS_SCRIPT_URL = localConfig.settings.gasUrl;
+      if (localConfig.settings.metaPixelId !== undefined) META_PIXEL_ID = localConfig.settings.metaPixelId;
+      if (localConfig.settings.ga4Id !== undefined) GA4_ID = localConfig.settings.ga4Id;
+    }
+    if (localConfig.promises) Object.assign(SITE_PROMISES, localConfig.promises);
+  }
+} catch (e) {}
