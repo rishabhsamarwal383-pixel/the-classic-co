@@ -1,56 +1,14 @@
 {
-  "id": "/",
-  "name": "The Classic Co. · Luxury Eyewear Studio",
-  "short_name": "The Classic Co",
-  "description": "Architectural Sunglasses & Handcrafted Studio Eyewear • Express Delivery Across India",
+  "name": "The Classic Co.",
+  "short_name": "Classic Co",
+  "description": "UV400 polarized sunglasses. COD and 24-hour delivery in Udaipur.",
   "start_url": "/",
-  "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#161514",
   "theme_color": "#161514",
-  "categories": ["shopping", "lifestyle"],
-  "prefer_related_applications": false,
   "icons": [
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "screenshot-mobile.png",
-      "sizes": "750x1334",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "The Classic Co. Mobile Store"
-    },
-    {
-      "src": "screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "Luxury Eyewear Studio Catalog"
-    }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
   ]
 }
