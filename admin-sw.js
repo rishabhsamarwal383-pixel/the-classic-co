@@ -5,7 +5,9 @@ const ASSETS_TO_CACHE = [
   '/icon-192.png',
   '/icon-512.png',
   '/favicon.png',
-  '/chaching.ogg'
+  '/chaching.ogg',
+  '/js/products-data.js',
+  '/js/admin-app.js'
 ];
 
 self.addEventListener('install', (e) => {
