@@ -1,0 +1,25 @@
+{
+  "name": "The Classic Co. - Admin Operations",
+  "short_name": "CC Admin",
+  "description": "Store Operations, Orders & Live Site CMS",
+  "start_url": "/admin",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#161514",
+  "theme_color": "#b48448",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
