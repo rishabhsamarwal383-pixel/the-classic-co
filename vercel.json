@@ -1,11 +1,12 @@
 {
   "version": 2,
+  "functions": {
+    "api/admin.js": { "includeFiles": "api/_admin.html" }
+  },
   "routes": [
-    { "src": "/admin", "dest": "/admin.html" },
+    { "src": "/admin", "dest": "/api/admin" },
+    { "src": "/admin.html", "dest": "/api/admin" },
     { "handle": "filesystem" },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
