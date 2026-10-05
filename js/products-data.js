@@ -1,24 +1,24 @@
 // ---------------------------------------------------------------------------
 // STORE CONFIG
 // ---------------------------------------------------------------------------
-let GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec";
-let WA_NUMBER = "918619661325";
-let MERCHANT_UPI = "8619661325@upi";
+var GOOGLE_APPS_SCRIPT_URL = window.GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec";
+var WA_NUMBER = window.WA_NUMBER = "918619661325";
+var MERCHANT_UPI = window.MERCHANT_UPI = "8619661325@upi";
 
 // Marketing IDs. Paste your IDs here (inside the quotes) and redeploy.
 // Leave empty ("") to turn a tracker off. These now load for EVERY visitor.
-let META_PIXEL_ID = "";
-let GA4_ID = "";
+var META_PIXEL_ID = window.META_PIXEL_ID = "";
+var GA4_ID = window.GA4_ID = "";
 
 // Delivery rule: pincodes starting with this prefix = Udaipur (COD + 24h delivery).
-let LOCAL_PINCODE_PREFIX = "313";
+var LOCAL_PINCODE_PREFIX = window.LOCAL_PINCODE_PREFIX = "313";
 
 // Prices (single price, UPI discount of Rs 100)
-let PRICE_STANDARD = 899;
-let PRICE_UPI = 799;
+var PRICE_STANDARD = window.PRICE_STANDARD = 899;
+var PRICE_UPI = window.PRICE_UPI = 799;
 
 // Site Promises & Editorial Copy
-let SITE_PROMISES = {
+var SITE_PROMISES = window.SITE_PROMISES = {
   announcement: "UV400 polarized · Hard case & cloth included · 7-day exchange",
   heroTitle: "Polarized sunglasses,<br><span class=\"hero-title-accent\">delivered to your door.</span>",
   heroSubtitle: "UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.",
@@ -31,7 +31,7 @@ let SITE_PROMISES = {
 // inStock: false  -> product is hidden from the site
 // featured: true  -> product shows under "Bestsellers" (keep 6)
 // ---------------------------------------------------------------------------
-let PRODUCTS = [
+var PRODUCTS = window.PRODUCTS = [
   {
     "id": 1,
     "handle": "untitled-11apr_15-24",
@@ -615,19 +615,38 @@ let PRODUCTS = [
 
 // Dynamic client override check
 try {
-  const localConfig = JSON.parse(localStorage.getItem('classic_co_custom_config') || '{}');
+  var localConfig = JSON.parse(localStorage.getItem('classic_co_custom_config') || '{}');
   if (localConfig && typeof localConfig === 'object') {
-    if (Array.isArray(localConfig.products) && localConfig.products.length) PRODUCTS = localConfig.products;
-    if (localConfig.settings) {
-      if (localConfig.settings.priceStandard) PRICE_STANDARD = Number(localConfig.settings.priceStandard);
-      if (localConfig.settings.priceUpi) PRICE_UPI = Number(localConfig.settings.priceUpi);
-      if (localConfig.settings.waNumber) WA_NUMBER = String(localConfig.settings.waNumber);
-      if (localConfig.settings.merchantUpi) MERCHANT_UPI = String(localConfig.settings.merchantUpi);
-      if (localConfig.settings.pincodePrefix) LOCAL_PINCODE_PREFIX = String(localConfig.settings.pincodePrefix);
-      if (localConfig.settings.gasUrl) GOOGLE_APPS_SCRIPT_URL = localConfig.settings.gasUrl;
-      if (localConfig.settings.metaPixelId !== undefined) META_PIXEL_ID = localConfig.settings.metaPixelId;
-      if (localConfig.settings.ga4Id !== undefined) GA4_ID = localConfig.settings.ga4Id;
+    if (Array.isArray(localConfig.products) && localConfig.products.length > 0) {
+      PRODUCTS = window.PRODUCTS = localConfig.products;
     }
-    if (localConfig.promises) Object.assign(SITE_PROMISES, localConfig.promises);
+    if (localConfig.settings) {
+      if (localConfig.settings.priceStandard) PRICE_STANDARD = window.PRICE_STANDARD = Number(localConfig.settings.priceStandard);
+      if (localConfig.settings.priceUpi) PRICE_UPI = window.PRICE_UPI = Number(localConfig.settings.priceUpi);
+      if (localConfig.settings.waNumber) WA_NUMBER = window.WA_NUMBER = String(localConfig.settings.waNumber);
+      if (localConfig.settings.merchantUpi) MERCHANT_UPI = window.MERCHANT_UPI = String(localConfig.settings.merchantUpi);
+      if (localConfig.settings.pincodePrefix) LOCAL_PINCODE_PREFIX = window.LOCAL_PINCODE_PREFIX = String(localConfig.settings.pincodePrefix);
+      if (localConfig.settings.gasUrl) GOOGLE_APPS_SCRIPT_URL = window.GOOGLE_APPS_SCRIPT_URL = localConfig.settings.gasUrl;
+      if (localConfig.settings.metaPixelId !== undefined) META_PIXEL_ID = window.META_PIXEL_ID = localConfig.settings.metaPixelId;
+      if (localConfig.settings.ga4Id !== undefined) GA4_ID = window.GA4_ID = localConfig.settings.ga4Id;
+    }
+    if (localConfig.promises) {
+      Object.assign(SITE_PROMISES, localConfig.promises);
+      window.SITE_PROMISES = SITE_PROMISES;
+    }
   }
 } catch (e) {}
+
+// Global browser window bindings
+if (typeof window !== 'undefined') {
+  window.PRODUCTS = PRODUCTS;
+  window.PRICE_STANDARD = PRICE_STANDARD;
+  window.PRICE_UPI = PRICE_UPI;
+  window.SITE_PROMISES = SITE_PROMISES;
+  window.WA_NUMBER = WA_NUMBER;
+  window.MERCHANT_UPI = MERCHANT_UPI;
+  window.LOCAL_PINCODE_PREFIX = LOCAL_PINCODE_PREFIX;
+  window.GOOGLE_APPS_SCRIPT_URL = GOOGLE_APPS_SCRIPT_URL;
+  window.META_PIXEL_ID = META_PIXEL_ID;
+  window.GA4_ID = GA4_ID;
+}
