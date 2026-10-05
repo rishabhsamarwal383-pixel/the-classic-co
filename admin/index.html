@@ -1,0 +1,1649 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Classic Co Admin">
+<link rel="manifest" href="/admin-manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<title>The Classic Co. - Shopify Admin</title>
+<script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<!-- External base products data -->
+<script src="/js/products-data.js?v=20261005"></script>
+
+<style>
+  :root {
+    --p-bg: #f6f6f7;
+    --p-surface: #ffffff;
+    --p-surface-hover: #fafbfc;
+    --p-border: #e1e3e5;
+    --p-border-subdued: #f1f2f4;
+    --p-text: #202223;
+    --p-text-subdued: #6d7175;
+    --p-text-disabled: #8c9196;
+    --p-green: #008060;
+    --p-green-hover: #006e52;
+    --p-green-active: #005e46;
+    --p-green-subdued: #ebf5f0;
+    --p-badge-in-stock-bg: #cbe8ba;
+    --p-badge-in-stock-text: #0e623b;
+    --p-badge-featured-bg: #ffd27d;
+    --p-badge-featured-text: #5c3b00;
+    --p-badge-subdued-bg: #e4e5e7;
+    --p-badge-subdued-text: #5c5f62;
+    --p-red: #d82c0d;
+    --p-red-hover: #bc2200;
+    --p-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+    --p-shadow-modal: 0 10px 40px rgba(0, 0, 0, 0.16);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    background: var(--p-bg);
+    color: var(--p-text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 13.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 80px;
+  }
+
+  /* TOP NAVIGATION BAR */
+  .shopify-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .shopify-store-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--p-text);
+    text-decoration: none;
+  }
+
+  .shopify-bag-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+
+  .store-tag {
+    background: #f1f2f3;
+    color: var(--p-text-subdued);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* SHOPIFY BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.15s ease-in-out;
+    border: 1px solid transparent;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--p-green);
+    color: #ffffff;
+    border-color: var(--p-green);
+  }
+  .btn-primary:hover {
+    background: var(--p-green-hover);
+    border-color: var(--p-green-hover);
+  }
+  .btn-primary:active {
+    background: var(--p-green-active);
+  }
+
+  .btn-secondary {
+    background: #ffffff;
+    color: var(--p-text);
+    border-color: #babfc3;
+  }
+  .btn-secondary:hover {
+    background: var(--p-surface-hover);
+    border-color: #8c9196;
+  }
+
+  .btn-danger {
+    background: #ffffff;
+    color: var(--p-red);
+    border-color: #babfc3;
+  }
+  .btn-danger:hover {
+    background: #fef1ee;
+    border-color: var(--p-red);
+  }
+
+  .btn-sm {
+    height: 30px;
+    padding: 0 9px;
+    font-size: 12px;
+  }
+
+  .btn-sound-on {
+    background: #ebf5f0;
+    color: #0e623b;
+    border-color: #cbe8ba;
+  }
+
+  /* MOBILE SUB-BAR FOR QUICK ACTIONS */
+  .mobile-sub-actions {
+    display: none;
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+    padding: 8px 12px;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mobile-sub-actions::-webkit-scrollbar { display: none; }
+
+  /* SHOPIFY SUB-NAV TABS */
+  .shopify-tabs-bar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+    padding: 0 20px;
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .shopify-tabs-bar::-webkit-scrollbar { display: none; }
+
+  .tab-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--p-text-subdued);
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab-link:hover {
+    color: var(--p-text);
+  }
+  .tab-link.active {
+    color: var(--p-text);
+    border-bottom-color: var(--p-green);
+  }
+
+  .tab-badge {
+    background: #f1f2f3;
+    color: var(--p-text-subdued);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+  .tab-link.active .tab-badge {
+    background: var(--p-green-subdued);
+    color: var(--p-green);
+  }
+
+  /* MAIN CONTAINER */
+  .shopify-main {
+    max-width: 1180px;
+    margin: 24px auto;
+    padding: 0 16px;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* PAGE HEADER */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .page-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--p-text);
+    margin: 0;
+  }
+  .page-subtitle {
+    font-size: 13px;
+    color: var(--p-text-subdued);
+    margin-top: 3px;
+  }
+
+  /* SHOPIFY CARD */
+  .shopify-card {
+    background: var(--p-surface);
+    border: 1px solid var(--p-border);
+    border-radius: 8px;
+    box-shadow: var(--p-shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--p-border-subdued);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-header h2 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--p-text);
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  /* METRICS GRID */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .metric-box {
+    background: #ffffff;
+    border: 1px solid var(--p-border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    box-shadow: var(--p-shadow);
+  }
+  .metric-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--p-text-subdued);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .metric-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--p-text);
+    margin-top: 6px;
+  }
+
+  
+  /* ADMIN CATEGORY PILL TABS - JUST LIKE MAIN STORE */
+  .admin-pill-tabs-wrap {
+    padding: 12px 16px 4px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+  }
+  .admin-pill-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .admin-pill-tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+  .admin-pill-tabs::-webkit-scrollbar-thumb {
+    background: #dfe3e8;
+    border-radius: 4px;
+  }
+  .admin-pill-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #dcdfe4;
+    color: #5c5f62;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .admin-pill-tab:hover {
+    background: #f6f6f7;
+    border-color: #202223;
+    color: #202223;
+  }
+  .admin-pill-tab.active {
+    background: #202223;
+    color: #ffffff;
+    border-color: #202223;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+  .admin-pill-tab .pill-count {
+    display: inline-block;
+    background: #f1f2f3;
+    color: #5c5f62;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+  .admin-pill-tab.active .pill-count {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
+  .admin-pill-tab.tab-pill-hidden {
+    border-color: #fed3d1;
+    color: #d72c0d;
+  }
+  .admin-pill-tab.tab-pill-hidden.active {
+    background: #d72c0d;
+    color: #ffffff;
+    border-color: #d72c0d;
+  }
+  .admin-pill-tab.tab-pill-hidden .pill-count {
+    background: #fff4f4;
+    color: #d72c0d;
+  }
+  .admin-pill-tab.tab-pill-hidden.active .pill-count {
+    background: rgba(255,255,255,0.25);
+    color: #ffffff;
+  }
+
+  /* CONTROLS BAR (SEARCH & FILTERS) */
+  .table-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .controls-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 280px;
+    flex-wrap: wrap;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-input-wrap input {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px 0 34px;
+    border: 1px solid var(--p-border);
+    border-radius: 6px;
+    font-size: 13.5px;
+    background: #ffffff;
+    color: var(--p-text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input-wrap input:focus {
+    border-color: var(--p-green);
+    box-shadow: 0 0 0 1px var(--p-green);
+  }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--p-text-disabled);
+    pointer-events: none;
+    font-size: 14px;
+  }
+
+  .filter-select {
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--p-border);
+    border-radius: 6px;
+    background: #ffffff;
+    color: var(--p-text);
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+  }
+  .filter-select:focus {
+    border-color: var(--p-green);
+  }
+
+  /* SHOPIFY DATA TABLE (DESKTOP) */
+  .table-responsive {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  table.shopify-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13.5px;
+  }
+
+  table.shopify-table th {
+    background: #fbfcfd;
+    padding: 12px 16px;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--p-text-subdued);
+    border-bottom: 1px solid var(--p-border);
+    white-space: nowrap;
+  }
+
+  table.shopify-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--p-border-subdued);
+    vertical-align: middle;
+    color: var(--p-text);
+  }
+
+  table.shopify-table tr:hover td {
+    background: var(--p-surface-hover);
+  }
+
+  /* PRODUCT ROW CELL ELEMENTS */
+  .prod-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .prod-thumbnail {
+    width: 46px;
+    height: 46px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #f4f4f4;
+    border: 1px solid var(--p-border);
+    flex-shrink: 0;
+  }
+  .prod-title-link {
+    font-weight: 600;
+    color: var(--p-text);
+    text-decoration: none;
+    cursor: pointer;
+    line-height: 1.35;
+  }
+  .prod-title-link:hover {
+    color: var(--p-green);
+    text-decoration: underline;
+  }
+
+  /* SHOPIFY BADGES */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .badge-success {
+    background: var(--p-badge-in-stock-bg);
+    color: var(--p-badge-in-stock-text);
+  }
+  .badge-subdued {
+    background: var(--p-badge-subdued-bg);
+    color: var(--p-badge-subdued-text);
+  }
+  .badge-warning {
+    background: var(--p-badge-featured-bg);
+    color: var(--p-badge-featured-text);
+  }
+  .badge-category {
+    background: #f1f2f3;
+    color: #44474a;
+    font-weight: 500;
+  }
+
+  /* SHOPIFY TOGGLE SWITCH */
+  .toggle-switch-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--p-text-subdued);
+  }
+  .switch-container {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+  .switch-container input { opacity: 0; width: 0; height: 0; }
+  .switch-slider {
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #c9cccf; transition: .2s; border-radius: 22px;
+  }
+  .switch-slider:before {
+    position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px;
+    background-color: white; transition: .2s; border-radius: 50%;
+  }
+  input:checked + .switch-slider { background-color: var(--p-green); }
+  input:checked + .switch-slider:before { transform: translateX(14px); }
+
+  /* FORMS & INPUTS */
+  .form-row {
+    margin-bottom: 16px;
+  }
+  .form-row label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--p-text);
+    margin-bottom: 6px;
+  }
+  .form-control {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--p-border);
+    border-radius: 6px;
+    background: #ffffff;
+    color: var(--p-text);
+    font-size: 13.5px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  .form-control:focus {
+    border-color: var(--p-green);
+    box-shadow: 0 0 0 1px var(--p-green);
+  }
+  textarea.form-control {
+    height: auto;
+    min-height: 80px;
+    padding: 10px 12px;
+    line-height: 1.5;
+  }
+  .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-hint {
+    font-size: 11.5px;
+    color: var(--p-text-subdued);
+    margin-top: 4px;
+  }
+
+  /* MODAL DIALOG */
+  .modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .shopify-modal {
+    background: #ffffff;
+    border-radius: 8px;
+    width: min(600px, 100%);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--p-shadow-modal);
+    border: 1px solid var(--p-border);
+    animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes modalPop {
+    0% { transform: scale(0.96); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .modal-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--p-border-subdued);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--p-text);
+  }
+  .modal-close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--p-text-subdued);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .modal-close-btn:hover { background: #f1f2f3; }
+  .modal-body {
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .modal-footer {
+    padding: 14px 20px;
+    border-top: 1px solid var(--p-border-subdued);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fafbfc;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  /* IMAGE PREVIEW STRIP */
+  .img-previews-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .img-preview-card {
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    border: 1px solid var(--p-border);
+    object-fit: cover;
+    background: #f4f4f4;
+  }
+
+  /* REAL-TIME SALE TOAST */
+  #sale-toast {
+    display: none;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: #ffffff;
+    border: 2px solid #008060;
+    color: var(--p-text);
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
+    max-width: 360px;
+    animation: toastSlide 0.3s ease;
+  }
+  @keyframes toastSlide {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  /* NOTICE BANNER */
+  .banner-info {
+    background: #eef9f5;
+    border: 1px solid #cbe8ba;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: #0e623b;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ========================================================================= */
+  /* MOBILE FRIENDLY ADAPTIVE DESIGN (<= 768px) */
+  /* ========================================================================= */
+  .mobile-cards-view { display: none; }
+
+  @media (max-width: 768px) {
+    body {
+      font-size: 13.5px;
+      padding-bottom: 90px;
+    }
+    .shopify-topbar {
+      padding: 0 12px;
+      height: 52px;
+    }
+    .shopify-store-badge span {
+      font-size: 14.5px;
+    }
+    .store-tag { display: none; }
+    
+    .topbar-right { gap: 6px; }
+    .btn-desktop-only { display: none !important; }
+    
+    .mobile-sub-actions {
+      display: flex;
+    }
+
+    .shopify-tabs-bar {
+      padding: 0 8px;
+      gap: 2px;
+    }
+    .tab-link {
+      padding: 10px 10px;
+      font-size: 13px;
+    }
+
+    .shopify-main {
+      margin: 14px auto;
+      padding: 0 10px;
+    }
+
+    .page-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .page-header button {
+      width: 100%;
+      height: 40px;
+      font-size: 14px;
+    }
+    .page-title {
+      font-size: 18px;
+    }
+
+    .metrics-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .metric-box {
+      padding: 12px 10px;
+    }
+    .metric-label {
+      font-size: 10.5px;
+    }
+    .metric-value {
+      font-size: 18px;
+    }
+
+    .table-controls {
+      padding: 10px;
+      gap: 8px;
+    }
+    .controls-group {
+      min-width: 100%;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
+    }
+    .search-input-wrap input {
+      font-size: 16px; /* Prevents auto zoom in mobile browser */
+      height: 40px;
+    }
+    .filter-select {
+      width: 100%;
+      height: 40px;
+      font-size: 13.5px;
+    }
+
+    /* Switch from Wide Table to Mobile Card View */
+    .desktop-table-view {
+      display: none !important;
+    }
+    .mobile-cards-view {
+      display: flex !important;
+      flex-direction: column;
+      gap: 10px;
+      padding: 10px;
+    }
+
+    /* Mobile Product Card */
+    .mobile-prod-card {
+      background: #ffffff;
+      border: 1px solid var(--p-border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .mobile-prod-card.is-hidden {
+      background: #fbfbfc;
+      opacity: 0.88;
+    }
+    .mobile-prod-top {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .mobile-prod-thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #f4f4f4;
+      border: 1px solid var(--p-border);
+      flex-shrink: 0;
+    }
+    .mobile-prod-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .mobile-prod-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--p-text);
+      line-height: 1.3;
+      cursor: pointer;
+    }
+    .mobile-prod-meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .mobile-prod-price {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--p-text);
+      margin-top: 4px;
+    }
+    .mobile-prod-price small {
+      font-weight: 500;
+      color: var(--p-text-subdued);
+      margin-left: 6px;
+      font-size: 12px;
+    }
+
+    /* Mobile Quick Toggles Strip */
+    .mobile-toggles-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4px;
+      background: #f8f9fa;
+      border: 1px solid var(--p-border-subdued);
+      border-radius: 6px;
+      padding: 8px 4px;
+    }
+    .mobile-toggle-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--p-text-subdued);
+      text-align: center;
+    }
+
+    /* Mobile Actions Buttons */
+    .mobile-actions-row {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .mobile-actions-row .btn {
+      flex: 1;
+      height: 36px;
+      font-size: 12.5px;
+    }
+
+    /* Mobile Order Card */
+    .mobile-order-card {
+      background: #ffffff;
+      border: 1px solid var(--p-border);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    /* Forms on Mobile */
+    .form-grid-2 {
+      grid-template-columns: 1fr !important;
+      gap: 12px;
+    }
+    .form-control {
+      font-size: 16px !important; /* Prevents auto zoom in iOS Safari */
+      height: 42px;
+    }
+    textarea.form-control {
+      height: auto;
+      min-height: 90px;
+    }
+
+    /* Full-Screen Sheet Modal on Mobile */
+    .shopify-modal {
+      width: 100% !important;
+      max-height: 100% !important;
+      height: 100% !important;
+      border-radius: 0 !important;
+      border: none !important;
+    }
+    .modal-backdrop {
+      padding: 0 !important;
+    }
+    .modal-header {
+      padding: 14px 16px;
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 10;
+    }
+    .modal-body {
+      padding: 16px;
+      flex: 1;
+    }
+    .modal-footer {
+      padding: 14px 16px;
+      position: sticky;
+      bottom: 0;
+      background: #ffffff;
+      z-index: 10;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Client-side Password Gate for Static Hosting -->
+  <div id="admin-login-overlay" style="display:none; position:fixed; inset:0; background:rgba(18,18,18,0.92); z-index:999999; backdrop-filter:blur(10px); align-items:center; justify-content:center; padding:20px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+    <div style="background:#ffffff; border-radius:12px; max-width:380px; width:100%; padding:32px 28px; box-shadow:0 20px 40px rgba(0,0,0,0.3); text-align:center;">
+      <div style="width:56px; height:56px; border-radius:50%; background:#f1f2f4; margin:0 auto 16px; display:flex; align-items:center; justify-content:center; font-size:26px; border:2px solid #e1e3e5; overflow:hidden;">
+        <img src="/icon-192.png" alt="Admin" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+      </div>
+      <h2 style="font-size:18px; font-weight:700; margin:0 0 6px 0; color:#202223;">The Classic Co. Admin</h2>
+      <p style="font-size:13px; color:#6d7175; margin:0 0 20px 0;">Enter your master administrative password to unlock operations dashboard.</p>
+      <form onsubmit="handleStaticLogin(event)">
+        <input type="password" id="gate-password-input" placeholder="Enter password..." autofocus style="width:100%; height:42px; border:1px solid #c9cccf; border-radius:8px; padding:0 14px; font-size:14px; outline:none; box-sizing:border-box; margin-bottom:12px;" required>
+        <div id="gate-error-msg" style="display:none; color:#d72c0d; font-size:12px; font-weight:600; margin-bottom:10px;">Incorrect password. Please try again.</div>
+        <button type="submit" style="width:100%; height:42px; background:#008060; color:#ffffff; font-weight:600; font-size:14px; border:none; border-radius:8px; cursor:pointer; transition:background 0.15s;">
+          Unlock Dashboard →
+        </button>
+      </form>
+      <div style="font-size:11px; color:#8c9196; margin-top:16px;">
+        🔒 256-bit Secure Operational Control
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var AUTH_KEY = 'cc_admin_static_auth';
+      var overlay = document.getElementById('admin-login-overlay');
+      var isAuth = sessionStorage.getItem(AUTH_KEY) === 'true';
+
+      if (!isAuth) {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+
+      window.handleStaticLogin = function(e) {
+        e.preventDefault();
+        var inp = document.getElementById('gate-password-input');
+        var err = document.getElementById('gate-error-msg');
+        if (inp.value === 'Classic2026Admin!') {
+          sessionStorage.setItem(AUTH_KEY, 'true');
+          overlay.style.display = 'none';
+          document.body.style.overflow = '';
+          if (typeof renderProductsTable === 'function') renderProductsTable();
+        } else {
+          err.style.display = 'block';
+          inp.value = '';
+          inp.focus();
+        }
+      };
+    })();
+  </script>
+
+
+  <!-- AUTHENTIC SHOPIFY CHA-CHING AUDIO ELEMENT -->
+  <audio id="audio-chaching" preload="auto" src="/chaching.ogg"></audio>
+
+  <!-- TOPBAR -->
+  <header class="shopify-topbar">
+    <div class="topbar-left">
+      <a href="/admin" class="shopify-store-badge">
+        <img src="/icon-192.png" class="shopify-bag-icon" alt="The Classic Co.">
+        <span>The Classic Co.</span>
+      </a>
+      <span class="store-tag">Shopify Admin</span>
+      <span class="badge badge-success" id="badge-sync-status" style="font-size:11px;">● Saved</span>
+    </div>
+
+    <div class="topbar-right">
+      <!-- Test Cha-Ching button -->
+      <button class="btn btn-secondary btn-sm btn-desktop-only" id="btn-test-chaching" onclick="testChaChingSound()" title="Test authentic Shopify cash register sound">
+        🔔 <span>Test Cha-Ching</span>
+      </button>
+
+      <!-- Sound Toggle -->
+      <button class="btn btn-secondary btn-sm btn-sound-on btn-desktop-only" id="btn-toggle-sound" onclick="toggleSoundAlerts()">
+        <span id="sound-icon">🔔</span> <span id="sound-text">Alerts: ON</span>
+      </button>
+
+      <!-- PWA Install Button -->
+      <button class="btn btn-secondary btn-sm" id="btn-install-pwa" style="display:none;" onclick="installPWA()">
+        📲 <span>Install</span>
+      </button>
+
+      <!-- View Online Store -->
+      <a href="/" target="_blank" class="btn btn-secondary btn-sm btn-desktop-only">
+        ↗ <span>Store</span>
+      </a>
+
+      <!-- Publish Live -->
+      <button class="btn btn-primary btn-sm" onclick="publishLiveChanges()">
+        🚀 <span>Publish Live</span>
+      </button>
+
+      <a href="/admin?logout=1" class="btn btn-secondary btn-sm" title="Log out">
+        🚪
+      </a>
+    </div>
+  </header>
+
+  <!-- MOBILE SUB-BAR FOR QUICK ACTIONS -->
+  <div class="mobile-sub-actions">
+    <button class="btn btn-secondary btn-sm" onclick="testChaChingSound()">
+      🔔 Test Cha-Ching
+    </button>
+    <button class="btn btn-secondary btn-sm btn-sound-on" id="btn-toggle-sound-m" onclick="toggleSoundAlerts()">
+      <span id="sound-icon-m">🔔</span> <span id="sound-text-m">Alerts: ON</span>
+    </button>
+    <a href="/" target="_blank" class="btn btn-secondary btn-sm">
+      ↗ View Store
+    </a>
+  </div>
+
+  <!-- SHOPIFY TABS BAR -->
+  <nav class="shopify-tabs-bar">
+    <button class="tab-link active" onclick="switchTab('products', this)">
+      <span>📦 Products</span>
+      <span class="tab-badge" id="badge-prod-count">30</span>
+    </button>
+    <button class="tab-link" onclick="switchTab('orders', this)">
+      <span>🛒 Orders</span>
+      <span class="tab-badge" id="badge-orders-count">0</span>
+    </button>
+    <button class="tab-link" onclick="switchTab('pricing', this)">
+      <span>🏷️ Pricing</span>
+    </button>
+    <button class="tab-link" onclick="switchTab('promises', this)">
+      <span>✍️ Promises</span>
+    </button>
+    <button class="tab-link" onclick="switchTab('settings', this)">
+      <span>⚙️ Settings</span>
+    </button>
+  </nav>
+
+  <main class="shopify-main">
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: PRODUCTS (SHOWCASE & CATALOG EDITOR) -->
+    <!-- ========================================================================= -->
+    <section id="tab-products" class="tab-content active">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Products</h1>
+          <div class="page-subtitle">Manage all 30 sunglasses, visibility, stock, pricing, and homepage bestsellers.</div>
+        </div>
+        <button class="btn btn-primary" onclick="openAddProductModal()">
+          + Add product
+        </button>
+      </div>
+
+      <div class="banner-info">
+        <span>💡</span>
+        <div>
+          <strong>Quick Control:</strong> Changes are immediately active in this browser. To sync live across all visitors, tap the green <strong>"Publish Live"</strong> button in the top right.
+        </div>
+      </div>
+
+      <div class="shopify-card">
+        <!-- Controls & Filters -->
+        <!-- Category Divide (Just Like Main Store) -->
+        <div class="admin-pill-tabs-wrap">
+          <div class="admin-pill-tabs" id="admin-category-pills">
+            <button type="button" class="admin-pill-tab active" data-cat="ALL" onclick="setAdminCategory('ALL')">
+              All Styles <span class="pill-count" id="pill-count-all">30</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="BESTSELLER" onclick="setAdminCategory('BESTSELLER')">
+              ⭐ Bestsellers <span class="pill-count" id="pill-count-bestsellers">6</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Polarized & Driving" onclick="setAdminCategory('Polarized & Driving')">
+              Polarized &amp; Driving <span class="pill-count" id="pill-count-polarized">8</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Magnetic Clip-Ons" onclick="setAdminCategory('Magnetic Clip-Ons')">
+              Magnetic Clip-Ons <span class="pill-count" id="pill-count-magnetic">3</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Premium Styles" onclick="setAdminCategory('Premium Styles')">
+              Premium Styles <span class="pill-count" id="pill-count-premium">11</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Classic Lifestyle" onclick="setAdminCategory('Classic Lifestyle')">
+              Classic Lifestyle <span class="pill-count" id="pill-count-classic">4</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Trending" onclick="setAdminCategory('Trending')">
+              Trending <span class="pill-count" id="pill-count-trending">4</span>
+            </button>
+            <button type="button" class="admin-pill-tab tab-pill-hidden" data-cat="HIDDEN" onclick="setAdminCategory('HIDDEN')">
+              👁️ Hidden <span class="pill-count" id="pill-count-hidden">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search & Sort Controls Bar (Sort Just Like Main Store) -->
+        <div class="table-controls">
+          <div class="controls-group">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="prod-search" placeholder="Search by title or category..." oninput="renderProductsTable()">
+            </div>
+
+            <!-- Sort Dropdown (Just Like Main Store) -->
+            <select id="prod-sort" class="filter-select" onchange="renderProductsTable()">
+              <option value="default">Sort: Default (Catalog Order)</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Alphabetically: A to Z</option>
+              <option value="name-desc">Alphabetically: Z to A</option>
+              <option value="bestseller-first">Bestsellers First</option>
+              <option value="hidden-first">Hidden First</option>
+              <option value="stock-out-first">Out of Stock First</option>
+            </select>
+
+            <!-- Inventory Status Filter -->
+            <select id="prod-stock-filter" class="filter-select" onchange="renderProductsTable()">
+              <option value="ALL">All Inventory Status</option>
+              <option value="IN_STOCK">In Stock Only</option>
+              <option value="OUT_OF_STOCK">Out of Stock Only</option>
+            </select>
+
+            <!-- Visibility Filter -->
+            <select id="prod-vis-filter" class="filter-select" onchange="renderProductsTable()">
+              <option value="ALL">All Visibility</option>
+              <option value="LIVE">Live on Store Only</option>
+              <option value="HIDDEN">Hidden Only</option>
+            </select>
+          </div>
+
+          <div style="font-size:12.5px; color:var(--p-text-subdued);" id="prod-results-text">
+            Showing 30 products
+          </div>
+        </div>
+
+        <!-- Desktop Products Table -->
+        <div class="table-responsive desktop-table-view">
+          <table class="shopify-table">
+            <thead>
+              <tr>
+                <th style="width:32%;">Product</th>
+                <th>Category</th>
+                <th>Visibility</th>
+                <th>Stock</th>
+                <th>Homepage</th>
+                <th>Price (COD / UPI)</th>
+                <th>Visible</th>
+                <th>In Stock</th>
+                <th>Bestseller</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- Rendered via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Products Cards View -->
+        <div class="mobile-cards-view" id="products-mobile-container">
+          <!-- Rendered via JavaScript -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: ORDERS (LIVE WITH REAL-TIME CHA-CHING) -->
+    <!-- ========================================================================= -->
+    <section id="tab-orders" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Orders</h1>
+          <div class="page-subtitle">Real-time incoming orders with automatic Shopify Cha-Ching sound alerts.</div>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a id="btn-open-sheet" href="#" target="_blank" rel="noopener" class="btn btn-secondary btn-sm" style="display:none;">
+            📊 Google Sheet ↗
+          </a>
+          <button class="btn btn-secondary btn-sm" onclick="exportOrdersCSV()">
+            📥 Export CSV
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="clearTestOrders()">
+            🗑️ Clear Tests
+          </button>
+        </div>
+      </div>
+
+      <!-- Metrics summary strip -->
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <div class="metric-label">Total Orders</div>
+          <div class="metric-value" id="stat-total-orders">0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Total Revenue</div>
+          <div class="metric-value" id="stat-total-revenue" style="color:var(--p-green);">₹0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">Pending Verification</div>
+          <div class="metric-value" id="stat-pending-orders" style="color:#d97706;">0</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-label">COD / UPI Split</div>
+          <div class="metric-value" id="stat-cod-upi-split" style="font-size:16px; margin-top:8px;">0 COD / 0 UPI</div>
+        </div>
+      </div>
+
+      <div class="shopify-card">
+        <div class="table-controls">
+          <div class="controls-group">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="order-search" placeholder="Search orders by ID, name, or phone..." oninput="renderOrders()">
+            </div>
+            <select id="order-status-filter" class="filter-select" onchange="renderOrders()">
+              <option value="ALL">All Order Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Payment pending verification">UPI Verification Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Desktop Orders Table -->
+        <div class="table-responsive desktop-table-view">
+          <table class="shopify-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Customer</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th style="text-align:right;">WhatsApp</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <tr><td colspan="7" style="text-align:center; padding:36px; color:var(--p-text-subdued);">No orders placed yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Orders Cards View -->
+        <div class="mobile-cards-view" id="orders-mobile-container">
+          <!-- Rendered via JavaScript -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: PRICING & LOCAL DELIVERY RULES -->
+    <!-- ========================================================================= -->
+    <section id="tab-pricing" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Pricing & Delivery Rules</h1>
+          <div class="page-subtitle">Configure base product prices, UPI discount, and local delivery rules.</div>
+        </div>
+        <button class="btn btn-primary" onclick="savePricingRules()">
+          Save Pricing Rules
+        </button>
+      </div>
+
+      <div class="shopify-card">
+        <div class="card-header">
+          <h2>Pricing Strategy</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>Standard COD Price (₹)</label>
+              <input type="number" id="cfg-price-standard" class="form-control" value="899">
+              <div class="form-hint">Displayed as the standard retail price across all frames.</div>
+            </div>
+            <div class="form-row">
+              <label>Prepaid UPI Price (₹)</label>
+              <input type="number" id="cfg-price-upi" class="form-control" value="799">
+              <div class="form-hint">Customers who pay online via UPI save ₹100 immediately.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shopify-card">
+        <div class="card-header">
+          <h2>Udaipur Local Delivery Rule</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <label>Local Pincode Prefix</label>
+            <input type="text" id="cfg-pincode-prefix" class="form-control" value="313" style="max-width:200px;">
+            <div class="form-hint">Pincodes starting with this prefix are identified as Udaipur.</div>
+          </div>
+
+          <div style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:14px 18px; margin-top:14px; font-size:13px; line-height:1.6;">
+            <div>🚚 <strong>Udaipur (Pincodes starting with 313):</strong> Cash on delivery enabled. 24-hour local doorstep delivery.</div>
+            <div style="margin-top:6px;">✈️ <strong>Rest of India:</strong> Cash on delivery disabled. Prepaid UPI only. Dispatches in 2-4 business days.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: STORE PROMISES & EDITORIAL COPY -->
+    <!-- ========================================================================= -->
+    <section id="tab-promises" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Store Promises & Guarantees</h1>
+          <div class="page-subtitle">Honest marketing copy, guarantees, and homepage announcement headers.</div>
+        </div>
+        <button class="btn btn-primary" onclick="saveStorePromises()">
+          Save Store Promises
+        </button>
+      </div>
+
+      <div class="shopify-card">
+        <div class="card-header">
+          <h2>Storefront Copy</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-row">
+            <label>Top Announcement Bar</label>
+            <input type="text" id="copy-announcement" class="form-control">
+            <div class="form-hint">Appears at the very top of the storefront.</div>
+          </div>
+
+          <div class="form-row">
+            <label>Hero Headline (HTML allowed)</label>
+            <input type="text" id="copy-hero-title" class="form-control">
+          </div>
+
+          <div class="form-row">
+            <label>Hero Subtext</label>
+            <textarea id="copy-hero-subtitle" class="form-control" rows="2"></textarea>
+          </div>
+
+          <div class="form-row">
+            <label>Delivery Strip Text (HTML allowed)</label>
+            <input type="text" id="copy-delivery-strip" class="form-control">
+          </div>
+
+          <div class="form-row">
+            <label>Founder Note (Footer)</label>
+            <input type="text" id="copy-founder" class="form-control">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: SETTINGS & BACKUP -->
+    <!-- ========================================================================= -->
+    <section id="tab-settings" class="tab-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">Settings & Deployment</h1>
+          <div class="page-subtitle">Configure Google Apps Script, Meta Pixel, WhatsApp, and GitHub live deployment.</div>
+        </div>
+        <button class="btn btn-primary" onclick="saveGeneralSettings()">
+          Save Settings
+        </button>
+      </div>
+
+      <div class="shopify-card">
+        <div class="card-header">
+          <h2>Integrations & Contacts</h2>
+        </div>
+        <div class="card-body">
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>WhatsApp Number (With country code 91)</label>
+              <input type="text" id="cfg-wa-number" class="form-control" value="918619661325">
+            </div>
+            <div class="form-row">
+              <label>Merchant UPI ID</label>
+              <input type="text" id="cfg-merchant-upi" class="form-control" value="8619661325@upi">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label>Google Apps Script URL (Order intake webhook)</label>
+            <input type="text" id="cfg-gas-url" class="form-control">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>Meta Pixel ID</label>
+              <input type="text" id="cfg-meta-pixel" class="form-control" placeholder="Optional (e.g. 1234567890)">
+            </div>
+            <div class="form-row">
+              <label>Google Analytics 4 ID (GA4)</label>
+              <input type="text" id="cfg-ga4-id" class="form-control" placeholder="Optional (e.g. G-XXXXXXX)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="shopify-card">
+        <div class="card-header">
+          <h2>Live Deployment to Vercel (GitHub Token)</h2>
+        </div>
+        <div class="card-body">
+          <p style="font-size:13px; color:var(--p-text-subdued); margin-top:0;">
+            When you tap <strong>"Publish Live"</strong>, changes are committed to the GitHub repository (<code>main</code> branch), which immediately triggers a Vercel rebuild for your live site.
+          </p>
+          <div class="form-row">
+            <label>GitHub Personal Access Token</label>
+            <input type="password" id="cfg-github-token" class="form-control" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
+            <div class="form-hint">Pre-configured on Vercel environment or enter your token here.</div>
+          </div>
+          <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="publishLiveChanges()">
+              🚀 Publish All Live to Vercel
+            </button>
+            <button class="btn btn-danger" onclick="resetToFactoryDefaults()">
+              🔄 Reset to Factory Defaults (30 Products)
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- SHOPIFY PRODUCT EDIT / ADD MODAL -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="product-modal">
+    <div class="shopify-modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Edit Product</h3>
+        <button type="button" class="modal-close-btn" onclick="closeProductModal()">×</button>
+      </div>
+      <form id="product-form" onsubmit="saveProductModal(event)">
+        <div class="modal-body">
+          <input type="hidden" id="edit-prod-id">
+
+          <!-- Visibility Hide Card -->
+          <div class="form-row" style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:12px 14px; margin-bottom:14px;">
+            <label class="toggle-switch-label" style="align-items:flex-start;">
+              <span class="switch-container" style="margin-top:2px;">
+                <input type="checkbox" id="edit-prod-hidden">
+                <span class="switch-slider"></span>
+              </span>
+              <div>
+                <div style="font-weight:700; color:var(--p-text);">Hide from Storefront (Draft / Unpublished)</div>
+                <div style="font-size:11.5px; color:var(--p-text-subdued); margin-top:2px;">When enabled, this specific product is completely hidden from customers on the website, search results, and bestsellers.</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>Title</label>
+            <input type="text" id="edit-prod-title" class="form-control" required>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>Category</label>
+              <select id="edit-prod-category" class="form-control">
+                <option value="Premium Styles">Premium Styles</option>
+                <option value="Magnetic Clip-Ons">Magnetic Clip-Ons</option>
+                <option value="Polarized & Driving">Polarized & Driving</option>
+                <option value="Classic Lifestyle">Classic Lifestyle</option>
+                <option value="Trending">Trending</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Handle (URL slug)</label>
+              <input type="text" id="edit-prod-handle" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>COD Price (₹)</label>
+              <input type="number" id="edit-prod-cod" class="form-control" required>
+            </div>
+            <div class="form-row">
+              <label>UPI Price (₹)</label>
+              <input type="number" id="edit-prod-upi" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-grid-2" style="margin-bottom:16px;">
+            <label class="toggle-switch-label">
+              <span class="switch-container">
+                <input type="checkbox" id="edit-prod-instock">
+                <span class="switch-slider"></span>
+              </span>
+              <span style="font-weight:600; color:var(--p-text);">In Stock (Inventory Available)</span>
+            </label>
+
+            <label class="toggle-switch-label">
+              <span class="switch-container">
+                <input type="checkbox" id="edit-prod-featured">
+                <span class="switch-slider"></span>
+              </span>
+              <span style="font-weight:600; color:var(--p-text);">Featured in Homepage Bestsellers</span>
+            </label>
+          </div>
+
+          <div class="form-row">
+            <label>Image URLs (one URL per line)</label>
+            <textarea id="edit-prod-images" class="form-control" rows="4" oninput="updateImagePreviews()"></textarea>
+            <div class="form-hint">First image is used as the primary catalog thumbnail.</div>
+            <div class="img-previews-container" id="edit-prod-img-previews"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" id="btn-delete-prod" onclick="deleteCurrentProduct()">
+            Delete Product
+          </button>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="btn btn-secondary" onclick="closeProductModal()">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Save Product
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- REAL-TIME NEW ORDER CHA-CHING TOAST -->
+  <div id="sale-toast">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+      <strong id="toast-title" style="color:var(--p-green); font-size:14px;">💰 Cha-Ching! New Sale!</strong>
+      <button onclick="document.getElementById('sale-toast').style.display='none'" style="background:none; border:none; cursor:pointer; font-size:16px; color:#888;">×</button>
+    </div>
+    <div id="toast-body" style="font-size:13px; color:var(--p-text-subdued); margin-bottom:12px;"></div>
+    <button id="toast-wa-btn" class="btn btn-primary btn-sm" style="width:100%;">
+      Chat on WhatsApp
+    </button>
+  </div>
+
+  <!-- Modular Clean Scripts -->
+  <script>
+    window.ORDERS_SHEET_URL = __ORDERS_SHEET_URL__;
+    window.GITHUB_TOKEN_AVAILABLE = __GITHUB_TOKEN_AVAILABLE__;
+  </script>
+  <script src="/js/admin-app.js"></script>
+</body>
+</html>
