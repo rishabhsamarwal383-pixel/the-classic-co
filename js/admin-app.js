@@ -41,11 +41,21 @@
   function installPWA() {
     if (deferredInstallPrompt) {
       deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then(function() {
+      deferredInstallPrompt.userChoice.then(function(choice) {
+        if (choice && choice.outcome === 'accepted') {
+          alert('🎉 App installed successfully! You can now launch "The Classic Co." directly from your home screen.');
+        }
         deferredInstallPrompt = null;
         var btn = document.getElementById('btn-install-pwa');
         if (btn) btn.style.display = 'none';
       });
+    } else {
+      var isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        alert("📲 To install on iPhone/iPad:\n\n1. Tap the Share button (square with arrow pointing up at the bottom of Safari)\n2. Scroll down and tap 'Add to Home Screen'\n3. Tap 'Add' in the top-right corner!\n\nThe app will appear on your home screen with the Instagram DP icon.");
+      } else {
+        alert("📲 To install on Android / Desktop:\n\n1. Tap Chrome's menu (⋮ 3 dots in the top-right corner)\n2. Tap 'Install app' or 'Add to Home screen'\n3. Tap 'Install'!\n\nThe app will be added to your home screen with the Instagram DP icon.");
+      }
     }
   }
 

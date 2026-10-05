@@ -1101,6 +1101,9 @@
 
   <!-- MOBILE SUB-BAR FOR QUICK ACTIONS -->
   <div class="mobile-sub-actions">
+    <button class="btn btn-primary btn-sm" onclick="installPWA()" style="background:#008060; font-weight:700; white-space:nowrap;">
+      📲 Install App
+    </button>
     <button class="btn btn-secondary btn-sm" onclick="testChaChingSound()">
       🔔 Test Cha-Ching
     </button>
@@ -1461,6 +1464,55 @@
         <button class="btn btn-primary" onclick="saveGeneralSettings()">
           Save Settings
         </button>
+      </div>
+
+      <!-- PWA APP INSTALLATION CARD (FOR MOBILE & DESKTOP) -->
+      <div class="shopify-card" style="border: 2px solid #008060; background: #fbfdfc; margin-bottom: 20px;">
+        <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <img src="/icon-192.png" alt="App Icon" style="width:48px; height:48px; border-radius:12px; border:1px solid #c9cccf; object-fit:cover; box-shadow:0 2px 6px rgba(0,0,0,0.1);">
+            <div>
+              <h2 style="margin:0; font-size:16px; color:#202223;">Install Admin App on Phone / Desktop</h2>
+              <div style="font-size:12.5px; color:#6d7175; margin-top:2px;">The Classic Co. - Admin Operations PWA</div>
+            </div>
+          </div>
+          <span class="badge badge-success" style="font-size:12px; padding:4px 10px;">Official App</span>
+        </div>
+        <div class="card-body">
+          <p style="font-size:13.5px; color:#202223; margin:0 0 16px 0; line-height:1.5;">
+            Install this dashboard directly onto your Android phone, iPhone, or PC. It opens in full-screen standalone mode with real-time Shopify Cha-Ching order sound alerts, offline access, and fast 1-tap operation.
+          </p>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:18px;">
+            <button type="button" class="btn btn-primary btn-lg" onclick="installPWA()" style="flex:1; min-width:200px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 20px; font-size:15px; font-weight:700; background:#008060; border-radius:8px;">
+              📲 1-Tap Install App on This Device
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="testChaChingSound()" style="padding:12px 18px; font-size:14px; font-weight:600;">
+              🎵 Test Sound Alert
+            </button>
+          </div>
+
+          <!-- Step-by-step instructions for Android & iOS -->
+          <div style="background:#ffffff; border:1px solid #e1e3e5; border-radius:8px; padding:14px 16px;">
+            <div style="font-weight:700; font-size:13px; color:#202223; margin-bottom:8px;">
+              📱 How to install on mobile if the 1-Tap button is blocked:
+            </div>
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:12px; font-size:12.5px; color:#4a4d50; line-height:1.5;">
+              <div style="padding:10px; background:#f6f6f7; border-radius:6px;">
+                <strong style="color:#202223; display:block; margin-bottom:4px;">🤖 Android (Chrome):</strong>
+                1. Tap Chrome's <strong>⋮ (3 dots)</strong> menu in the top-right corner.<br>
+                2. Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.<br>
+                3. The app icon with Instagram DP will be added to your home screen!
+              </div>
+              <div style="padding:10px; background:#f6f6f7; border-radius:6px;">
+                <strong style="color:#202223; display:block; margin-bottom:4px;">🍎 iPhone (Safari):</strong>
+                1. Tap Safari's <strong>Share button</strong> (square with arrow pointing up) at the bottom.<br>
+                2. Scroll down and tap <strong>"Add to Home Screen"</strong>.<br>
+                3. Tap <strong>Add</strong> in the top-right corner!
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="shopify-card">
