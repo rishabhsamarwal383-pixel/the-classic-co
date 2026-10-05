@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function inStockProducts() {
-  return PRODUCTS.filter(p => p.inStock !== false);
+  return PRODUCTS.filter(p => p.inStock !== false && !p.hidden);
 }
 
 function renderProductsGrid() {
@@ -120,7 +120,8 @@ function handleSearch(val) {
 
 // ----- Product detail modal -----
 function openProductDetailModal(prodId) {
-  const p = PRODUCTS.find(x => x.id === prodId) || PRODUCTS[0];
+  const p = PRODUCTS.find(x => x.id === prodId && x.inStock !== false && !x.hidden) || inStockProducts()[0];
+  if (!p) return;
   viewingProduct = p;
 
   document.getElementById("detail-category").innerText = p.category;
