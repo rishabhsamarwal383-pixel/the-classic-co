@@ -1818,3 +1818,63 @@
     .btn-upi-paytm { background: #00baf2; color: #fff; }
     .btn-upi-generic { background: #161514; color: #fff; grid-column: 1 / -1; }
     .btn-upi-app:hover { opacity: 0.92; transform: translateY(-1px); }
+/* =======================================================================
+   ADDITIONS: delivery strip, trust row, founder line, price note
+   ======================================================================= */
+.delivery-strip {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: 10px 14px;
+  background: #161514; color: #f5f3ee;
+  padding: 12px 16px;
+  font-size: 13px; letter-spacing: 0.2px; text-align: center;
+}
+.delivery-strip strong { color: #fff; font-weight: 800; }
+.delivery-strip-sep { opacity: 0.4; }
+
+.catalog-head { text-align: center; }
+
+.price-upi-note { font-size: 11.5px; font-weight: 700; color: #15803d; }
+
+.trust-row-section {
+  background: var(--bg-warm);
+  border-top: 1px solid var(--surface-border);
+  border-bottom: 1px solid var(--surface-border);
+  padding: 44px 20px;
+}
+.trust-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; max-width: 960px; margin: 0 auto;
+}
+.trust-item { text-align: center; padding: 6px 10px; }
+.trust-icon {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--surface-border);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #161514; margin-bottom: 12px;
+}
+.trust-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; color: #161514; }
+.trust-text { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+
+.founder-section { text-align: center; padding: 8px 20px 56px; }
+.founder-section p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px; color: #161514; margin: 0 0 16px;
+}
+.founder-wa-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #16a34a; color: #fff; text-decoration: none;
+  padding: 13px 26px; border-radius: 10px;
+  font-size: 14px; font-weight: 700;
+}
+
+@media (max-width: 680px) {
+  .delivery-strip { font-size: 12px; padding: 10px 12px; gap: 6px 10px; }
+  .delivery-strip-sep { display: none; }
+  .delivery-strip span { width: 100%; }
+  .trust-row { grid-template-columns: 1fr; gap: 14px; }
+  .trust-item { display: grid; grid-template-columns: 52px 1fr; column-gap: 14px; text-align: left; align-items: center; padding: 4px 0; }
+  .trust-icon { grid-row: 1 / span 2; margin-bottom: 0; }
+  .trust-title { margin-bottom: 0; }
+  .trust-row-section { padding: 28px 16px; }
+  .founder-section p { font-size: 16px; }
+}
