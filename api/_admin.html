@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin | The Classic Co.</title>
+<style>
+  :root{--bg:#161514;--card:#1f1e1c;--line:#33312e;--text:#f5f3ee;--muted:#a19d96;--gold:#b48448;--green:#16a34a;--amber:#d97706}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:14px;line-height:1.5}
+  header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+  header b{letter-spacing:2px;font-size:14px}
+  a{color:var(--gold)}
+  main{max-width:1000px;margin:0 auto;padding:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:16px}
+  h2{font-size:15px;margin:0 0 6px}
+  .muted{color:var(--muted);font-size:12.5px}
+  .btn{display:inline-block;background:var(--gold);color:#fff;border:0;border-radius:8px;padding:9px 14px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none}
+  .btn.sec{background:#2b2a27;color:var(--text);border:1px solid var(--line)}
+  .btn.wa{background:var(--green)}
+  .btn.sm{padding:6px 10px;font-size:12px}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+  th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+  select{background:#111;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:5px}
+  .pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:700;background:#2b2a27}
+  .pill.warn{background:#4a3410;color:#fbbf24}
+  .pill.ok{background:#12351f;color:#4ade80}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<header>
+  <b>THE CLASSIC CO. ADMIN</b>
+  <a href="/admin?logout=1">Log out</a>
+</header>
+<main>
+  <div class="card">
+    <h2>Real orders</h2>
+    <p class="muted">Every customer order is written to your Google Sheet. That is your source of truth. Orders from UPI show <b>"UPI - Payment pending verification"</b> until you check your UPI app and confirm them yourself.</p>
+    <div class="row" id="sheet-row"></div>
+  </div>
+
+  <div class="card">
+    <h2>Orders placed in this browser</h2>
+    <p class="muted">This list only shows orders placed on this phone or computer (for example your own test orders). Customer orders do not appear here, they go to the Google Sheet.</p>
+    <div class="row" style="margin:10px 0">
+      <button class="btn sec sm" onclick="exportCSV()">Export CSV</button>
+      <button class="btn sec sm" onclick="clearTests()">Clear this list</button>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Order</th><th>Customer</th><th>Item</th><th>Amount</th><th>Payment</th><th>Status</th><th>Message</th></tr></thead>
+        <tbody id="orders-body"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script>
+  const ORDERS_SHEET_URL = __ORDERS_SHEET_URL__;
+  const STATUSES = ['Pending', 'Payment pending verification', 'Payment confirmed', 'Dispatched', 'Delivered', 'Cancelled'];
+  const KEY = 'the_classic_co_orders';
+
+  function esc(v) {
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function (m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+    });
+  }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+  function save(list) { try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {} }
+
+  function wa(order, kind) {
+    var phone = String(order.phone || '').replace(/\D/g, '');
+    var name = order.name || '';
+    var text = kind === 'paid'
+      ? 'Hi ' + name + ', we received your payment for order ' + order.orderId + '. Your sunglasses will ship in 2-4 business days. Thank you!'
+      : kind === 'local'
+        ? 'Hi ' + name + ', this is The Classic Co. Your order ' + order.orderId + ' is confirmed. We will deliver within 24 hours via Cash on Delivery.'
+        : 'Hi ' + name + ', this is The Classic Co. about your order ' + order.orderId + '.';
+    return 'https://wa.me/91' + phone + '?text=' + encodeURIComponent(text);
+  }
+
+  function render() {
+    var list = load();
+    var body = document.getElementById('orders-body');
+    if (!list.length) {
+      body.innerHTML = '<tr><td colspan="7" class="muted" style="padding:20px">No orders placed from this browser yet.</td></tr>';
+      return;
+    }
+    body.innerHTML = list.map(function (o, i) {
+      var st = o.status || 'Pending';
+      var opts = STATUSES.map(function (s) { return '<option' + (s === st ? ' selected' : '') + '>' + esc(s) + '</option>'; }).join('');
+      var isUpi = o.paymentMode === 'UPI';
+      var pillClass = (st === 'Payment pending verification') ? 'pill warn' : 'pill';
+      return '<tr>' +
+        '<td><b>#' + esc(o.orderId) + '</b><div class="muted">' + esc((o.createdAt || '').slice(0, 16).replace('T', ' ')) + '</div></td>' +
+        '<td>' + esc(o.name) + '<div class="muted">+91 ' + esc(o.phone) + '</div><div class="muted">' + esc(o.pincode) + '</div></td>' +
+        '<td>' + esc(o.title) + '</td>' +
+        '<td>₹' + esc(o.amount) + '</td>' +
+        '<td>' + esc(o.paymentMode) + '<div><span class="' + pillClass + '">' + esc(o.paymentStatus || '') + '</span></div></td>' +
+        '<td><select onchange="setStatus(' + i + ', this.value)">' + opts + '</select></td>' +
+        '<td><a class="btn wa sm" target="_blank" rel="noopener" href="' + wa(o, isUpi ? 'paid' : 'local') + '">WhatsApp</a></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function setStatus(i, value) {
+    var list = load();
+    if (list[i]) { list[i].status = value; save(list); render(); }
+  }
+  function clearTests() {
+    if (confirm('Remove all orders stored in this browser? (Your Google Sheet is not affected.)')) { save([]); render(); }
+  }
+  function exportCSV() {
+    var list = load();
+    if (!list.length) { alert('Nothing to export.'); return; }
+    function q(v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; }
+    var rows = [['Order ID', 'Name', 'Phone', 'Email', 'Address', 'Pincode', 'Item', 'Amount', 'Payment', 'Status', 'Date']];
+    list.forEach(function (o) {
+      rows.push([o.orderId, o.name, o.phone, o.email, o.address, o.pincode, o.title, o.amount, o.paymentMode, o.status, o.createdAt]);
+    });
+    var csv = rows.map(function (r) { return r.map(q).join(','); }).join('\n');
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+    a.download = 'classic-co-orders-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  }
+
+  (function init() {
+    var row = document.getElementById('sheet-row');
+    if (ORDERS_SHEET_URL) {
+      row.innerHTML = '<a class="btn" target="_blank" rel="noopener" href="' + esc(ORDERS_SHEET_URL) + '">Open orders Google Sheet</a>';
+    } else {
+      row.innerHTML = '<span class="muted">Tip: add your Google Sheet link as <b>ORDERS_SHEET_URL</b> in Vercel and a button will show here.</span>';
+    }
+    render();
+  })();
+</script>
+</body>
+</html>
