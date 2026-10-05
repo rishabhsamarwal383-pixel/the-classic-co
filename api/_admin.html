@@ -320,6 +320,87 @@
     margin-top: 6px;
   }
 
+  
+  /* ADMIN CATEGORY PILL TABS - JUST LIKE MAIN STORE */
+  .admin-pill-tabs-wrap {
+    padding: 12px 16px 4px 16px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--p-border);
+  }
+  .admin-pill-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .admin-pill-tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+  .admin-pill-tabs::-webkit-scrollbar-thumb {
+    background: #dfe3e8;
+    border-radius: 4px;
+  }
+  .admin-pill-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 1px solid #dcdfe4;
+    color: #5c5f62;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .admin-pill-tab:hover {
+    background: #f6f6f7;
+    border-color: #202223;
+    color: #202223;
+  }
+  .admin-pill-tab.active {
+    background: #202223;
+    color: #ffffff;
+    border-color: #202223;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+  .admin-pill-tab .pill-count {
+    display: inline-block;
+    background: #f1f2f3;
+    color: #5c5f62;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+  .admin-pill-tab.active .pill-count {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+  }
+  .admin-pill-tab.tab-pill-hidden {
+    border-color: #fed3d1;
+    color: #d72c0d;
+  }
+  .admin-pill-tab.tab-pill-hidden.active {
+    background: #d72c0d;
+    color: #ffffff;
+    border-color: #d72c0d;
+  }
+  .admin-pill-tab.tab-pill-hidden .pill-count {
+    background: #fff4f4;
+    color: #d72c0d;
+  }
+  .admin-pill-tab.tab-pill-hidden.active .pill-count {
+    background: rgba(255,255,255,0.25);
+    color: #ffffff;
+  }
+
   /* CONTROLS BAR (SEARCH & FILTERS) */
   .table-controls {
     display: flex;
@@ -1026,6 +1107,37 @@
 
       <div class="shopify-card">
         <!-- Controls & Filters -->
+        <!-- Category Divide (Just Like Main Store) -->
+        <div class="admin-pill-tabs-wrap">
+          <div class="admin-pill-tabs" id="admin-category-pills">
+            <button type="button" class="admin-pill-tab active" data-cat="ALL" onclick="setAdminCategory('ALL')">
+              All Styles <span class="pill-count" id="pill-count-all">30</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="BESTSELLER" onclick="setAdminCategory('BESTSELLER')">
+              ⭐ Bestsellers <span class="pill-count" id="pill-count-bestsellers">6</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Polarized & Driving" onclick="setAdminCategory('Polarized & Driving')">
+              Polarized &amp; Driving <span class="pill-count" id="pill-count-polarized">8</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Magnetic Clip-Ons" onclick="setAdminCategory('Magnetic Clip-Ons')">
+              Magnetic Clip-Ons <span class="pill-count" id="pill-count-magnetic">3</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Premium Styles" onclick="setAdminCategory('Premium Styles')">
+              Premium Styles <span class="pill-count" id="pill-count-premium">11</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Classic Lifestyle" onclick="setAdminCategory('Classic Lifestyle')">
+              Classic Lifestyle <span class="pill-count" id="pill-count-classic">4</span>
+            </button>
+            <button type="button" class="admin-pill-tab" data-cat="Trending" onclick="setAdminCategory('Trending')">
+              Trending <span class="pill-count" id="pill-count-trending">4</span>
+            </button>
+            <button type="button" class="admin-pill-tab tab-pill-hidden" data-cat="HIDDEN" onclick="setAdminCategory('HIDDEN')">
+              👁️ Hidden <span class="pill-count" id="pill-count-hidden">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search & Sort Controls Bar (Sort Just Like Main Store) -->
         <div class="table-controls">
           <div class="controls-group">
             <div class="search-input-wrap">
@@ -1033,31 +1145,30 @@
               <input type="text" id="prod-search" placeholder="Search by title or category..." oninput="renderProductsTable()">
             </div>
 
-            <select id="prod-vis-filter" class="filter-select" onchange="renderProductsTable()">
-              <option value="ALL">All Products (Live &amp; Hidden)</option>
-              <option value="LIVE">Live on Store Only</option>
-              <option value="HIDDEN">Hidden from Store Only</option>
+            <!-- Sort Dropdown (Just Like Main Store) -->
+            <select id="prod-sort" class="filter-select" onchange="renderProductsTable()">
+              <option value="default">Sort: Default (Catalog Order)</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Alphabetically: A to Z</option>
+              <option value="name-desc">Alphabetically: Z to A</option>
+              <option value="bestseller-first">Bestsellers First</option>
+              <option value="hidden-first">Hidden First</option>
+              <option value="stock-out-first">Out of Stock First</option>
             </select>
 
-            <select id="prod-cat-filter" class="filter-select" onchange="renderProductsTable()">
-              <option value="ALL">All Categories</option>
-              <option value="Premium Styles">Premium Styles</option>
-              <option value="Magnetic Clip-Ons">Magnetic Clip-Ons</option>
-              <option value="Polarized & Driving">Polarized & Driving</option>
-              <option value="Classic Lifestyle">Classic Lifestyle</option>
-              <option value="Trending">Trending</option>
-            </select>
-
+            <!-- Inventory Status Filter -->
             <select id="prod-stock-filter" class="filter-select" onchange="renderProductsTable()">
               <option value="ALL">All Inventory Status</option>
               <option value="IN_STOCK">In Stock Only</option>
               <option value="OUT_OF_STOCK">Out of Stock Only</option>
             </select>
 
-            <select id="prod-feat-filter" class="filter-select" onchange="renderProductsTable()">
-              <option value="ALL">All Homepage Status</option>
-              <option value="BESTSELLER">Bestsellers (Homepage)</option>
-              <option value="CATALOG">Catalog Only</option>
+            <!-- Visibility Filter -->
+            <select id="prod-vis-filter" class="filter-select" onchange="renderProductsTable()">
+              <option value="ALL">All Visibility</option>
+              <option value="LIVE">Live on Store Only</option>
+              <option value="HIDDEN">Hidden Only</option>
             </select>
           </div>
 
@@ -1477,1483 +1588,11 @@
     </button>
   </div>
 
-<script>
-  // =========================================================================
-  // EMBEDDED COMPLETE DEFAULT PRODUCTS (30 ITEMS)
-  // Ensures 100% reliable showcasing regardless of external loading order
-  // =========================================================================
-  const DEFAULT_PRODUCTS = [
-  {
-    "id": 1,
-    "handle": "untitled-11apr_15-24",
-    "title": "Aero Crystal Matte Frames",
-    "category": "Premium Styles",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_705dcf3a-0743-4b68-958a-33d07983079e.jpg?v=1775901336",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8e426eed-f2f7-4b59-920c-174bb7d01d36.jpg?v=1775901337",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_018377c5-19d3-43c2-b648-516a39a780f4.jpg?v=1775901337",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_e737239d-d782-4f94-ae4c-a76a0dc3ecd6.jpg?v=1775901337",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_cc55dbc8-8940-4e1f-93a9-b21cad41fe4f.jpg?v=1775901337"
-    ]
-  },
-  {
-    "id": 2,
-    "handle": "omni-flex-3-magnetic-clip-ons-shiv-shakti-versatile-series",
-    "title": "Omni-Flex 3-in-1 Magnetic Clip-Ons",
-    "category": "Magnetic Clip-Ons",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_36f4ffcc-4e59-47d8-9478-fdfbb163eb35.jpg?v=1776062370",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a0709c18-8504-433f-bcd5-046b0bc1250f.jpg?v=1776062370",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0272ca52-fb8d-45c2-9e99-5d3c81a6def9.jpg?v=1776062370",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_168acd25-6b7f-472e-97a7-0a06fb7ea572.jpg?v=1776062372",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_427e6247-6f5f-4867-be70-0263c04e04cf.jpg?v=1776062370",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_cdd0a14e-c321-4547-b52e-3aa1834d263c.jpg?v=1776062370"
-    ]
-  },
-  {
-    "id": 3,
-    "handle": "royal-gilt-aviators-shiv-shakti-modern-lux-series",
-    "title": "Royal Gilt Aviators",
-    "category": "Premium Styles",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": true,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_1473c992-3b7d-4f09-aef0-2a3335926713.jpg?v=1776061514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d6d32d43-3501-40ed-99cf-dbe4072969b0.jpg?v=1776061514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_03711623-0533-4b91-860b-178349f586fc.jpg?v=1776061514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_39645ffc-f11d-4566-ad13-022441a8eaa7.jpg?v=1776061514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a57da4e3-2372-41fc-add2-57f8ca84d927.jpg?v=1776061514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_22d362d3-f6a3-4fa3-9c41-03567a4505f8.jpg?v=1776061514"
-    ]
-  },
-  {
-    "id": 4,
-    "handle": "sepia-mist-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Sepia Mist Rounded Squares",
-    "category": "Premium Styles",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8d1c8f25-1c77-446b-b451-7f48f194cf45.jpg?v=1776069430",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5cd914a5-e6ed-4afc-b1cc-1edfe6a80844.jpg?v=1776069430",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_1a17ed00-bb25-4381-a091-cd3eb163d9cd.jpg?v=1776069430",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_32d22ef4-de79-4714-b720-728d3156eeaf.jpg?v=1776069430",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a007d26d-461c-49a5-a846-0c11075a2b35.jpg?v=1776069430",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_bb178d53-c99e-4794-92d7-8f59a385956e.jpg?v=1776069433",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3dae09e8-bb87-4159-80f9-ea21cf6c2e9d.jpg?v=1776069697",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_42e4ad19-5e0f-4d58-a49f-b54bf07c0b08.jpg?v=1776069430",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_fc8cf1f6-89d0-4a73-9d64-dfc6cba1c3fc.jpg?v=1776069430"
-    ]
-  },
-  {
-    "id": 5,
-    "handle": "the-mewar-maverick-4-in-1-magnetic-set-shiv-shakti-elite-series",
-    "title": "The Mewar Maverick 4-in-1 Magnetic Set",
-    "category": "Magnetic Clip-Ons",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_fe8e1885-07fa-4d22-a61e-fd067ca9c1a3.jpg?v=1776063093",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_60e69d93-a360-42f5-a5d3-80d3ecd6d9e6.jpg?v=1776063093",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_f3298aad-fa22-44b0-ab91-696c602531b0.jpg?v=1776063093",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ffd32da3-73f2-4ebf-848c-f4e599afe4fa.jpg?v=1776063093",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d415527c-6cbc-4824-80c3-eb4088a9203b.jpg?v=1776063093",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3f7f1728-f314-419d-809b-ce15294bdb18.jpg?v=1776063093"
-    ]
-  },
-  {
-    "id": 6,
-    "handle": "the-urban-bridge-shiv-shakti-signature",
-    "title": "Urban Bridge",
-    "category": "Premium Styles",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a7991f55-d4f2-4c05-9599-ba8e56dd63e3.jpg?v=1776061243",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_eae3fadc-6240-4340-800e-ced1a1021664.jpg?v=1776061243",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_1297ceff-db71-4623-bd67-15cea31b9f9c.jpg?v=1776061242",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_78dac9d4-e906-41d2-bfc2-d33f698b6a2b.jpg?v=1776061243",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a429f35b-307a-47a1-afc1-e57f87f52bc1.jpg?v=1776061243",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_242b8d4a-4164-4844-80ff-3efc3a16426d.jpg?v=1776061242"
-    ]
-  },
-  {
-    "id": 7,
-    "handle": "vantage-3-in-1-magnetic-clip-ons-shiv-shakti-performance-series",
-    "title": "Vantage 3-in-1 Magnetic Clip-Ons",
-    "category": "Magnetic Clip-Ons",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": true,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_038ad405-7ce8-4e61-bbca-babce30f09be.jpg?v=1776062733",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_286460a6-3267-46d6-b33b-70cec549208e.jpg?v=1776062733",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4d77f619-2dbd-429c-9621-be2cd30431d0.jpg?v=1776062733",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_134d2282-2ae2-43c4-a530-2a8488b57624.jpg?v=1776062733",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_db22cddc-317e-40f7-bbbf-405a5292821a.jpg?v=1776062733",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_602d7e18-77d8-44a3-b1b0-ad56d9e3c9d8.jpg?v=1776062733"
-    ]
-  },
-  {
-    "id": 8,
-    "handle": "aura-glow-night-vision-wayfarers-shiv-shakti-performance-series",
-    "title": "Aura Glow Wayfarers",
-    "category": "Polarized & Driving",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": true,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a23021b2-b13c-4740-8ac1-f7942b7fb9ab.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ca76fbce-f74a-48a9-9a6d-ada8dbc7c061.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_26bf0680-ab6b-4365-836b-8792550bba57.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5e4b06d0-013d-44d0-a361-596a6b8c7186.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_69de604c-32e3-4f8c-a8cc-da0469174131.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_bbd57d74-9c69-4414-acf3-0d75ec6429fb.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_bcb38e0e-b0d5-41e1-9084-ab38ef0e4890.jpg?v=1776064394",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_634d2c37-eb41-444b-9665-06cd60bfab64.jpg?v=1776064394"
-    ]
-  },
-  {
-    "id": 9,
-    "handle": "citrine-glow-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Knight Force Goggles",
-    "category": "Polarized & Driving",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_e10de9f8-40b4-4169-9ba7-957575e43552.jpg?v=1776067514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ce9ec51d-2899-4a1f-b538-90a819b7d56c.jpg?v=1776067514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_16cdc1ed-4df0-4828-865c-dfcdf02d0659.jpg?v=1776067514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4257fb6f-cfe1-4a07-ab38-4821d61add98.jpg?v=1776067514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_41077d46-41d9-47b3-ab5f-d470e1943476.jpg?v=1776067514",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9ac520ff-a4ca-4ad2-b200-1b00bb2447d5.jpg?v=1776067514"
-    ]
-  },
-  {
-    "id": 10,
-    "handle": "amber-estate-classic-frames-shiv-shakti-modern-lux",
-    "title": "Amber Estate Classic Frames",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_e27fe7d3-7e80-45dd-afa5-bcbf460c0bf9.jpg?v=1776065470",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7e7bc02b-69a9-4d6b-99e2-08832e7a9c68.jpg?v=1776065470",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a28bfdb0-a884-41cf-a5e6-c21d8a1763cf.jpg?v=1776065470",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7198cce2-92b2-434b-826c-d7b9ad621f82.jpg?v=1776065470",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_97a1b62d-5973-4901-9866-c460e7373be5.jpg?v=1776065470"
-    ]
-  },
-  {
-    "id": 11,
-    "handle": "arctic-circ-translucent-frames-shiv-shakti-modern-lux",
-    "title": "Arctic Circ Translucent Frames",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_809aa693-4c6d-4563-a3dc-71e238accb94.jpg?v=1776064685",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_108e16bd-b7f2-4893-8bdb-ae1c6947bc89.jpg?v=1776064685",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ebb9fb5f-c0cd-48ff-afdf-1d12bfc1dd4a.jpg?v=1776064685",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_dc08be74-5059-43b2-87d9-9e7f52f491f8.jpg?v=1776064686",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_11cf1c86-5808-43a5-92f4-d92c07dde3b1.jpg?v=1776064685"
-    ]
-  },
-  {
-    "id": 12,
-    "handle": "azure-executive-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Azure Executive Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": true,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_1742cd45-b656-4148-bdc8-02c442f972aa.jpg?v=1776067214",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_020e0553-9ce5-4592-ab86-5c3ae6fd5ad3.jpg?v=1776067214",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_88e33222-5d35-4a2d-abac-09bffc7ef1f6.jpg?v=1776067214",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d450aec6-d375-479e-9d47-0c1326a6a053.jpg?v=1776067215",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_b25067fc-d32e-40a8-b9b1-1eed726c5082.jpg?v=1776067214",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5725458e-3544-4ecd-a504-c64b964886e4.jpg?v=1776067213",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5e171134-5346-4b1b-8b98-f88cd7d1f232.jpg?v=1776067214"
-    ]
-  },
-  {
-    "id": 13,
-    "handle": "azure-stealth-professionals-shiv-shakti-modern-lux-series",
-    "title": "Azure Stealth Professionals",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9bbfe356-dc1e-4064-8322-73c2193cea50.jpg?v=1776066253",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0c3e69fe-9118-4ca6-af14-2ab46c7ad1d3.jpg?v=1776066253",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4aa6f3ee-4305-41a1-8184-6f959804db2f.jpg?v=1776066253",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d8023e32-5dc7-43a5-b27f-6a9e637536fc.jpg?v=1776066253",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4e43a395-c333-4a9d-8c49-987c568972f1.jpg?v=1776066253",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_df15c27c-288b-4322-b76b-d9978b9e87d0.jpg?v=1776066253",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_b077a99d-c3e1-488f-ad41-7b918aff148c.jpg?v=1776066253"
-    ]
-  },
-  {
-    "id": 14,
-    "handle": "carbon-stealth-geo-aviators-shiv-shakti-modern-lux-series",
-    "title": "Carbon Stealth Geo-Aviators",
-    "category": "Trending",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8c0208d6-aaa3-426a-b6fc-f3fe505f7eb0.jpg?v=1776064153",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ee219c00-8ea9-4270-be9a-4bb5ecfa6718.jpg?v=1776064151",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_964e7ee4-5d11-49a7-8fe4-08418eb91457.jpg?v=1776064151",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_99d6600a-df68-4711-b391-e9212f01c9e6.jpg?v=1776064151",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_f296fedd-8670-4907-a41e-c1332a5b2259.jpg?v=1776064151",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_95c08ee9-0b15-47cf-b4e6-8df67f10a3c3.jpg?v=1776064151",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8995775c-fd84-4e77-ad1f-9b293bb1c382.jpg?v=1776064151"
-    ]
-  },
-  {
-    "id": 15,
-    "handle": "champagne-frost-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Champagne Frost Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_cebdaebf-95ab-4c9a-8136-0d0e9c89dbeb.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_2b31eb9d-e645-4513-8044-e583ffca5aac.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_bb34d4a4-f805-47ac-a8af-e6e5ed14e05b.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4c024c60-451c-413b-9350-5aff07025ae1.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9a5f3c51-f759-4e81-acaa-457184f2f1ef.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_44d9a35b-dc4b-4f41-81c7-d016d39cda42.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_aee9ac69-5da0-4ccd-b6ec-5dd48c0816e7.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_bf718af7-7f4a-485f-81d6-51b90a27c243.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4b19c9eb-fc4f-4289-b785-8f9392187f7e.jpg?v=1776068122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5a1e75b3-2755-4dda-a55d-0affaf015f21.jpg?v=1776068122"
-    ]
-  },
-  {
-    "id": 16,
-    "handle": "diamond-clear-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Diamond Clear Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3bddf760-a65f-4ebd-be0f-dbf31f776476.jpg?v=1776068684",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_dface118-ae6e-45b5-8300-561daa57b34c.jpg?v=1776068684",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_13fea03c-6e82-461c-82d1-9cb3fc595393.jpg?v=1776068684",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_1ea08b47-c727-4d10-89cf-f40f473899ae.jpg?v=1776068684",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a898da47-51ae-447a-99af-533717ec1438.jpg?v=1776068684",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_fa07c9d6-4b1a-4349-8702-d82909602837.jpg?v=1776068686",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_511c4c2f-aef9-436b-99d6-1d3387679249.jpg?v=1776068684",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_2535e66b-7c42-4234-865f-ef1ec8acf0d8.jpg?v=1776068684"
-    ]
-  },
-  {
-    "id": 17,
-    "handle": "icy-eyes-crystal-squares-shiv-shakti-modern-lux-series",
-    "title": "Icy Eyes Crystal Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8e7d5479-1aa5-4726-98ce-d67d80dfe3d9.jpg?v=1776069183",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_46cc81ca-58a1-44ff-9d79-edd02086b5a8.jpg?v=1776069183",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0aa91089-22cb-44c0-a7e7-54ae9eb9b198.jpg?v=1776069183",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_b9b57ce4-ea35-4fe7-911e-a12c97bc3e84.jpg?v=1776069183"
-    ]
-  },
-  {
-    "id": 18,
-    "handle": "lakeside-vogue-rimless-squares-shiv-shakti-modern-lux-series",
-    "title": "Lakeside Vogue Rimless Squares",
-    "category": "Trending",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4956ff6a-ce70-4093-9d67-f19c931b51ea.jpg?v=1776063399",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_c5f47775-575a-483f-a172-a6114fac8d19.jpg?v=1776063399",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5ec4d413-a5bc-42a3-bdaa-5d6a3f1789b3.jpg?v=1776063400",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_dda7f953-0f65-40f0-b17a-de4a92315f8f.jpg?v=1776063400",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7bbc6e31-1ffc-445d-9796-e1feb74f07e1.jpg?v=1776063400",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d180dde0-154a-4883-972f-5e7a7f1bdfbe.jpg?v=1776063400"
-    ]
-  },
-  {
-    "id": 19,
-    "handle": "luna-frost-matte-translucents-shiv-shakti-modern-lux-series",
-    "title": "Luna Frost Matte Translucents",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_46008640-a362-4098-8033-3c9021b2e2d0.jpg?v=1776066001",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_74a1febe-1ab3-4fad-88b8-9c5ce7b50e46.jpg?v=1776066001",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_437b7f04-fae5-4465-a7e3-4b8c38df7b9b.jpg?v=1776066001",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7d10e23f-04a5-4507-99c5-8eaa754aca08.jpg?v=1776066001",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_340cec9d-9a87-4041-9935-e36c67e622ac.jpg?v=1776066001"
-    ]
-  },
-  {
-    "id": 20,
-    "handle": "marine-crystal-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Marine Crystal Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ff0d24a7-410b-4044-9237-2a6ca8a82143.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9ba6824d-3e28-4989-a42a-0db33255ad1c.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_cf45c4ae-f792-4d81-a9e7-05aef25c16a4.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9d7666c2-87e2-4197-b3d6-fe4e7bc4859c.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_ca04dc98-3b9b-4e70-a4dc-5834fcf64cd8.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_442eab84-40a8-4a86-9ae4-c6050292ef81.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9a686855-89ad-4133-9ffd-b23d20ef5f59.jpg?v=1776067765",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_327a3b9a-7b2e-425a-85a9-fa26330b1d2f.jpg?v=1776067765",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3ba015c7-fdba-452f-ab9d-f6638c037430.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_575cb588-fec7-4a11-985f-b613c0133a09.jpg?v=1776067764",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3ae38457-eee0-4d55-9f02-904dde402d8e.jpg?v=1776067764"
-    ]
-  },
-  {
-    "id": 21,
-    "handle": "obsidian-square-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Obsidian Square Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_e85b471e-5e8a-4a86-925d-29f2558f1cc6.jpg?v=1776068893",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_fad8c7f0-c4f8-4809-b1f4-aef838a01bbf.jpg?v=1776068893",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_065b446b-b909-4102-9868-299a252752bf.jpg?v=1776068893",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_eb32a2c5-eafa-41a4-a899-395ad3e9140f.jpg?v=1776068893",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8f00a682-de23-4f0b-9c36-ddd31ecaa83e.jpg?v=1776068893",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0b03083a-c9c3-4783-9864-bce1b943db5c.jpg?v=1776068893",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_07373885-d9fe-4b35-b620-027314cb1547.jpg?v=1776068893"
-    ]
-  },
-  {
-    "id": 22,
-    "handle": "olive-frost-rounded-shiv-shakti-modern-lux-series",
-    "title": "Olive Frost Rounded",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_643cde16-6d96-4bbc-846e-c65e055296a4.jpg?v=1776066942",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_05417830-ffed-4884-948c-9827f39e4f72.jpg?v=1776066943",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_041f217f-e16c-4867-89c6-4a576a89d003.jpg?v=1776066942",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9a6d697f-b671-4ba5-a646-f88bd6921271.jpg?v=1776066942",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_acb5ef13-d9ef-4a42-9065-036fa8a372d6.jpg?v=1776066942",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_17cb6297-a1df-4794-96c1-0d629e77c744.jpg?v=1776066942",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0b9cd53a-527c-44d9-a629-51aa114f393d.jpg?v=1776066942"
-    ]
-  },
-  {
-    "id": 23,
-    "handle": "onyx-hex-geometric-frames-shiv-shakti-modern-lux-series",
-    "title": "Onyx Hex Geometric Frames",
-    "category": "Trending",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": true,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_587703cf-b2b1-461a-9996-0d9c2da3d835.jpg?v=1776061872",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_676880bf-9860-41a3-94a4-13d7b41c45a3.jpg?v=1776061872",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_caad09f9-c097-45b5-99b7-7a7dc1488388.jpg?v=1776061872",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_e8c8e507-7d1b-4ffa-9b13-71b379e662fc.jpg?v=1776061872",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3bb471cf-14b1-4129-9aa2-d3492efb8b2b.jpg?v=1776061872",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_513d112b-634b-48c2-8b50-2c13e2dc2262.jpg?v=1776061872"
-    ]
-  },
-  {
-    "id": 24,
-    "handle": "onyx-tortoise-classic-shiv-shakti-modern-lux-series",
-    "title": "Onyx Tortoise Classic",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": true,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0069ab9d-6c59-4a31-99f8-8d8006319471.jpg?v=1776065735",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_319b396b-6e04-4e10-933d-920dcb6abcd3.jpg?v=1776065735",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_92a3c4b9-8bbb-41f0-ae80-8fb6457e98dc.jpg?v=1776065735",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_64f7215f-f144-4586-8c89-b5d3e7333bb8.jpg?v=1776065735",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_79693e45-187a-4d3a-ab80-4f786814c536.jpg?v=1776065735",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_693ae6c1-957e-449d-819a-07d7eca1fc1f.jpg?v=1776065735",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_2a27694d-2c86-4c21-b485-653188c3fbf7.jpg?v=1776065735"
-    ]
-  },
-  {
-    "id": 25,
-    "handle": "royal-panther-rimless-gradients-shiv-shakti-modern-lux",
-    "title": "Royal Panther Rimless Gradients",
-    "category": "Trending",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_834aff56-6f41-4da3-93b2-40ef70dd1304.jpg?v=1776063910",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3e8888ef-1232-471a-ab93-faac4157d98a.jpg?v=1776063909",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_b1adbaf5-1e69-4843-8a9f-14951e7780fd.jpg?v=1776063909",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_6cbee7e9-63fb-40d3-a48f-d4a0b81d371e.jpg?v=1776063909",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_93750fdc-dd72-4b3c-82c1-aec9fca0eb21.jpg?v=1776063909",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4d049d09-2e6a-429b-85f4-e6944a6b2189.jpg?v=1776063909",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_395ea240-2762-4373-bc46-97c7cedb1352.jpg?v=1776063910"
-    ]
-  },
-  {
-    "id": 26,
-    "handle": "ruby-crystal-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Ruby Crystal Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8c3af7b7-a311-4f32-af16-196bc941eff1.jpg?v=1776068613",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_25ae9577-e999-4a25-a995-b86188a6b614.jpg?v=1776068445",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d1d5269f-248a-4e19-8d7a-30efaef1e013.jpg?v=1776068445",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_62f6dfd3-082f-4299-bac2-fa8bec8440e8.jpg?v=1776068445",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7758c58e-c324-4ed0-93b3-ea208d9031f0.jpg?v=1776068445",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4a949a60-eb38-4fe0-bf7b-068d8b6c0830.jpg?v=1776068445",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_eeb422e2-a43b-43d7-90c8-1dca684bfc72.jpg?v=1776068445"
-    ]
-  },
-  {
-    "id": 27,
-    "handle": "shadow-edge-minimalist-acetates",
-    "title": "Shadow Edge Minimalist",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/IMG-20260408_191604.jpg?v=1775656033",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/IMG-20260408_191637.jpg?v=1775656033",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/IMG-20260408_191630.jpg?v=1775656034",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_c64f7f00-e48d-415d-bf0d-7177ad403140.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_6c9979e4-9b4f-4106-8359-22513fe2051b.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_2cda2230-cbee-4062-9cd7-9091cc6f5c46.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8ade1bae-deac-4644-adc3-b7ff66020299.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_fde300da-d449-4807-b010-e50d2280721a.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_80fd06e9-59b5-4f08-9032-3a7349fdf4c5.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_207444d0-27ea-48e4-aa4c-f50520afd09b.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3fd0bb6f-66ec-4da0-8709-3e3e82552cf6.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_6a97b0d8-a208-4857-983f-dcec1cb23ade.jpg?v=1775660848",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_a15ebd4e-6742-4904-b286-23e0c0d8aec3.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_b82f8cdf-3fde-4087-ba37-7516eddc4628.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_9fbde594-ed28-42e2-b54d-0e8ce2f3a8f1.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_e0f356db-bd33-4ba6-949a-e66a2d940f96.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_4307691c-f22b-45ce-bea2-708e958a6f0d.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_af0e0716-d200-4027-91f3-59bcab167752.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7bfb3ced-1541-4725-9d4a-8ca6d1c3dae8.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_6f596826-24a9-4bd4-a15e-49d7f00fbb9c.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8c79edbf-59b8-4ab2-af8b-eedeedcca76a.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_854856a2-9afc-4628-a40d-5010fc60b6c2.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_c6f38d56-a9cf-4e50-b86e-ff77fd03aa8a.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_6fd09b88-6e3c-43a6-bd05-854e92498aa3.jpg?v=1775660845",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d3641b00-5552-43b4-a298-3f4d9d337157.jpg?v=1775660844",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_98ab99dc-587e-4611-aedd-7fbd5b481015.jpg?v=1775660844"
-    ]
-  },
-  {
-    "id": 28,
-    "handle": "shadow-mist-rounded-squares-shiv-shakti-modern-lux-series",
-    "title": "Shadow Mist Rounded Squares",
-    "category": "Classic Lifestyle",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8506b9c9-7016-4fe4-a85a-8aba824c979c.jpg?v=1776066534",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_c9431552-47db-46ef-8808-dfe253f69b96.jpg?v=1776066534",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_02cc0d73-a9dd-4f22-b164-046189690c8f.jpg?v=1776066535",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_7163fadc-b4d4-41db-aeae-ee860a0bf0c9.jpg?v=1776066536",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_92e67e0d-0c7d-49d9-915c-5dcbc9aaf636.jpg?v=1776066534",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_2734cdff-8631-4870-a0bc-144f6df2a4db.jpg?v=1776066534"
-    ]
-  },
-  {
-    "id": 29,
-    "handle": "silver-shadow-rimless-rectangles-shiv-shakti-modern-lux",
-    "title": "Silver Shadow Rimless Rectangles",
-    "category": "Trending",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_8d6b0f3d-b8c2-4bc7-b6d8-e0520f716e18.jpg?v=1776063695",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_fd36aaa9-faa2-4d7e-9e7e-4cf2ae32f0c6.jpg?v=1776063695",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5fab3a56-f97f-4556-a609-dd95a7224afd.jpg?v=1776063695",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0018ee68-8091-40c0-91cc-7d9d5c68e5b2.jpg?v=1776063697",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_786b3940-cbc1-4304-a9ee-6e32320b7c8a.jpg?v=1776063695",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_847b3f22-ecf2-44aa-8b28-0a36aa37efe5.jpg?v=1776063695"
-    ]
-  },
-  {
-    "id": 30,
-    "handle": "the-mewar-vintages-shiv-shakti-modern-lux-series",
-    "title": "Mewar Vintage",
-    "category": "Trending",
-    "cod_price": 899,
-    "upi_price": 799,
-    "inStock": true,
-    "featured": false,
-    "images": [
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_3ae241a8-c297-41fe-b995-2b93d858deb1.jpg?v=1776065121",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_f7df04ed-e0ed-45b9-a15a-c5ba8b8e9526.jpg?v=1776065122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_0c7ca629-126b-4459-9462-4c38117e876f.jpg?v=1776065122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_b12b1a57-4a0f-48ea-9bfe-c9597f49a03e.jpg?v=1776065122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_bc6d4214-3c4b-4ecd-bb43-36d4ee9c805f.jpg?v=1776065122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_d7755225-eb11-4a7e-9b92-ca0af6ccf0a0.jpg?v=1776065122",
-      "https://cdn.shopify.com/s/files/1/0716/7636/2863/files/rn-image_picker_lib_temp_5e8ce7ff-4ab7-4075-8c84-41bce3301027.jpg?v=1776065122"
-    ]
-  }
-];
-
-  const STORAGE_KEY_CONFIG = 'classic_co_custom_config';
-  const STORAGE_KEY_ORDERS = 'classic_co_orders';
-  const STORAGE_KEY_SOUND = 'classic_co_sound_enabled';
-  const STORAGE_KEY_TOKEN = 'classic_co_github_token';
-
-  const ORDERS_SHEET_URL = __ORDERS_SHEET_URL__ || '';
-  const GITHUB_TOKEN_AVAILABLE = __GITHUB_TOKEN_AVAILABLE__;
-
-  const STATUSES = ['Pending', 'Payment pending verification', 'Confirmed', 'Shipped', 'Delivered', 'Cancelled'];
-
-  let currentProducts = [];
-  let currentSettings = {};
-  let currentPromises = {};
-  let soundAlertsEnabled = localStorage.getItem(STORAGE_KEY_SOUND) !== 'false';
-  let knownOrderIds = new Set();
-  let deferredInstallPrompt = null;
-
-  // -------------------------------------------------------------------------
-  // AUDIO & PWA SETUP
-  // -------------------------------------------------------------------------
-  window.addEventListener('beforeinstallprompt', function(e) {
-    e.preventDefault();
-    deferredInstallPrompt = e;
-    var btn = document.getElementById('btn-install-pwa');
-    if (btn) btn.style.display = 'inline-flex';
-  });
-
-  function installPWA() {
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      deferredInstallPrompt.userChoice.then(function() {
-        deferredInstallPrompt = null;
-        var btn = document.getElementById('btn-install-pwa');
-        if (btn) btn.style.display = 'none';
-      });
-    }
-  }
-
-  // Authentic Web Audio API Synthesizer fallback for Shopify cash register sound
-  function playChaChingFallback() {
-    try {
-      var AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      var ctx = new AudioCtx();
-      if (ctx.state === 'suspended') ctx.resume();
-
-      var osc1 = ctx.createOscillator();
-      var osc2 = ctx.createOscillator();
-      var gain = ctx.createGain();
-
-      osc1.type = 'sine';
-      osc2.type = 'triangle';
-      osc1.frequency.setValueAtTime(1760, ctx.currentTime);
-      osc2.frequency.setValueAtTime(2637, ctx.currentTime);
-
-      gain.gain.setValueAtTime(0.4, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.85);
-
-      osc1.connect(gain);
-      osc2.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc1.start();
-      osc2.start();
-      osc1.stop(ctx.currentTime + 0.85);
-      osc2.stop(ctx.currentTime + 0.85);
-    } catch(e) {}
-  }
-
-  function playChaChingSound() {
-    if (!soundAlertsEnabled) return;
-    var audio = document.getElementById('audio-chaching');
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play().catch(function() {
-        playChaChingFallback();
-      });
-    } else {
-      playChaChingFallback();
-    }
-    if (navigator.vibrate) navigator.vibrate([150, 80, 150]);
-  }
-
-  function testChaChingSound() {
-    playChaChingSound();
-    if (window.confetti) {
-      confetti({ particleCount: 50, spread: 70, origin: { y: 0.8 } });
-    }
-    showToast({
-      orderId: 'CC-TEST-' + Math.floor(1000 + Math.random() * 9000),
-      title: 'Royal Gilt Aviators',
-      amount: '899',
-      name: 'Rishabh Samarwal',
-      phone: '8619661325'
-    });
-  }
-
-  function toggleSoundAlerts() {
-    soundAlertsEnabled = !soundAlertsEnabled;
-    localStorage.setItem(STORAGE_KEY_SOUND, soundAlertsEnabled);
-    updateSoundUI();
-  }
-
-  function updateSoundUI() {
-    var btn = document.getElementById('btn-toggle-sound');
-    var icon = document.getElementById('sound-icon');
-    var text = document.getElementById('sound-text');
-    var btnM = document.getElementById('btn-toggle-sound-m');
-    var iconM = document.getElementById('sound-icon-m');
-    var textM = document.getElementById('sound-text-m');
-
-    if (soundAlertsEnabled) {
-      if (btn) { btn.className = 'btn btn-secondary btn-sm btn-sound-on btn-desktop-only'; icon.innerText = '🔔'; text.innerText = 'Alerts: ON'; }
-      if (btnM) { btnM.className = 'btn btn-secondary btn-sm btn-sound-on'; iconM.innerText = '🔔'; textM.innerText = 'Alerts: ON'; }
-    } else {
-      if (btn) { btn.className = 'btn btn-secondary btn-sm btn-desktop-only'; icon.innerText = '🔕'; text.innerText = 'Alerts: OFF'; }
-      if (btnM) { btnM.className = 'btn btn-secondary btn-sm'; iconM.innerText = '🔕'; textM.innerText = 'Alerts: OFF'; }
-    }
-  }
-
-  function showToast(order) {
-    var toast = document.getElementById('sale-toast');
-    document.getElementById('toast-title').innerText = '💰 Cha-Ching! ₹' + order.amount + ' Sale!';
-    document.getElementById('toast-body').innerText = '#' + order.orderId + ' · ' + order.name + ' (' + order.title + ')';
-    var waBtn = document.getElementById('toast-wa-btn');
-    waBtn.onclick = function() { window.open(waCustomerUrl(order), '_blank'); };
-    toast.style.display = 'block';
-  }
-
-  // -------------------------------------------------------------------------
-  // INITIALIZATION & STORE STATE RECOVERY
-  // -------------------------------------------------------------------------
-  function loadStoredConfig() {
-    try {
-      var custom = JSON.parse(localStorage.getItem(STORAGE_KEY_CONFIG) || '{}');
-
-      // 1. GUARANTEED PRODUCT RECOVERY: Never allow 0 products!
-      if (Array.isArray(custom.products) && custom.products.length > 0) {
-        currentProducts = custom.products;
-      } else if (Array.isArray(window.PRODUCTS) && window.PRODUCTS.length > 0) {
-        currentProducts = window.PRODUCTS;
-      } else {
-        currentProducts = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-      }
-
-      window.PRODUCTS = currentProducts;
-
-      // 2. Settings
-      currentSettings = Object.assign({
-        priceStandard: (window.PRICE_STANDARD || 899),
-        priceUpi: (window.PRICE_UPI || 799),
-        pincodePrefix: (window.LOCAL_PINCODE_PREFIX || '313'),
-        waNumber: (window.WA_NUMBER || '918619661325'),
-        merchantUpi: (window.MERCHANT_UPI || '8619661325@upi'),
-        gasUrl: (window.GOOGLE_APPS_SCRIPT_URL || ''),
-        metaPixelId: (window.META_PIXEL_ID || ''),
-        ga4Id: (window.GA4_ID || '')
-      }, custom.settings || {});
-
-      // 3. Promises
-      currentPromises = Object.assign({
-        announcement: "UV400 polarized · Hard case & cloth included · 7-day exchange",
-        heroTitle: "Polarized sunglasses,<br><span class="hero-title-accent">delivered to your door.</span>",
-        heroSubtitle: "UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.",
-        deliveryStrip: "<span><strong>Udaipur:</strong> 1-day delivery + COD</span><span class="delivery-strip-sep">|</span><span><strong>Rest of India:</strong> prepaid UPI</span>",
-        founder: "Run by a local founder in Udaipur. Questions? WhatsApp us."
-      }, custom.promises || {});
-
-    } catch (e) {
-      currentProducts = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-    }
-  }
-
-  function saveStoredConfig() {
-    var data = {
-      products: currentProducts,
-      settings: currentSettings,
-      promises: currentPromises,
-      updatedAt: new Date().toISOString()
-    };
-    localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(data));
-    window.PRODUCTS = currentProducts;
-
-    var badge = document.getElementById('badge-sync-status');
-    if (badge) {
-      badge.innerText = '● Saved in Browser';
-      badge.className = 'badge badge-warning';
-    }
-  }
-
-  function initUI() {
-    loadStoredConfig();
-    updateSoundUI();
-
-    // Populate Pricing & Rules Inputs
-    document.getElementById('cfg-price-standard').value = currentSettings.priceStandard;
-    document.getElementById('cfg-price-upi').value = currentSettings.priceUpi;
-    document.getElementById('cfg-pincode-prefix').value = currentSettings.pincodePrefix;
-
-    // Populate Promises Inputs
-    document.getElementById('copy-announcement').value = currentPromises.announcement;
-    document.getElementById('copy-hero-title').value = currentPromises.heroTitle;
-    document.getElementById('copy-hero-subtitle').value = currentPromises.heroSubtitle;
-    document.getElementById('copy-delivery-strip').value = currentPromises.deliveryStrip;
-    document.getElementById('copy-founder').value = currentPromises.founder;
-
-    // Populate Settings Inputs
-    document.getElementById('cfg-wa-number').value = currentSettings.waNumber;
-    document.getElementById('cfg-merchant-upi').value = currentSettings.merchantUpi;
-    document.getElementById('cfg-gas-url').value = currentSettings.gasUrl;
-    document.getElementById('cfg-meta-pixel').value = currentSettings.metaPixelId;
-    document.getElementById('cfg-ga4-id').value = currentSettings.ga4Id;
-
-    // GitHub token
-    var token = localStorage.getItem(STORAGE_KEY_TOKEN) || '';
-    if (token) document.getElementById('cfg-github-token').value = token;
-
-    if (ORDERS_SHEET_URL) {
-      var btn = document.getElementById('btn-open-sheet');
-      btn.href = ORDERS_SHEET_URL;
-      btn.style.display = 'inline-flex';
-    }
-
-    renderProductsTable();
-    renderOrders();
-
-    // Notification permission
-    if (soundAlertsEnabled && 'Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
-    }
-
-    // Background poller
-    setInterval(pollForNewOrders, 6000);
-  }
-
-  // -------------------------------------------------------------------------
-  // TAB NAVIGATION
-  // -------------------------------------------------------------------------
-  function switchTab(tabName, btn) {
-    document.querySelectorAll('.tab-link').forEach(function(b) { b.classList.remove('active'); });
-    document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-    if (btn) btn.classList.add('active');
-    var target = document.getElementById('tab-' + tabName);
-    if (target) target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // -------------------------------------------------------------------------
-  // TAB 1: SHOPIFY PRODUCTS TABLE & MANAGEMENT (DESKTOP & MOBILE ADAPTIVE)
-  // -------------------------------------------------------------------------
-  function renderProductsTable() {
-    var tbody = document.getElementById('products-table-body');
-    var mobileContainer = document.getElementById('products-mobile-container');
-    var search = (document.getElementById('prod-search').value || '').toLowerCase().trim();
-    var visFilter = (document.getElementById('prod-vis-filter') ? document.getElementById('prod-vis-filter').value : 'ALL');
-    var catFilter = document.getElementById('prod-cat-filter').value;
-    var stockFilter = document.getElementById('prod-stock-filter').value;
-    var featFilter = document.getElementById('prod-feat-filter').value;
-
-    var list = currentProducts.filter(function(p) {
-      var matchSearch = !search || p.title.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
-      var matchCat = catFilter === 'ALL' || p.category === catFilter;
-      var matchStock = stockFilter === 'ALL' || (stockFilter === 'IN_STOCK' ? p.inStock !== false : p.inStock === false);
-      var matchFeat = featFilter === 'ALL' || (featFilter === 'BESTSELLER' ? p.featured : !p.featured);
-      var matchVis = visFilter === 'ALL' || (visFilter === 'LIVE' ? !p.hidden : Boolean(p.hidden));
-      return matchSearch && matchCat && matchStock && matchFeat && matchVis;
-    });
-
-    document.getElementById('badge-prod-count').innerText = currentProducts.length;
-    document.getElementById('prod-results-text').innerText = 'Showing ' + list.length + ' of ' + currentProducts.length + ' products';
-
-    if (!list.length) {
-      var emptyMsg = 'No products found matching your filters.';
-      tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</td></tr>';
-      mobileContainer.innerHTML = '<div style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</div>';
-      return;
-    }
-
-    // 1. Render Desktop Table Rows
-    tbody.innerHTML = list.map(function(p) {
-      var isHidden = Boolean(p.hidden);
-      var isInStock = p.inStock !== false;
-      var isFeatured = Boolean(p.featured);
-      var thumb = (p.images && p.images.length) ? p.images[0] : '';
-
-      return '<tr ' + (isHidden ? 'style="background:#fcfcfd; opacity:0.86;"' : '') + '>' +
-        '<td>' +
-          '<div class="prod-cell">' +
-            '<img src="' + thumb + '" class="prod-thumbnail" alt="' + escapeHTML(p.title) + '" loading="lazy">' +
-            '<div>' +
-              '<a class="prod-title-link" onclick="openEditProductModal(' + p.id + ')">' + escapeHTML(p.title) + '</a>' +
-              (isHidden ? ' <span class="badge badge-warning" style="font-size:10px; padding:1px 5px; margin-left:4px;">HIDDEN</span>' : '') +
-              '<div style="font-size:11.5px; color:var(--p-text-subdued); margin-top:2px;">ID: #' + p.id + '</div>' +
-            '</div>' +
-          '</div>' +
-        '</td>' +
-        '<td><span class="badge badge-category">' + escapeHTML(p.category) + '</span></td>' +
-        '<td><span class="badge ' + (isHidden ? 'badge-subdued' : 'badge-success') + '">' + (isHidden ? '👁️ Hidden' : '● Live') + '</span></td>' +
-        '<td><span class="badge ' + (isInStock ? 'badge-success' : 'badge-subdued') + '">' + (isInStock ? 'In stock' : 'Out of stock') + '</span></td>' +
-        '<td>' + (isFeatured ? '<span class="badge badge-warning">★ Bestseller</span>' : '<span style="color:var(--p-text-subdued);">-</span>') + '</td>' +
-        '<td><div style="font-weight:700;">₹' + p.cod_price + '</div><div style="font-size:11.5px; color:var(--p-text-subdued);">UPI: ₹' + p.upi_price + '</div></td>' +
-        '<td>' +
-          '<label class="switch-container" title="' + (isHidden ? 'Product is hidden. Click to show on store' : 'Product is visible. Click to hide from store') + '">' +
-            '<input type="checkbox" ' + (!isHidden ? 'checked' : '') + ' onchange="toggleProductVisibility(' + p.id + ', !this.checked)">' +
-            '<span class="switch-slider"></span>' +
-          '</label>' +
-        '</td>' +
-        '<td>' +
-          '<label class="switch-container" title="Toggle stock availability">' +
-            '<input type="checkbox" ' + (isInStock ? 'checked' : '') + ' onchange="toggleProductStock(' + p.id + ', this.checked)">' +
-            '<span class="switch-slider"></span>' +
-          '</label>' +
-        '</td>' +
-        '<td>' +
-          '<label class="switch-container" title="Toggle homepage bestseller status">' +
-            '<input type="checkbox" ' + (isFeatured ? 'checked' : '') + ' onchange="toggleProductFeatured(' + p.id + ', this.checked)">' +
-            '<span class="switch-slider"></span>' +
-          '</label>' +
-        '</td>' +
-        '<td style="text-align:right;">' +
-          '<div style="display:inline-flex; gap:6px;">' +
-            '<button class="btn btn-secondary btn-sm" onclick="toggleProductVisibility(' + p.id + ', ' + (!isHidden) + ')" title="' + (isHidden ? 'Show on store' : 'Hide from store') + '">' +
-              (isHidden ? '👁️ Show' : '🚫 Hide') +
-            '</button>' +
-            '<button class="btn btn-secondary btn-sm" onclick="openEditProductModal(' + p.id + ')">✏️ Edit</button>' +
-            '<button class="btn btn-danger btn-sm" onclick="quickDeleteProduct(' + p.id + ')">🗑️</button>' +
-          '</div>' +
-        '</td>' +
-      '</tr>';
-    }).join('');
-
-    // 2. Render Mobile Native Product Cards
-    mobileContainer.innerHTML = list.map(function(p) {
-      var isHidden = Boolean(p.hidden);
-      var isInStock = p.inStock !== false;
-      var isFeatured = Boolean(p.featured);
-      var thumb = (p.images && p.images.length) ? p.images[0] : '';
-
-      return '<div class="mobile-prod-card ' + (isHidden ? 'is-hidden' : '') + '">' +
-        '<div class="mobile-prod-top">' +
-          '<img src="' + thumb + '" class="mobile-prod-thumb" alt="' + escapeHTML(p.title) + '" loading="lazy" onclick="openEditProductModal(' + p.id + ')">' +
-          '<div class="mobile-prod-info">' +
-            '<div class="mobile-prod-title" onclick="openEditProductModal(' + p.id + ')">' +
-              escapeHTML(p.title) +
-              (isHidden ? ' <span class="badge badge-warning" style="font-size:10px; padding:1px 5px;">HIDDEN</span>' : '') +
-            '</div>' +
-            '<div class="mobile-prod-meta">' +
-              '<span class="badge badge-category">' + escapeHTML(p.category) + '</span>' +
-              '<span class="badge ' + (isHidden ? 'badge-subdued' : 'badge-success') + '">' + (isHidden ? '👁️ Hidden' : '● Live') + '</span>' +
-              (isFeatured ? '<span class="badge badge-warning">★ Bestseller</span>' : '') +
-            '</div>' +
-            '<div class="mobile-prod-price">' +
-              '₹' + p.cod_price +
-              '<small>UPI: ₹' + p.upi_price + '</small>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="mobile-toggles-strip">' +
-          '<div class="mobile-toggle-item">' +
-            '<span>' + (isHidden ? 'Hidden' : 'Live') + '</span>' +
-            '<label class="switch-container">' +
-              '<input type="checkbox" ' + (!isHidden ? 'checked' : '') + ' onchange="toggleProductVisibility(' + p.id + ', !this.checked)">' +
-              '<span class="switch-slider"></span>' +
-            '</label>' +
-          '</div>' +
-          '<div class="mobile-toggle-item">' +
-            '<span>' + (isInStock ? 'In Stock' : 'Out Stock') + '</span>' +
-            '<label class="switch-container">' +
-              '<input type="checkbox" ' + (isInStock ? 'checked' : '') + ' onchange="toggleProductStock(' + p.id + ', this.checked)">' +
-              '<span class="switch-slider"></span>' +
-            '</label>' +
-          '</div>' +
-          '<div class="mobile-toggle-item">' +
-            '<span>Bestseller</span>' +
-            '<label class="switch-container">' +
-              '<input type="checkbox" ' + (isFeatured ? 'checked' : '') + ' onchange="toggleProductFeatured(' + p.id + ', this.checked)">' +
-              '<span class="switch-slider"></span>' +
-            '</label>' +
-          '</div>' +
-        '</div>' +
-
-        '<div class="mobile-actions-row">' +
-          '<button class="btn btn-secondary" onclick="toggleProductVisibility(' + p.id + ', ' + (!isHidden) + ')">' +
-            (isHidden ? '👁️ Show' : '🚫 Hide') +
-          '</button>' +
-          '<button class="btn btn-secondary" onclick="openEditProductModal(' + p.id + ')">' +
-            '✏️ Edit' +
-          '</button>' +
-          '<button class="btn btn-danger" style="flex:0 0 44px;" onclick="quickDeleteProduct(' + p.id + ')">' +
-            '🗑️' +
-          '</button>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  function toggleProductVisibility(id, isHidden) {
-    var p = currentProducts.find(function(x) { return x.id === id; });
-    if (p) {
-      p.hidden = isHidden;
-      saveStoredConfig();
-      renderProductsTable();
-    }
-  }
-
-  function toggleProductStock(id, inStock) {
-    var p = currentProducts.find(function(x) { return x.id === id; });
-    if (p) {
-      p.inStock = inStock;
-      saveStoredConfig();
-      renderProductsTable();
-    }
-  }
-
-  function toggleProductFeatured(id, featured) {
-    var p = currentProducts.find(function(x) { return x.id === id; });
-    if (p) {
-      p.featured = featured;
-      saveStoredConfig();
-      renderProductsTable();
-    }
-  }
-
-  function openEditProductModal(id) {
-    var p = currentProducts.find(function(x) { return x.id === id; });
-    if (!p) return;
-    document.getElementById('modal-title').innerText = 'Edit ' + p.title;
-    document.getElementById('edit-prod-id').value = p.id;
-    document.getElementById('edit-prod-title').value = p.title;
-    document.getElementById('edit-prod-handle').value = p.handle || '';
-    document.getElementById('edit-prod-category').value = p.category;
-    document.getElementById('edit-prod-cod').value = p.cod_price;
-    document.getElementById('edit-prod-upi').value = p.upi_price;
-    document.getElementById('edit-prod-hidden').checked = Boolean(p.hidden);
-    document.getElementById('edit-prod-instock').checked = p.inStock !== false;
-    document.getElementById('edit-prod-featured').checked = Boolean(p.featured);
-    document.getElementById('edit-prod-images').value = (p.images || []).join('
-');
-    document.getElementById('btn-delete-prod').style.display = 'inline-flex';
-    updateImagePreviews();
-    document.getElementById('product-modal').style.display = 'flex';
-  }
-
-  function openAddProductModal() {
-    var newId = currentProducts.length ? Math.max.apply(null, currentProducts.map(function(p) { return p.id; })) + 1 : 1;
-    document.getElementById('modal-title').innerText = 'Add New Product';
-    document.getElementById('edit-prod-id').value = newId;
-    document.getElementById('edit-prod-title').value = '';
-    document.getElementById('edit-prod-handle').value = '';
-    document.getElementById('edit-prod-category').value = 'Premium Styles';
-    document.getElementById('edit-prod-cod').value = currentSettings.priceStandard || 899;
-    document.getElementById('edit-prod-upi').value = currentSettings.priceUpi || 799;
-    document.getElementById('edit-prod-hidden').checked = false;
-    document.getElementById('edit-prod-instock').checked = true;
-    document.getElementById('edit-prod-featured').checked = false;
-    document.getElementById('edit-prod-images').value = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';
-    document.getElementById('btn-delete-prod').style.display = 'none';
-    updateImagePreviews();
-    document.getElementById('product-modal').style.display = 'flex';
-  }
-
-  function closeProductModal() {
-    document.getElementById('product-modal').style.display = 'none';
-  }
-
-  function updateImagePreviews() {
-    var val = document.getElementById('edit-prod-images').value;
-    var urls = val.split('
-').map(function(s) { return s.trim(); }).filter(Boolean);
-    var container = document.getElementById('edit-prod-img-previews');
-    container.innerHTML = urls.map(function(u) {
-      return '<img src="' + u + '" class="img-preview-card" onerror="this.style.display='none'">';
-    }).join('');
-  }
-
-  function saveProductModal(e) {
-    e.preventDefault();
-    var id = Number(document.getElementById('edit-prod-id').value);
-    var title = document.getElementById('edit-prod-title').value.trim();
-    var handle = document.getElementById('edit-prod-handle').value.trim() || title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    var category = document.getElementById('edit-prod-category').value;
-    var cod = Number(document.getElementById('edit-prod-cod').value);
-    var upi = Number(document.getElementById('edit-prod-upi').value);
-    var isHidden = document.getElementById('edit-prod-hidden').checked;
-    var inStock = document.getElementById('edit-prod-instock').checked;
-    var featured = document.getElementById('edit-prod-featured').checked;
-    var rawImages = document.getElementById('edit-prod-images').value;
-    var images = rawImages.split('
-').map(function(s) { return s.trim(); }).filter(Boolean);
-
-    var p = currentProducts.find(function(x) { return x.id === id; });
-    if (p) {
-      p.title = title;
-      p.handle = handle;
-      p.category = category;
-      p.cod_price = cod;
-      p.upi_price = upi;
-      p.hidden = isHidden;
-      p.inStock = inStock;
-      p.featured = featured;
-      p.images = images.length ? images : p.images;
-    } else {
-      currentProducts.unshift({
-        id: id,
-        handle: handle,
-        title: title,
-        category: category,
-        cod_price: cod,
-        upi_price: upi,
-        hidden: isHidden,
-        inStock: inStock,
-        featured: featured,
-        images: images.length ? images : ['https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80']
-      });
-    }
-
-    saveStoredConfig();
-    closeProductModal();
-    renderProductsTable();
-  }
-
-  function quickDeleteProduct(id) {
-    var p = currentProducts.find(function(x) { return x.id === id; });
-    if (!p) return;
-    if (confirm('Delete "' + p.title + '" from your catalog?')) {
-      currentProducts = currentProducts.filter(function(x) { return x.id !== id; });
-      saveStoredConfig();
-      renderProductsTable();
-    }
-  }
-
-  function deleteCurrentProduct() {
-    var id = Number(document.getElementById('edit-prod-id').value);
-    quickDeleteProduct(id);
-    closeProductModal();
-  }
-
-  // -------------------------------------------------------------------------
-  // TAB 2: ORDERS MANAGEMENT & REAL-TIME SOUND ALERTS
-  // -------------------------------------------------------------------------
-  function loadOrders() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY_ORDERS) || '[]'); }
-    catch (e) { return []; }
-  }
-  function saveOrders(list) {
-    try { localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(list)); } catch (e) {}
-  }
-
-  function pollForNewOrders() {
-    var list = loadOrders();
-    var hasNew = false;
-    list.forEach(function(o) {
-      if (!knownOrderIds.has(o.orderId)) {
-        if (knownOrderIds.size > 0) {
-          hasNew = true;
-          playChaChingSound();
-          showToast(o);
-          if (window.confetti) confetti({ particleCount: 60, spread: 80, origin: { y: 0.8 } });
-          if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('💰 New Sale Received!', {
-              body: 'Order #' + o.orderId + ' - ₹' + o.amount + ' by ' + o.name,
-              icon: '/icon-192.png'
-            });
-          }
-        }
-        knownOrderIds.add(o.orderId);
-      }
-    });
-    if (hasNew) renderOrders();
-  }
-
-  function waCustomerUrl(order) {
-    var phone = String(order.phone || '').replace(/\D/g, '');
-    var name = order.name || 'Customer';
-    var isUpi = order.paymentMode === 'UPI';
-    var text = isUpi
-      ? 'Hi ' + name + ', we received your payment for order #' + order.orderId + '. Your sunglasses will ship in 2-4 business days. Thank you!'
-      : 'Hi ' + name + ', this is The Classic Co. Your order #' + order.orderId + ' is confirmed. We will deliver within 24 hours via Cash on Delivery.';
-    return 'https://wa.me/91' + phone + '?text=' + encodeURIComponent(text);
-  }
-
-  function renderOrders() {
-    var list = loadOrders();
-    list.forEach(function(o) { knownOrderIds.add(o.orderId); });
-
-    var revenue = 0;
-    var pendingCount = 0;
-    var codCount = 0;
-    var upiCount = 0;
-
-    list.forEach(function(o) {
-      revenue += Number(o.amount || 0);
-      if (o.status === 'Pending' || o.status === 'Payment pending verification') pendingCount++;
-      if (o.paymentMode === 'UPI') upiCount++; else codCount++;
-    });
-
-    document.getElementById('stat-total-orders').innerText = list.length;
-    document.getElementById('stat-total-revenue').innerText = '₹' + revenue.toLocaleString('en-IN');
-    document.getElementById('stat-pending-orders').innerText = pendingCount;
-    document.getElementById('stat-cod-upi-split').innerText = codCount + ' COD / ' + upiCount + ' UPI';
-    document.getElementById('badge-orders-count').innerText = list.length;
-
-    var search = (document.getElementById('order-search').value || '').toLowerCase().trim();
-    var statusFilter = document.getElementById('order-status-filter').value;
-
-    var filtered = list.filter(function(o) {
-      var matchSearch = !search ||
-        (o.orderId && o.orderId.toLowerCase().includes(search)) ||
-        (o.name && o.name.toLowerCase().includes(search)) ||
-        (o.phone && o.phone.includes(search));
-      var matchStatus = statusFilter === 'ALL' || o.status === statusFilter;
-      return matchSearch && matchStatus;
-    });
-
-    var tbody = document.getElementById('orders-table-body');
-    var mobileOrders = document.getElementById('orders-mobile-container');
-    if (!filtered.length) {
-      var emptyMsg = 'No orders placed yet.';
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</td></tr>';
-      mobileOrders.innerHTML = '<div style="text-align:center; padding:36px; color:var(--p-text-subdued);">' + emptyMsg + '</div>';
-      return;
-    }
-
-    // Desktop Orders Rows
-    tbody.innerHTML = filtered.map(function(o) {
-      var st = o.status || 'Pending';
-      var opts = STATUSES.map(function(s) { return '<option ' + (s === st ? 'selected' : '') + '>' + s + '</option>'; }).join('');
-      var isPendingVerif = st === 'Payment pending verification';
-
-      return '<tr>' +
-        '<td>' +
-          '<strong>#' + o.orderId + '</strong>' +
-          '<div style="font-size:11.5px; color:var(--p-text-subdued);">' + (o.createdAt || '').slice(0, 16).replace('T', ' ') + '</div>' +
-        '</td>' +
-        '<td>' +
-          '<div style="font-weight:600;">' + escapeHTML(o.name || 'Customer') + '</div>' +
-          '<div style="font-size:11.5px; color:var(--p-text-subdued);">+91 ' + escapeHTML(o.phone) + '</div>' +
-          '<div style="font-size:11px; color:var(--p-text-subdued);">' + escapeHTML(o.city || '') + ' · ' + escapeHTML(o.pincode) + '</div>' +
-        '</td>' +
-        '<td>' +
-          '<div style="font-weight:600;">' + escapeHTML(o.title || 'Classic Frame') + '</div>' +
-        '</td>' +
-        '<td>' +
-          '<div style="font-weight:700;">₹' + Number(o.amount).toLocaleString('en-IN') + '</div>' +
-        '</td>' +
-        '<td>' +
-          '<div>' + o.paymentMode + '</div>' +
-          '<span class="badge ' + (isPendingVerif ? 'badge-warning' : 'badge-success') + '">' + (o.paymentStatus || st) + '</span>' +
-        '</td>' +
-        '<td>' +
-          '<select class="filter-select" onchange="updateOrderStatus(\'' + o.orderId + '\', this.value)" style="height:32px; font-size:12px;">' +
-            opts +
-          '</select>' +
-        '</td>' +
-        '<td style="text-align:right;">' +
-          '<a class="btn btn-secondary btn-sm" target="_blank" rel="noopener" href="' + waCustomerUrl(o) + '">' +
-            'WhatsApp ↗' +
-          '</a>' +
-        '</td>' +
-      '</tr>';
-    }).join('');
-
-    // Mobile Orders Cards
-    mobileOrders.innerHTML = filtered.map(function(o) {
-      var st = o.status || 'Pending';
-      var opts = STATUSES.map(function(s) { return '<option ' + (s === st ? 'selected' : '') + '>' + s + '</option>'; }).join('');
-      var isPendingVerif = st === 'Payment pending verification';
-
-      return '<div class="mobile-order-card">' +
-        '<div style="display:flex; justify-content:space-between; align-items:center;">' +
-          '<strong>#' + o.orderId + '</strong>' +
-          '<span class="badge ' + (isPendingVerif ? 'badge-warning' : 'badge-success') + '">' + (o.paymentStatus || st) + '</span>' +
-        '</div>' +
-        '<div style="font-size:12px; color:var(--p-text-subdued);">' +
-          (o.createdAt || '').slice(0, 16).replace('T', ' ') + ' · ' + o.paymentMode +
-        '</div>' +
-        '<div style="font-weight:600; margin-top:4px;">' +
-          escapeHTML(o.name || 'Customer') + ' (+91 ' + escapeHTML(o.phone) + ')' +
-        '</div>' +
-        '<div style="font-size:12px; color:var(--p-text-subdued);">' +
-          escapeHTML(o.city || '') + ' · ' + escapeHTML(o.pincode) +
-        '</div>' +
-        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; padding-top:6px; border-top:1px solid #f1f2f4;">' +
-          '<span>' + escapeHTML(o.title || 'Classic Frame') + '</span>' +
-          '<strong style="font-size:15px;">₹' + Number(o.amount).toLocaleString('en-IN') + '</strong>' +
-        '</div>' +
-        '<div style="margin-top:6px;">' +
-          '<select class="filter-select" onchange="updateOrderStatus(\'' + o.orderId + '\', this.value)" style="width:100%; height:38px;">' +
-            opts +
-          '</select>' +
-        '</div>' +
-        '<div style="margin-top:6px;">' +
-          '<a class="btn btn-primary" style="width:100%; height:40px; text-decoration:none;" target="_blank" rel="noopener" href="' + waCustomerUrl(o) + '">' +
-            'Chat with Customer on WhatsApp ↗' +
-          '</a>' +
-        '</div>' +
-      '</div>';
-    }).join('');
-  }
-
-  function updateOrderStatus(orderId, newStatus) {
-    var list = loadOrders();
-    var idx = list.findIndex(function(o) { return o.orderId === orderId; });
-    if (idx >= 0) {
-      list[idx].status = newStatus;
-      saveOrders(list);
-      renderOrders();
-    }
-  }
-
-  function clearTestOrders() {
-    if (confirm('Clear test orders stored in this browser? (Your Google Sheet is untouched).')) {
-      saveOrders([]);
-      renderOrders();
-    }
-  }
-
-  function exportOrdersCSV() {
-    var list = loadOrders();
-    if (!list.length) return alert('No orders to export.');
-    var q = function(v) { return '"' + String(v || '').replace(/"/g, '""') + '"'; };
-    var rows = [['Order ID', 'Date', 'Customer Name', 'Phone', 'Address', 'Pincode', 'Product', 'Amount', 'Payment Mode', 'Status']];
-    list.forEach(function(o) {
-      rows.push([o.orderId, o.createdAt, o.name, o.phone, o.address, o.pincode, o.title, o.amount, o.paymentMode, o.status]);
-    });
-    var csv = rows.map(function(r) { return r.map(q).join(','); }).join('\n');
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
-    a.download = 'classic-co-orders-' + new Date().toISOString().slice(0, 10) + '.csv';
-    a.click();
-  }
-
-  // -------------------------------------------------------------------------
-  // TAB 3: PRICING RULES SAVE
-  // -------------------------------------------------------------------------
-  function savePricingRules() {
-    currentSettings.priceStandard = Number(document.getElementById('cfg-price-standard').value);
-    currentSettings.priceUpi = Number(document.getElementById('cfg-price-upi').value);
-    currentSettings.pincodePrefix = String(document.getElementById('cfg-pincode-prefix').value).trim();
-    saveStoredConfig();
-    alert('✓ Pricing & delivery rules saved in browser! Tap "Publish Live" to push to all visitors.');
-  }
-
-  // -------------------------------------------------------------------------
-  // TAB 4: STORE PROMISES SAVE
-  // -------------------------------------------------------------------------
-  function saveStorePromises() {
-    currentPromises.announcement = document.getElementById('copy-announcement').value;
-    currentPromises.heroTitle = document.getElementById('copy-hero-title').value;
-    currentPromises.heroSubtitle = document.getElementById('copy-hero-subtitle').value;
-    currentPromises.deliveryStrip = document.getElementById('copy-delivery-strip').value;
-    currentPromises.founder = document.getElementById('copy-founder').value;
-    saveStoredConfig();
-    alert('✓ Store promises updated in browser! Tap "Publish Live" to push to all visitors.');
-  }
-
-  // -------------------------------------------------------------------------
-  // TAB 5: GENERAL SETTINGS SAVE
-  // -------------------------------------------------------------------------
-  function saveGeneralSettings() {
-    currentSettings.waNumber = String(document.getElementById('cfg-wa-number').value).trim();
-    currentSettings.merchantUpi = String(document.getElementById('cfg-merchant-upi').value).trim();
-    currentSettings.gasUrl = String(document.getElementById('cfg-gas-url').value).trim();
-    currentSettings.metaPixelId = String(document.getElementById('cfg-meta-pixel').value).trim();
-    currentSettings.ga4Id = String(document.getElementById('cfg-ga4-id').value).trim();
-
-    var token = document.getElementById('cfg-github-token').value.trim();
-    if (token) localStorage.setItem(STORAGE_KEY_TOKEN, token);
-
-    saveStoredConfig();
-    alert('✓ Settings saved successfully!');
-  }
-
-  function resetToFactoryDefaults() {
-    if (confirm('Reset catalog to factory defaults (30 original sunglasses)? Any manual additions will be reset.')) {
-      localStorage.removeItem(STORAGE_KEY_CONFIG);
-      currentProducts = JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
-      saveStoredConfig();
-      renderProductsTable();
-      alert('✓ Reset to factory defaults completed!');
-    }
-  }
-
-  // -------------------------------------------------------------------------
-  // PUBLISH LIVE TO GITHUB & VERCEL
-  // -------------------------------------------------------------------------
-  async function publishLiveChanges() {
-    var token = document.getElementById('cfg-github-token').value.trim() || localStorage.getItem(STORAGE_KEY_TOKEN) || '';
-    if (!token && !GITHUB_TOKEN_AVAILABLE) {
-      var entered = prompt('Please enter your GitHub Personal Access Token to deploy live to Vercel:');
-      if (!entered) return;
-      token = entered.trim();
-      localStorage.setItem(STORAGE_KEY_TOKEN, token);
-    }
-
-    var badge = document.getElementById('badge-sync-status');
-    badge.innerText = '⏳ Publishing...';
-    badge.className = 'badge badge-warning';
-
-    var code = generateProductsDataJs();
-
-    try {
-      var res = await fetch('/admin?action=publish', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          token: token || undefined,
-          filePath: 'js/products-data.js',
-          content: code,
-          message: '🚀 Admin Update: Updated products, pricing & store promises (' + currentProducts.length + ' products)'
-        })
-      });
-
-      var data = await res.json();
-      if (res.ok && data.success) {
-        badge.innerText = '● All Live on Vercel';
-        badge.className = 'badge badge-success';
-        if (window.confetti) confetti({ particleCount: 70, spread: 90, origin: { y: 0.6 } });
-        alert('🎉 SUCCESS! Changes published live to GitHub. Vercel is now building and deploying to your live store (takes ~20 seconds).');
-      } else {
-        badge.innerText = '⚠️ Publish Failed';
-        badge.className = 'badge badge-subdued';
-        alert('Publish Error: ' + (data.error || 'Unknown error occurred.'));
-      }
-    } catch (err) {
-      badge.innerText = '⚠️ Network Error';
-      alert('Network error connecting to deployment server: ' + err.message);
-    }
-  }
-
-  function generateProductsDataJs() {
-    return '// ---------------------------------------------------------------------------\n' +
-      '// STORE CONFIG\n' +
-      '// ---------------------------------------------------------------------------\n' +
-      'var GOOGLE_APPS_SCRIPT_URL = window.GOOGLE_APPS_SCRIPT_URL = ' + JSON.stringify(currentSettings.gasUrl || '') + ';\n' +
-      'var WA_NUMBER = window.WA_NUMBER = ' + JSON.stringify(currentSettings.waNumber || '918619661325') + ';\n' +
-      'var MERCHANT_UPI = window.MERCHANT_UPI = ' + JSON.stringify(currentSettings.merchantUpi || '8619661325@upi') + ';\n\n' +
-      'var META_PIXEL_ID = window.META_PIXEL_ID = ' + JSON.stringify(currentSettings.metaPixelId || '') + ';\n' +
-      'var GA4_ID = window.GA4_ID = ' + JSON.stringify(currentSettings.ga4Id || '') + ';\n\n' +
-      'var LOCAL_PINCODE_PREFIX = window.LOCAL_PINCODE_PREFIX = ' + JSON.stringify(currentSettings.pincodePrefix || '313') + ';\n\n' +
-      'var PRICE_STANDARD = window.PRICE_STANDARD = ' + Number(currentSettings.priceStandard || 899) + ';\n' +
-      'var PRICE_UPI = window.PRICE_UPI = ' + Number(currentSettings.priceUpi || 799) + ';\n\n' +
-      'var SITE_PROMISES = window.SITE_PROMISES = ' + JSON.stringify(currentPromises, null, 2) + ';\n\n' +
-      '// ---------------------------------------------------------------------------\n' +
-      '// PRODUCTS\n' +
-      '// ---------------------------------------------------------------------------\n' +
-      'var PRODUCTS = window.PRODUCTS = ' + JSON.stringify(currentProducts, null, 2) + ';\n\n' +
-      '// Dynamic client override check\n' +
-      'try {\n' +
-      '  var localConfig = JSON.parse(localStorage.getItem("classic_co_custom_config") || "{}");\n' +
-      '  if (localConfig && typeof localConfig === "object") {\n' +
-      '    if (Array.isArray(localConfig.products) && localConfig.products.length > 0) PRODUCTS = window.PRODUCTS = localConfig.products;\n' +
-      '    if (localConfig.settings) {\n' +
-      '      if (localConfig.settings.priceStandard) PRICE_STANDARD = window.PRICE_STANDARD = Number(localConfig.settings.priceStandard);\n' +
-      '      if (localConfig.settings.priceUpi) PRICE_UPI = window.PRICE_UPI = Number(localConfig.settings.priceUpi);\n' +
-      '      if (localConfig.settings.waNumber) WA_NUMBER = window.WA_NUMBER = String(localConfig.settings.waNumber);\n' +
-      '      if (localConfig.settings.merchantUpi) MERCHANT_UPI = window.MERCHANT_UPI = String(localConfig.settings.merchantUpi);\n' +
-      '      if (localConfig.settings.pincodePrefix) LOCAL_PINCODE_PREFIX = window.LOCAL_PINCODE_PREFIX = String(localConfig.settings.pincodePrefix);\n' +
-      '      if (localConfig.settings.gasUrl) GOOGLE_APPS_SCRIPT_URL = window.GOOGLE_APPS_SCRIPT_URL = localConfig.settings.gasUrl;\n' +
-      '      if (localConfig.settings.metaPixelId !== undefined) META_PIXEL_ID = window.META_PIXEL_ID = localConfig.settings.metaPixelId;\n' +
-      '      if (localConfig.settings.ga4Id !== undefined) GA4_ID = window.GA4_ID = localConfig.settings.ga4Id;\n' +
-      '    }\n' +
-      '    if (localConfig.promises) Object.assign(SITE_PROMISES, localConfig.promises);\n' +
-      '  }\n' +
-      '} catch (e) {}\n\n' +
-      'if (typeof window !== "undefined") {\n' +
-      '  window.PRODUCTS = PRODUCTS;\n' +
-      '  window.PRICE_STANDARD = PRICE_STANDARD;\n' +
-      '  window.PRICE_UPI = PRICE_UPI;\n' +
-      '  window.SITE_PROMISES = SITE_PROMISES;\n' +
-      '  window.WA_NUMBER = WA_NUMBER;\n' +
-      '  window.MERCHANT_UPI = MERCHANT_UPI;\n' +
-      '  window.LOCAL_PINCODE_PREFIX = LOCAL_PINCODE_PREFIX;\n' +
-      '  window.GOOGLE_APPS_SCRIPT_URL = GOOGLE_APPS_SCRIPT_URL;\n' +
-      '  window.META_PIXEL_ID = META_PIXEL_ID;\n' +
-      '  window.GA4_ID = GA4_ID;\n' +
-      '}\n';
-  }
-
-  function escapeHTML(str) {
-    return String(str || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
-  document.addEventListener('DOMContentLoaded', initUI);
-</script>
+  <!-- Modular Clean Scripts -->
+  <script>
+    window.ORDERS_SHEET_URL = __ORDERS_SHEET_URL__;
+    window.GITHUB_TOKEN_AVAILABLE = __GITHUB_TOKEN_AVAILABLE__;
+  </script>
+  <script src="/js/admin-app.js"></script>
 </body>
 </html>
