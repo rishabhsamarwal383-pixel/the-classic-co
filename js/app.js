@@ -49,3 +49,31 @@ function switchHeroPhoto(src, pillEl) {
   document.querySelectorAll('.hero-pill-thumb').forEach(p => p.classList.remove('active'));
   if (pillEl) pillEl.classList.add('active');
 }
+
+// Dynamic Site Promises & Editorial Copy Binding
+function applySitePromises() {
+  if (typeof SITE_PROMISES === 'undefined' || !SITE_PROMISES) return;
+  if (SITE_PROMISES.announcement) {
+    const el = document.querySelector('.announcement-bar span');
+    if (el) el.innerHTML = SITE_PROMISES.announcement;
+  }
+  if (SITE_PROMISES.heroTitle) {
+    const el = document.querySelector('.hero-main-title');
+    if (el) el.innerHTML = SITE_PROMISES.heroTitle;
+  }
+  if (SITE_PROMISES.heroSubtitle) {
+    const el = document.querySelector('.hero-sub-title');
+    if (el) el.innerHTML = SITE_PROMISES.heroSubtitle;
+  }
+  if (SITE_PROMISES.deliveryStrip) {
+    const el = document.querySelector('.delivery-strip');
+    if (el) el.innerHTML = SITE_PROMISES.deliveryStrip;
+  }
+  if (SITE_PROMISES.founder) {
+    const el = document.querySelector('.founder-section p');
+    if (el) el.innerHTML = SITE_PROMISES.founder;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", applySitePromises);
+
