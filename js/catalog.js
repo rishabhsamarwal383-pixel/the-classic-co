@@ -3,6 +3,7 @@
 // =========================================================================
 let currentCategory = "All";
 let searchQuery = "";
+let currentSort = "featured";
 let selectedProduct = null;
 let selectedPayment = "upi";
 let confirmedOrderData = null;
@@ -17,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function inStockProducts() {
   return PRODUCTS.filter(p => p.inStock !== false && !p.hidden);
+}
+
+function handleSort(val) {
+  currentSort = val;
+  renderProductsGrid();
 }
 
 function renderProductsGrid() {
@@ -37,13 +43,24 @@ function renderProductsGrid() {
   }
 
   const isFiltered = currentCategory !== "All" || !!searchQuery;
-  let display = list;
+  let display = [...list];
   let showViewAll = false;
 
-  if (!isFiltered && !showAllStyles) {
-    const featured = list.filter(p => p.featured);
-    display = featured.length ? featured : list.slice(0, BESTSELLER_FALLBACK_COUNT);
-    showViewAll = list.length > display.length;
+  if (currentSort === "price-asc") {
+    display.sort((a, b) => a.cod_price - b.cod_price);
+  } else if (currentSort === "price-desc") {
+    display.sort((a, b) => b.cod_price - a.cod_price);
+  } else if (currentSort === "name-asc") {
+    display.sort((a, b) => a.title.localeCompare(b.title));
+  } else if (currentSort === "name-desc") {
+    display.sort((a, b) => b.title.localeCompare(a.title));
+  } else {
+    // "featured" default sorting
+    if (!isFiltered && !showAllStyles) {
+      const featured = display.filter(p => p.featured);
+      display = featured.length ? featured : display.slice(0, BESTSELLER_FALLBACK_COUNT);
+      showViewAll = list.length > display.length;
+    }
   }
 
   if (headingEl) {
