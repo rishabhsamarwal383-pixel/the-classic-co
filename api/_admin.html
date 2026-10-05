@@ -777,8 +777,14 @@
               <option value="OUT_OF_STOCK">Out of Stock Only</option>
             </select>
 
+            <select id="prod-vis-filter" class="filter-select" onchange="renderProductsTable()">
+              <option value="ALL">All Products (Live &amp; Hidden)</option>
+              <option value="LIVE">Live on Store Only</option>
+              <option value="HIDDEN">Hidden from Store Only</option>
+            </select>
+
             <select id="prod-feat-filter" class="filter-select" onchange="renderProductsTable()">
-              <option value="ALL">All Visibility</option>
+              <option value="ALL">All Homepage Status</option>
               <option value="BESTSELLER">Bestsellers (Homepage)</option>
               <option value="CATALOG">Catalog Only</option>
             </select>
@@ -794,11 +800,13 @@
           <table class="shopify-table">
             <thead>
               <tr>
-                <th style="width:40%;">Product</th>
+                <th style="width:32%;">Product</th>
                 <th>Category</th>
-                <th>Status</th>
+                <th>Visibility</th>
+                <th>Stock</th>
                 <th>Homepage</th>
                 <th>Price (COD / UPI)</th>
+                <th>Visible</th>
                 <th>In Stock</th>
                 <th>Bestseller</th>
                 <th style="text-align:right;">Actions</th>
@@ -1116,13 +1124,26 @@
             </div>
           </div>
 
+          <div class="form-row" style="background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:12px 14px; margin-bottom:14px;">
+            <label class="toggle-switch-label" style="align-items:flex-start;">
+              <span class="switch-container" style="margin-top:2px;">
+                <input type="checkbox" id="edit-prod-hidden">
+                <span class="switch-slider"></span>
+              </span>
+              <div>
+                <div style="font-weight:700; color:var(--p-text);">Hide from Storefront (Draft / Unpublished)</div>
+                <div style="font-size:11.5px; color:var(--p-text-subdued); margin-top:2px;">When enabled, this specific product is completely hidden from customers on the website, search results, and bestsellers.</div>
+              </div>
+            </label>
+          </div>
+
           <div class="form-grid-2" style="margin-bottom:16px;">
             <label class="toggle-switch-label">
               <span class="switch-container">
                 <input type="checkbox" id="edit-prod-instock">
                 <span class="switch-slider"></span>
               </span>
-              <span style="font-weight:600; color:var(--p-text);">In Stock (Visible to Customers)</span>
+              <span style="font-weight:600; color:var(--p-text);">In Stock (Inventory Available)</span>
             </label>
 
             <label class="toggle-switch-label">
@@ -2011,12 +2032,15 @@
     var stockFilter = document.getElementById('prod-stock-filter').value;
     var featFilter = document.getElementById('prod-feat-filter').value;
 
+    var visFilter = (document.getElementById('prod-vis-filter') ? document.getElementById('prod-vis-filter').value : 'ALL');
+
     var list = currentProducts.filter(function(p) {
       var matchSearch = !search || p.title.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
       var matchCat = catFilter === 'ALL' || p.category === catFilter;
       var matchStock = stockFilter === 'ALL' || (stockFilter === 'IN_STOCK' ? p.inStock !== false : p.inStock === false);
       var matchFeat = featFilter === 'ALL' || (featFilter === 'BESTSELLER' ? p.featured : !p.featured);
-      return matchSearch && matchCat && matchStock && matchFeat;
+      var matchVis = visFilter === 'ALL' || (visFilter === 'LIVE' ? !p.hidden : Boolean(p.hidden));
+      return matchSearch && matchCat && matchStock && matchFeat && matchVis;
     });
 
     document.getElementById('badge-prod-count').innerText = currentProducts.length;
@@ -2028,44 +2052,65 @@
     }
 
     tbody.innerHTML = list.map(function(p) {
+      var isHidden = Boolean(p.hidden);
       var isInStock = p.inStock !== false;
       var isFeatured = Boolean(p.featured);
       var thumb = (p.images && p.images.length) ? p.images[0] : '';
 
-      return '<tr>' +
+      return '<tr ' + (isHidden ? 'style="background:#fcfcfd; opacity:0.86;"' : '') + '>' +
         '<td>' +
           '<div class="prod-cell">' +
             '<img src="' + thumb + '" class="prod-thumbnail" alt="' + escapeHTML(p.title) + '" loading="lazy">' +
             '<div>' +
               '<a class="prod-title-link" onclick="openEditProductModal(' + p.id + ')">' + escapeHTML(p.title) + '</a>' +
+              (isHidden ? ' <span class="badge badge-warning" style="font-size:10px; padding:1px 5px; margin-left:4px;">HIDDEN</span>' : '') +
               '<div style="font-size:11.5px; color:var(--p-text-subdued); margin-top:2px;">ID: #' + p.id + '</div>' +
             '</div>' +
           '</div>' +
         '</td>' +
         '<td><span class="badge badge-category">' + escapeHTML(p.category) + '</span></td>' +
-        '<td><span class="badge ' + (isInStock ? 'badge-success' : 'badge-subdued') + '">' + (isInStock ? '● In stock' : '○ Out of stock') + '</span></td>' +
+        '<td><span class="badge ' + (isHidden ? 'badge-subdued' : 'badge-success') + '">' + (isHidden ? '👁️ Hidden' : '● Live') + '</span></td>' +
+        '<td><span class="badge ' + (isInStock ? 'badge-success' : 'badge-subdued') + '">' + (isInStock ? 'In stock' : 'Out of stock') + '</span></td>' +
         '<td>' + (isFeatured ? '<span class="badge badge-warning">★ Bestseller</span>' : '<span style="color:var(--p-text-subdued);">-</span>') + '</td>' +
         '<td><div style="font-weight:700;">₹' + p.cod_price + '</div><div style="font-size:11.5px; color:var(--p-text-subdued);">UPI: ₹' + p.upi_price + '</div></td>' +
         '<td>' +
-          '<label class="switch-container">' +
+          '<label class="switch-container" title="' + (isHidden ? 'Product is hidden. Click to show on store' : 'Product is visible. Click to hide from store') + '">' +
+            '<input type="checkbox" ' + (!isHidden ? 'checked' : '') + ' onchange="toggleProductVisibility(' + p.id + ', !this.checked)">' +
+            '<span class="switch-slider"></span>' +
+          '</label>' +
+        '</td>' +
+        '<td>' +
+          '<label class="switch-container" title="Toggle stock availability">' +
             '<input type="checkbox" ' + (isInStock ? 'checked' : '') + ' onchange="toggleProductStock(' + p.id + ', this.checked)">' +
             '<span class="switch-slider"></span>' +
           '</label>' +
         '</td>' +
         '<td>' +
-          '<label class="switch-container">' +
+          '<label class="switch-container" title="Toggle homepage bestseller status">' +
             '<input type="checkbox" ' + (isFeatured ? 'checked' : '') + ' onchange="toggleProductFeatured(' + p.id + ', this.checked)">' +
             '<span class="switch-slider"></span>' +
           '</label>' +
         '</td>' +
         '<td style="text-align:right;">' +
           '<div style="display:inline-flex; gap:6px;">' +
+            '<button class="btn btn-secondary btn-sm" onclick="toggleProductVisibility(' + p.id + ', ' + (!isHidden) + ')" title="' + (isHidden ? 'Show on store' : 'Hide from store') + '">' +
+              (isHidden ? '👁️ Show' : '🚫 Hide') +
+            '</button>' +
             '<button class="btn btn-secondary btn-sm" onclick="openEditProductModal(' + p.id + ')">✏️ Edit</button>' +
             '<button class="btn btn-danger btn-sm" onclick="quickDeleteProduct(' + p.id + ')">🗑️</button>' +
           '</div>' +
         '</td>' +
       '</tr>';
     }).join('');
+  }
+
+  function toggleProductVisibility(id, isHidden) {
+    var p = currentProducts.find(function(x) { return x.id === id; });
+    if (p) {
+      p.hidden = isHidden;
+      saveStoredConfig();
+      renderProductsTable();
+    }
   }
 
   function toggleProductStock(id, inStock) {
@@ -2096,6 +2141,7 @@
     document.getElementById('edit-prod-category').value = p.category;
     document.getElementById('edit-prod-cod').value = p.cod_price;
     document.getElementById('edit-prod-upi').value = p.upi_price;
+    document.getElementById('edit-prod-hidden').checked = Boolean(p.hidden);
     document.getElementById('edit-prod-instock').checked = p.inStock !== false;
     document.getElementById('edit-prod-featured').checked = Boolean(p.featured);
     document.getElementById('edit-prod-images').value = (p.images || []).join('\n');
@@ -2113,6 +2159,7 @@
     document.getElementById('edit-prod-category').value = 'Premium Styles';
     document.getElementById('edit-prod-cod').value = currentSettings.priceStandard || 899;
     document.getElementById('edit-prod-upi').value = currentSettings.priceUpi || 799;
+    document.getElementById('edit-prod-hidden').checked = false;
     document.getElementById('edit-prod-instock').checked = true;
     document.getElementById('edit-prod-featured').checked = false;
     document.getElementById('edit-prod-images').value = 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80';
@@ -2142,6 +2189,7 @@
     var category = document.getElementById('edit-prod-category').value;
     var cod = Number(document.getElementById('edit-prod-cod').value);
     var upi = Number(document.getElementById('edit-prod-upi').value);
+    var isHidden = document.getElementById('edit-prod-hidden').checked;
     var inStock = document.getElementById('edit-prod-instock').checked;
     var featured = document.getElementById('edit-prod-featured').checked;
     var rawImages = document.getElementById('edit-prod-images').value;
@@ -2154,6 +2202,7 @@
       p.category = category;
       p.cod_price = cod;
       p.upi_price = upi;
+      p.hidden = isHidden;
       p.inStock = inStock;
       p.featured = featured;
       p.images = images.length ? images : p.images;
@@ -2165,6 +2214,7 @@
         category: category,
         cod_price: cod,
         upi_price: upi,
+        hidden: isHidden,
         inStock: inStock,
         featured: featured,
         images: images.length ? images : ['https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=80']
