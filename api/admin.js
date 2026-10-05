@@ -48,16 +48,20 @@ function parseCookies(header) {
 function readBody(req) {
   return new Promise((resolve) => {
     if (req.body !== undefined && req.body !== null) {
-      if (typeof req.body === 'string') return resolve(req.body);
       if (typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
-        return resolve(JSON.stringify(req.body));
+        return resolve(req.body);
       }
-      if (Buffer.isBuffer(req.body)) return resolve(req.body.toString('utf8'));
+      const str = Buffer.isBuffer(req.body) ? req.body.toString('utf8') : String(req.body);
+      try { return resolve(JSON.parse(str)); }
+      catch (e) { return resolve(Object.fromEntries(new URLSearchParams(str))); }
     }
     let data = '';
     req.on('data', (c) => { data += c; if (data.length > 5000000) req.destroy(); });
-    req.on('end', () => resolve(data));
-    req.on('error', () => resolve(''));
+    req.on('end', () => {
+      try { resolve(JSON.parse(data)); }
+      catch (e) { resolve(Object.fromEntries(new URLSearchParams(data))); }
+    });
+    req.on('error', () => resolve({}));
   });
 }
 
@@ -151,10 +155,7 @@ module.exports = async (req, res) => {
     }
 
     try {
-      const raw = await readBody(req);
-      let payload = {};
-      try { payload = JSON.parse(raw); } catch (e) { payload = Object.fromEntries(new URLSearchParams(raw)); }
-
+      const payload = await readBody(req);
       const githubToken = payload.token || process.env.GITHUB_TOKEN;
       if (!githubToken) {
         res.statusCode = 400;
@@ -219,9 +220,8 @@ module.exports = async (req, res) => {
 
   // Handle Password Login Form Submission
   if (req.method === 'POST') {
-    const raw = await readBody(req);
-    const params = new URLSearchParams(raw);
-    const given = params.get('password') || '';
+    const payload = await readBody(req);
+    const given = (payload && payload.password) ? payload.password : '';
 
     if (safeEqual(given, password)) {
       res.setHeader('Set-Cookie', COOKIE_NAME + '=' + makeToken(secret) + '; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=' + SESSION_SECONDS);
