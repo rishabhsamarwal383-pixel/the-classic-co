@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>THE CLASSIC CO. — Contemporary Eyewear Studio</title>
+  <title>The Classic Co. | Polarized Sunglasses in Udaipur</title>
+  <meta name="description" content="UV400 polarized sunglasses from ₹899. Cash on delivery and 24-hour delivery in Udaipur, prepaid UPI across India. Hard case and cloth included.">
   
   <!-- PWA & Mobile Capabilities -->
   <link rel="manifest" href="manifest.json">
@@ -25,16 +26,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- Dynamic Marketing Pixels & Tracking Loader (Configured via /admin) -->
+  <!-- Store config (IDs, prices, delivery rule) -->
+  <script src="js/products-data.js?v=20261005"></script>
+
+  <!-- Marketing pixels: IDs are set in js/products-data.js and load for every visitor -->
   <script>
     (function initMarketingPixels() {
       try {
-        var metaPixelId = localStorage.getItem('cc_meta_pixel_id') || "";
-        var ga4Id = localStorage.getItem('cc_ga4_id') || "";
-        var gtmId = localStorage.getItem('cc_gtm_id') || "";
-        var customHead = localStorage.getItem('cc_custom_head_code') || "";
-
-        if (metaPixelId) {
+        if (typeof META_PIXEL_ID !== 'undefined' && META_PIXEL_ID) {
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
           n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -43,56 +42,34 @@
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', metaPixelId);
+          fbq('init', META_PIXEL_ID);
           fbq('track', 'PageView');
         }
-
-        if (ga4Id) {
+        if (typeof GA4_ID !== 'undefined' && GA4_ID) {
           var gaScript = document.createElement('script');
           gaScript.async = true;
-          gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(ga4Id);
+          gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA4_ID);
           document.head.appendChild(gaScript);
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
+          window.gtag = function(){ dataLayer.push(arguments); };
           gtag('js', new Date());
-          gtag('config', ga4Id);
-        }
-
-        if (gtmId) {
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer',gtmId);
-        }
-
-        if (customHead) {
-          var div = document.createElement('div');
-          div.innerHTML = customHead;
-          Array.from(div.children).forEach(function(child) {
-            if (child.tagName === 'SCRIPT') {
-              var s = document.createElement('script');
-              if (child.src) s.src = child.src;
-              else s.text = child.innerHTML;
-              document.head.appendChild(s);
-            }
-          });
+          gtag('config', GA4_ID);
         }
       } catch(e) {}
     })();
   </script>
 
   <!-- Core Design & Mobile Stylesheets -->
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/mobile.css">
+  <link rel="stylesheet" href="css/style.css?v=20261005">
+  <link rel="stylesheet" href="css/mobile.css?v=20261005">
 </head>
 <body>
 
   <!-- ========================================================================= -->
-  <!-- LUXURY SLIDE-OVER DRAWER (MENU, SHOPPING BAG & ORDER TRACKER) -->
+  <!-- MENU DRAWER -->
   <!-- ========================================================================= -->
   <!-- ========================================================================= -->
-  <!-- LUXURY NAVIGATION DRAWER (PURE NAVIGATION & TRACKING) -->
+  <!-- NAVIGATION DRAWER -->
   <!-- ========================================================================= -->
   <div class="drawer-overlay" id="menu-drawer" onclick="handleDrawerBackdropClick(event)">
     <div class="drawer-panel" onclick="event.stopPropagation()">
@@ -109,41 +86,23 @@
         <div>
           <div class="drawer-section-title">Collections</div>
           <ul class="drawer-nav-list">
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('All')"><span>All Silhouettes</span><span style="font-size:12px; color:var(--text-light);">30</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Polarized')"><span>Polarized &amp; Driving</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Acetates')"><span>Studio Acetates</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Magnetic')"><span>4-in-1 Magnetic Clip-Ons</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Luxury')"><span>Luxury Collection</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Lifestyle')"><span>Classic Lifestyle</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('All')"><span>Bestsellers</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Polarized &amp; Driving')"><span>Polarized &amp; Driving</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Magnetic Clip-Ons')"><span>Magnetic Clip-Ons</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Premium Styles')"><span>Premium Styles</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Classic Lifestyle')"><span>Classic Lifestyle</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Trending')"><span>Trending</span><span>→</span></a></li>
           </ul>
         </div>
 
-        <!-- DELIVERY NOTIFICATIONS & APP INSTALL -->
-        <div style="border-top:1px solid var(--surface-border); padding-top:16px; margin-bottom:14px;">
-          <ul class="drawer-nav-list" style="font-size:13px;">
-            <li><a href="javascript:void(0)" onclick="closeMenuDrawer(); openNotificationModal();"><span>🔔 Live Delivery Alerts</span><span id="drawer-notif-status" style="font-size:11.5px; color:#16a34a; font-weight:700;">Enable</span></a></li>
-            <li id="drawer-install-li"><a href="javascript:void(0)" onclick="openPwaModal()"><span>📱 Install Web App</span><span style="font-size:11px; background:#f1f5f9; padding:2px 6px; border-radius:4px; font-weight:700;">1-Tap</span></a></li>
-          </ul>
-        </div>
-
-        <!-- TRACK ORDER -->
-        <div style="border-top:1px solid var(--surface-border); padding-top:18px;">
-          <div class="drawer-section-title">Track Order</div>
-          <div style="display:flex; gap:6px; margin-bottom:8px;">
-            <input type="text" id="drawer-track-input" class="form-input" placeholder="Enter Order ID" style="font-size:13px; padding:9px 12px;">
-            <button type="button" class="btn-submit-order" style="width:auto; padding:9px 16px; margin:0; font-size:12px;" onclick="handleDrawerTrackingSearch()">Search</button>
-          </div>
-          <div id="drawer-track-result" style="display:none; font-size:12px; background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:4px; padding:10px; line-height:1.5;"></div>
-        </div>
-
-        <!-- SUPPORT & ADMIN -->
+        <!-- SUPPORT -->
         <div style="border-top:1px solid var(--surface-border); padding-top:18px; margin-top:auto;">
           <ul class="drawer-nav-list" style="font-size:12.5px;">
+            <li><a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20want%20to%20check%20my%20order%20status." target="_blank" style="color:#059669;"><span>💬 Order status on WhatsApp</span><span>→</span></a></li>
             <li><a href="https://wa.me/918619661325" target="_blank" style="color:#059669;"><span>💬 WhatsApp Support</span><span>+91 8619661325</span></a></li>
-            <li><a href="/admin" target="_blank" style="color:var(--accent);"><span>🔒 Studio Admin &amp; CRM</span><span>Login</span></a></li>
           </ul>
           <div style="font-size:11px; color:var(--text-light); margin-top:12px; text-align:center;">
-            Express Shipping Across India · Cash on Delivery Available
+            Udaipur: 24h delivery + COD · Rest of India: prepaid UPI
           </div>
         </div>
 
@@ -154,7 +113,7 @@
 
   <!-- TOP ANNOUNCEMENT BAR -->
   <div class="announcement-bar">
-    <span>Complimentary Express Shipping Across India · Cash on Delivery Available</span>
+    <span>UV400 polarized · Hard case &amp; cloth included · 7-day exchange</span>
   </div>
 
   <!-- HEADER -->
@@ -162,18 +121,6 @@
     <a href="#" class="brand-logo">THE CLASSIC CO.</a>
 
     <div class="header-tools">
-      <button type="button" class="header-action-btn" id="btn-header-notif" onclick="openNotificationModal()" aria-label="Delivery Alerts" title="Order & Delivery Alerts">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-        </svg>
-        <span class="notif-pulse-dot" id="notif-header-dot"></span>
-      </button>
-
-      <button type="button" class="header-install-chip" id="btn-header-install" onclick="openPwaModal()" aria-label="Install App">
-        <span>📲 Install</span>
-      </button>
-
       <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation">
         <div class="hamburger-icon">
           <span></span>
@@ -185,147 +132,115 @@
     </div>
   </header>
 
-  <!-- HERO SECTION (SHOPIFY DTC MINIMAL STYLE) -->
-  <!-- ========================================================================= -->
-  <!-- HIGH-FASHION EDITORIAL HERO SHOWCASE (THE CLASSIC CO. PRIVATE ARCHIVE) -->
-  <!-- ========================================================================= -->
+  <!-- HERO -->
   <section class="hero-editorial">
     <div class="hero-editorial-grid">
-      
-      <!-- EDITORIAL COPY -->
+
       <div class="hero-text-col">
         <div class="hero-edition-badge">
           <span class="hero-edition-dot"></span>
-          <span>HAUTE OPTICS · PRIVATE ARCHIVE 2026</span>
+          <span>FROM ₹899</span>
         </div>
-        
+
         <h1 class="hero-main-title">
-          Architectural Eyewear.<br>
-          <span class="hero-title-accent">Crafted for Distinction.</span>
+          Polarized sunglasses,<br>
+          <span class="hero-title-accent">delivered to your door.</span>
         </h1>
-        
+
         <p class="hero-sub-title">
-          Precision-engineered TAC polarized silhouettes crafted in limited batch runs. Hand-finished Italian acetates and aerospace metals, delivered with complimentary express shipping and Cash on Delivery across India.
+          UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.
         </p>
-        
+
         <div class="hero-actions-group">
           <a href="#collection" class="btn-hero-explore">
-            <span>Explore 30 Silhouettes</span>
+            <span>Shop Bestsellers</span>
             <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
           </a>
-          <a href="https://wa.me/918619661325?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20The%20Classic%20Co.%20luxury%20collection" target="_blank" class="btn-hero-concierge">
-            <span>💬 Concierge VIP</span>
+          <a href="https://wa.me/918619661325?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Classic%20Co.%20sunglasses" target="_blank" class="btn-hero-concierge">
+            <span>💬 WhatsApp us</span>
           </a>
         </div>
 
         <div class="hero-metrics-strip">
           <div class="hero-metric-item">
-            <span class="metric-num">30</span>
-            <span class="metric-lbl">Proprietary Silhouettes</span>
+            <span class="metric-num">UV400</span>
+            <span class="metric-lbl">Polarized lenses</span>
           </div>
           <div class="hero-metric-divider"></div>
           <div class="hero-metric-item">
-            <span class="metric-num">100%</span>
-            <span class="metric-lbl">UV400 TAC Polarized</span>
+            <span class="metric-num">24h</span>
+            <span class="metric-lbl">Udaipur delivery</span>
           </div>
           <div class="hero-metric-divider"></div>
           <div class="hero-metric-item">
-            <span class="metric-num">₹999</span>
-            <span class="metric-lbl">COD Pan-India</span>
+            <span class="metric-num">7-day</span>
+            <span class="metric-lbl">Exchange</span>
           </div>
         </div>
       </div>
 
-      <!-- EDITORIAL VISUAL SHOWCASE -->
       <div class="hero-visual-col">
         <div class="hero-visual-stage">
-          <img src="hero_luxury_aviator.jpg" alt="The Classic Co. Luxury Polarized Sunglasses" class="hero-luxury-image" id="hero-main-photo">
-          
-          <!-- FLOATING EDITORIAL SPECS BADGE -->
-          <div class="hero-floating-seal">
-            <div class="seal-icon">✦</div>
-            <div class="seal-text">
-              <span class="seal-title">ARCHIVE SELECTION</span>
-              <span class="seal-sub" id="hero-seal-sub">24K Gilt · TAC Polarized</span>
-            </div>
-          </div>
+          <img src="hero_luxury_aviator.jpg" alt="The Classic Co. polarized sunglasses" class="hero-luxury-image" id="hero-main-photo">
 
-          <!-- FLOATING DELIVERY CHIP -->
           <div class="hero-delivery-chip">
             <span class="delivery-pulse"></span>
-            <span>Pan-India 48h Express Dispatch</span>
+            <span>Udaipur: delivered in 24h</span>
           </div>
 
-          <!-- EDITORIAL LOOKBOOK SWITCHER -->
           <div class="hero-switcher-bar">
-            <button type="button" class="hero-pill-thumb active" onclick="switchHeroPhoto('hero_luxury_aviator.jpg', this, '24K Gilt · TAC Polarized')">
-              <span>01 Gilt Aviator</span>
+            <button type="button" class="hero-pill-thumb active" onclick="switchHeroPhoto('hero_luxury_aviator.jpg', this)">
+              <span>Aviator</span>
             </button>
-            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_round.jpg', this, 'Studio Round · Carrara Marble')">
-              <span>02 Studio Round</span>
+            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_round.jpg', this)">
+              <span>Round</span>
             </button>
-            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_riviera.jpg', this, 'Riviera Acetate · Amber UV400')">
-              <span>03 Riviera Sunset</span>
+            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_riviera.jpg', this)">
+              <span>Sunset</span>
             </button>
           </div>
         </div>
       </div>
 
     </div>
-
-    <!-- EDITORIAL TRUST STRIP -->
-    <div class="hero-editorial-trust">
-      <div class="trust-pill-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>TAC 1.1mm UV400 Polarized</span>
-      </div>
-      <div class="trust-pill-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-        <span>Handcrafted Italian Acetates</span>
-      </div>
-      <div class="trust-pill-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        <span>Complimentary Pan-India Shipping</span>
-      </div>
-      <div class="trust-pill-item">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        <span>Cash on Delivery Available</span>
-      </div>
-    </div>
   </section>
+
+  <!-- DELIVERY STRIP -->
+  <div class="delivery-strip">
+    <span><strong>Udaipur:</strong> 1-day delivery + COD</span>
+    <span class="delivery-strip-sep">|</span>
+    <span><strong>Rest of India:</strong> prepaid UPI</span>
+  </div>
 
   <!-- MAIN CATALOG SECTION -->
   <main class="catalog-section" id="collection">
     
-    <!-- CATEGORY TABS & CONTROLS -->
+    <div class="catalog-head">
+      <h2 class="section-title" id="catalog-heading" style="margin-bottom:6px;">Bestsellers</h2>
+      <div class="section-sub" id="catalog-sub" style="margin-bottom:22px;">Our most-ordered frames. UV400 polarized lenses, hard case and cloth included.</div>
+    </div>
+
     <div class="filter-bar">
       <div class="pill-tabs">
-        <button class="pill-tab active" onclick="filterCategory('All', this)">All Silhouettes (30)</button>
-        <button class="pill-tab" onclick="filterCategory('Polarized', this)">Polarized &amp; Driving</button>
-        <button class="pill-tab" onclick="filterCategory('Acetates', this)">Studio Acetates</button>
-        <button class="pill-tab" onclick="filterCategory('Magnetic', this)">4-in-1 Magnetic Clip-Ons</button>
-        <button class="pill-tab" onclick="filterCategory('Luxury', this)">Luxury Collection</button>
-        <button class="pill-tab" onclick="filterCategory('Lifestyle', this)">Classic Lifestyle</button>
+        <button class="pill-tab active" data-cat="All" onclick="filterCategory('All', this)">Bestsellers</button>
+        <button class="pill-tab" data-cat="Polarized &amp; Driving" onclick="filterCategory('Polarized &amp; Driving', this)">Polarized &amp; Driving</button>
+        <button class="pill-tab" data-cat="Magnetic Clip-Ons" onclick="filterCategory('Magnetic Clip-Ons', this)">Magnetic Clip-Ons</button>
+        <button class="pill-tab" data-cat="Premium Styles" onclick="filterCategory('Premium Styles', this)">Premium Styles</button>
+        <button class="pill-tab" data-cat="Classic Lifestyle" onclick="filterCategory('Classic Lifestyle', this)">Classic Lifestyle</button>
+        <button class="pill-tab" data-cat="Trending" onclick="filterCategory('Trending', this)">Trending</button>
       </div>
 
       <div class="filter-tools">
         <div class="search-box">
           <span class="search-icon">🔍</span>
-          <input type="text" class="search-input" id="search-input" placeholder="Search frames..." oninput="handleSearch(this.value)">
+          <input type="text" class="search-input" id="search-input" placeholder="Search styles..." oninput="handleSearch(this.value)">
         </div>
-
-        <select class="sort-dropdown" id="sort-select" onchange="handleSort(this.value)">
-          <option value="featured">Featured</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-          <option value="popular">Bestsellers</option>
-        </select>
       </div>
     </div>
 
     <div class="count-status">
-      <span id="results-count-text">Showing 30 silhouettes</span>
-      <span>100% UV400 Polarized Certified</span>
+      <span id="results-count-text">Showing styles</span>
+      <span>Hard case + cloth included</span>
     </div>
 
     <!-- PRODUCTS GRID -->
@@ -334,105 +249,96 @@
     </div>
   </main>
 
-  <!-- VERIFIED CUSTOMER REVIEWS (PAN-INDIA) -->
-  <section class="reviews-section">
-    <div class="section-title">Verified Customer Reviews</div>
-    <div class="section-sub">Trusted by thousands across India for daily clarity &amp; architectural design</div>
-
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Optical clarity on the polarized lenses is on par with ₹4,000 designer brands. COD delivery arrived in 2 days in Mumbai. Very impressed with the build."</div>
-        <div class="review-author">
-          <div class="review-avatar">RM</div>
-          <div>
-            <div class="review-name">Rohit M.</div>
-            <div class="review-city">Mumbai, Maharashtra</div>
-          </div>
+  <!-- TRUST ROW -->
+  <section class="trust-row-section">
+    <div class="trust-row">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
         </div>
+        <div class="trust-title">Cash on delivery</div>
+        <div class="trust-text">Udaipur orders delivered in 24 hours. Pay comfortably at your doorstep.</div>
       </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"The magnetic clip-ons are game changers for driving and screen work. Magnets snap firmly even on bumpy bike rides. Hard case quality is stellar."</div>
-        <div class="review-author">
-          <div class="review-avatar">AS</div>
-          <div>
-            <div class="review-name">Aditya S.</div>
-            <div class="review-city">New Delhi</div>
-          </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         </div>
+        <div class="trust-title">7-day exchange</div>
+        <div class="trust-text">Not right? Message us within 7 days of delivery.</div>
       </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Minimalist aesthetic and very lightweight. No nose pad pressure even after 8 hours of continuous wear. The acetate finish looks high-end."</div>
-        <div class="review-author">
-          <div class="review-avatar">PN</div>
-          <div>
-            <div class="review-name">Priya N.</div>
-            <div class="review-city">Bangalore, Karnataka</div>
-          </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.5 8.5 0 0 1-3.8-.9L3 20l1.1-5.1A8.4 8.4 0 1 1 21 11.5z"/></svg>
         </div>
-      </div>
-
-      <div class="review-card">
-        <div class="review-stars">★★★★★</div>
-        <div class="review-text">"Cash on Delivery made the purchase completely risk-free. Official tax invoice arrived on my email immediately after ordering. Will buy again."</div>
-        <div class="review-author">
-          <div class="review-avatar">VK</div>
-          <div>
-            <div class="review-name">Varun K.</div>
-            <div class="review-city">Jaipur, Rajasthan</div>
-          </div>
-        </div>
+        <div class="trust-title">WhatsApp support</div>
+        <div class="trust-text">A real person replies on +91 8619661325.</div>
       </div>
     </div>
   </section>
 
   <!-- FAQ SECTION -->
   <section class="faq-section">
-    <div class="section-title">Frequently Asked Questions</div>
-    <div class="section-sub">Helpful answers regarding ordering, shipping, and delivery across India</div>
+    <div class="section-title">Questions</div>
+    <div class="section-sub">Ordering, delivery and exchange</div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        <span>How does Cash on Delivery (COD) work?</span>
+        <span>Is cash on delivery available?</span>
         <span>＋</span>
       </div>
       <div class="faq-a">
-        You simply enter your shipping address at checkout without paying in advance. Pay cash to the courier delivery agent when your parcel arrives safely at your doorstep!
+        Yes, in Udaipur (pincodes starting with 313). Your sunglasses are delivered within 24 hours via Cash on Delivery. Outside Udaipur we accept prepaid UPI.
       </div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        <span>What is the estimated delivery time?</span>
+        <span>How long does delivery take?</span>
         <span>＋</span>
       </div>
       <div class="faq-a">
-        All orders are dispatched from our central studio within 24 hours. Express courier delivery takes 2 to 4 business days across India.
+        Udaipur: within 24 hours. Other cities: ships in 2-4 business days after your UPI payment is confirmed.
       </div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)">
-        <span>What if the product gets damaged during shipping?</span>
-      </div>
-      <div class="faq-a">
-        All parcels are packed securely in a protective hard case. In the rare event of transit damage, please share an unboxing video with our WhatsApp helpline (+91 8619661325) within 24 hours of delivery for immediate assistance.
-      </div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">
-        <span>Are all lenses 100% polarized &amp; UV400 protected?</span>
+        <span>I paid by UPI. How do I know you got it?</span>
         <span>＋</span>
       </div>
       <div class="faq-a">
-        Yes! Every frame features 9-layer TAC polarized lenses blocking 100% of UVA/UVB rays. Every order comes with a complimentary Polarization Test Card so you can verify it yourself.
+        After you pay, tap the button on the payment screen. We check the payment ourselves and confirm your order on WhatsApp. Sending a screenshot of the payment makes it quicker.
       </div>
     </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>What if I want to exchange?</span>
+        <span>＋</span>
+      </div>
+      <div class="faq-a">
+        Message us on WhatsApp (+91 8619661325) within 7 days of delivery and we will sort out an exchange.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span>Are the lenses polarized and UV400?</span>
+        <span>＋</span>
+      </div>
+      <div class="faq-a">
+        Yes. The lenses are polarized with UV400 protection. Every pair comes with a hard case and a cleaning cloth.
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER LINE -->
+  <section class="founder-section">
+    <p>Run by a local founder in Udaipur. Questions? WhatsApp us.</p>
+    <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20have%20a%20question." target="_blank" class="founder-wa-btn">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+      <span>Chat on WhatsApp</span>
+    </a>
   </section>
 
   <!-- FOOTER -->
@@ -441,7 +347,7 @@
       <div>
         <div class="footer-brand">THE CLASSIC CO.</div>
         <p style="color:#a19d96; max-width:400px; line-height:1.6; margin-bottom:14px;">
-          Architectural Eyewear Studio crafting timeless silhouettes engineered for daily comfort and UV400 protection.
+          Polarized UV400 sunglasses, delivered in Udaipur and across India.
         </p>
         <p style="color:#78736b; font-size:11.5px;">
           Customer Support: +91 8619661325 · rishabhsamarwal383@gmail.com
@@ -451,26 +357,25 @@
       <div class="footer-col">
         <h4>Collection</h4>
         <ul>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Polarized')">Polarized &amp; Driving</a></li>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Acetates')">Studio Acetates</a></li>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Magnetic')">4-in-1 Magnetic Clip-Ons</a></li>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Luxury')">Luxury Collection</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Polarized &amp; Driving')">Polarized &amp; Driving</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Magnetic Clip-Ons')">Magnetic Clip-Ons</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Premium Styles')">Premium Styles</a></li>
+          <li><a href="javascript:void(0)" onclick="filterCategory('Classic Lifestyle')">Classic Lifestyle</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <h4>Help &amp; Orders</h4>
         <ul>
-          <li><a href="javascript:void(0)" onclick="openTrackerModal()">Track Your Order</a></li>
-          <li><a href="https://wa.me/918619661325" target="_blank">WhatsApp Helpline</a></li>
-          <li><a href="/admin" target="_blank" style="color:var(--accent);">🔒 Studio Admin &amp; CRM</a></li>
+          <li><a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20want%20to%20check%20my%20order%20status." target="_blank">Order status on WhatsApp</a></li>
+          <li><a href="https://wa.me/918619661325" target="_blank">WhatsApp Support</a></li>
         </ul>
       </div>
     </div>
 
     <div class="footer-bottom">
       <div>© 2026 THE CLASSIC CO. All rights reserved.</div>
-      <div>Designed with clean architectural precision · Cash on Delivery across India</div>
+      <div>Udaipur: COD + 24h delivery · Rest of India: prepaid UPI</div>
     </div>
   </footer>
 
@@ -483,7 +388,7 @@
   </a>
 
   <!-- ========================================================================= -->
-  <!-- MODAL 1: SHOPIFY EXPRESS CHECKOUT -->
+  <!-- MODAL 1: CHECKOUT -->
   <!-- ========================================================================= -->
   
   <!-- ========================================================================= -->
@@ -521,32 +426,26 @@
           <h2 style="font-size:22px; font-weight:700; line-height:1.25; margin-bottom:8px; font-family:'Playfair Display', serif;" id="detail-title">
             Product Title
           </h2>
-          <div style="font-size:12px; color:#eab308; margin-bottom:14px;" id="detail-rating">
-            ★★★★★ <span style="color:var(--text-light);" id="detail-review-count">(42 Reviews)</span>
+          <div style="display:flex; align-items:baseline; gap:10px; margin:6px 0 4px;">
+            <span style="font-size:26px; font-weight:800; color:#161514;" id="detail-price">₹899</span>
           </div>
-
-          <div style="display:flex; align-items:baseline; gap:10px; margin-bottom:16px;">
-            <span style="font-size:24px; font-weight:800; color:#161514;" id="detail-price">₹899</span>
-            <span style="font-size:14px; color:var(--text-light); text-decoration:line-through;" id="detail-compare">₹1,999</span>
-            <span class="price-save" id="detail-discount">55% OFF</span>
-          </div>
+          <div style="font-size:13px; color:#15803d; font-weight:700; margin-bottom:16px;" id="detail-upi">₹799 if you pay by UPI</div>
 
           <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
-            <span class="spec-badge-chip">📦 Hard Case &amp; Cloth Included</span>
-            <span class="spec-badge-chip">🚚 Free Express Delivery</span>
+            <span class="spec-badge-chip">🕶️ UV400 polarized</span>
+            <span class="spec-badge-chip">📦 Hard case &amp; cloth included</span>
+            <span class="spec-badge-chip">🔁 7-day exchange</span>
           </div>
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:4px;">
-            <button type="button" class="btn-card-action" style="padding:14px; font-size:13.5px; font-weight:700; background:#ffffff; border:1.5px solid #161514; color:#161514; border-radius:6px; cursor:pointer;" onclick="addToCartFromDetail()">
-              🛍️ Add to Cart
-            </button>
-            <button type="button" class="btn-submit-order" style="padding:14px; font-size:13.5px; margin:0;" onclick="orderProductFromDetail()">
-              ⚡ Order Now
+          <div style="display:block; margin-top:4px;">
+            <button type="button" class="btn-submit-order" style="padding:14px; font-size:14px; margin:0;" onclick="orderProductFromDetail()">
+              Order Now
             </button>
           </div>
 
           <div style="font-size:11.5px; color:var(--text-muted); margin-top:14px; line-height:1.5;">
-            Cash on Delivery &amp; UPI accepted at checkout. Dispatched within 24 hours.
+            Udaipur: delivered within 24 hours with Cash on Delivery.<br>
+            Rest of India: prepaid UPI, ships in 2-4 business days.
           </div>
         </div>
       </div>
@@ -564,7 +463,7 @@
       <!-- STEP 1: ORDER DETAILS FORM -->
       <div id="checkout-step-1">
         <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px;">
-          EXPRESS CHECKOUT
+          CHECKOUT
         </div>
         <h3 style="font-size:18px; font-weight:700; margin-bottom:14px; font-family:'Playfair Display', serif;">
           Complete Your Order
@@ -579,7 +478,7 @@
           </div>
           <div style="text-align:right;">
             <div style="font-size:15px; font-weight:800;" id="check-item-price">₹899</div>
-            <div style="font-size:10px; color:var(--green); font-weight:700;">FREE SHIPPING</div>
+            <div style="font-size:10px; color:var(--green); font-weight:700;">FREE DELIVERY</div>
           </div>
         </div>
 
@@ -597,18 +496,10 @@
             <div class="field-error-msg" id="err-phone">Valid 10-digit number required.</div>
           </div>
           <div class="form-group">
-            <label class="form-label" for="inp-email">Email ID *</label>
+            <label class="form-label" for="inp-email">Email (optional)</label>
             <input type="email" id="inp-email" name="email" autocomplete="email" class="form-input" placeholder="rahul@gmail.com" oninput="clearError('inp-email', 'err-email')">
-            <div class="field-error-msg" id="err-email">Valid email required for invoice.</div>
+            <div class="field-error-msg" id="err-email">That email does not look right. You can leave it blank.</div>
           </div>
-        </div>
-
-        <!-- INVOICE & NOTIFICATION CHECKBOX -->
-        <div style="margin-bottom:16px;">
-          <label style="display:flex; align-items:center; gap:10px; font-size:12.5px; color:#475569; cursor:pointer; user-select:none;">
-            <input type="checkbox" id="inp-send-invoice" checked style="width:16px; height:16px; accent-color:#161514; cursor:pointer;">
-            <span>Order details and dispatch updates will be sent via email</span>
-          </label>
         </div>
 
         <!-- GPS LIVE LOCATION DETECTOR & AUTOFILL -->
@@ -632,30 +523,32 @@
         <div class="form-row">
           <div class="form-group">
             <label class="form-label" for="inp-city">City *</label>
-            <input type="text" id="inp-city" name="address-level2" autocomplete="address-level2" class="form-input" placeholder="e.g. Mumbai / Delhi / Bengaluru" oninput="clearError('inp-city', 'err-city')">
+            <input type="text" id="inp-city" name="address-level2" autocomplete="address-level2" class="form-input" placeholder="e.g. Udaipur" oninput="clearError('inp-city', 'err-city')">
             <div class="field-error-msg" id="err-city">City is required.</div>
           </div>
           <div class="form-group">
             <label class="form-label" for="inp-pincode">Pincode *</label>
-            <input type="tel" id="inp-pincode" name="postal-code" autocomplete="postal-code" inputmode="numeric" class="form-input" placeholder="6 Digits" maxlength="6" oninput="clearError('inp-pincode', 'err-pincode')">
+            <input type="tel" id="inp-pincode" name="postal-code" autocomplete="postal-code" inputmode="numeric" class="form-input" placeholder="6 Digits" maxlength="6" oninput="onPincodeInput()">
             <div class="field-error-msg" id="err-pincode">6-digit Pincode required.</div>
           </div>
         </div>
 
+        <div id="delivery-note" style="display:block; margin-bottom:14px; padding:10px 12px; border:1px solid #e2e8f0; border-radius:8px; background:#f8fafc; color:#475569; font-size:12.5px; line-height:1.5; font-weight:600;">Enter your 6-digit pincode to see delivery options.</div>
+
         <!-- PAYMENT METHOD SELECTION -->
         <label class="form-label">Payment Method:</label>
-        <div class="payment-option-card active" id="pay-opt-cod" onclick="selectPaymentMode('cod')">
+        <div class="payment-option-card" id="pay-opt-cod" onclick="pickPaymentMode('cod')" style="display:none;">
           <div>
             <div style="font-size:13.5px; font-weight:700; color:#161514;">💵 Cash on Delivery (COD)</div>
-            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">Pay when your parcel arrives</div>
+            <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">Udaipur only · Pay at your doorstep</div>
           </div>
           <div style="font-size:14px; font-weight:800;" id="pay-cod-amount">₹899</div>
         </div>
 
-        <div class="payment-option-card" id="pay-opt-upi" onclick="selectPaymentMode('upi')">
+        <div class="payment-option-card active" id="pay-opt-upi" onclick="pickPaymentMode('upi')">
           <div style="flex:1;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <span style="font-size:13.5px; font-weight:700; color:#161514;">⚡ Instant UPI (Save ₹100)</span>
+              <span style="font-size:13.5px; font-weight:700; color:#161514;">⚡ UPI (Save ₹100)</span>
               <span style="font-size:14px; font-weight:800; color:#15803d;" id="pay-upi-amount">₹799</span>
             </div>
             <!-- OFFICIAL APP LOGOS -->
@@ -679,18 +572,18 @@
           </div>
         </div>
 
-        <button type="button" class="btn-submit-order" onclick="submitCustomerOrder()">
-          <span id="btn-submit-text">Place Order · ₹899</span>
+        <button type="button" class="btn-submit-order" id="btn-submit-main" onclick="submitCustomerOrder()">
+          <span id="btn-submit-text">Pay ₹799 via UPI</span>
         </button>
 
         <div style="text-align:center; font-size:11px; color:var(--text-light); margin-top:10px;">
-          🔒 256-Bit SSL Encrypted · 7-Day Easy Exchange · Inspect Parcel Before Paying on COD
+          7-day exchange guarantee · Cash on Delivery in Udaipur
         </div>
       </div>
       
       <div id="checkout-step-upi-waiting" style="display:none; text-align:center;">
         <div style="font-size:11px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--accent); margin-bottom:4px;">
-          PREPAID UPI CHECKOUT
+          UPI PAYMENT
         </div>
         <h3 style="font-size:22px; font-weight:700; margin-bottom:4px; font-family:'Playfair Display', serif;">
           Complete Payment
@@ -702,13 +595,13 @@
         <!-- AMOUNT & COUNTDOWN CARD -->
         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-sm); padding:16px; margin-bottom:18px;">
           <div style="font-size:11px; font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">
-            Total Payable (₹100 Instant Discount Applied)
+            Total to pay (₹100 UPI discount applied)
           </div>
           <div style="font-size:32px; font-weight:800; color:#161514; line-height:1.1;" id="upi-waiting-amount">
             ₹799
           </div>
-          <div style="font-size:12px; color:#64748b; font-weight:600; margin-top:6px;" id="upi-waiting-timer">
-            ⏳ Complete payment in 04:59
+          <div style="font-size:12px; color:#64748b; font-weight:600; margin-top:6px;">
+            Pay with any UPI app, then come back to this screen.
           </div>
         </div>
 
@@ -761,16 +654,12 @@
           </div>
         </div>
 
-        <!-- AUTO-VERIFICATION STATUS BOX (PULSING ANIMATION ON RETURN) -->
-        <div id="upi-verifying-box" style="display:none; background:#f0fdf4; border:1.5px solid #86efac; border-radius:8px; padding:14px 16px; margin-bottom:14px; text-align:center;">
-          <div style="display:inline-block; width:22px; height:22px; border:2.5px solid #86efac; border-top-color:#16a34a; border-radius:50%; animation:spin 0.8s linear infinite; margin-bottom:6px;"></div>
-          <div style="font-size:13.5px; font-weight:700; color:#166534;">Verifying payment with bank network...</div>
-          <div style="font-size:11.5px; color:#15803d; margin-top:2px;">Automated payment detection in progress</div>
+        <div style="background:#fffbeb; border:1px solid #fde68a; border-radius:8px; padding:12px 14px; margin-bottom:12px; text-align:center; font-size:13px; font-weight:600; color:#92400e; line-height:1.5;">
+          Payment received? Tap below and we'll confirm on WhatsApp.
         </div>
 
-        <!-- 1-TAP CONFIRMATION BUTTON (NO UTR REQUIRED) -->
-        <button type="button" class="btn-submit-order" id="btn-confirm-payment-done" style="background:#161514; padding:15px; font-size:14.5px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="handlePaymentAppReturn(true)">
-          <span>✓ I Have Paid · Confirm Order</span>
+        <button type="button" class="btn-submit-order" id="btn-confirm-payment-done" style="background:#161514; padding:15px; font-size:14.5px; font-weight:700; margin-bottom:12px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="confirmUpiPaid()">
+          <span>I've paid · Confirm on WhatsApp</span>
         </button>
 
         <div style="text-align:center;">
@@ -784,14 +673,14 @@
         <div style="width:48px; height:48px; border-radius:50%; background:#f0fdf4; color:#16a34a; display:inline-flex; align-items:center; justify-content:center; margin-bottom:12px; border:1px solid #bbf7d0;">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
         </div>
-        <div style="font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px;">
-          ORDER CONFIRMED
+        <div style="font-size:11px; font-weight:800; color:var(--accent); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px;" id="rec-hero-label">
+          ORDER PLACED
         </div>
         <h3 style="font-size:22px; font-weight:700; margin:0 0 8px; font-family:'Playfair Display', serif;" id="rec-hero-orderid">
           #ORD-CC-1001
         </h3>
         <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px; line-height:1.5;">
-          Thank you <strong id="rec-hero-name" style="color:#161514;"></strong>! Your order has been placed and will be dispatched via express courier.
+          Thank you <strong id="rec-hero-name" style="color:#161514;"></strong>! <span id="rec-hero-msg"></span>
         </p>
 
         <!-- RECEIPT CARD -->
@@ -809,14 +698,14 @@
             <span id="rec-disp-addr" style="color:#161514; text-align:right; max-width:65%;"></span>
           </div>
           <div style="display:flex; justify-content:space-between;">
-            <span style="color:#64748b;">Confirmation:</span>
-            <span id="rec-disp-email" style="color:#161514; text-align:right;"></span>
+            <span style="color:#64748b;">Status:</span>
+            <span id="rec-disp-status" style="color:#161514; text-align:right;"></span>
           </div>
         </div>
 
-        <button type="button" class="btn-submit-order" onclick="printOrderInvoice(confirmedOrderData)" style="background:#161514; margin-bottom:10px; padding:14px; font-size:13.5px;">
-          Download Invoice (PDF)
-        </button>
+        <a href="#" target="_blank" id="btn-wa-order-share" class="btn-submit-order" style="display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; background:#16a34a; margin-bottom:10px; padding:14px; font-size:13.5px;">
+          <span id="btn-wa-order-text">Chat with us on WhatsApp</span>
+        </a>
 
         <button type="button" class="icon-btn" style="width:100%; justify-content:center; padding:12px; font-size:13px;" onclick="closeCheckoutModal()">
           Continue Browsing
@@ -827,154 +716,10 @@
   </div>
 
   <!-- ========================================================================= -->
-  <!-- MODAL 2: ORDER TRACKER -->
-  <!-- ========================================================================= -->
-  <div class="modal-backdrop" id="tracker-modal">
-    <div class="modal-box">
-      <div class="modal-sticky-header">
-        <button type="button" class="modal-close-btn" onclick="closeTrackerModal()" aria-label="Close modal">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"></line><line x1="13" y1="1" x2="1" y2="13"></line></svg>
-        </button>
-      </div>
-      <div style="font-size:11px; font-weight:800; letter-spacing:1px; text-transform:uppercase; color:var(--accent);">
-        DELIVERY TRACKING
-      </div>
-      <h3 style="font-size:18px; font-weight:700; margin:4px 0 12px; font-family:'Playfair Display', serif;">
-        Track Your Order
-      </h3>
-      <div style="display:flex; gap:8px; margin-bottom:16px;">
-        <input type="text" class="form-input" id="tracker-input" placeholder="Enter Order ID (e.g. ORD-CC-12345)">
-        <button class="btn-submit-order" style="width:auto; padding:10px 18px; margin:0;" onclick="handleTrackingSearch()">Search</button>
-      </div>
-
-      <div id="tracker-result" style="display:none; background:var(--bg-warm); border:1px solid var(--surface-border); border-radius:var(--radius-sm); padding:14px; font-size:12.5px; line-height:1.6;">
-        <!-- Injected via JS -->
-      </div>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  
-  <!-- ========================================================================= -->
-  <!-- MODAL: NOTIFICATION PRE-PERMISSION MODAL (SOFT-ASK) -->
-  <!-- ========================================================================= -->
-  <div class="modal-backdrop" id="notif-pre-permission-modal" onclick="handleNotifModalBackdrop(event)">
-    <div class="modal-box" style="max-width:440px; text-align:center; padding:28px 22px;">
-      <div class="modal-sticky-header">
-        <button type="button" class="modal-close-btn" onclick="closeNotifModal()" aria-label="Close modal">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"></line><line x1="13" y1="1" x2="1" y2="13"></line></svg>
-        </button>
-      </div>
-
-      <div style="width:56px; height:56px; border-radius:50%; background:#f8fafc; border:1.5px solid #e2e8f0; display:inline-flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:14px; box-shadow:0 4px 12px rgba(0,0,0,0.06);">
-        🔔
-      </div>
-
-      <h3 style="font-size:20px; font-weight:700; margin-bottom:8px; font-family:'Playfair Display', serif; color:#161514;">
-        Live Delivery &amp; Dispatch Updates
-      </h3>
-
-      <p style="font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:20px;">
-        Never wonder where your parcel is. Get instant alerts when your sunglasses are dispatched, out for delivery, and arrive at your doorstep.
-      </p>
-
-      <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:14px; text-align:left; margin-bottom:22px; font-size:12.5px; line-height:1.7;">
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-          <span>🚚</span>
-          <span style="color:#334155;"><strong>Real-Time Tracking:</strong> Know when courier is out for delivery</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-          <span>⚡</span>
-          <span style="color:#334155;"><strong>VIP Studio Drops:</strong> Early alerts on limited edition restocks</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:10px;">
-          <span>🛡️</span>
-          <span style="color:#334155;"><strong>Zero Spam Guarantee:</strong> Strictly essential order &amp; delivery updates</span>
-        </div>
-      </div>
-
-      <button type="button" class="btn-submit-order" onclick="requestBrowserNotificationPermission()" style="margin-bottom:10px; padding:14px; font-size:14px; font-weight:700;">
-        🔔 Enable Order &amp; Delivery Alerts
-      </button>
-
-      <button type="button" onclick="postponeNotificationPermission()" style="background:none; border:none; color:var(--text-light); font-size:12.5px; cursor:pointer; padding:6px 12px;">
-        Maybe Later
-      </button>
-    </div>
-  </div>
-
-  <!-- ========================================================================= -->
-  <!-- MODAL: APP INSTALL POPUP ASK (OFFICIAL APP INSTALLATION) -->
-  <!-- ========================================================================= -->
-  <div class="modal-backdrop" id="pwa-install-modal" onclick="handlePwaModalBackdrop(event)">
-    <div class="modal-box" style="max-width:420px; text-align:center; padding:28px 22px;">
-      <div class="modal-sticky-header">
-        <button type="button" class="modal-close-btn" onclick="closePwaModal()" aria-label="Close modal">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="1" y1="1" x2="13" y2="13"></line><line x1="13" y1="1" x2="1" y2="13"></line></svg>
-        </button>
-      </div>
-
-      <img src="icon-192.png" alt="The Classic Co. App" style="width:64px; height:64px; border-radius:16px; margin:0 auto 12px; display:block; box-shadow:0 8px 20px rgba(0,0,0,0.14); object-fit:cover;">
-
-      <div style="display:inline-block; background:#f1f5f9; color:#475569; font-size:10.5px; font-weight:800; letter-spacing:1px; text-transform:uppercase; padding:3px 10px; border-radius:20px; margin-bottom:8px;">
-        OFFICIAL APP
-      </div>
-
-      <h3 style="font-size:21px; font-weight:700; margin-bottom:6px; font-family:'Playfair Display', serif; color:#161514;">
-        Install The Classic Co. App
-      </h3>
-
-      <p style="font-size:13px; color:var(--text-muted); line-height:1.55; margin-bottom:18px;">
-        Install our official app for instant 1-tap access, live parcel tracking, and express checkout.
-      </p>
-
-      <div style="background:#fafafa; border:1px solid #e2e8f0; border-radius:8px; padding:12px 14px; text-align:left; margin-bottom:18px; font-size:12.5px; line-height:1.6;">
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-          <span>⚡</span>
-          <span style="color:#334155;"><strong>1-Tap App Access:</strong> Launches fullscreen without browser bars</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-          <span>📦</span>
-          <span style="color:#334155;"><strong>Live Parcel Updates:</strong> Direct dispatch alerts on your lockscreen</span>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px;">
-          <span>🛡️</span>
-          <span style="color:#334155;"><strong>Zero Storage:</strong> Instant install, works offline</span>
-        </div>
-      </div>
-
-      <!-- iOS Instruction Card -->
-      <div id="ios-install-hint" style="display:none; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; padding:12px 14px; margin-bottom:16px; text-align:left; font-size:12px; line-height:1.6; color:#0f172a;">
-        <div style="font-weight:700; margin-bottom:4px; color:#161514;">📱 How to Install on iPhone:</div>
-        <div>1. Tap the <strong>Share</strong> button (⎋) at the bottom of Safari.</div>
-        <div>2. Tap <strong>"Add to Home Screen"</strong> (Install App).</div>
-      </div>
-
-      <!-- Android Fallback Guide Card -->
-      <div id="android-install-guide" style="display:none; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:8px; padding:12px 14px; margin-bottom:16px; text-align:left; font-size:12px; line-height:1.6; color:#0f172a;">
-        <div style="font-weight:700; margin-bottom:4px; color:#161514;">📲 Tap to Install:</div>
-        <div>1. Tap the <strong>⋮ (three dots)</strong> menu at the top right of Chrome.</div>
-        <div>2. Tap <strong>"Install app"</strong>.</div>
-      </div>
-
-      <button type="button" class="btn-submit-order" id="btn-modal-install-action" onclick="executePwaInstall()" style="margin-bottom:10px; padding:14px; font-size:14px; font-weight:700;">
-        📲 Install App Now
-      </button>
-
-      <button type="button" onclick="postponePwaInstall()" style="background:none; border:none; color:var(--text-light); font-size:12.5px; cursor:pointer; padding:6px 12px;">
-        Maybe Later
-      </button>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT: APPLICATION LOGIC -->
-  <!-- ========================================================================= -->
-  <!-- Application Logic Modules -->
-  <script src="js/products-data.js"></script>
-  <script src="js/catalog.js"></script>
-  <script src="js/checkout.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/pwa.js"></script>
+    <!-- Application Logic (js/products-data.js is loaded in <head>) -->
+  <script src="js/catalog.js?v=20261005"></script>
+  <script src="js/checkout.js?v=20261005"></script>
+  <script src="js/app.js?v=20261005"></script>
+  <script src="js/pwa.js?v=20261005"></script>
 </body>
 </html>
