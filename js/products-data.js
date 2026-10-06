@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // STORE CONFIG
 // ---------------------------------------------------------------------------
-var GOOGLE_APPS_SCRIPT_URL = window.GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvhLRquyBHA1DFarnqbiqM5JlV-4dI_TpzOduKdSnubWCdcPI4n_YCN_b1wZeREIP3Gg/exec";
+var GOOGLE_APPS_SCRIPT_URL = window.GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzBJML40f8C5PTF-JadtrTA2Nhrpw_PPIUwPNG-p_AeUVoZuAs_pIdkJM2C1nKz-BQ/exec";
 var WA_NUMBER = window.WA_NUMBER = "918619661325";
 var MERCHANT_UPI = window.MERCHANT_UPI = "8619661325@upi";
 

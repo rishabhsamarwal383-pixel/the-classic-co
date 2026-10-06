@@ -30,37 +30,9 @@ const server = http.createServer((req, res) => {
     return adminHandler(req, res);
   }
 
-  // Handle local orders API
-  if (pathname === '/api/order' && req.method === 'POST') {
-    let body = '';
-    req.on('data', chunk => body += chunk);
-    req.on('end', () => {
-      try {
-        const order = JSON.parse(body);
-        const ordersFile = path.join(BASE_DIR, 'orders.json');
-        let list = [];
-        try { list = JSON.parse(fs.readFileSync(ordersFile, 'utf8')); } catch (e) { list = []; }
-        const idx = list.findIndex(o => o.orderId === order.orderId);
-        if (idx >= 0) list[idx] = order; else list.unshift(order);
-        fs.writeFileSync(ordersFile, JSON.stringify(list, null, 2), 'utf8');
-        res.setHeader('Content-Type', 'application/json');
-        res.end(JSON.stringify({ success: true, orderId: order.orderId }));
-      } catch (err) {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ success: false, error: err.message }));
-      }
-    });
-    return;
-  }
-
-  if (pathname === '/api/orders' && req.method === 'GET') {
-    const ordersFile = path.join(BASE_DIR, 'orders.json');
-    let list = [];
-    try { list = JSON.parse(fs.readFileSync(ordersFile, 'utf8')); } catch (e) { list = []; }
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.end(JSON.stringify(list));
-    return;
+  // Handle /api/order and /api/orders via api/admin.js for complete parity
+  if (pathname === '/api/order' || pathname === '/api/orders') {
+    return adminHandler(req, res);
   }
 
   // 2. Default to index.html for root

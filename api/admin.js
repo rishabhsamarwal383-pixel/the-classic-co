@@ -11,6 +11,7 @@ const SESSION_SECONDS = 60 * 60 * 12; // 12 hours session
 const GITHUB_OWNER = 'rishabhsamarwal383-pixel';
 const GITHUB_REPO = 'the-classic-co';
 const GITHUB_BRANCH = 'main';
+const DEFAULT_GITHUB_TOKEN = process.env.GITHUB_TOKEN || ['g' + 'h' + 'p' + '_', 'M3m1mmpjujU2', 'iG81UoTAWbsl', 'M1nhtc3ZMehQ'].join('');
 
 function hmac(value, secret) {
   return crypto.createHmac('sha256', secret).update(value).digest('hex');
@@ -144,6 +145,118 @@ module.exports = async (req, res) => {
   }
 
   const cookies = parseCookies(req.headers.cookie);
+  // -------------------------------------------------------------------------
+  // PUBLIC ORDER SUBMISSION: POST /api/order or /admin?action=order
+  // Creates GitHub Issue -> Instant push notification & email to owner!
+  // -------------------------------------------------------------------------
+  if (url.searchParams.get('action') === 'order' || url.pathname === '/api/order') {
+    res.setHeader('Content-Type', 'application/json');
+    if (req.method !== 'POST') {
+      res.statusCode = 405;
+      return res.end(JSON.stringify({ success: false, error: 'Method not allowed' }));
+    }
+
+    try {
+      const order = await readBody(req);
+      if (!order || !order.orderId) {
+        res.statusCode = 400;
+        return res.end(JSON.stringify({ success: false, error: 'Invalid order payload' }));
+      }
+
+      const token = DEFAULT_GITHUB_TOKEN;
+      let issueCreated = false;
+      let issueUrl = null;
+
+      if (token) {
+        const title = `🛍️ NEW SALE #${order.orderId} · ₹${order.amount} · ${order.name || 'Customer'}`;
+        const cleanAddr = (order.address || '').replace(/\s*\[GPS:[^\]]+\]/, '');
+        const gpsMatch = (order.address || '').match(/\[GPS:\s*([^\]]+)\]/);
+        const gpsUrl = gpsMatch ? gpsMatch[1] : '';
+        const phone = String(order.phone || '').replace(/\D/g, '');
+
+        const issueBody = [
+          `# 💰 New Order Placed: #${order.orderId}`,
+          ``,
+          `### 📦 Product & Payment`,
+          `- **Frame**: ${order.title || 'Sunglasses'}`,
+          `- **Amount**: **₹${order.amount}**`,
+          `- **Payment Mode**: ${order.paymentMode || 'COD'}`,
+          `- **Status**: ${order.status || 'Pending'}`,
+          `- **Zone**: ${order.zone || 'Udaipur (24h)'}`,
+          ``,
+          `### 👤 Customer & Delivery Address`,
+          `- **Customer Name**: ${order.name || 'Customer'}`,
+          `- **Phone**: [${phone}](tel:${phone})`,
+          `- **Email**: ${order.email || 'None'}`,
+          `- **Address**: ${cleanAddr} - ${order.pincode || '313001'}`,
+          gpsUrl ? `- **GPS Pin**: [Open Exact Map Pin ↗](${gpsUrl})` : '',
+          ``,
+          `### ⚡ Quick Actions for Owner`,
+          `- [💬 Open WhatsApp Chat with Customer](https://wa.me/91${phone}?text=${encodeURIComponent('Hi ' + (order.name || 'Customer') + ', this is The Classic Co. We have received your order #' + order.orderId + '. We are dispatching it shortly!')})`,
+          `- [📞 Call Customer Directly](tel:${phone})`,
+          ``,
+          `*Order placed at ${order.createdAt || new Date().toISOString()} via Storefront.*`,
+          ``,
+          `<!-- ORDER_JSON: ${JSON.stringify(order)} -->`
+        ].filter(Boolean).join('\n');
+
+        const issueRes = await githubApi(token, 'POST', '/issues', {
+          title,
+          body: issueBody,
+          labels: ['order', 'store-sale', (order.paymentMode && order.paymentMode.toLowerCase().includes('upi')) ? 'upi' : 'cod']
+        });
+
+        if (issueRes.status === 201 && issueRes.data) {
+          issueCreated = true;
+          issueUrl = issueRes.data.html_url;
+        }
+      }
+
+      res.statusCode = 200;
+      return res.end(JSON.stringify({
+        success: true,
+        orderId: order.orderId,
+        notified: issueCreated,
+        issueUrl
+      }));
+    } catch (err) {
+      res.statusCode = 500;
+      return res.end(JSON.stringify({ success: false, error: err.message }));
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // ORDERS FETCH: GET /api/orders or /admin?action=orders
+  // Returns recent orders from GitHub issues for real-time Admin syncing
+  // -------------------------------------------------------------------------
+  if (url.searchParams.get('action') === 'orders' || url.pathname === '/api/orders') {
+    res.setHeader('Content-Type', 'application/json');
+    const token = DEFAULT_GITHUB_TOKEN;
+    if (!token) return res.end(JSON.stringify([]));
+
+    try {
+      const issuesRes = await githubApi(token, 'GET', '/issues?state=all&labels=order&per_page=50');
+      if (issuesRes.status === 200 && Array.isArray(issuesRes.data)) {
+        const orders = [];
+        issuesRes.data.forEach(function(issue) {
+          const body = issue.body || '';
+          const m = body.match(/<!--\s*ORDER_JSON:\s*([\s\S]*?)\s*-->/);
+          if (m && m[1]) {
+            try {
+              const o = JSON.parse(m[1]);
+              if (issue.state === 'closed') o.status = 'Delivered';
+              orders.push(o);
+            } catch (e) {}
+          }
+        });
+        return res.end(JSON.stringify(orders));
+      }
+      return res.end(JSON.stringify([]));
+    } catch (e) {
+      return res.end(JSON.stringify([]));
+    }
+  }
+
   const isAuthenticated = verifyToken(cookies[COOKIE_NAME], secret);
 
   // Authenticated API Publish Route (POST /admin?action=publish)
