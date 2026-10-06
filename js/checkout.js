@@ -304,13 +304,32 @@ function backToOrderDetails() {
   document.getElementById("checkout-step-1").style.display = "block";
 }
 
-// Store locally and send to the Google Sheet webhook
+// Store locally and send to the Google Sheet webhook & local server
 function saveAndSendOrder(orderData) {
   try {
-    const stored = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
+    const stored = JSON.parse(localStorage.getItem('classic_co_cached_orders') || localStorage.getItem('the_classic_co_orders') || '[]');
     const idx = stored.findIndex(o => o.orderId === orderData.orderId);
     if (idx >= 0) stored[idx] = orderData; else stored.unshift(orderData);
+    localStorage.setItem('classic_co_cached_orders', JSON.stringify(stored));
     localStorage.setItem('the_classic_co_orders', JSON.stringify(stored));
+  } catch (e) {}
+
+  // Instant cross-tab & standalone Admin PWA notification broadcast
+  try {
+    if (window.BroadcastChannel) {
+      const bc = new BroadcastChannel('classic_co_orders_channel');
+      bc.postMessage({ action: 'NEW_ORDER', order: orderData });
+      bc.close();
+    }
+  } catch (e) {}
+
+  // Local server / backend orders sync
+  try {
+    fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderData)
+    }).catch(() => {});
   } catch (e) {}
 
   if (!GOOGLE_APPS_SCRIPT_URL) return;

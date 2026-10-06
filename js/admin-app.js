@@ -120,8 +120,48 @@
   function toggleSoundAlerts() {
     soundAlertsEnabled = !soundAlertsEnabled;
     localStorage.setItem(STORAGE_KEY_SOUND, soundAlertsEnabled);
+    if (soundAlertsEnabled) {
+      if ('Notification' in window && Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission().then(function(perm) {
+          if (perm === 'granted') {
+            try {
+              new Notification('🔔 Notifications Active!', {
+                body: 'Shopify Cha-Ching alerts enabled for all new orders.',
+                icon: '/icon-192.png'
+              });
+            } catch (e) {}
+          }
+        });
+      }
+      playChaChingSound();
+    }
     updateSoundUI();
   }
+
+  function enablePushNotifications() {
+    if (!('Notification' in window)) {
+      alert('Push Notifications are not supported in this browser.');
+      return;
+    }
+    Notification.requestPermission().then(function(perm) {
+      if (perm === 'granted') {
+        soundAlertsEnabled = true;
+        localStorage.setItem(STORAGE_KEY_SOUND, 'true');
+        updateSoundUI();
+        playChaChingSound();
+        try {
+          new Notification('💰 Order Notifications Active!', {
+            body: 'You will receive instant Shopify Cha-Ching alerts whenever an order is placed.',
+            icon: '/icon-192.png'
+          });
+        } catch (e) {}
+        alert('✓ Push Notifications & Cha-Ching Sound enabled successfully!');
+      } else if (perm === 'denied') {
+        alert('Notification permission was blocked in browser settings. Please allow notifications in site settings to receive order alerts.');
+      }
+    });
+  }
+  window.enablePushNotifications = enablePushNotifications;
 
   function updateSoundUI() {
     var btn = document.getElementById('btn-toggle-sound');
@@ -678,35 +718,87 @@
   // -------------------------------------------------------------------------
   // ORDERS MANAGEMENT
   // -------------------------------------------------------------------------
+  var isInitialOrdersLoaded = false;
+
   function loadOrders() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY_ORDERS) || '[]'); }
-    catch (e) { return []; }
+    try {
+      var a = JSON.parse(localStorage.getItem(STORAGE_KEY_ORDERS) || '[]');
+      var b = JSON.parse(localStorage.getItem('the_classic_co_orders') || '[]');
+      var map = {};
+      if (Array.isArray(b)) b.forEach(function(o) { if (o && o.orderId) map[o.orderId] = o; });
+      if (Array.isArray(a)) a.forEach(function(o) { if (o && o.orderId) map[o.orderId] = o; });
+      var list = Object.values(map).sort(function(x, y) {
+        return new Date(y.createdAt || 0) - new Date(x.createdAt || 0);
+      });
+      return list;
+    } catch (e) { return []; }
   }
 
   function saveOrders(list) {
-    try { localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(list)); } catch (e) {}
+    try {
+      localStorage.setItem(STORAGE_KEY_ORDERS, JSON.stringify(list));
+      localStorage.setItem('the_classic_co_orders', JSON.stringify(list));
+    } catch (e) {}
   }
 
   function pollForNewOrders() {
-    var list = loadOrders();
+    // 1. Process current local orders
+    processOrdersList(loadOrders());
+
+    // 2. Fetch server orders if running on local server
+    try {
+      fetch('/api/orders', { cache: 'no-store' })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(serverOrders) {
+          if (Array.isArray(serverOrders) && serverOrders.length > 0) {
+            var current = loadOrders();
+            var map = {};
+            current.forEach(function(o) { if (o && o.orderId) map[o.orderId] = o; });
+            var added = false;
+            serverOrders.forEach(function(so) {
+              if (so && so.orderId && !map[so.orderId]) {
+                map[so.orderId] = so;
+                added = true;
+              }
+            });
+            if (added) {
+              var merged = Object.values(map).sort(function(x, y) {
+                return new Date(y.createdAt || 0) - new Date(x.createdAt || 0);
+              });
+              saveOrders(merged);
+              processOrdersList(merged);
+            }
+          }
+        })
+        .catch(function() {});
+    } catch (e) {}
+  }
+
+  function processOrdersList(list) {
     var hasNew = false;
     list.forEach(function(o) {
+      if (!o || !o.orderId) return;
       if (!knownOrderIds.has(o.orderId)) {
-        if (knownOrderIds.size > 0) {
+        if (isInitialOrdersLoaded) {
           hasNew = true;
           playChaChingSound();
           showToast(o);
-          if (window.confetti) confetti({ particleCount: 60, spread: 80, origin: { y: 0.8 } });
+          if (window.confetti) {
+            try { confetti({ particleCount: 60, spread: 80, origin: { y: 0.8 } }); } catch(e) {}
+          }
           if ('Notification' in window && Notification.permission === 'granted') {
-            new Notification('💰 New Sale Received!', {
-              body: 'Order #' + o.orderId + ' - ₹' + o.amount + ' by ' + o.name,
-              icon: '/icon-192.png'
-            });
+            try {
+              new Notification('💰 New Sale Received!', {
+                body: 'Order #' + o.orderId + ' - ₹' + o.amount + ' by ' + o.name,
+                icon: '/icon-192.png'
+              });
+            } catch (e) {}
           }
         }
         knownOrderIds.add(o.orderId);
       }
     });
+    isInitialOrdersLoaded = true;
     if (hasNew) renderOrders();
   }
 
@@ -990,7 +1082,23 @@
   window.installPWA = installPWA;
   window.renderOrders = renderOrders;
   window.updateOrderStatus = updateOrderStatus;
-  window.waCustomerUrl = waCustomerUrl;
+  // Real-time Cross-Tab & PWA Order Listener
+  try {
+    if (window.BroadcastChannel) {
+      var bc = new BroadcastChannel('classic_co_orders_channel');
+      bc.onmessage = function(ev) {
+        if (ev && ev.data && ev.data.action === 'NEW_ORDER') {
+          pollForNewOrders();
+        }
+      };
+    }
+  } catch (e) {}
+
+  window.addEventListener('storage', function(e) {
+    if (e && (e.key === STORAGE_KEY_ORDERS || e.key === 'the_classic_co_orders')) {
+      pollForNewOrders();
+    }
+  });
 
   // Initialize
   if (document.readyState === 'loading') {
