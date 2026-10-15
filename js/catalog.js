@@ -93,18 +93,12 @@ function renderProductsGrid() {
       <div class="media-wrap">
         <img src="${p.images[0]}" alt="${escapeHTML(p.title)}" class="media-img" loading="lazy">
         ${p.images[1] ? `<img src="${p.images[1]}" alt="${escapeHTML(p.title)}" class="media-img media-img-hover" loading="lazy">` : ''}
-        ${p.featured ? '<span class="badge-card">Featured</span>' : ''}
       </div>
       <div class="card-body">
-        <div class="card-cat">${escapeHTML(p.category)}</div>
         <div class="card-title">${escapeHTML(p.title)}</div>
         <div class="price-row">
-          <span class="price-current">Rs. ${p.cod_price}.00</span>
-          <span class="price-upi-note">₹${p.upi_price} on UPI</span>
+          <span class="price-current">Rs. ${p.cod_price.toLocaleString('en-IN')}.00</span>
         </div>
-        <button type="button" class="btn-card-action" onclick="event.stopPropagation(); openProductDetailModal(${p.id})">
-          View Details
-        </button>
       </div>
     </div>
   `).join('');

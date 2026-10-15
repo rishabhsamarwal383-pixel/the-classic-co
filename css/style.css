@@ -1,47 +1,51 @@
-/* EXACT SHOPIFY RISE THEME FONTS */
+/* EXACT SHOPIFY RISE THEME FONTS (LOCAL + SHOPIFY CDN FALLBACK) */
 @font-face {
   font-family: 'Murecho';
   font-weight: 300;
   font-style: normal;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMR80B5w.woff2") format("woff2");
+  src: url("../fonts/murecho_400.woff2") format("woff2"),
+       url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n4.48026a226f97b34dd378daf307ec4f9bcdf1dd4c.woff2") format("woff2");
 }
 @font-face {
   font-family: 'Murecho';
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n4.48026a226f97b34dd378daf307ec4f9bcdf1dd4c.woff2") format("woff2"),
-       url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMR80B5w.woff2") format("woff2");
+  src: url("../fonts/murecho_400.woff2") format("woff2"),
+       url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n4.48026a226f97b34dd378daf307ec4f9bcdf1dd4c.woff2") format("woff2");
 }
 @font-face {
   font-family: 'Murecho';
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+  src: url("../fonts/murecho_400.woff2") format("woff2"),
+       url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n4.48026a226f97b34dd378daf307ec4f9bcdf1dd4c.woff2") format("woff2");
 }
 @font-face {
   font-family: 'Murecho';
   font-weight: 600;
   font-style: normal;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+  src: url("../fonts/murecho_700.woff2") format("woff2"),
+       url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n7.85aa37ea273eee5593712f2d3fa544d877fef839.woff2") format("woff2");
 }
 @font-face {
   font-family: 'Murecho';
   font-weight: 700;
   font-style: normal;
   font-display: swap;
-  src: url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n7.85aa37ea273eee5593712f2d3fa544d877fef839.woff2") format("woff2"),
-       url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+  src: url("../fonts/murecho_700.woff2") format("woff2"),
+       url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n7.85aa37ea273eee5593712f2d3fa544d877fef839.woff2") format("woff2");
 }
 @font-face {
   font-family: 'Murecho';
   font-weight: 800;
   font-style: normal;
   font-display: swap;
-  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+  src: url("../fonts/murecho_700.woff2") format("woff2"),
+       url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n7.85aa37ea273eee5593712f2d3fa544d877fef839.woff2") format("woff2");
 }
 
 :root {
@@ -89,9 +93,9 @@ h1, h2, h3, h4, h5, h6, .brand-logo, .rise-hero-title, .rise-hero-subtitle, .ris
 .announcement-bar {
   background: #ffffff;
   color: #121212;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid rgba(18, 18, 18, 0.08);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.04em;
   padding: 10px 16px;
   text-align: center;
@@ -103,6 +107,9 @@ h1, h2, h3, h4, h5, h6, .brand-logo, .rise-hero-title, .rise-hero-subtitle, .ris
 .announcement-bar-message {
   margin: 0;
   line-height: 1.3;
+  font-size: 13px;
+  font-weight: 400;
+  color: #121212;
 }
 
 /* HEADER (SHOPIFY RISE THEME 1:1) */
@@ -110,9 +117,9 @@ header {
   position: sticky;
   top: 0;
   background: #ffffff;
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid rgba(18, 18, 18, 0.08);
   z-index: 100;
-  padding: 16px 36px;
+  padding: 16px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -124,8 +131,8 @@ header {
 }
 .brand-logo {
   font-family: 'Murecho', sans-serif !important;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 24px;
+  font-weight: 400 !important;
   letter-spacing: -0.01em;
   color: #121212;
   text-decoration: none;
@@ -133,7 +140,7 @@ header {
 }
 .header-inline-nav {
   display: flex;
-  gap: 24px;
+  gap: 28px;
   list-style: none;
   align-items: center;
 }
@@ -149,11 +156,13 @@ header {
 .header-nav-link:hover {
   text-decoration: underline;
   text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
 }
 .header-nav-link.active {
   text-decoration: underline;
   text-underline-offset: 4px;
-  font-weight: 500;
+  text-decoration-thickness: 1px;
+  font-weight: 400;
 }
 .header-nav-link.active::after {
   display: none;
@@ -196,8 +205,12 @@ header {
   justify-content: center;
   line-height: 1;
 }
-@media (max-width: 768px) {
-  .header-inline-nav { display: none; }
+.hamburger-btn {
+  display: none !important;
+}
+@media (max-width: 989px) {
+  .hamburger-btn { display: inline-flex !important; }
+  .header-inline-nav { display: none !important; }
   header { padding: 12px 18px; }
 }
 
@@ -211,7 +224,7 @@ header {
 .rise-hero-container {
   position: relative;
   width: 100%;
-  min-height: 520px;
+  min-height: 540px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,11 +263,11 @@ header {
   font-family: 'Murecho', sans-serif !important;
   font-size: 44px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: #ffffff;
   margin-bottom: 12px;
   line-height: 1.15;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  text-shadow: none !important;
 }
 .rise-hero-subtitle {
   font-family: 'Murecho', sans-serif !important;
@@ -262,25 +275,25 @@ header {
   font-weight: 700;
   color: #ffffff;
   margin-bottom: 24px;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+  text-shadow: none !important;
 }
 .rise-btn-primary {
   display: inline-block;
   background: #ffffff;
   color: #121212;
-  padding: 11px 32px;
+  padding: 12px 32px;
   border-radius: 0px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   letter-spacing: 0.05em;
   text-transform: lowercase;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: none !important;
+  border: none;
 }
 .rise-btn-primary:hover {
   background: #f0f0f0;
-  transform: translateY(-1px);
 }
 @media (max-width: 749px) {
   .rise-hero-container {
@@ -395,21 +408,20 @@ header {
       justify-content: space-between;
     }
 
-    /* PRODUCT GRID */
+    /* PRODUCT GRID (SHOPIFY RISE THEME 6 COLUMNS DESKTOP) */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+      margin-bottom: 30px;
     }
-    @media (max-width: 1024px) {
-      .products-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    @media (max-width: 1200px) {
+      .products-grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
     }
     @media (max-width: 680px) {
-      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-      .nav-links { display: none; }
-      header { padding: 12px 16px; }
-      .announcement-bar { font-size: 10.5px; padding: 7px 10px; }
-      .catalog-section { padding: 24px 12px 50px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .announcement-bar { font-size: 11px; padding: 7px 10px; }
+      .catalog-section { padding: 20px 14px 40px; }
     }
 
     /* VIEW ALL BUTTON (MOBILE) */
@@ -418,38 +430,39 @@ header {
       padding: 20px 0 8px; gap: 6px;
     }
     .btn-view-all {
-      background: #161514; color: #fff; border: none; border-radius: 10px;
-      padding: 14px 36px; font-size: 14px; font-weight: 700;
+      background: #161514; color: #fff; border: none; border-radius: 0px;
+      padding: 12px 32px; font-size: 13.5px; font-weight: 500;
       letter-spacing: 0.3px; cursor: pointer;
       transition: all 0.2s ease;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      font-family: 'Murecho', sans-serif !important;
     }
     .btn-view-all:active { transform: scale(0.97); }
     .view-all-hint {
-      font-size: 11.5px; color: var(--text-muted); font-weight: 500;
+      font-size: 11.5px; color: var(--text-muted); font-weight: 400;
     }
 
-    /* PRODUCT CARD */
+    /* PRODUCT CARD (SHOPIFY RISE THEME 1:1) */
     .product-card {
-      background: #ffffff;
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius);
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 0px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       transition: var(--transition);
       position: relative;
+      cursor: pointer;
     }
     .product-card:hover {
-      border-color: #161514;
+      border-color: transparent;
       transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      box-shadow: none;
     }
     .media-wrap {
       position: relative;
       width: 100%;
       aspect-ratio: 4 / 3;
-      background: #f7f7f7;
+      background: #f4f4f4;
       overflow: hidden;
       cursor: pointer;
     }
@@ -477,40 +490,23 @@ header {
       transform: scale(1.03);
     }
     .badge-card {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: #121212;
-      color: #ffffff;
-      font-size: 10.5px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      border: none;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
-      z-index: 2;
+      display: none;
     }
 
     .card-body {
-      padding: 14px 14px 16px;
+      padding: 10px 0 4px;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
     .card-cat {
-      font-size: 10.5px;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      display: none;
     }
     .card-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--text);
+      font-family: 'Murecho', sans-serif !important;
+      font-size: 13.5px !important;
+      font-weight: 400 !important;
+      color: #121212 !important;
       line-height: 1.35;
       margin-bottom: 6px;
       display: -webkit-box;
@@ -519,27 +515,33 @@ header {
       overflow: hidden;
       cursor: pointer;
     }
-    .card-rating {
-      font-size: 11px;
-      color: #eab308;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .product-card:hover .card-title {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
     }
-    .card-rating span { color: var(--text-light); font-size: 10.5px; }
+    .card-rating {
+      display: none;
+    }
 
     .price-row {
       display: flex;
       align-items: baseline;
       gap: 8px;
       margin-top: auto;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
     }
     .price-current {
-      font-size: 16px;
-      font-weight: 800;
-      color: #161514;
+      font-family: 'Murecho', sans-serif !important;
+      font-size: 13.5px !important;
+      font-weight: 400 !important;
+      color: #121212 !important;
+    }
+    .price-upi-note {
+      display: none;
+    }
+    .btn-card-action {
+      display: none;
     }
     .price-original {
       font-size: 12px;
@@ -581,7 +583,7 @@ header {
       padding: 56px 20px;
     }
     .section-title {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Murecho', sans-serif;
       font-size: 26px;
       font-weight: 700;
       text-align: center;
@@ -660,7 +662,7 @@ header {
     @media (max-width: 768px) {
       .footer-inner { grid-template-columns: 1fr; gap: 24px; }
     }
-    .footer-brand { font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+    .footer-brand { font-family: 'Murecho', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; color: #fff; }
     .footer-col h4 { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 12px; }
     .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .footer-col a { color: #a19d96; text-decoration: none; transition: var(--transition); }
@@ -969,7 +971,7 @@ header {
       background: #faf9f6;
     }
     .drawer-brand {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Murecho', sans-serif;
       font-size: 16px;
       font-weight: 700;
       letter-spacing: 1px;
@@ -1143,7 +1145,7 @@ header {
       background: #faf9f6;
     }
     .drawer-brand {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Murecho', sans-serif;
       font-size: 16px;
       font-weight: 700;
       letter-spacing: 1px;
@@ -1439,7 +1441,7 @@ header {
       box-shadow: 0 0 8px rgba(140, 109, 70, 0.5);
     }
     .hero-main-title {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Murecho', sans-serif;
       font-size: 52px;
       font-weight: 700;
       color: #161514;
@@ -1451,7 +1453,7 @@ header {
       font-style: italic;
       font-weight: 400;
       color: #635446;
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Murecho', sans-serif;
     }
     .hero-sub-title {
       font-size: 15px;
@@ -1520,7 +1522,7 @@ header {
       gap: 2px;
     }
     .metric-num {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Murecho', sans-serif;
       font-size: 20px;
       font-weight: 700;
       color: #161514;
@@ -2042,7 +2044,7 @@ header {
 
 .founder-section { text-align: center; padding: 8px 20px 56px; }
 .founder-section p {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Murecho', sans-serif;
   font-size: 18px; color: #161514; margin: 0 0 16px;
 }
 .founder-wa-btn {
@@ -2141,7 +2143,7 @@ header {
   font-weight: 800;
   color: #161514;
   margin: 0 0 6px;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Murecho', sans-serif;
 }
 .game-banner-desc {
   font-size: 13.5px;
@@ -2225,7 +2227,7 @@ header {
   font-weight: 700;
   color: #161514;
   margin: 2px 0 0;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Murecho', sans-serif;
 }
 .arcade-controls-top {
   display: flex;

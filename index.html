@@ -19,15 +19,16 @@
   <link rel="icon" type="image/svg+xml" href="icon.svg">
 
   <!-- CDNs & Fonts -->
+  <link rel="preload" href="fonts/murecho_400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/murecho_700.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.shopify.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@400;700&display=swap" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Store config (IDs, prices, delivery rule) -->
-  <script src="js/products-data.js?v=20261005"></script>
+  <script src="js/products-data.js?v=20261015-rise2"></script>
 
   <!-- Marketing pixels: IDs are set in js/products-data.js and load for every visitor -->
   <script>
@@ -60,8 +61,8 @@
   </script>
 
   <!-- Core Design & Mobile Stylesheets -->
-  <link rel="stylesheet" href="css/style.css?v=20261005">
-  <link rel="stylesheet" href="css/mobile.css?v=20261005">
+  <link rel="stylesheet" href="css/style.css?v=20261015-rise2">
+  <link rel="stylesheet" href="css/mobile.css?v=20261015-rise2">
 </head>
 <body>
 
@@ -171,8 +172,8 @@
     </div>
   </section>
 
-  <!-- DELIVERY STRIP -->
-  <div class="delivery-strip">
+  <!-- DELIVERY STRIP (Hidden on homepage to match Shopify Rise 1:1) -->
+  <div class="delivery-strip" style="display: none;">
     <span><strong>Udaipur:</strong> 1-day delivery + COD</span>
     <span class="delivery-strip-sep">|</span>
     <span><strong>Rest of India:</strong> prepaid UPI</span>
@@ -182,11 +183,16 @@
   <main class="catalog-section" id="collection">
     
     <div class="catalog-head">
-      <h2 class="section-title" id="catalog-heading" style="margin-bottom:6px;">Featured collection</h2>
-      <div class="section-sub" id="catalog-sub" style="margin-bottom:22px;">UV400 polarized lenses, hard case and cloth included.</div>
+      <h2 class="section-title" id="catalog-heading" style="margin-bottom:20px; font-weight:400; font-size:26px;">Featured collection</h2>
+      <div class="section-sub" id="catalog-sub" style="display: none;">UV400 polarized lenses, hard case and cloth included.</div>
     </div>
 
-    <div class="filter-bar">
+    <!-- PRODUCTS GRID (SHOPIFY RISE THEME 6 COLUMNS DESKTOP) -->
+    <div class="products-grid" id="products-grid">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <div class="filter-bar" style="margin-top: 24px;">
       <div class="pill-tabs">
         <button class="pill-tab active" data-cat="All" onclick="filterCategory('All', this)">All</button>
         <button class="pill-tab" data-cat="Vintage &amp; Classic" onclick="filterCategory('Vintage &amp; Classic', this)">Vintage &amp; Classic</button>
@@ -214,11 +220,6 @@
     <div class="count-status">
       <span id="results-count-text">Showing styles</span>
       <span>Hard case + cloth included</span>
-    </div>
-
-    <!-- PRODUCTS GRID -->
-    <div class="products-grid" id="products-grid">
-      <!-- Injected via JavaScript -->
     </div>
   </main>
 
@@ -762,10 +763,10 @@
 
   <!-- ========================================================================= -->
   <!-- Application Logic (js/products-data.js is loaded in <head>) -->
-  <script src="js/catalog.js?v=20261005"></script>
-  <script src="js/checkout.js?v=20261005"></script>
-  <script src="js/game.js?v=20261005"></script>
-  <script src="js/app.js?v=20261005"></script>
-  <script src="js/pwa.js?v=20261005"></script>
+  <script src="js/catalog.js?v=20261015-rise2"></script>
+  <script src="js/checkout.js?v=20261015-rise2"></script>
+  <script src="js/game.js?v=20261015-rise2"></script>
+  <script src="js/app.js?v=20261015-rise2"></script>
+  <script src="js/pwa.js?v=20261015-rise2"></script>
 </body>
 </html>
