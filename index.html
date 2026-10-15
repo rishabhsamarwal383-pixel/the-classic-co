@@ -22,7 +22,8 @@
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.shopify.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Store config (IDs, prices, delivery rule) -->
@@ -118,18 +119,30 @@
 
   <!-- HEADER (SHOPIFY RISE THEME 1:1) -->
   <header>
-    <a href="/" class="brand-logo">The Classic co</a>
+    <div class="header-left-group">
+      <a href="/" class="brand-logo">The Classic co</a>
 
-    <nav class="header-inline-nav">
-      <a href="/" class="header-nav-link active">Home</a>
-      <a href="#collection" class="header-nav-link">Catalog</a>
-      <a href="#contact" class="header-nav-link">Contact</a>
-    </nav>
+      <nav class="header-inline-nav">
+        <a href="/" class="header-nav-link active">Home</a>
+        <a href="#collection" class="header-nav-link">Catalog</a>
+        <a href="#contact" class="header-nav-link">Contact</a>
+      </nav>
+    </div>
 
     <div class="header-tools">
       <button class="icon-tool-btn" onclick="document.getElementById('search-input')?.focus(); document.getElementById('collection')?.scrollIntoView({behavior:'smooth'});" aria-label="Search">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon-svg" viewBox="0 0 18 19" width="18" height="19"><path fill="currentColor" fill-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 1 1 2.85 3.5a5.784 5.784 0 0 1 8.18 8.18m.26 1.12a6.78 6.78 0 1 1 .72-.7l5.4 5.4a.5.5 0 1 1-.71.7z" clip-rule="evenodd"/></svg>
       </button>
+
+      <a href="https://wa.me/918619661325" target="_blank" class="icon-tool-btn" aria-label="Account">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon-svg" viewBox="0 0 18 19" width="18" height="19"><path fill="currentColor" fill-rule="evenodd" d="M6 4.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-4a4 4 0 1 0 0 8 4 4 0 0 0 0-8m5.58 12.15c1.12.82 1.83 2.24 1.91 4.85H1.51c.08-2.6.79-4.03 1.9-4.85C4.66 11.75 6.5 11.5 9 11.5s4.35.26 5.58 1.15M9 10.5c-2.5 0-4.65.24-6.17 1.35C1.27 12.98.5 14.93.5 18v.5h17V18c0-3.07-.77-5.02-2.33-6.15-1.52-1.1-3.67-1.35-6.17-1.35" clip-rule="evenodd"/></svg>
+      </a>
+
+      <button type="button" class="icon-tool-btn cart-icon-wrap" onclick="document.getElementById('collection')?.scrollIntoView({behavior:'smooth'});" aria-label="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon-svg" viewBox="0 0 40 40" width="22" height="22"><path fill="currentColor" fill-rule="evenodd" d="M15.75 11.8h-3.16l-.77 11.6a5 5 0 0 0 4.99 5.34h7.38a5 5 0 0 0 4.99-5.33L28.4 11.8zm0 1h-2.22l-.71 10.67a4 4 0 0 0 3.99 4.27h7.38a4 4 0 0 0 4-4.27l-.72-10.67h-2.22v.63a4.75 4.75 0 1 1-9.5 0zm8.5 0h-7.5v.63a3.75 3.75 0 1 0 7.5 0z"/></svg>
+        <span class="cart-bubble-count" id="header-cart-badge">1</span>
+      </button>
+
       <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation">
         <div class="hamburger-icon">
           <span></span>

@@ -1,218 +1,298 @@
+/* EXACT SHOPIFY RISE THEME FONTS */
+@font-face {
+  font-family: 'Murecho';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMR80B5w.woff2") format("woff2");
+}
+@font-face {
+  font-family: 'Murecho';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n4.48026a226f97b34dd378daf307ec4f9bcdf1dd4c.woff2") format("woff2"),
+       url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMR80B5w.woff2") format("woff2");
+}
+@font-face {
+  font-family: 'Murecho';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+}
+@font-face {
+  font-family: 'Murecho';
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+}
+@font-face {
+  font-family: 'Murecho';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://theclassicco-in.myshopify.com/cdn/fonts/murecho/murecho_n7.85aa37ea273eee5593712f2d3fa544d877fef839.woff2") format("woff2"),
+       url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+}
+@font-face {
+  font-family: 'Murecho';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://fonts.gstatic.com/s/murecho/v17/1Ptzg8vdTUjh_0uMSc4B5w.woff2") format("woff2");
+}
+
 :root {
-      --bg: #ffffff;
-      --bg-warm: #faf9f6;
-      --surface: #ffffff;
-      --surface-border: #e8e6e1;
-      --surface-border-subtle: #f0eee9;
-      --text: #161514;
-      --text-muted: #6e6b66;
-      --text-light: #99958f;
-      --accent: #b48448;
-      --accent-dark: #8c622a;
-      --green: #059669;
-      --green-light: #ecfdf5;
-      --radius: 10px;
-      --radius-sm: 6px;
-      --radius-pill: 999px;
-      --shadow-sm: 0 2px 8px rgba(22, 21, 20, 0.04);
-      --shadow-md: 0 8px 24px rgba(22, 21, 20, 0.08);
-      --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+  --bg: #ffffff;
+  --bg-warm: #faf9f6;
+  --surface: #ffffff;
+  --surface-border: #e8e6e1;
+  --surface-border-subtle: #f0eee9;
+  --text: #121212;
+  --text-muted: #6e6b66;
+  --text-light: #99958f;
+  --accent: #b48448;
+  --accent-dark: #8c622a;
+  --green: #059669;
+  --green-light: #ecfdf5;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 2px 8px rgba(22, 21, 20, 0.04);
+  --shadow-md: 0 8px 24px rgba(22, 21, 20, 0.08);
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body {
-      font-family: 'Murecho', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'Murecho', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+body {
+  font-family: 'Murecho', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
 
-    /* TOP ANNOUNCEMENT BAR (SHOPIFY RISE THEME 1:1) */
-    .announcement-bar {
-      background: #ffffff;
-      color: #121212;
-      border-bottom: 1px solid #e8e8e8;
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      padding: 10px 16px;
-      text-align: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-    }
-    .announcement-bar-message {
-      margin: 0;
-      line-height: 1.3;
-    }
+h1, h2, h3, h4, h5, h6, .brand-logo, .rise-hero-title, .rise-hero-subtitle, .rise-btn-primary, .header-nav-link, .card-title, .section-title {
+  font-family: 'Murecho', sans-serif !important;
+}
 
-    /* HEADER (SHOPIFY RISE THEME 1:1) */
-    header {
-      position: sticky;
-      top: 0;
-      background: #ffffff;
-      border-bottom: 1px solid #e8e8e8;
-      z-index: 100;
-      padding: 16px 28px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .brand-logo {
-      font-family: 'Murecho', sans-serif;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
-      color: #121212;
-      text-decoration: none;
-      text-transform: none;
-    }
-    .header-inline-nav {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-      align-items: center;
-    }
-    .header-nav-link {
-      color: #121212;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: opacity 0.2s;
-      position: relative;
-    }
-    .header-nav-link:hover { opacity: 0.7; }
-    .header-nav-link.active::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 100%;
-      height: 1.5px;
-      background: #121212;
-    }
-    .header-tools {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .icon-tool-btn {
-      background: transparent;
-      border: none;
-      color: #121212;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px;
-      border-radius: 4px;
-      transition: opacity 0.2s;
-    }
-    .icon-tool-btn:hover { opacity: 0.7; }
-    @media (max-width: 768px) {
-      .header-inline-nav { display: none; }
-      header { padding: 12px 18px; }
-    }
+/* TOP ANNOUNCEMENT BAR (SHOPIFY RISE THEME 1:1) */
+.announcement-bar {
+  background: #ffffff;
+  color: #121212;
+  border-bottom: 1px solid #e8e8e8;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 10px 16px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+.announcement-bar-message {
+  margin: 0;
+  line-height: 1.3;
+}
 
-    /* HERO SLIDESHOW (SHOPIFY RISE THEME 1:1) */
-    .rise-hero-section {
-      position: relative;
-      width: 100%;
-      background: #000000;
-      overflow: hidden;
-    }
-    .rise-hero-container {
-      position: relative;
-      width: 100%;
-      min-height: 520px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .rise-hero-media {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .rise-hero-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-    }
-    .rise-hero-content-wrapper {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 1200px;
-      padding: 60px 20px;
-      display: flex;
-      justify-content: center;
-    }
-    .rise-hero-card {
-      background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 34px 44px;
-      border-radius: 6px;
-      text-align: center;
-      max-width: 480px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-    .rise-hero-title {
-      font-family: 'Murecho', sans-serif;
-      font-size: 36px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #121212;
-      margin-bottom: 10px;
-      line-height: 1.15;
-    }
-    .rise-hero-subtitle {
-      font-family: 'Murecho', sans-serif;
-      font-size: 17px;
-      font-weight: 500;
-      color: #121212;
-      margin-bottom: 22px;
-    }
-    .rise-btn-primary {
-      display: inline-block;
-      background: #121212;
-      color: #ffffff;
-      padding: 13px 36px;
-      border-radius: 40px;
-      font-size: 13.5px;
-      font-weight: 600;
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      text-transform: lowercase;
-      transition: all 0.2s ease;
-    }
-    .rise-btn-primary:hover {
-      background: #333333;
-      transform: translateY(-1px);
-    }
-    @media (max-width: 749px) {
-      .rise-hero-container {
-        min-height: 380px;
-      }
-      .rise-hero-card {
-        padding: 24px 20px;
-        margin: 0 16px;
-      }
-      .rise-hero-title {
-        font-size: 26px;
-      }
-      .rise-hero-subtitle {
-        font-size: 14.5px;
-      }
-    }
+/* HEADER (SHOPIFY RISE THEME 1:1) */
+header {
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  border-bottom: 1px solid #e8e8e8;
+  z-index: 100;
+  padding: 16px 36px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-left-group {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.brand-logo {
+  font-family: 'Murecho', sans-serif !important;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: #121212;
+  text-decoration: none;
+  text-transform: none;
+}
+.header-inline-nav {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  align-items: center;
+}
+.header-nav-link {
+  color: #121212;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: opacity 0.2s;
+  position: relative;
+  font-family: 'Murecho', sans-serif !important;
+}
+.header-nav-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.header-nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 500;
+}
+.header-nav-link.active::after {
+  display: none;
+}
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.icon-tool-btn {
+  background: transparent;
+  border: none;
+  color: #121212;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 4px;
+  transition: opacity 0.2s;
+  text-decoration: none;
+}
+.icon-tool-btn:hover { opacity: 0.7; }
+.cart-icon-wrap {
+  position: relative;
+}
+.cart-bubble-count {
+  position: absolute;
+  top: -2px;
+  right: -4px;
+  background: #121212;
+  color: #ffffff;
+  font-size: 9.5px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+@media (max-width: 768px) {
+  .header-inline-nav { display: none; }
+  header { padding: 12px 18px; }
+}
+
+/* HERO SLIDESHOW (SHOPIFY RISE THEME 1:1) */
+.rise-hero-section {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  overflow: hidden;
+}
+.rise-hero-container {
+  position: relative;
+  width: 100%;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rise-hero-media {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.rise-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.rise-hero-content-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  padding: 60px 20px;
+  display: flex;
+  justify-content: center;
+}
+.rise-hero-card {
+  background: transparent;
+  padding: 20px;
+  text-align: center;
+  max-width: 600px;
+  box-shadow: none;
+}
+.rise-hero-title {
+  font-family: 'Murecho', sans-serif !important;
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 12px;
+  line-height: 1.15;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.rise-hero-subtitle {
+  font-family: 'Murecho', sans-serif !important;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
+.rise-btn-primary {
+  display: inline-block;
+  background: #ffffff;
+  color: #121212;
+  padding: 11px 32px;
+  border-radius: 0px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.rise-btn-primary:hover {
+  background: #f0f0f0;
+  transform: translateY(-1px);
+}
+@media (max-width: 749px) {
+  .rise-hero-container {
+    min-height: 380px;
+  }
+  .rise-hero-title {
+    font-size: 28px;
+  }
+  .rise-hero-subtitle {
+    font-size: 14px;
+  }
+}
 
     /* TRUST BAR */
     .trust-bar {
