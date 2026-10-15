@@ -22,8 +22,7 @@
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.shopify.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Murecho:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
   <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <!-- Store config (IDs, prices, delivery rule) -->
@@ -86,12 +85,12 @@
         <div>
           <div class="drawer-section-title">Collections</div>
           <ul class="drawer-nav-list">
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('All')"><span>Bestsellers</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Polarized &amp; Driving')"><span>Polarized &amp; Driving</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('All')"><span>All</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Vintage &amp; Classic')"><span>Vintage &amp; Classic</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Geometric &amp; Rimless')"><span>Geometric &amp; Rimless</span><span>→</span></a></li>
             <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Magnetic Clip-Ons')"><span>Magnetic Clip-Ons</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Premium Styles')"><span>Premium Styles</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Classic Lifestyle')"><span>Classic Lifestyle</span><span>→</span></a></li>
-            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Trending')"><span>Trending</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Performance Series')"><span>Performance Series</span><span>→</span></a></li>
+            <li><a href="javascript:void(0)" onclick="drawerFilterCategory('Optical &amp; Blue Cut')"><span>Optical &amp; Blue Cut</span><span>→</span></a></li>
             <li style="border-top:1px dashed var(--surface-border); margin-top:8px; padding-top:6px;"><a href="javascript:void(0)" onclick="closeMenuDrawer(); window.ClassicGame.openModal();" style="color:#d97706; font-weight:700;"><span>🎮 Play Sunset Drive (Win 15% Off)</span><span>→</span></a></li>
           </ul>
         </div>
@@ -112,97 +111,50 @@
   </div>
   
 
-  <!-- TOP ANNOUNCEMENT BAR -->
+  <!-- TOP ANNOUNCEMENT BAR (SHOPIFY RISE THEME 1:1) -->
   <div class="announcement-bar">
-    <span>UV400 polarized · Hard case &amp; cloth included · 7-day exchange</span>
+    <p class="announcement-bar-message"><span>Welcome to our store</span></p>
   </div>
 
-  <!-- HEADER -->
+  <!-- HEADER (SHOPIFY RISE THEME 1:1) -->
   <header>
-    <a href="#" class="brand-logo">THE CLASSIC CO.</a>
+    <a href="/" class="brand-logo">The Classic co</a>
+
+    <nav class="header-inline-nav">
+      <a href="/" class="header-nav-link active">Home</a>
+      <a href="#collection" class="header-nav-link">Catalog</a>
+      <a href="#contact" class="header-nav-link">Contact</a>
+    </nav>
 
     <div class="header-tools">
+      <button class="icon-tool-btn" onclick="document.getElementById('search-input')?.focus(); document.getElementById('collection')?.scrollIntoView({behavior:'smooth'});" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon-svg" viewBox="0 0 18 19" width="18" height="19"><path fill="currentColor" fill-rule="evenodd" d="M11.03 11.68A5.784 5.784 0 1 1 2.85 3.5a5.784 5.784 0 0 1 8.18 8.18m.26 1.12a6.78 6.78 0 1 1 .72-.7l5.4 5.4a.5.5 0 1 1-.71.7z" clip-rule="evenodd"/></svg>
+      </button>
       <button class="hamburger-btn" onclick="openMenuDrawer()" aria-label="Open Navigation">
         <div class="hamburger-icon">
           <span></span>
           <span></span>
           <span></span>
         </div>
-        <span>MENU</span>
       </button>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero-editorial">
-    <div class="hero-editorial-grid">
-
-      <div class="hero-text-col">
-        <div class="hero-edition-badge">
-          <span class="hero-edition-dot"></span>
-          <span>FROM ₹899</span>
-        </div>
-
-        <h1 class="hero-main-title">
-          Polarized sunglasses,<br>
-          <span class="hero-title-accent">delivered to your door.</span>
-        </h1>
-
-        <p class="hero-sub-title">
-          UV400 polarized lenses. Cash on delivery in Udaipur, 7-day exchange guarantee. Hard case + cloth included.
-        </p>
-
-        <div class="hero-actions-group">
-          <a href="#collection" class="btn-hero-explore">
-            <span>Shop Bestsellers</span>
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-          </a>
-          <a href="https://wa.me/918619661325?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20The%20Classic%20Co.%20sunglasses" target="_blank" class="btn-hero-concierge">
-            <span>💬 WhatsApp us</span>
-          </a>
-        </div>
-
-        <div class="hero-metrics-strip">
-          <div class="hero-metric-item">
-            <span class="metric-num">UV400</span>
-            <span class="metric-lbl">Polarized lenses</span>
-          </div>
-          <div class="hero-metric-divider"></div>
-          <div class="hero-metric-item">
-            <span class="metric-num">24h</span>
-            <span class="metric-lbl">Udaipur delivery</span>
-          </div>
-          <div class="hero-metric-divider"></div>
-          <div class="hero-metric-item">
-            <span class="metric-num">7-day</span>
-            <span class="metric-lbl">Exchange</span>
+  <!-- HERO SLIDESHOW (SHOPIFY RISE THEME 1:1) -->
+  <section class="rise-hero-section">
+    <div class="rise-hero-container">
+      <div class="rise-hero-media">
+        <img src="https://theclassicco-in.myshopify.com/cdn/shop/files/rn-image_picker_lib_temp_134d2282-2ae2-43c4-a530-2a8488b57624.jpg?v=1791284713&amp;width=1780" alt="The Classic co - Elegant shades" class="rise-hero-img" id="hero-main-photo">
+      </div>
+      <div class="rise-hero-content-wrapper">
+        <div class="rise-hero-card">
+          <h2 class="rise-hero-title"><strong>Elegant shades&nbsp;</strong></h2>
+          <div class="rise-hero-subtitle"><p><strong>Make an impact</strong></p></div>
+          <div class="rise-hero-actions">
+            <a href="#collection" class="rise-btn-primary">view all</a>
           </div>
         </div>
       </div>
-
-      <div class="hero-visual-col">
-        <div class="hero-visual-stage">
-          <img src="hero_luxury_aviator.jpg" alt="The Classic Co. polarized sunglasses" class="hero-luxury-image" id="hero-main-photo">
-
-          <div class="hero-delivery-chip">
-            <span class="delivery-pulse"></span>
-            <span>Udaipur: delivered in 24h</span>
-          </div>
-
-          <div class="hero-switcher-bar">
-            <button type="button" class="hero-pill-thumb active" onclick="switchHeroPhoto('hero_luxury_aviator.jpg', this)">
-              <span>Aviator</span>
-            </button>
-            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_round.jpg', this)">
-              <span>Round</span>
-            </button>
-            <button type="button" class="hero-pill-thumb" onclick="switchHeroPhoto('hero_luxury_riviera.jpg', this)">
-              <span>Sunset</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
     </div>
   </section>
 
@@ -213,44 +165,22 @@
     <span><strong>Rest of India:</strong> prepaid UPI</span>
   </div>
 
-  <!-- ARCADE GAME BANNER (Interactive Dwell-Time & Conversion Engine) -->
-  <section class="game-banner-section">
-    <div class="game-banner-card">
-      <div class="game-banner-content">
-        <div class="game-banner-tag">🕶️ THE CLASSIC ARCADE · LAKE CITY SUNSET DRIVE</div>
-        <h3 class="game-banner-heading">Dodge The Road Glare. Win Up To 15% OFF!</h3>
-        <p class="game-banner-desc">Take our vintage roadster along Udaipur's lake roads at golden hour. Tap/Space to jump over blinding glare, collect polarized lenses, and earn discount vouchers!</p>
-        <div class="game-banner-stats">
-          <span>🏆 50 pts = 10% OFF</span>
-          <span>·</span>
-          <span>⭐ 100 pts = 15% OFF</span>
-        </div>
-      </div>
-      <div class="game-banner-cta">
-        <button type="button" class="btn-play-arcade" onclick="window.ClassicGame.openModal()">
-          <span>🎮 Play &amp; Win Voucher</span>
-          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l6 5-6 5"/></svg>
-        </button>
-      </div>
-    </div>
-  </section>
-
   <!-- MAIN CATALOG SECTION -->
   <main class="catalog-section" id="collection">
     
     <div class="catalog-head">
-      <h2 class="section-title" id="catalog-heading" style="margin-bottom:6px;">Bestsellers</h2>
-      <div class="section-sub" id="catalog-sub" style="margin-bottom:22px;">Our most-ordered frames. UV400 polarized lenses, hard case and cloth included.</div>
+      <h2 class="section-title" id="catalog-heading" style="margin-bottom:6px;">Featured collection</h2>
+      <div class="section-sub" id="catalog-sub" style="margin-bottom:22px;">UV400 polarized lenses, hard case and cloth included.</div>
     </div>
 
     <div class="filter-bar">
       <div class="pill-tabs">
-        <button class="pill-tab active" data-cat="All" onclick="filterCategory('All', this)">Bestsellers</button>
-        <button class="pill-tab" data-cat="Polarized &amp; Driving" onclick="filterCategory('Polarized &amp; Driving', this)">Polarized &amp; Driving</button>
+        <button class="pill-tab active" data-cat="All" onclick="filterCategory('All', this)">All</button>
+        <button class="pill-tab" data-cat="Vintage &amp; Classic" onclick="filterCategory('Vintage &amp; Classic', this)">Vintage &amp; Classic</button>
+        <button class="pill-tab" data-cat="Geometric &amp; Rimless" onclick="filterCategory('Geometric &amp; Rimless', this)">Geometric &amp; Rimless</button>
         <button class="pill-tab" data-cat="Magnetic Clip-Ons" onclick="filterCategory('Magnetic Clip-Ons', this)">Magnetic Clip-Ons</button>
-        <button class="pill-tab" data-cat="Premium Styles" onclick="filterCategory('Premium Styles', this)">Premium Styles</button>
-        <button class="pill-tab" data-cat="Classic Lifestyle" onclick="filterCategory('Classic Lifestyle', this)">Classic Lifestyle</button>
-        <button class="pill-tab" data-cat="Trending" onclick="filterCategory('Trending', this)">Trending</button>
+        <button class="pill-tab" data-cat="Performance Series" onclick="filterCategory('Performance Series', this)">Performance Series</button>
+        <button class="pill-tab" data-cat="Optical &amp; Blue Cut" onclick="filterCategory('Optical &amp; Blue Cut', this)">Optical &amp; Blue Cut</button>
       </div>
 
       <div class="filter-tools">
@@ -278,6 +208,35 @@
       <!-- Injected via JavaScript -->
     </div>
   </main>
+
+  <!-- LIFESTYLE IMAGE BANNER (SHOPIFY RISE 1:1) -->
+  <section class="rise-image-banner-section">
+    <div class="rise-image-banner-container">
+      <img src="https://theclassicco-in.myshopify.com/cdn/shop/files/rn-image_picker_lib_temp_60e69d93-a360-42f5-a5d3-80d3ecd6d9e6.jpg?v=1791284708&amp;width=1780" alt="The Classic co Lifestyle" class="rise-image-banner-img" loading="lazy">
+    </div>
+  </section>
+
+  <!-- ARCADE GAME BANNER (Interactive Dwell-Time & Conversion Engine) -->
+  <section class="game-banner-section">
+    <div class="game-banner-card">
+      <div class="game-banner-content">
+        <div class="game-banner-tag">🕶️ THE CLASSIC ARCADE · LAKE CITY SUNSET DRIVE</div>
+        <h3 class="game-banner-heading">Dodge The Road Glare. Win Up To 15% OFF!</h3>
+        <p class="game-banner-desc">Take our vintage roadster along Udaipur's lake roads at golden hour. Tap/Space to jump over blinding glare, collect polarized lenses, and earn discount vouchers!</p>
+        <div class="game-banner-stats">
+          <span>🏆 50 pts = 10% OFF</span>
+          <span>·</span>
+          <span>⭐ 100 pts = 15% OFF</span>
+        </div>
+      </div>
+      <div class="game-banner-cta">
+        <button type="button" class="btn-play-arcade" onclick="window.ClassicGame.openModal()">
+          <span>🎮 Play &amp; Win Voucher</span>
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l6 5-6 5"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
 
   <!-- TRUST ROW -->
   <section class="trust-row-section">
@@ -362,8 +321,8 @@
     </div>
   </section>
 
-  <!-- FOUNDER LINE -->
-  <section class="founder-section">
+  <!-- FOUNDER LINE / CONTACT -->
+  <section class="founder-section" id="contact">
     <p>Run by a local founder in Udaipur. Questions? WhatsApp us.</p>
     <a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20have%20a%20question." target="_blank" class="founder-wa-btn">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
@@ -371,41 +330,33 @@
     </a>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-inner">
-      <div>
-        <div class="footer-brand">THE CLASSIC CO.</div>
-        <p style="color:#a19d96; max-width:400px; line-height:1.6; margin-bottom:14px;">
-          Polarized UV400 sunglasses, delivered in Udaipur and across India.
-        </p>
-        <p style="color:#78736b; font-size:11.5px;">
-          Customer Support: +91 8619661325 · rishabhsamarwal383@gmail.com
-        </p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Collection</h4>
-        <ul>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Polarized &amp; Driving')">Polarized &amp; Driving</a></li>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Magnetic Clip-Ons')">Magnetic Clip-Ons</a></li>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Premium Styles')">Premium Styles</a></li>
-          <li><a href="javascript:void(0)" onclick="filterCategory('Classic Lifestyle')">Classic Lifestyle</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Help &amp; Orders</h4>
-        <ul>
-          <li><a href="https://wa.me/918619661325?text=Hi%20The%20Classic%20Co!%20I%20want%20to%20check%20my%20order%20status." target="_blank">Order status on WhatsApp</a></li>
-          <li><a href="https://wa.me/918619661325" target="_blank">WhatsApp Support</a></li>
-        </ul>
+  <!-- FOOTER (SHOPIFY RISE THEME 1:1) -->
+  <footer class="footer-rise" id="footer">
+    <div class="footer-rise-top">
+      <div class="footer-newsletter-wrap">
+        <h3 class="footer-newsletter-heading">Subscribe to our emails</h3>
+        <form class="footer-newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing to The Classic co updates!'); this.reset();">
+          <div class="newsletter-input-group">
+            <input type="email" class="newsletter-field-input" placeholder="Email" required aria-label="Email address">
+            <button type="submit" class="newsletter-submit-btn" aria-label="Subscribe">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon-svg" viewBox="0 0 14 10" width="14" height="10"><path fill="currentColor" fill-rule="evenodd" d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546" clip-rule="evenodd"/></svg>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <div>© 2026 THE CLASSIC CO. All rights reserved.</div>
-      <div>Udaipur: COD + 24h delivery · Rest of India: prepaid UPI</div>
+    <div class="footer-rise-bottom">
+      <div class="footer-rise-links">
+        <a href="#collection">Catalog</a>
+        <a href="https://wa.me/918619661325" target="_blank">Contact</a>
+        <a href="javascript:void(0)" onclick="alert('Privacy Policy: The Classic co values your privacy. We only use your details for order delivery and customer service.');">Privacy policy</a>
+        <a href="javascript:void(0)" onclick="alert('7-Day Exchange Policy: Message us on WhatsApp (+91 8619661325) within 7 days of delivery for a hassle-free exchange.');">Refund policy</a>
+      </div>
+      <div class="footer-rise-copy">
+        <small>&copy; 2026, <a href="/">The Classic co</a></small>
+        <small><a target="_blank" rel="nofollow" href="https://www.shopify.com?utm_campaign=poweredby&amp;utm_medium=shopify&amp;utm_source=onlinestore">Powered by Shopify</a></small>
+      </div>
     </div>
   </footer>
 

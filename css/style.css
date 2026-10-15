@@ -21,7 +21,7 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-family: 'Murecho', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
@@ -29,102 +29,190 @@
       overflow-x: hidden;
     }
 
-    /* TOP ANNOUNCEMENT BAR */
+    /* TOP ANNOUNCEMENT BAR (SHOPIFY RISE THEME 1:1) */
     .announcement-bar {
-      background: #161514;
-      color: #faf9f6;
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      padding: 9px 16px;
+      background: #ffffff;
+      color: #121212;
+      border-bottom: 1px solid #e8e8e8;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 10px 16px;
       text-align: center;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 12px;
     }
+    .announcement-bar-message {
+      margin: 0;
+      line-height: 1.3;
+    }
 
-    /* HEADER */
+    /* HEADER (SHOPIFY RISE THEME 1:1) */
     header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--surface-border);
+      background: #ffffff;
+      border-bottom: 1px solid #e8e8e8;
       z-index: 100;
-      padding: 14px 24px;
+      padding: 16px 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
     .brand-logo {
-      font-family: 'Playfair Display', Georgia, serif;
-      font-size: 21px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: #161514;
+      font-family: 'Murecho', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #121212;
       text-decoration: none;
-      text-transform: uppercase;
+      text-transform: none;
     }
-    .nav-links {
+    .header-inline-nav {
       display: flex;
-      gap: 24px;
+      gap: 28px;
       list-style: none;
       align-items: center;
     }
-    .nav-links a {
-      color: var(--text-muted);
+    .header-nav-link {
+      color: #121212;
       text-decoration: none;
-      font-size: 13.5px;
-      font-weight: 600;
-      transition: var(--transition);
+      font-size: 14px;
+      font-weight: 500;
+      transition: opacity 0.2s;
+      position: relative;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .header-nav-link:hover { opacity: 0.7; }
+    .header-nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      background: #121212;
+    }
     .header-tools {
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .icon-btn {
+    .icon-tool-btn {
       background: transparent;
-      border: 1px solid var(--surface-border);
-      border-radius: var(--radius-sm);
-      padding: 7px 12px;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
+      border: none;
+      color: #121212;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: var(--transition);
+      justify-content: center;
+      padding: 6px;
+      border-radius: 4px;
+      transition: opacity 0.2s;
     }
-    .icon-btn:hover { background: var(--bg-warm); }
-    .cart-pill {
-      background: var(--accent);
-      color: #fff;
-      font-size: 10.5px;
-      font-weight: 800;
-      padding: 1px 6px;
-      border-radius: 10px;
+    .icon-tool-btn:hover { opacity: 0.7; }
+    @media (max-width: 768px) {
+      .header-inline-nav { display: none; }
+      header { padding: 12px 18px; }
     }
 
-    /* HERO BANNER (SHOPIFY DTC MINIMAL STYLE) */
-    .btn-hero {
-      padding: 12px 28px;
-      border-radius: var(--radius-sm);
-      font-size: 13.5px;
-      font-weight: 700;
-      text-decoration: none;
-      cursor: pointer;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    /* HERO SLIDESHOW (SHOPIFY RISE THEME 1:1) */
+    .rise-hero-section {
+      position: relative;
+      width: 100%;
+      background: #000000;
+      overflow: hidden;
     }
-    .btn-hero-primary:hover { background: #2b2826; }
-    .btn-hero-secondary:hover { background: var(--surface-border-subtle); }
+    .rise-hero-container {
+      position: relative;
+      width: 100%;
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rise-hero-media {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .rise-hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .rise-hero-content-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1200px;
+      padding: 60px 20px;
+      display: flex;
+      justify-content: center;
+    }
+    .rise-hero-card {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 34px 44px;
+      border-radius: 6px;
+      text-align: center;
+      max-width: 480px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .rise-hero-title {
+      font-family: 'Murecho', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #121212;
+      margin-bottom: 10px;
+      line-height: 1.15;
+    }
+    .rise-hero-subtitle {
+      font-family: 'Murecho', sans-serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: #121212;
+      margin-bottom: 22px;
+    }
+    .rise-btn-primary {
+      display: inline-block;
+      background: #121212;
+      color: #ffffff;
+      padding: 13px 36px;
+      border-radius: 40px;
+      font-size: 13.5px;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: lowercase;
+      transition: all 0.2s ease;
+    }
+    .rise-btn-primary:hover {
+      background: #333333;
+      transform: translateY(-1px);
+    }
+    @media (max-width: 749px) {
+      .rise-hero-container {
+        min-height: 380px;
+      }
+      .rise-hero-card {
+        padding: 24px 20px;
+        margin: 0 16px;
+      }
+      .rise-hero-title {
+        font-size: 26px;
+      }
+      .rise-hero-subtitle {
+        font-size: 14.5px;
+      }
+    }
 
     /* TRUST BAR */
     .trust-bar {
@@ -280,8 +368,8 @@
     .media-wrap {
       position: relative;
       width: 100%;
-      aspect-ratio: 1 / 1;
-      background: #f5f4f0;
+      aspect-ratio: 4 / 3;
+      background: #f7f7f7;
       overflow: hidden;
       cursor: pointer;
     }
@@ -289,23 +377,40 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease, opacity 0.35s ease;
+      display: block;
     }
-    .product-card:hover .media-img { transform: scale(1.04); }
+    .media-img-hover {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.4s ease;
+    }
+    .product-card:hover .media-img-hover {
+      opacity: 1;
+    }
+    .product-card:hover .media-img:not(.media-img-hover) {
+      transform: scale(1.03);
+    }
     .badge-card {
       position: absolute;
       top: 10px;
       left: 10px;
-      background: #ffffff;
-      color: #161514;
-      font-size: 10px;
-      font-weight: 800;
+      background: #121212;
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 700;
       padding: 3px 8px;
-      border-radius: var(--radius-sm);
+      border-radius: 3px;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
-      border: 1px solid var(--surface-border);
-      box-shadow: var(--shadow-sm);
+      letter-spacing: 0.05em;
+      border: none;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      z-index: 2;
     }
 
     .card-body {
@@ -2141,5 +2246,126 @@
   .arcade-canvas-wrap {
     height: 340px;
   }
+}
+
+/* RISE LIFESTYLE IMAGE BANNER (SHOPIFY RISE 1:1) */
+.rise-image-banner-section {
+  width: 100%;
+  margin: 48px 0;
+  overflow: hidden;
+}
+.rise-image-banner-container {
+  width: 100%;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.rise-image-banner-img {
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+/* FOOTER (SHOPIFY RISE 1:1) */
+.footer-rise {
+  background: #ffffff;
+  border-top: 1px solid #e8e8e8;
+  padding: 56px 20px 36px;
+  color: #121212;
+  font-family: 'Murecho', sans-serif;
+}
+.footer-rise-top {
+  max-width: 1200px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+.footer-newsletter-wrap {
+  max-width: 440px;
+  margin: 0 auto;
+}
+.footer-newsletter-heading {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: #121212;
+}
+.newsletter-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid #121212;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #ffffff;
+}
+.newsletter-field-input {
+  flex: 1;
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  outline: none;
+  font-size: 13.5px;
+  font-family: inherit;
+  color: #121212;
+}
+.newsletter-submit-btn {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #121212;
+  transition: background 0.2s;
+}
+.newsletter-submit-btn:hover {
+  background: #f4f4f4;
+}
+.footer-rise-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.footer-rise-links {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-rise-links a {
+  color: #717171;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.footer-rise-links a:hover {
+  color: #121212;
+}
+.footer-rise-copy {
+  font-size: 11.5px;
+  color: #8c8c8c;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.footer-rise-copy a {
+  color: inherit;
+  text-decoration: none;
+}
+.footer-rise-copy a:hover {
+  text-decoration: underline;
 }
 

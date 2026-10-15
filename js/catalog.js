@@ -12,6 +12,11 @@ let showAllStyles = false;
 let viewingProduct = null;
 const BESTSELLER_FALLBACK_COUNT = 6;
 
+function escapeHTML(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[m]);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   renderProductsGrid();
 });
@@ -64,14 +69,14 @@ function renderProductsGrid() {
   }
 
   if (headingEl) {
-    if (!isFiltered && !showAllStyles) headingEl.innerText = "Bestsellers";
+    if (!isFiltered && !showAllStyles) headingEl.innerText = "Featured collection";
     else if (currentCategory !== "All") headingEl.innerText = currentCategory;
     else if (searchQuery) headingEl.innerText = "Search results";
     else headingEl.innerText = "All styles";
   }
   if (subEl) {
     subEl.innerText = (!isFiltered && !showAllStyles)
-      ? "Our most-ordered frames. UV400 polarized lenses, hard case and cloth included."
+      ? "UV400 polarized lenses, hard case and cloth included."
       : "UV400 polarized lenses, hard case and cloth included.";
   }
   if (countEl) {
@@ -87,12 +92,14 @@ function renderProductsGrid() {
     <div class="product-card" onclick="openProductDetailModal(${p.id})">
       <div class="media-wrap">
         <img src="${p.images[0]}" alt="${escapeHTML(p.title)}" class="media-img" loading="lazy">
+        ${p.images[1] ? `<img src="${p.images[1]}" alt="${escapeHTML(p.title)}" class="media-img media-img-hover" loading="lazy">` : ''}
+        ${p.featured ? '<span class="badge-card">Featured</span>' : ''}
       </div>
       <div class="card-body">
         <div class="card-cat">${escapeHTML(p.category)}</div>
         <div class="card-title">${escapeHTML(p.title)}</div>
         <div class="price-row">
-          <span class="price-current">₹${p.cod_price}</span>
+          <span class="price-current">Rs. ${p.cod_price}.00</span>
           <span class="price-upi-note">₹${p.upi_price} on UPI</span>
         </div>
         <button type="button" class="btn-card-action" onclick="event.stopPropagation(); openProductDetailModal(${p.id})">
